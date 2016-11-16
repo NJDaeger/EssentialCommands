@@ -85,6 +85,27 @@ public class BannerGUI extends Banner{
 		if (type == GuiType.EFFECTS) {
 			Inventory i = Bukkit.createInventory(player, 54, "Banner Creator - Effects");
 			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM , (short) 0 ));
+			
+			i.setItem(7, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(9, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(10, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(11, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(12, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(13, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(14, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(15, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(16, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(17, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(24, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(26, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(33, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(34, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(35, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(42, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(43, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(44, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(51, this.item(" ", Material.BEDROCK, (short) 0 ));
+			
 			player.openInventory(i);
 			return;
 		}

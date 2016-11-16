@@ -3,6 +3,8 @@ package com.njdaeger.essentials.bannermanager.utils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.essentials.bannermanager.GuiType;
+
 public interface IBannerHandler {
 	
 	
@@ -39,7 +41,7 @@ public interface IBannerHandler {
 	/**
 	 * @param player Player to add to edit mode. 
 	 */
-	void addEditMode(String player);
+	void addEditMode(String player, GuiType type);
 	
 	/**
 	 * @param player Player to check if in edit mode.

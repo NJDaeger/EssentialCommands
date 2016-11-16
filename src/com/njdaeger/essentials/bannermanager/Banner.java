@@ -2,7 +2,7 @@ package com.njdaeger.essentials.bannermanager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,7 +17,7 @@ import com.njdaeger.essentials.bannermanager.utils.NotEditing;
 
 public class Banner implements IBannerHandler{
 	
-	public static ArrayList<String> editmode = new ArrayList<String>();
+	public static HashMap<String, GuiType> editmode = new HashMap<String, GuiType>();
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#saveBanner(java.lang.String)
 	 */
@@ -107,7 +107,7 @@ public class Banner implements IBannerHandler{
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#removeEditMode(org.bukkit.entity.Player)
 	 */
 	public void removeEditMode(String player) {
-		if (editmode.contains(player)) {
+		if (editmode.containsValue(player)) {
 			editmode.remove(player);
 			return;
 		}
@@ -121,9 +121,9 @@ public class Banner implements IBannerHandler{
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#addEditMode(org.bukkit.entity.Player)
 	 */
-	public void addEditMode(String player) {
-		if (!editmode.contains(player)) {
-			editmode.add(player);
+	public void addEditMode(String player, GuiType type) {
+		if (!editmode.containsValue(player)) {
+			editmode.put(player, type);
 			return;
 		}
 		try {
@@ -137,7 +137,7 @@ public class Banner implements IBannerHandler{
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#isEditMode(org.bukkit.entity.Player)
 	 */
 	public boolean isEditMode(String player) {
-		if (editmode.contains(player)) {
+		if (editmode.containsValue(player)) {
 			return true;
 		}
 		return false;
