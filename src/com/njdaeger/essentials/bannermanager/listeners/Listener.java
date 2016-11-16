@@ -2,6 +2,7 @@ package com.njdaeger.essentials.bannermanager.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -11,12 +12,17 @@ import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.essentials.Core;
 import com.njdaeger.essentials.bannermanager.Banner;
+import com.njdaeger.essentials.bannermanager.GuiType;
+import com.njdaeger.essentials.bannermanager.utils.BannerGUI;
 
 public class Listener extends Banner implements org.bukkit.event.Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
 	public Listener(Core plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
+	
+	BannerGUI bGui = new BannerGUI();
+	
 	@EventHandler
 	public void onInvClick(InventoryClickEvent e) {
 		if (editmode.contains(e.getWhoClicked().getName())) {
@@ -50,6 +56,12 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			if (s == 43) {
 				e.getWhoClicked().getInventory().addItem(this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
 				return;
+			}
+			if (s == 48) {
+				e.getWhoClicked().closeInventory();
+				bGui.newBannerGui((Player)e.getWhoClicked(), GuiType.EFFECTS);
+				return;
+				
 			}
 		}
 		Bukkit.getLogger().info(editmode.toString());

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.njdaeger.essentials.bannermanager.GuiType;
 import com.njdaeger.essentials.bannermanager.utils.BannerGUI;
+import com.njdaeger.essentials.enums.Error;
 
 public class CreatebannerCommand extends BukkitCommand{
 	
@@ -31,8 +32,7 @@ public class CreatebannerCommand extends BukkitCommand{
 			bGui.newBannerGui(player, GuiType.COLOR);
 			return true;
 		}
-		return true; 
-	}
-	
-	
+		else sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+		return true;
+	}	
 }

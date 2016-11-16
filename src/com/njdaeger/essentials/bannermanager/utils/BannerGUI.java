@@ -14,10 +14,15 @@ import com.njdaeger.essentials.bannermanager.GuiType;
 
 public class BannerGUI extends Banner{
 	
+	/**
+	 * @param player Player to create the inventory for
+	 * @param type Type of GUI to make. 
+	 */
 	public void newBannerGui(Player player, GuiType type) {
+		
+		
 		if (type == GuiType.COLOR) {
 			Inventory i = Bukkit.createInventory(player, 54, "Banner Creator - Color");
-			
 			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short)0));
 			i.setItem(5, this.item(ChatColor.GRAY + "Previous Layer", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(6, this.item(ChatColor.GRAY + "Next Layer", Material.EYE_OF_ENDER, (short) 0 ));
@@ -78,6 +83,12 @@ public class BannerGUI extends Banner{
 			return;
 		}
 		if (type == GuiType.EFFECTS) {
+			Inventory i = Bukkit.createInventory(player, 54, "Banner Creator - Effects");
+			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM , (short) 0 ));
+			player.openInventory(i);
+			return;
+		}
+		if (type == GuiType.EFFECTS2) {
 			
 		}
 		if (type == GuiType.EFFECT_COLOR) {
