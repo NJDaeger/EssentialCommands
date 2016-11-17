@@ -1,7 +1,5 @@
 package com.njdaeger.essentials.bannermanager.listeners;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -16,6 +14,7 @@ import com.njdaeger.essentials.Core;
 import com.njdaeger.essentials.bannermanager.Banner;
 import com.njdaeger.essentials.bannermanager.GuiType;
 import com.njdaeger.essentials.bannermanager.utils.BannerGUI;
+import com.njdaeger.essentials.enums.Error;
 
 public class Listener extends Banner implements org.bukkit.event.Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
@@ -104,7 +103,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				e.setCancelled(true);
 				if (e.getInventory().getItem(43) == null) {
 					player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
-					player.sendMessage(ChatColor.RED + "Pick a base color.");
+					player.sendMessage(Error.NO_BASE_COLOR.sendError());
 					return;
 				}
 				main.remove(e.getWhoClicked().getName());
@@ -118,17 +117,26 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * Next or previous layer buttons. (both return not allowed due to it being the base color layer)
 			 * 
 			 */
-			if ((s == 5) || (s == 6)) {
-				
+			if (s == 5) {
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				player.sendMessage(Error.NO_PREVIOUS_LAYER.sendError());
+				return;
 			}
-			
+			if (s == 6) {
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				player.sendMessage(Error.NO_NEXT_LAYER.sendError());
+				return;
+			}
 			/*
 			 * 
 			 * Saved banners
 			 * 
 			 */
 			if (s == 23) {
-				
+				e.setCancelled(true);
+				return;
 			}
 			
 			/*
@@ -137,7 +145,8 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if (s == 24) {
-				
+				e.setCancelled(true);
+				return;
 			}
 			
 			/*
@@ -146,7 +155,8 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if (s == 25) {
-				
+				e.setCancelled(true);
+				return;
 			}
 			
 			/*
@@ -155,7 +165,10 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if (s == 45) {
-				
+				e.setCancelled(true);
+				e.getInventory().setItem(43, null);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				return;
 			}
 			
 			/*
@@ -164,7 +177,10 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if ((s == 46) || (s == 47)) {
-				
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				player.sendMessage(Error.LAYER_CANNOT_BUMP.sendError());
+				return;
 			}
 			
 			/*
@@ -173,7 +189,10 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if (s == 49) {
-				
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				player.sendMessage(Error.ALREADY_ON_PALLET.sendError());
+				return;
 			}
 			
 			/*
@@ -182,7 +201,16 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 */
 			if (s == 50) {
-				
+				e.setCancelled(true);
+				if (e.getInventory().getItem(43) == null) {
+					player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+					player.sendMessage(Error.NO_BASE_COLOR.sendError());
+					return;
+				}
+				main.remove(e.getWhoClicked().getName());
+				effects1.add(e.getWhoClicked().getName());
+				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)));
+				return;
 			}
 		}
 		

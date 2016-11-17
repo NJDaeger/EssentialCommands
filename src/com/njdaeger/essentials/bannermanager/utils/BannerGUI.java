@@ -27,8 +27,8 @@ public class BannerGUI extends Banner{
 		
 		if (type == GuiType.COLOR) {
 			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short)0));
-			i.setItem(5, this.item(ChatColor.GRAY + "Previous Layer", Material.ENDER_PEARL, (short) 0 ));
-			i.setItem(6, this.item(ChatColor.GRAY + "Next Layer", Material.EYE_OF_ENDER, (short) 0 ));
+			i.setItem(5, this.item(ChatColor.GRAY + "Previous Layer", Material.STRUCTURE_VOID, (short) 0 ));
+			i.setItem(6, this.item(ChatColor.GRAY + "Next Layer", Material.STRUCTURE_VOID, (short) 0 ));
 			i.setItem(45, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM, (short) 0 ));
 			i.setItem(46, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(47, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
@@ -84,14 +84,14 @@ public class BannerGUI extends Banner{
 			i.setItem(25, this.item(ChatColor.GRAY + "Save Banner", Material.BOOK_AND_QUILL, (short) 0 ));
 		}
 		if (type == GuiType.EFFECTS) {
-			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM , (short) 0 ));
+			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM, (short) 0 ));
 			i.setItem(1, this.item(ChatColor.GRAY + "Effect Color", Material.INK_SACK, (short) 1 ));
 			i.setItem(2, this.item(ChatColor.GRAY + "Save Banner", Material.BOOK_AND_QUILL, (short) 0 ));
 			i.setItem(3, this.item(ChatColor.GRAY + "New Layer", Material.PAPER, (short) 0 ));
 			i.setItem(4, this.item(ChatColor.GRAY + "Base Color", Material.PAINTING, (short) 0 ));
 			i.setItem(5, this.item(ChatColor.GRAY + "Previous Effect Page", Material.STRUCTURE_VOID, (short) 0 ));
 			i.setItem(6, this.item(ChatColor.GRAY + "Next Effect Page", Material.EYE_OF_ENDER, (short) 0 ));
-			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short)0));
+			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short) 0 ));
 			i.setItem(52, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(53, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			
@@ -117,26 +117,88 @@ public class BannerGUI extends Banner{
 			
 			i.setItem(25, stack);
 			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BORDER));
-			i.setItem(19, this.setBanner(ChatColor.GRAY + "Bricks", stack, PatternType.BRICKS));
-			i.setItem(20, this.setBanner(ChatColor.GRAY + "Middle Dot", stack, PatternType.CIRCLE_MIDDLE));
-			i.setItem(21, this.setBanner(ChatColor.GRAY + "Creeper", stack, PatternType.CREEPER));
-			i.setItem(22, this.setBanner(ChatColor.GRAY + "Cross", stack, PatternType.CROSS));
-			i.setItem(23, this.setBanner(ChatColor.GRAY + "Indented Border", stack, PatternType.CURLY_BORDER));
-			i.setItem(27, this.setBanner(ChatColor.GRAY + "Left Diagonal", stack, PatternType.DIAGONAL_LEFT));
-			i.setItem(28, this.setBanner(ChatColor.GRAY + "Left Diagonal (Flipped)", stack, PatternType.DIAGONAL_LEFT_MIRROR));
-			i.setItem(29, this.setBanner(ChatColor.GRAY + "Right Diagonal", stack, PatternType.DIAGONAL_RIGHT));
-			i.setItem(30, this.setBanner(ChatColor.GRAY + "Right DIagonal (Flipped)", stack, PatternType.DIAGONAL_RIGHT_MIRROR));
-			i.setItem(31, this.setBanner(ChatColor.GRAY + "Flower", stack, PatternType.FLOWER));
-			i.setItem(32, this.setBanner(ChatColor.GRAY + "Gradient", stack, PatternType.GRADIENT));
-			i.setItem(36, this.setBanner(ChatColor.GRAY + "Gradient (Flipped)", stack, PatternType.GRADIENT_UP));
-			i.setItem(37, this.setBanner(ChatColor.GRAY + "Half Horizontal", stack, PatternType.HALF_HORIZONTAL));
-			i.setItem(38, this.setBanner(ChatColor.GRAY + "Half Horizontal (Flipped)", stack, PatternType.HALF_HORIZONTAL_MIRROR));
-			i.setItem(39, this.setBanner(ChatColor.GRAY + "Half Vertical", stack, PatternType.HALF_VERTICAL));
-			i.setItem(40, this.setBanner(ChatColor.GRAY + "Half Vertical (Flipped)", stack, PatternType.HALF_VERTICAL_MIRROR));
-			i.setItem(41, this.setBanner(ChatColor.GRAY + "Mojang", stack, PatternType.MOJANG));
+			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BRICKS));
+			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CIRCLE_MIDDLE));
+			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CREEPER));
+			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CROSS));
+			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CURLY_BORDER));
+			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT));
+			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT_MIRROR));
+			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT));
+			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT_MIRROR));
+			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.FLOWER));
+			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT));
+			i.setItem(36, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT_UP));
+			i.setItem(37, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL));
+			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL_MIRROR));
+			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL));
+			i.setItem(40, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL_MIRROR));
+			i.setItem(41, this.setBanner(ChatColor.GRAY + "", stack, PatternType.MOJANG));
+			i.setItem(45, this.setBanner(ChatColor.GRAY + "", stack, PatternType.RHOMBUS_MIDDLE));
+			i.setItem(46, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SKULL));
+			i.setItem(47, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_LEFT));
+			i.setItem(48, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_RIGHT));
+			i.setItem(49, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_TOP_LEFT));
+			i.setItem(50, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_TOP_RIGHT));
+			
 		}
 		if (type == GuiType.EFFECTS2) {
+			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM , (short) 0 ));
+			i.setItem(1, this.item(ChatColor.GRAY + "Effect Color", Material.INK_SACK, (short) 1 ));
+			i.setItem(2, this.item(ChatColor.GRAY + "Save Banner", Material.BOOK_AND_QUILL, (short) 0 ));
+			i.setItem(3, this.item(ChatColor.GRAY + "New Layer", Material.PAPER, (short) 0 ));
+			i.setItem(4, this.item(ChatColor.GRAY + "Base Color", Material.PAINTING, (short) 0 ));
+			i.setItem(5, this.item(ChatColor.GRAY + "Previous Effect Page", Material.ENDER_PEARL, (short) 0 ));
+			i.setItem(6, this.item(ChatColor.GRAY + "Next Effect Page", Material.STRUCTURE_VOID, (short) 0 ));
+			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short) 0 ));
+			i.setItem(52, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
+			i.setItem(53, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			
+			i.setItem(7, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(9, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(10, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(11, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(12, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(13, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(14, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(15, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(16, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(17, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(24, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(26, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(33, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(34, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(35, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(42, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(43, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(44, this.item(" ", Material.BEDROCK, (short) 0 ));
+			i.setItem(51, this.item(" ", Material.BEDROCK, (short) 0 ));
+			
+			i.setItem(25, stack);
+			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRAIGHT_CROSS));
+			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_BOTTOM));
+			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_CENTER));
+			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNLEFT));
+			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNRIGHT));
+			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_LEFT));
+			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_MIDDLE));
+			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_RIGHT));
+			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_SMALL));
+			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_TOP));
+			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_BOTTOM));
+			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_TOP));
+			i.setItem(36, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_BOTTOM));
+			i.setItem(37, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_TOP));
+//			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL_MIRROR));
+//			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL));
+//			i.setItem(40, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL_MIRROR));
+//			i.setItem(41, this.setBanner(ChatColor.GRAY + "", stack, PatternType.MOJANG));
+//			i.setItem(45, this.setBanner(ChatColor.GRAY + "", stack, PatternType.RHOMBUS_MIDDLE));
+//			i.setItem(46, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SKULL));
+//			i.setItem(47, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_LEFT));
+//			i.setItem(48, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_RIGHT));
+//			i.setItem(49, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_TOP_LEFT));
+//			i.setItem(50, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_TOP_RIGHT));
 		}
 		if (type == GuiType.EFFECT_COLOR) {
 			

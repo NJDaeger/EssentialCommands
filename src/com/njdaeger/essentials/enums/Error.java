@@ -277,6 +277,57 @@ public enum Error{
 			String error = ChatColor.RED + "Warp could not be found.";
 			return error;
 		}
+	},
+	NO_BANNER_IN_HAND {
+
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "No banner in main hand.";
+			return error;
+		}
+		
+	},
+	NOT_BANNER_MAKER {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "You did not create this banner.";
+			return error;
+		}
+	},
+	NO_BASE_COLOR {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "No base color chosen.";
+			return error;
+		}
+	},
+	ALREADY_ON_PALLET {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "You are on the color pallet.";
+			return error;
+		}
+	},
+	LAYER_CANNOT_BUMP {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "You cannot bump this layer.";
+			return error;
+		}
+	},
+	NO_NEXT_LAYER {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "No next layer.";
+			return error;
+		}
+	},
+	NO_PREVIOUS_LAYER {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "No previous layer.";
+			return error;
+		}
 	};
 	
 	public abstract String sendError();

@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import com.njdaeger.essentials.bannermanager.utils.BannerExists;
 import com.njdaeger.essentials.bannermanager.utils.BannerMissing;
 import com.njdaeger.essentials.bannermanager.utils.Editing;
-import com.njdaeger.essentials.bannermanager.utils.Errors;
 import com.njdaeger.essentials.bannermanager.utils.IBannerHandler;
 import com.njdaeger.essentials.bannermanager.utils.NotEditing;
+import com.njdaeger.essentials.enums.Error;
 
 public class Banner implements IBannerHandler{
 	
@@ -45,7 +45,7 @@ public class Banner implements IBannerHandler{
 				}
 				return;
 			}
-			sender.sendMessage(Errors.NO_BANNER_IN_HAND.sendError());
+			sender.sendMessage(Error.NO_BANNER_IN_HAND.sendError());
 			return;
 		}
 		try {
@@ -67,7 +67,7 @@ public class Banner implements IBannerHandler{
 				file.delete();
 				return;
 			}
-			sender.sendMessage(Errors.NOT_BANNER_MAKER.sendError());
+			sender.sendMessage(Error.NOT_BANNER_MAKER.sendError());
 			return;
 		}
 		try {
