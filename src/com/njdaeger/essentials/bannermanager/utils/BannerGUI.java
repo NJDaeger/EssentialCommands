@@ -3,10 +3,14 @@ package com.njdaeger.essentials.bannermanager.utils;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.njdaeger.essentials.bannermanager.Banner;
@@ -18,11 +22,10 @@ public class BannerGUI extends Banner{
 	 * @param player Player to create the inventory for
 	 * @param type Type of GUI to make. 
 	 */
-	public void newBannerGui(Player player, GuiType type) {
-		
+	public void newBannerGui(Player player, GuiType type, ItemStack stack) {
+		Inventory i = Bukkit.createInventory(player, 54, "Banner Creator");
 		
 		if (type == GuiType.COLOR) {
-			Inventory i = Bukkit.createInventory(player, 54, "Banner Creator - Color");
 			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short)0));
 			i.setItem(5, this.item(ChatColor.GRAY + "Previous Layer", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(6, this.item(ChatColor.GRAY + "Next Layer", Material.EYE_OF_ENDER, (short) 0 ));
@@ -30,7 +33,7 @@ public class BannerGUI extends Banner{
 			i.setItem(46, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(47, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			i.setItem(48, this.item(ChatColor.GRAY + "Effects", Material.NETHER_STAR, (short) 0 ));
-			i.setItem(49, this.item(ChatColor.GRAY + "Base Color", Material.INK_SACK, (short) 1 ));
+			i.setItem(49, this.item(ChatColor.GRAY + "Base Color", Material.PAINTING, (short) 0 ));
 			i.setItem(50, this.item(ChatColor.GRAY + "New Layer", Material.PAPER, (short) 0 ));
 			
 			i.setItem(4, this.item(" ", Material.BEDROCK, (short) 0 ));
@@ -79,12 +82,18 @@ public class BannerGUI extends Banner{
 			i.setItem(23, this.item(ChatColor.GRAY + "Saved Banners", Material.ENCHANTED_BOOK, (short) 0 ));
 			i.setItem(24, this.item(ChatColor.GRAY + "Load from inventory", Material.BOOK, (short) 0 ));
 			i.setItem(25, this.item(ChatColor.GRAY + "Save Banner", Material.BOOK_AND_QUILL, (short) 0 ));
-			player.openInventory(i);
-			return;
 		}
 		if (type == GuiType.EFFECTS) {
-			Inventory i = Bukkit.createInventory(player, 54, "Banner Creator - Effects");
 			i.setItem(0, this.item(ChatColor.GRAY + "Reset Layer", Material.CAULDRON_ITEM , (short) 0 ));
+			i.setItem(1, this.item(ChatColor.GRAY + "Effect Color", Material.INK_SACK, (short) 1 ));
+			i.setItem(2, this.item(ChatColor.GRAY + "Save Banner", Material.BOOK_AND_QUILL, (short) 0 ));
+			i.setItem(3, this.item(ChatColor.GRAY + "New Layer", Material.PAPER, (short) 0 ));
+			i.setItem(4, this.item(ChatColor.GRAY + "Base Color", Material.PAINTING, (short) 0 ));
+			i.setItem(5, this.item(ChatColor.GRAY + "Previous Effect Page", Material.STRUCTURE_VOID, (short) 0 ));
+			i.setItem(6, this.item(ChatColor.GRAY + "Next Effect Page", Material.EYE_OF_ENDER, (short) 0 ));
+			i.setItem(8, this.item(ChatColor.GRAY + "Leave Editor", Material.BARRIER, (short)0));
+			i.setItem(52, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
+			i.setItem(53, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			
 			i.setItem(7, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(9, this.item(" ", Material.BEDROCK, (short) 0 ));
@@ -106,8 +115,25 @@ public class BannerGUI extends Banner{
 			i.setItem(44, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(51, this.item(" ", Material.BEDROCK, (short) 0 ));
 			
-			player.openInventory(i);
-			return;
+			i.setItem(25, stack);
+			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BORDER));
+			i.setItem(19, this.setBanner(ChatColor.GRAY + "Bricks", stack, PatternType.BRICKS));
+			i.setItem(20, this.setBanner(ChatColor.GRAY + "Middle Dot", stack, PatternType.CIRCLE_MIDDLE));
+			i.setItem(21, this.setBanner(ChatColor.GRAY + "Creeper", stack, PatternType.CREEPER));
+			i.setItem(22, this.setBanner(ChatColor.GRAY + "Cross", stack, PatternType.CROSS));
+			i.setItem(23, this.setBanner(ChatColor.GRAY + "Indented Border", stack, PatternType.CURLY_BORDER));
+			i.setItem(27, this.setBanner(ChatColor.GRAY + "Left Diagonal", stack, PatternType.DIAGONAL_LEFT));
+			i.setItem(28, this.setBanner(ChatColor.GRAY + "Left Diagonal (Flipped)", stack, PatternType.DIAGONAL_LEFT_MIRROR));
+			i.setItem(29, this.setBanner(ChatColor.GRAY + "Right Diagonal", stack, PatternType.DIAGONAL_RIGHT));
+			i.setItem(30, this.setBanner(ChatColor.GRAY + "Right DIagonal (Flipped)", stack, PatternType.DIAGONAL_RIGHT_MIRROR));
+			i.setItem(31, this.setBanner(ChatColor.GRAY + "Flower", stack, PatternType.FLOWER));
+			i.setItem(32, this.setBanner(ChatColor.GRAY + "Gradient", stack, PatternType.GRADIENT));
+			i.setItem(36, this.setBanner(ChatColor.GRAY + "Gradient (Flipped)", stack, PatternType.GRADIENT_UP));
+			i.setItem(37, this.setBanner(ChatColor.GRAY + "Half Horizontal", stack, PatternType.HALF_HORIZONTAL));
+			i.setItem(38, this.setBanner(ChatColor.GRAY + "Half Horizontal (Flipped)", stack, PatternType.HALF_HORIZONTAL_MIRROR));
+			i.setItem(39, this.setBanner(ChatColor.GRAY + "Half Vertical", stack, PatternType.HALF_VERTICAL));
+			i.setItem(40, this.setBanner(ChatColor.GRAY + "Half Vertical (Flipped)", stack, PatternType.HALF_VERTICAL_MIRROR));
+			i.setItem(41, this.setBanner(ChatColor.GRAY + "Mojang", stack, PatternType.MOJANG));
 		}
 		if (type == GuiType.EFFECTS2) {
 			
@@ -117,12 +143,8 @@ public class BannerGUI extends Banner{
 		}
 		if (type == GuiType.SAVES) {
 			
-		} else
-			try {
-				throw new UnknownGUIType();
-			} catch (UnknownGUIType e) {
-				e.printStackTrace();
-			}
+		}
+		player.openInventory(i);
 	}
 	/*
 	 * make it so when they select the color/pattern or whatever, the banner gets a red border around it.
@@ -137,5 +159,21 @@ public class BannerGUI extends Banner{
 		meta.setDisplayName(customName);
 		stack.setItemMeta(meta);
 		return stack;
+	}
+	private ItemStack setBanner(String customname, ItemStack stack, PatternType type) {
+		DyeColor pColor;
+		short d = stack.getDurability();
+		pColor = DyeColor.WHITE;
+		if (d == 15 || d == 14 || d == 13 || d == 12 || d == 11 || d == 10 || d == 9 || d == 7 || d == 6 || d == 5 || d == 4 || d ==3 || d == 2 | d == 1) {
+			pColor = DyeColor.BLACK;
+		}
+		ItemStack s = new ItemStack(Material.BANNER, 1);
+		BannerMeta m = (BannerMeta)s.getItemMeta();
+		m.setDisplayName(customname);
+		m.addPattern(new Pattern(pColor, type));
+		s.setItemMeta(m);
+		s.setDurability(stack.getDurability());
+		return s;
+		
 	}
 }

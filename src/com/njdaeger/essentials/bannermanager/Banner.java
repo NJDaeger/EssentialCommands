@@ -2,7 +2,7 @@ package com.njdaeger.essentials.bannermanager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,7 +17,11 @@ import com.njdaeger.essentials.bannermanager.utils.NotEditing;
 
 public class Banner implements IBannerHandler{
 	
-	public static HashMap<String, GuiType> editmode = new HashMap<String, GuiType>();
+	public static ArrayList<String> main = new ArrayList<String>();
+	public static ArrayList<String> effects1 = new ArrayList<String>();
+	public static ArrayList<String> effects2 = new ArrayList<String>();
+	public static ArrayList<String> effectcolor = new ArrayList<String>();
+	public static ArrayList<String> saves = new ArrayList<String>();
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#saveBanner(java.lang.String)
 	 */
@@ -106,10 +110,41 @@ public class Banner implements IBannerHandler{
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#removeEditMode(org.bukkit.entity.Player)
 	 */
-	public void removeEditMode(String player) {
-		if (editmode.containsValue(player)) {
-			editmode.remove(player);
-			return;
+	public void removeEditMode(String player, GuiType type) {
+		if (type == GuiType.COLOR) {
+			if (main.contains(player)) {
+				main.remove(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECTS) {	
+			if (effects1.contains(player)) {
+				effects1.remove(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECTS2) {
+			if (effects2.contains(player)) {
+				effects2.remove(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECT_COLOR) {
+			if (effectcolor.contains(player)) {
+				effectcolor.remove(player);
+				return;
+			}
+		}
+		if (type == GuiType.SAVES) {
+			if (saves.contains(player)) {
+				saves.remove(player);
+				return;
+			}
+		}
+		try {
+			throw new Editing();
+		} catch (Editing e) {
+			e.printStackTrace();
 		}
 		try {
 			throw new NotEditing();
@@ -122,9 +157,35 @@ public class Banner implements IBannerHandler{
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#addEditMode(org.bukkit.entity.Player)
 	 */
 	public void addEditMode(String player, GuiType type) {
-		if (!editmode.containsValue(player)) {
-			editmode.put(player, type);
-			return;
+		if (type == GuiType.COLOR) {
+			if (!main.contains(player)) {
+				main.add(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECTS) {	
+			if (!effects1.contains(player)) {
+				effects1.add(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECTS2) {
+			if (!effects2.contains(player)) {
+				effects2.add(player);
+				return;
+			}
+		}
+		if (type == GuiType.EFFECT_COLOR) {
+			if (!effectcolor.contains(player)) {
+				effectcolor.add(player);
+				return;
+			}
+		}
+		if (type == GuiType.SAVES) {
+			if (!saves.contains(player)) {
+				saves.add(player);
+				return;
+			}
 		}
 		try {
 			throw new Editing();
@@ -137,7 +198,7 @@ public class Banner implements IBannerHandler{
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#isEditMode(org.bukkit.entity.Player)
 	 */
 	public boolean isEditMode(String player) {
-		if (editmode.containsValue(player)) {
+		if (main.contains(player) || effects1.contains(player) || effects2.contains(player) || effects2.contains(player) || saves.contains(player)) {
 			return true;
 		}
 		return false;

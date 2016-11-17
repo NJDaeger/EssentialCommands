@@ -36,7 +36,7 @@ public interface IBannerHandler {
 	/**
 	 * @param player Player to remove from edit mode.
 	 */
-	void removeEditMode(String player);
+	void removeEditMode(String player, GuiType type);
 	
 	/**
 	 * @param player Player to add to edit mode. 
