@@ -22,7 +22,7 @@ public class BannerGUI extends Banner{
 	 * @param player Player to create the inventory for
 	 * @param type Type of GUI to make. 
 	 */
-	public void newBannerGui(Player player, GuiType type, ItemStack stack) {
+	public void newBannerGui(Player player, GuiType type, ItemStack stack, int layer) {
 		Inventory i = Bukkit.createInventory(player, 54, "Banner Creator");
 		
 		if (type == GuiType.COLOR) {
@@ -95,13 +95,55 @@ public class BannerGUI extends Banner{
 			i.setItem(52, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(53, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			
+			if (layer == 1) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 2) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 3) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 4) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 5) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 6) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 13 ));
+			}
 			i.setItem(7, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(9, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(10, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(11, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(12, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(13, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(14, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(15, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(16, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(17, this.item(" ", Material.BEDROCK, (short) 0 ));
@@ -117,25 +159,25 @@ public class BannerGUI extends Banner{
 			
 			i.setItem(25, stack);
 			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BORDER));
-			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BRICKS));
-			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CIRCLE_MIDDLE));
-			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CREEPER));
-			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CROSS));
-			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CURLY_BORDER));
-			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT));
-			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT_MIRROR));
-			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT));
-			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT_MIRROR));
-			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.FLOWER));
-			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT));
-			i.setItem(36, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT_UP));
-			i.setItem(37, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL));
-			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL_MIRROR));
-			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL));
-			i.setItem(40, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL_MIRROR));
-			i.setItem(41, this.setBanner(ChatColor.GRAY + "", stack, PatternType.MOJANG));
-			i.setItem(45, this.setBanner(ChatColor.GRAY + "", stack, PatternType.RHOMBUS_MIDDLE));
-			i.setItem(46, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SKULL));
+			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CURLY_BORDER));
+			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT));
+			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_LEFT_MIRROR));
+			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT));
+			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.DIAGONAL_RIGHT_MIRROR));
+			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT));
+			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.GRADIENT_UP));
+			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL));
+			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL_MIRROR));
+			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL));
+			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL_MIRROR));
+			i.setItem(36, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_BOTTOM));
+			i.setItem(37, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_TOP));
+			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_BOTTOM));
+			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_TOP));
+			i.setItem(40, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_BOTTOM));
+			i.setItem(41, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_TOP));
+			i.setItem(45, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_LEFT));
+			i.setItem(46, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_RIGHT));
 			i.setItem(47, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_LEFT));
 			i.setItem(48, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_BOTTOM_RIGHT));
 			i.setItem(49, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SQUARE_TOP_LEFT));
@@ -154,13 +196,55 @@ public class BannerGUI extends Banner{
 			i.setItem(52, this.item(ChatColor.GRAY + "Bump Layer Down", Material.ENDER_PEARL, (short) 0 ));
 			i.setItem(53, this.item(ChatColor.GRAY + "Bump Layer Up", Material.EYE_OF_ENDER, (short) 0 ));
 			
+			if (layer == 1) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 2) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 3) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 4) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 5) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 13 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 14 ));
+			}
+			if (layer == 6) {
+				i.setItem(9, this.item(ChatColor.GRAY + "Layer 1", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(10, this.item(ChatColor.GRAY + "Layer 2", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(11, this.item(ChatColor.GRAY + "Layer 3", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(12, this.item(ChatColor.GRAY + "Layer 4", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(13, this.item(ChatColor.GRAY + "Layer 5", Material.STAINED_GLASS_PANE, (short) 14 ));
+				i.setItem(14, this.item(ChatColor.GRAY + "Layer 6", Material.STAINED_GLASS_PANE, (short) 13 ));
+			}
 			i.setItem(7, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(9, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(10, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(11, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(12, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(13, this.item(" ", Material.BEDROCK, (short) 0 ));
-			i.setItem(14, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(15, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(16, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(17, this.item(" ", Material.BEDROCK, (short) 0 ));
@@ -175,20 +259,20 @@ public class BannerGUI extends Banner{
 			i.setItem(51, this.item(" ", Material.BEDROCK, (short) 0 ));
 			
 			i.setItem(25, stack);
-			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRAIGHT_CROSS));
-			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_BOTTOM));
-			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_CENTER));
-			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNLEFT));
-			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNRIGHT));
-			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_LEFT));
-			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_MIDDLE));
-			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_RIGHT));
-			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_SMALL));
-			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_TOP));
-			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_BOTTOM));
-			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLE_TOP));
-			i.setItem(36, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_BOTTOM));
-			i.setItem(37, this.setBanner(ChatColor.GRAY + "", stack, PatternType.TRIANGLES_TOP));
+			i.setItem(18, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNLEFT));
+			i.setItem(19, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_DOWNRIGHT));
+			i.setItem(20, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_MIDDLE));
+			i.setItem(21, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_CENTER));
+			i.setItem(22, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRIPE_SMALL));
+			i.setItem(23, this.setBanner(ChatColor.GRAY + "", stack, PatternType.STRAIGHT_CROSS));
+			i.setItem(27, this.setBanner(ChatColor.GRAY + "", stack, PatternType.MOJANG));
+			i.setItem(28, this.setBanner(ChatColor.GRAY + "", stack, PatternType.SKULL));
+			i.setItem(29, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CIRCLE_MIDDLE));
+			i.setItem(30, this.setBanner(ChatColor.GRAY + "", stack, PatternType.RHOMBUS_MIDDLE));
+			i.setItem(31, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CREEPER));
+			i.setItem(32, this.setBanner(ChatColor.GRAY + "", stack, PatternType.CROSS));
+			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.BRICKS));
+			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.FLOWER));
 //			i.setItem(38, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_HORIZONTAL_MIRROR));
 //			i.setItem(39, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL));
 //			i.setItem(40, this.setBanner(ChatColor.GRAY + "", stack, PatternType.HALF_VERTICAL_MIRROR));

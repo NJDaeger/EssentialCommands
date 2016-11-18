@@ -29,7 +29,7 @@ public class CreatebannerCommand extends BukkitCommand{
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			BannerGUI.main.add(player.getName());
-			bGui.newBannerGui(player, GuiType.COLOR, null);
+			bGui.newBannerGui(player, GuiType.COLOR, null, 0);
 			return true;
 		}
 		else sndr.sendMessage(Error.PLAYER_ONLY.sendError());

@@ -108,7 +108,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				}
 				main.remove(e.getWhoClicked().getName());
 				effects1.add(e.getWhoClicked().getName());
-				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)));
+				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 				return;
 			}
 			
@@ -209,7 +209,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				}
 				main.remove(e.getWhoClicked().getName());
 				effects1.add(e.getWhoClicked().getName());
-				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)));
+				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 				return;
 			}
 		}
@@ -259,10 +259,12 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				 */
 			}
 			if (s == 6) {
-				/*
-				 * next effect page
-				 * 
-				 */
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				effects1.remove(player.getName());
+				effects2.add(player.getName());
+				bGui.newBannerGui(player, GuiType.EFFECTS2, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 1);
+				return;
 			}
 			if (s == 8) {
 				e.setCancelled(true);
