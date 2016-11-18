@@ -328,6 +328,13 @@ public enum Error{
 			String error = ChatColor.RED + "No previous layer.";
 			return error;
 		}
+	},
+	ON_CURRENT_LAYER {;
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "No previous layer.";
+			return error;
+		}
 	};
 	
 	public abstract String sendError();

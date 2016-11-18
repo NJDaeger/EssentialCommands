@@ -222,11 +222,61 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 		 * 
 		 */
 		if (effects1.contains(player.getName())) {
+			if (s == 0) {
+				/*
+				 * take off the current layer in slot 25. 
+				 * IDEA: possibly quick layer selector? move the effects down one slot and add wool in layers.
+				 */
+			}
+			if (s == 1) {
+				/*
+				 * Change the color of the effect currently chosen. If no effect is chosen then dont allow it to pass.
+				 * 
+				 */
+			}
+			if (s == 2) {
+				/*
+				 * Save the banner you are currently on. (possibly have a banner gui pop up and  have the player type in a name in the text box
+				 * 
+				 */
+			}
+			if (s == 3) {
+				/*
+				 * Create a new layer. 
+				 * 
+				 */
+			}
+			if (s == 4) {
+				/*
+				 * Reset the base color. 
+				 * 
+				 */
+			}
+			if (s == 5) {
+				/*
+				 * previous effect page (disabled)
+				 * 
+				 */
+			}
+			if (s == 6) {
+				/*
+				 * next effect page
+				 * 
+				 */
+			}
 			if (s == 8) {
 				e.setCancelled(true);
 				e.getWhoClicked().closeInventory();
 				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 				effects1.remove(player.getName());
+				return;
+			}
+			if (s == 15 || s == 16 || s == 17 || 
+					s == 24 || s == 26 || s == 33 || 
+					s == 34 || s == 35 || s == 42 || 
+					s == 43 || s == 44 || s == 51) {
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				e.setCancelled(true);
 				return;
 			}
 		}
