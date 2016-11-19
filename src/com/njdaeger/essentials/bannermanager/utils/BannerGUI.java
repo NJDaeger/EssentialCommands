@@ -61,6 +61,10 @@ public class BannerGUI extends Banner{
 			i.setItem(51, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(52, this.item(" ", Material.BEDROCK, (short) 0 ));
 			i.setItem(53, this.item(" ", Material.BEDROCK, (short) 0 ));
+			if (stack != null) {
+				i.setItem(43, stack);
+			}
+			
 			
 			i.setItem(0, this.item(ChatColor.GRAY + "" + ChatColor.BOLD + "White", Material.BANNER, (short) 15 ));
 			i.setItem(1, this.item(ChatColor.GRAY + "" + ChatColor.BOLD + "Orange", Material.BANNER, (short) 14 ));

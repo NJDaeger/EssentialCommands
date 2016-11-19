@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
@@ -217,12 +218,27 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 		/*
 		 * 
 		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 * Effects page 1
 		 * 
 		 * 
 		 */
 		if (effects1.contains(player.getName())) {
 			if (s == 0) {
+				e.setCancelled(true);
+				ItemStack stack = new ItemStack(Material.BANNER, 1, e.getInventory().getItem(25).getDurability());
+				e.getInventory().setItem(25, stack);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				return;
 				/*
 				 * take off the current layer in slot 25. 
 				 * IDEA: possibly quick layer selector? move the effects down one slot and add wool in layers.
@@ -247,10 +263,12 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				 */
 			}
 			if (s == 4) {
-				/*
-				 * Reset the base color. 
-				 * 
-				 */
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				effects1.remove(player.getName());
+				main.add(player.getName());
+				bGui.newBannerGui(player, GuiType.COLOR, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 0);
+				return;
 			}
 			if (s == 5) {
 				/*
@@ -281,6 +299,16 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				e.setCancelled(true);
 				return;
 			}
+			if (s == 18 || s == 19 || s == 20 || 
+					s == 21 || s == 22 || s == 23 || 
+					s == 27 || s == 28 || s == 29 || 
+					s == 30 || s == 31 || s == 32 || 
+					s == 38 || s == 39) {
+				e.setCancelled(true);
+				e.getInventory().setItem(25, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				return;
+			}
 		}
 		
 		/*
@@ -291,7 +319,78 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 		 * 
 		 */
 		if (effects2.contains(player.getName())) {
-			
+			if (s == 0) {
+				e.setCancelled(true);
+				ItemStack stack = new ItemStack(Material.BANNER, 1, e.getInventory().getItem(25).getDurability());
+				e.getInventory().setItem(25, stack);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				return;
+			}
+			if (s == 1) {
+				/*
+				 * Change the color of the effect currently chosen. If no effect is chosen then dont allow it to pass.
+				 * 
+				 */
+			}
+			if (s == 2) {
+				/*
+				 * Save the banner you are currently on. (possibly have a banner gui pop up and  have the player type in a name in the text box
+				 * 
+				 */
+			}
+			if (s == 3) {
+				/*
+				 * Create a new layer. 
+				 * 
+				 */
+			}
+			if (s == 4) {
+				/*
+				 * Reset the base color. 
+				 * 
+				 */
+			}
+			if (s == 5) {
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				effects2.remove(player.getName());
+				effects1.add(player.getName());
+				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 1);
+				return;
+			}
+			if (s == 6) {
+				e.setCancelled(true);
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				return;
+			}
+			if (s == 8) {
+				e.setCancelled(true);
+				e.getWhoClicked().closeInventory();
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				effects2.remove(player.getName());
+				return;
+			}
+			if (s == 15 || s == 16 || s == 17 || 
+					s == 24 || s == 26 || s == 33 || 
+					s == 34 || s == 35 || s == 42 || 
+					s == 43 || s == 44 || s == 51) {
+				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+				e.setCancelled(true);
+				return;
+			}
+			if (s == 18 || s == 19 || s == 20 || 
+					s == 21 || s == 22 || s == 23 || 
+					s == 27 || s == 28 || s == 29 || 
+					s == 30 || s == 31 || s == 32 || 
+					s == 36 || s == 37 || s == 38 || 
+					s == 39 || s == 40 || s == 41 || 
+					s == 45 || s == 46 || s == 47 || 
+					s == 48 || s == 49 || s == 50) {
+				e.setCancelled(true);
+				e.getInventory().setItem(25, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
+				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+				return;
+			}
 		}
 		
 		/*
@@ -326,6 +425,15 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 	private ItemStack getPreview(ItemMeta m, ItemStack s) {
 		ItemStack stack = new ItemStack(Material.BANNER, 1, s.getDurability());
 		stack.setItemMeta(m);
+		return stack;
+	}
+	private ItemStack clearLayer(ItemStack banner, int layer) {
+		short d = banner.getDurability();
+		ItemStack stack = new ItemStack(Material.BANNER, 1);
+		BannerMeta m = (BannerMeta)banner.getItemMeta();
+		m.removePattern(layer);
+		stack.setItemMeta(m);
+		stack.setDurability(d);
 		return stack;
 	}
 }
