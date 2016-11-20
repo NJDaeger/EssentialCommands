@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import com.njdaeger.essentials.bannermanager.utils.BannerExists;
+import com.njdaeger.essentials.bannermanager.exceptions.BannerExists;
+import com.njdaeger.essentials.bannermanager.exceptions.MetadataException;
 import com.njdaeger.essentials.bannermanager.utils.BannerMissing;
-import com.njdaeger.essentials.bannermanager.utils.Editing;
 import com.njdaeger.essentials.bannermanager.utils.IBannerHandler;
-import com.njdaeger.essentials.bannermanager.utils.NotEditing;
 import com.njdaeger.essentials.enums.Error;
 
 public class Banner implements IBannerHandler{
@@ -106,102 +109,87 @@ public class Banner implements IBannerHandler{
 		}
 		return null;
 	}
-
+	
 	/* (non-Javadoc)
-	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#removeEditMode(org.bukkit.entity.Player)
+	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#getPreview(org.bukkit.inventory.meta.ItemMeta, org.bukkit.inventory.ItemStack)
 	 */
-	public void removeEditMode(String player, GuiType type) {
-		if (type == GuiType.COLOR) {
-			if (main.contains(player)) {
-				main.remove(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECTS) {	
-			if (effects1.contains(player)) {
-				effects1.remove(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECTS2) {
-			if (effects2.contains(player)) {
-				effects2.remove(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECT_COLOR) {
-			if (effectcolor.contains(player)) {
-				effectcolor.remove(player);
-				return;
-			}
-		}
-		if (type == GuiType.SAVES) {
-			if (saves.contains(player)) {
-				saves.remove(player);
-				return;
-			}
-		}
-		try {
-			throw new Editing();
-		} catch (Editing e) {
-			e.printStackTrace();
-		}
-		try {
-			throw new NotEditing();
-		} catch (NotEditing e) {
-			e.printStackTrace();
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#addEditMode(org.bukkit.entity.Player)
-	 */
-	public void addEditMode(String player, GuiType type) {
-		if (type == GuiType.COLOR) {
-			if (!main.contains(player)) {
-				main.add(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECTS) {	
-			if (!effects1.contains(player)) {
-				effects1.add(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECTS2) {
-			if (!effects2.contains(player)) {
-				effects2.add(player);
-				return;
-			}
-		}
-		if (type == GuiType.EFFECT_COLOR) {
-			if (!effectcolor.contains(player)) {
-				effectcolor.add(player);
-				return;
-			}
-		}
-		if (type == GuiType.SAVES) {
-			if (!saves.contains(player)) {
-				saves.add(player);
-				return;
-			}
-		}
-		try {
-			throw new Editing();
-		} catch (Editing e) {
-			e.printStackTrace();
-		}
+	public ItemStack getPreview(ItemMeta m, ItemStack s) {
+		ItemStack stack = new ItemStack(Material.BANNER, 1, s.getDurability());
+		stack.setItemMeta(m);
+		return stack;
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#isEditMode(org.bukkit.entity.Player)
+	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#clearLayer(org.bukkit.inventory.ItemStack, int)
 	 */
-	public boolean isEditMode(String player) {
-		if (main.contains(player) || effects1.contains(player) || effects2.contains(player) || effects2.contains(player) || saves.contains(player)) {
-			return true;
-		}
-		return false;
+	public ItemStack clearLayer(ItemStack banner, int layer) {
+		short d = banner.getDurability();
+		ItemStack stack = new ItemStack(Material.BANNER, 1);
+		BannerMeta m = (BannerMeta)banner.getItemMeta();
+		m.removePattern(layer);
+		stack.setItemMeta(m);
+		stack.setDurability(d);
+		return stack;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#getDyeColor(short)
+	 */
+	public DyeColor getDyeColor(short d) {
+		if (d == 15) {
+			return DyeColor.WHITE;
+		}
+		if (d == 14) {
+			return DyeColor.ORANGE;
+		}
+		if (d == 13) {
+			return DyeColor.MAGENTA;
+		}
+		if (d == 12) {
+			return DyeColor.LIGHT_BLUE;
+		}
+		if (d == 11) {
+			return DyeColor.YELLOW;
+		}
+		if (d == 10) {
+			return DyeColor.LIME;
+		}
+		if (d == 9) {
+			return DyeColor.PINK;
+		}
+		if (d == 8) {
+			return DyeColor.GRAY;
+		}
+		if (d == 7) {
+			return DyeColor.SILVER;
+		}
+		if (d == 6) {
+			return DyeColor.CYAN;
+		}
+		if (d == 5) {
+			return DyeColor.PURPLE;
+		}
+		if (d == 4) {
+			return DyeColor.BLUE;
+		}
+		if (d == 3) {
+			return DyeColor.BROWN;
+		}
+		if (d == 2) {
+			return DyeColor.GREEN;
+		}
+		if (d == 1) {
+			return DyeColor.RED;
+		}
+		if (d == 0) {
+			return DyeColor.BLACK;
+		} 
+		else try {
+			throw new MetadataException();
+		} 
+		catch (MetadataException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

@@ -7,36 +7,35 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.essentials.Core;
 import com.njdaeger.essentials.bannermanager.Banner;
 import com.njdaeger.essentials.bannermanager.GuiType;
 import com.njdaeger.essentials.bannermanager.utils.BannerGUI;
-import com.njdaeger.essentials.enums.Error;
 
 public class Listener extends Banner implements org.bukkit.event.Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
 	public Listener(Core plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
-	BannerGUI bGui = new BannerGUI();
+	BannerGUI bGui;
+	MainGUI mainGui;
 	
 	@EventHandler
 	public void onInvClick(InventoryClickEvent e) {
 		int s = e.getSlot();
 		Player player = (Player) e.getWhoClicked();
 		if (main.contains(player.getName())) {
-			
+			mainGui.listen(e);
+			return;
 			/*
 			 * 
 			 * 
 			 * Quit button.
 			 * 
 			 * 
-			 */
+			 
 			if (s == 8) {
 				e.setCancelled(true);
 				e.getWhoClicked().closeInventory();
@@ -51,7 +50,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * All bedrock
 			 * 
 			 * 
-			 */
+			 
 			if ((s == 53) || (s == 52) || (s == 51) || 
 					(s == 42) || (s == 44) || (s == 35) || 
 					(s == 34) || (s == 33) || (s == 4)  || 
@@ -72,23 +71,40 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * All banners
 			 * 
 			 * 
-			 */
+			 
 			if ((s == 0) || (s == 1) || (s == 2) ||
 					(s == 3)  || (s == 9)  || (s == 10) ||
 					(s == 11) || (s == 12) || (s == 18) ||
 					(s == 19) || (s == 20) || (s == 21) || 
 					(s == 27) || (s == 28) || (s == 29) ||
 					(s == 30)) {
-				player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-				e.getInventory().setItem(43, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
-				e.setCancelled(true);
+				/*
+				 * 
+				 * Means the player just opened the GUI and hasnt selected a color yet.
+				 
+				if (e.getInventory().getItem(43) == null) {
+					player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+					e.getInventory().setItem(43, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
+					e.setCancelled(true);
+					return;
+				}
+				/*
+				 * 
+				 * Has already selected the color but either wants to change it with or without a design on it.
+				 
+				else {
+					BannerMeta m = (BannerMeta) e.getInventory().getItem(43).getItemMeta();
+					m.setBaseColor(this.getDyeColor(e.getCurrentItem().getDurability()));
+					return;
+				}
+				
 			}
 			
 			/*
 			 * 
 			 * Get banner button.
 			 * 
-			 */
+			 
 			if (s == 43) {
 				player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
 				e.getWhoClicked().getInventory().addItem(this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
@@ -99,7 +115,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Effects button
 			 * 
-			 */
+			 
 			if (s == 48) {
 				e.setCancelled(true);
 				if (e.getInventory().getItem(43) == null) {
@@ -117,7 +133,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Next or previous layer buttons. (both return not allowed due to it being the base color layer)
 			 * 
-			 */
+			 
 			if (s == 5) {
 				e.setCancelled(true);
 				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
@@ -134,7 +150,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Saved banners
 			 * 
-			 */
+			 
 			if (s == 23) {
 				e.setCancelled(true);
 				return;
@@ -144,7 +160,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Allow a banner to be loaded from the inventory
 			 * 
-			 */
+			 
 			if (s == 24) {
 				e.setCancelled(true);
 				return;
@@ -154,7 +170,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Save the selected banner (need to figure out how to name the banner) (possibly with anvil ui??)
 			 * 
-			 */
+			 
 			if (s == 25) {
 				e.setCancelled(true);
 				return;
@@ -164,7 +180,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Reset the current layer.
 			 * 
-			 */
+			 
 			if (s == 45) {
 				e.setCancelled(true);
 				e.getInventory().setItem(43, null);
@@ -176,7 +192,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Bump the layer up in order. (disabled due to it being base color layer)
 			 * 
-			 */
+			 
 			if ((s == 46) || (s == 47)) {
 				e.setCancelled(true);
 				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
@@ -188,7 +204,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * Base color pallet (disabled due to already being on it)
 			 * 
-			 */
+			 
 			if (s == 49) {
 				e.setCancelled(true);
 				player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
@@ -200,7 +216,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			 * 
 			 * new layer button. (will open effects page)
 			 * 
-			 */
+			 
 			if (s == 50) {
 				e.setCancelled(true);
 				if (e.getInventory().getItem(43) == null) {
@@ -213,6 +229,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 				bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 				return;
 			}
+			*/
 		}
 		
 		/*
@@ -415,25 +432,5 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 			
 		}
 		return;
-	}
-	/**
-	 * Gets a stack with its meta values.
-	 * @param m ItemMeta of the stack.
-	 * @param s Itemstack of the stack.
-	 * @return
-	 */
-	private ItemStack getPreview(ItemMeta m, ItemStack s) {
-		ItemStack stack = new ItemStack(Material.BANNER, 1, s.getDurability());
-		stack.setItemMeta(m);
-		return stack;
-	}
-	private ItemStack clearLayer(ItemStack banner, int layer) {
-		short d = banner.getDurability();
-		ItemStack stack = new ItemStack(Material.BANNER, 1);
-		BannerMeta m = (BannerMeta)banner.getItemMeta();
-		m.removePattern(layer);
-		stack.setItemMeta(m);
-		stack.setDurability(d);
-		return stack;
 	}
 }
