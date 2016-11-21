@@ -22,6 +22,7 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 	Effects2GUI e2Gui = new Effects2GUI();
 	EColorGUI cGUI = new EColorGUI();
 	SavesGUI sGui = new SavesGUI();
+	BasecolorGUI baseGui = new BasecolorGUI();
 	
 	@EventHandler
 	public void onInvClick(InventoryClickEvent e) {
@@ -50,6 +51,9 @@ public class Listener extends Banner implements org.bukkit.event.Listener{
 		if (saves.contains(player.getName())) {
 			sGui.listen(e);
 			return;
+		}
+		if (basecolor.contains(player.getName())) {
+			
 		}
 		return;
 	}
