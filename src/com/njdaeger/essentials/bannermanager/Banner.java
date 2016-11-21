@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,11 +22,31 @@ import com.njdaeger.essentials.enums.Error;
 
 public class Banner implements IBannerHandler{
 	
+	/**
+	 * Arraylist for the main GUI.
+	 */
 	public static ArrayList<String> main = new ArrayList<String>();
+	/**
+	 * Arraylist for page one of effects.
+	 */
 	public static ArrayList<String> effects1 = new ArrayList<String>();
+	/**
+	 * Arraylist for page two of effects.
+	 */
 	public static ArrayList<String> effects2 = new ArrayList<String>();
+	/**
+	 * Arraylist to choose the color of a selected effect.
+	 */
 	public static ArrayList<String> effectcolor = new ArrayList<String>();
+	/**
+	 * Arraylist for the saves GUI.
+	 */
 	public static ArrayList<String> saves = new ArrayList<String>();
+	/**
+	 * Arraylist for the basecolor GUI. (this is for the banner if it already has a pattern on it)
+	 */
+	public static ArrayList<String> basecolor = new ArrayList<String>();
+	
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#saveBanner(java.lang.String)
 	 */
@@ -191,5 +213,28 @@ public class Banner implements IBannerHandler{
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public ItemStack item(String customName, Material material, short data) {
+		ItemStack stack = new ItemStack(material, 1, data);
+		ItemMeta meta = stack.getItemMeta();
+		meta.setDisplayName(customName);
+		stack.setItemMeta(meta);
+		return stack;
+	}
+	public ItemStack setBanner(String customname, ItemStack stack, PatternType type) {
+		DyeColor pColor;
+		short d = stack.getDurability();
+		pColor = DyeColor.WHITE;
+		if (d == 15 || d == 14 || d == 13 || d == 12 || d == 11 || d == 10 || d == 9 || d == 7 || d == 6 || d == 5 || d == 4 || d ==3 || d == 2 | d == 1) {
+			pColor = DyeColor.BLACK;
+		}
+		ItemStack s = new ItemStack(Material.BANNER, 1);
+		BannerMeta m = (BannerMeta)s.getItemMeta();
+		m.setDisplayName(customname);
+		m.addPattern(new Pattern(pColor, type));
+		s.setItemMeta(m);
+		s.setDurability(stack.getDurability());
+		return s;
+		
 	}
 }

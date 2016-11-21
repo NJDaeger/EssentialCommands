@@ -1,6 +1,8 @@
 package com.njdaeger.essentials.bannermanager.utils;
 
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,4 +59,20 @@ public interface IBannerHandler {
 	 * @return
 	 */
 	DyeColor getDyeColor(short d);
+	
+	/**
+	 * @param customName Custom name to set item as.
+	 * @param material The material the item will be.
+	 * @param data Material metadata.
+	 * @return
+	 */
+	ItemStack item(String customName, Material material, short data);
+	
+	/**
+	 * @param customname What to name the banner.
+	 * @param stack This should be a 
+	 * @param type Pattern to put on the banner.
+	 * @return
+	 */
+	ItemStack setBanner(String customname, ItemStack stack, PatternType type);
 }

@@ -11,7 +11,7 @@ import com.njdaeger.essentials.bannermanager.utils.BannerGUI;
 import com.njdaeger.essentials.enums.Error;
 
 public class MainGUI extends Banner{
-	BannerGUI bGui;
+	BannerGUI bGui = new BannerGUI();
 	public void listen(InventoryClickEvent e) {
 		int s = e.getSlot();
 		Player player = (Player) e.getWhoClicked();
@@ -19,7 +19,6 @@ public class MainGUI extends Banner{
 			e.setCancelled(true);
 			e.getWhoClicked().closeInventory();
 			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-			main.remove(player.getName());
 			return;
 		}
 		if ((s == 53) || (s == 52) || (s == 51) || 
@@ -49,10 +48,20 @@ public class MainGUI extends Banner{
 			}
 			else {
 				BannerMeta m = (BannerMeta) e.getInventory().getItem(43).getItemMeta();
-				m.setBaseColor(this.getDyeColor(e.getCurrentItem().getDurability()));
-				e.getInventory().getItem(43).setItemMeta(m);
-				e.setCancelled(true);
-				return;
+				if (m.numberOfPatterns() == 0) {
+					player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+					e.getInventory().setItem(43, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
+					e.setCancelled(true);
+					return;
+				}
+				else {
+					m.setBaseColor(this.getDyeColor(e.getCurrentItem().getDurability()));
+					e.getInventory().getItem(43).setItemMeta(m);
+					player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+					e.setCancelled(true);
+					return;
+				}
+				
 			}
 			
 		}
@@ -70,6 +79,7 @@ public class MainGUI extends Banner{
 			}
 			main.remove(e.getWhoClicked().getName());
 			effects1.add(e.getWhoClicked().getName());
+			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 			bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 			return;
 		}

@@ -12,6 +12,7 @@ public enum GuiType {
 	EFFECTS,
 	EFFECTS2,
 	EFFECT_COLOR,
+	BASECOLOR,
 	SAVES;
 	
 }
