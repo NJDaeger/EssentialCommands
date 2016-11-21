@@ -77,8 +77,8 @@ public class MainGUI extends Banner{
 				player.sendMessage(Error.NO_BASE_COLOR.sendError());
 				return;
 			}
-			main.remove(e.getWhoClicked().getName());
 			effects1.add(e.getWhoClicked().getName());
+			main.remove(e.getWhoClicked().getName());
 			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 			bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 			return;
@@ -132,8 +132,8 @@ public class MainGUI extends Banner{
 				player.sendMessage(Error.NO_BASE_COLOR.sendError());
 				return;
 			}
-			main.remove(e.getWhoClicked().getName());
 			effects1.add(e.getWhoClicked().getName());
+			main.remove(e.getWhoClicked().getName());
 			bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(43).getItemMeta(), e.getInventory().getItem(43)), 1);
 			return;
 		}

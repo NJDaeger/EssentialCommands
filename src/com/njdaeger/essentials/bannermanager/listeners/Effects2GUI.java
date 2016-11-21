@@ -49,8 +49,8 @@ public class Effects2GUI extends Banner{
 			return;
 		}
 		if (s == 5) {
-			effects2.remove(player.getName());
 			effects1.add(player.getName());
+			effects2.remove(player.getName());
 			e.setCancelled(true);
 			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
 			bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 1);
