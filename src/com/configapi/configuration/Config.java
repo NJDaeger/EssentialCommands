@@ -18,6 +18,8 @@ public class Config implements IConfiguration{
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
+				Path.checkExist();
+				/*
 				YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
 				c.set(Path.get(Path.ENABLE_GM), true);
 				c.set(Path.get(Path.ENABLE_BM), true);
@@ -67,6 +69,7 @@ public class Config implements IConfiguration{
 				c.set("warps.enablecmd.Listwarps", true);
 				c.set("groupmanager.enablecmd.AddGroup", true);
 				c.save(file);
+				*/
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
