@@ -1,13 +1,10 @@
 package com.njdaeger.essentials;
 
-import java.io.IOException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.chat.chatcolor.ChatHandler;
 import com.configapi.configuration.Config;
-import com.configapi.configuration.Subplugins;
 import com.njdaeger.essentials.bannermanager.BannerManager;
 import com.njdaeger.essentials.bannermanager.listeners.Listener;
 import com.njdaeger.essentials.commands.homes.Delhome;
@@ -47,7 +44,6 @@ import com.njdaeger.essentials.utils.Util;
 
 public class Core extends JavaPlugin{
 	
-	Subplugins plugins = new Subplugins();
 	Config config = new Config();
 	
 	public void registerListeners() {
@@ -82,29 +78,29 @@ public class Core extends JavaPlugin{
 		
 	}
 	public void enableSubplugins() {
-		if (plugins.canRun("homes") == true) {
+		if (config.isHomesEnabled() == true) {
 			Plugin.getCommand("sethome", new Sethome()); //Finished
 			Plugin.getCommand("delhome", new Delhome()); //Finished
 			Plugin.getCommand("home", new Home()); //Finished
 			Plugin.getCommand("homes", new Listhomes()); //Finished
 			Bukkit.getLogger().info("Subplugin \"Homes\" is now attached and enabled.");
 		}
-		if (plugins.canRun("warps") == true) {
+		if (config.isWarpsEnabled() == true) {
 			Plugin.getCommand("setwarp", new SetwarpCommand()); //Finished
 			Plugin.getCommand("delwarp", new DelwarpCommand()); //Finished
 			Plugin.getCommand("warps", new WarpsCommand());
 			Plugin.getCommand("warp", new WarpCommand());
 			Bukkit.getLogger().info("Subplugin \"Warps\" is now attached and enabled.");
 		}
-		if (plugins.canRun("bannermanager")) {
+		if (config.isBannermanagerEnabled() == true) {
 			BannerManager.enableBannerManager();
 			new Listener(this);
 			Bukkit.getLogger().info("Subplugin \"BannerManager\" is now attached and enabled.");
 		}
-		if (plugins.canRun("groupmanager") == true) {
+		if (config.isGroupmanagerEnabled() == true) {
 			Bukkit.getLogger().info("Subplugin \"GroupManager\" is now attached and enabled.");
 		}
-		if (plugins.canRun("chatcolor") == true) {
+		if (config.isChatcolorEnabled() == true) {
 			new ChatHandler(this);
 			Bukkit.getLogger().info("Subplugin \"ChatColor\" is now attached and enabled.");
 		}
@@ -120,17 +116,12 @@ public class Core extends JavaPlugin{
 	 */
 	@Override
 	public void onEnable() {
-		try {
-			config.newConfig();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		enableSubplugins();
+		config.newConfig();
 		TPS.getTPSClass();
+		enableSubplugins();
 		registerListeners();
 		registerCommands();
 		registerPermissions();
-		
 	}
 	
 	@Override
