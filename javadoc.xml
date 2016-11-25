@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="C:\Users\Noah\Desktop\server builds\1.11\spigot-1.11.jar" destdir="C:\Users\Noah\Documents\Javadocs\EssentialCommands" doctitle="Essential Commands ALPHA 1" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.njdaeger.groupmanager.commands,com.njdaeger.essentials.bannermanager,com.njdaeger.groupmanager,com.njdaeger.essentials,com.chat.chatcolor,com.njdaeger.essentials.commands.homes,com.njdaeger.essentials.listeners,com.njdaeger.essentials.commands.world,com.njdaeger.essentials.commands.teleport,com.njdaeger.essentials.utils,com.njdaeger.essentials.bannermanager.listeners,com.njdaeger.essentials.exceptions,com.njdaeger.essentials.bannermanager.commands,com.configapi.configuration.exceptions,com.njdaeger.essentials.enums,com.configapi.configuration.interfaces,com.njdaeger.essentials.commands.player,com.njdaeger.essentials.commands.punish,com.njdaeger.essentials.bannermanager.utils,com.njdaeger.essentials.commands.messaging,com.configapi.configuration,com.njdaeger.essentials.bannermanager.exceptions" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

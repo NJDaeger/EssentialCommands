@@ -14,7 +14,67 @@ public interface IConfiguration {
 	
 	/**
 	 * Gets the configuration.
-	 * @return
+	 * @return Returns configuration.
 	 */
 	YamlConfiguration getConfig();
+	
+	/**
+	 * Checks if GroupManager is enabled. 
+	 * @return Returns true or false if enabled or not.
+	 */
+	boolean isGroupmanagerEnabled();
+	
+	/**
+	 * Enable or disable GroupManager.
+	 * @param enable True enables it, false disables it. 
+	 */
+	void setGroupmanagerEnabled(boolean enable);
+	
+	/**
+	 * Checks if BannerManager is enabled.
+	 * @return Returns true or false if enabled or not.
+	 */
+	boolean isBannermanagerEnabled();
+	
+	/**
+	 * Enable or disable BannerManager.
+	 * @param enable True enables it, false disables it. 
+	 */
+	void setBannermanagerEnabled(boolean enable);
+	
+	/**
+	 * Checks if ChatColor is enabled.
+	 * @return Returns true or false if enabled or not.
+	 */
+	boolean isChatcolorEnabled();
+	
+	/**
+	 * Enable or disable ChatColor.
+	 * @param enable True enables it, false disables it. 
+	 */
+	void setChatcolorEnabled(boolean enable);
+	
+	/**
+	 * Checks if Homes is enabled.
+	 * @return Returns true or false if enabled or not. 
+	 */
+	boolean isHomesEnabled();
+	
+	/**
+	 * Enable or disable Homes.
+	 * @param enable True enables it, false disables it.
+	 */
+	void setHomesrEnabled(boolean enable);
+	
+	/**
+	 * Checks if Warps is enabled.
+	 * @return Returns true or false if enabled or not.
+	 */
+	boolean isWarpsEnabled();
+	
+	/**
+	 * Enable or disable Warps.
+	 * @param enable True enables it, false disables it.
+	 */
+	void setWarpsEnabled(boolean enable);
 }

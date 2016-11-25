@@ -6,3 +6,9 @@ Progress:
   Editors: 65%
   Essentials: 40%
   Entire plugin: 35%
+
+Possible/planned features:
+- Banner Creator
+- Placed sign editor.
+- Custom MOTD per world (option)
+- Probably a few other things.

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.configapi.configuration.exceptions.ConfigExistsException;
+import com.configapi.configuration.enums.Path;
 import com.configapi.configuration.interfaces.IConfiguration;
 
 public class Config implements IConfiguration{
@@ -18,8 +18,8 @@ public class Config implements IConfiguration{
 		if (!file.exists()) {
 			file.createNewFile();
 			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			c.set("enable.groupmanager", true);
-			c.set("enable.bannermanager", true);
+			c.set(Path.get(Path.ENABLE_GM), true);
+			c.set(Path.get(Path.ENABLE_BM), true);
 			c.set("enable.chatcolor", true);
 			c.set("enable.homes", true);
 			c.set("enable.warps", true);
@@ -77,7 +77,10 @@ public class Config implements IConfiguration{
 			 */
 			
 		}
-		throw new ConfigExistsException();
+		else {
+			Path.checkExist();
+			return;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -89,5 +92,55 @@ public class Config implements IConfiguration{
 			return YamlConfiguration.loadConfiguration(file);
 		}
 		return null;
+	}
+
+	public boolean isGroupmanagerEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setGroupmanagerEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isBannermanagerEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setBannermanagerEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isChatcolorEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setChatcolorEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isHomesEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setHomesrEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isWarpsEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setWarpsEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
 	}
 }

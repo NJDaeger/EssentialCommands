@@ -12,6 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import com.njdaeger.essentials.bannermanager.Banner;
 import com.njdaeger.essentials.bannermanager.GuiType;
 
+/**
+ * Main class to generate the banner. Contains little banner logic. 
+ * @author Noah
+ *
+ */
 public class BannerGUI extends Banner{
 	
 

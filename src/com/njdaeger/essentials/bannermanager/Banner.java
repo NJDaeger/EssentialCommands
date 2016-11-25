@@ -46,6 +46,30 @@ public class Banner implements IBannerHandler{
 	 * Arraylist for the basecolor GUI. (this is for the banner if it already has a pattern on it)
 	 */
 	public static ArrayList<String> basecolor = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 1
+	 */
+	public static ArrayList<String> Layer1 = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 2
+	 */
+	public static ArrayList<String> Layer2 = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 3 
+	 */
+	public static ArrayList<String> Layer3 = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 4
+	 */
+	public static ArrayList<String> Layer4 = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 5
+	 */
+	public static ArrayList<String> Layer5 = new ArrayList<String>();
+	/**
+	 * Arraylist showing someone is on layer 6
+	 */
+	public static ArrayList<String> Layer6 = new ArrayList<String>();
 	
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#saveBanner(java.lang.String)
@@ -100,7 +124,6 @@ public class Banner implements IBannerHandler{
 		} catch (BannerMissing e) {
 			e.printStackTrace();
 		}
-		
 	}
 	/* (non-Javadoc)
 	 * @see com.njdaeger.essentials.bannermanager.utils.IBannerHandler#getBanner(java.lang.String)

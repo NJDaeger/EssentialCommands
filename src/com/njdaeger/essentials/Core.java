@@ -120,12 +120,10 @@ public class Core extends JavaPlugin{
 	 */
 	@Override
 	public void onEnable() {
-		if (config.getConfig() == null) {
-			try {
-				config.newConfig();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			config.newConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		enableSubplugins();
 		TPS.getTPSClass();
