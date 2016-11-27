@@ -229,4 +229,44 @@ public class Config implements IConfiguration{
 		return;
 		
 	}
+
+	public boolean isWarpLimit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setWarpLimitEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getWarpLimit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setWarpLimit(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isWarpLimitWorld() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setWorldWarpLimitEnabled(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getWorldWarpLimit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setWorldWarpLimit(String value) {
+		// TODO Auto-generated method stub
+		
+	}
 }
