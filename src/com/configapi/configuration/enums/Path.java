@@ -201,6 +201,22 @@ public enum Path {
 		
 	},
 	/**
+	 * Message sent to command sender if the command is disabled.
+	 */
+	BLACKLIST_COMMANDS_MESSAGE {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.commands.warn-message";
+		}
+
+		@Override
+		public Object defValue() {
+			return "&cThe command you tried to execute is not permitted.";
+		}
+		
+	},
+	/**
 	 * List of blacklisted blocks
 	 */
 	BLACKLIST_BLOCKS {
@@ -212,9 +228,110 @@ public enum Path {
 
 		@Override
 		public Object defValue() {
-			List<String> blacklistedBlocks = Arrays.asList("nick", "nickname", "disguise", "newname");
+			List<String> blacklistedBlocks = Arrays.asList("minecraft:bedrock", "minecraft:barrier");
 			return blacklistedBlocks;
 		} //Must be as their actual identification so like stone:1. 1 being the metadata value
+		
+	},
+	/**
+	 * Enables or disables the console notification.
+	 *
+	 */
+	BLACKLIST_BLOCKS_NOTIFYCSL {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.enable-console-warn";
+		}
+
+		@Override
+		public Object defValue() {
+			return true;
+		}
+		
+	},
+	/**
+	 * The notify message for the console when a non-permitted block is placed.
+	 *
+	 */
+	BLACKLIST_BLOCKS_NOTIFYCSL_MESSAGE {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.console-warn-message";
+		}
+
+		@Override
+		public Object defValue() {
+			return "&cA player has tried to place a non-permitted block.";
+		}
+		
+	},
+	/**
+	 * Enables or disables a warn message to operators if a non-permitted block is placed.
+	 *
+	 */
+	BLACKLIST_BLOCKS_NOTIFYOP {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.enable-operator-warn";
+		}
+
+		@Override
+		public Object defValue() {
+			return true;
+		}
+		
+	},
+	/**
+	 * The message being sent to an operator or admin when a non-permitted block is placed.
+	 * Add support for tags like {BLOCK} {BLOCKID} {XPOS} {YPOS} {XPOS} {PLAYER} {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
+	 */
+	BLACKLIST_BLOCKS_NOTIFYOP_MESSAGE {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.operator-warn-message";
+		}
+
+		@Override
+		public Object defValue() {
+			return "&cA player has tried to place a non-permitted block.";
+		}
+		
+	},
+	/**
+	 * Enables or disables the player warn message.
+	 */
+	BLACKLIST_BLOCKS_MESSAGE_ENABLE {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.enable-player-warn";
+		}
+
+		@Override
+		public Object defValue() {
+			return true;
+		}
+		
+	},
+	/**
+	 * Message sent to the user of the block if it is blacklisted.
+	 * Add support for tags like {BLOCK} {BLOCKID} {XPOS} {YPOS} {XPOS} {PLAYER} {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
+	 */
+	BLACKLIST_BLOCKS_MESSAGE {
+
+		@Override
+		public String getPath() {
+			return "main.blacklist.blocks.player-warn-message";
+		}
+
+		@Override
+		public Object defValue() {
+			return "&cThe block you tried to use is not permitted.";
+		}
 		
 	},
 	/**

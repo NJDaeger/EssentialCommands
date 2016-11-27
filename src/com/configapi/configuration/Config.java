@@ -3,6 +3,7 @@ package com.configapi.configuration;
 import java.io.File;
 import java.io.IOException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.configapi.configuration.enums.Path;
@@ -19,70 +20,10 @@ public class Config implements IConfiguration{
 			try {
 				file.createNewFile();
 				Path.checkExist();
-				/*
-				YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-				c.set(Path.get(Path.ENABLE_GM), true);
-				c.set(Path.get(Path.ENABLE_BM), true);
-				c.set("enable.chatcolor", true);
-				c.set("enable.homes", true);
-				c.set("enable.warps", true);
-				c.set("essentials.enablecmd.Afk", true);
-				c.set("essentials.enablecmd.Break", true);
-				c.set("essentials.enablecmd.Burn", true);
-				c.set("essentials.enablecmd.ClearInv", true);
-				c.set("essentials.enablecmd.Editsign", true);
-				c.set("essentials.enablecmd.Fly", true);
-				c.set("essentials.enablecmd.Gamemode", true);
-				c.set("essentials.enablecmd.GetPosition", true);
-				c.set("essentials.enablecmd.Give", true);
-				c.set("essentials.enablecmd.God", true);
-				c.set("essentials.enablecmd.Hat", true);
-				c.set("essentials.enablecmd.Heal", true);
-				c.set("essentials.enablecmd.Kill", true);
-				c.set("essentials.enablecmd.More", true);
-				c.set("essentials.enablecmd.Nick", true);
-				c.set("essentials.enablecmd.Ptime", true);
-				c.set("essentials.enablecmd.Pweather", true);
-				c.set("essentials.enablecmd.Realname", true);
-				c.set("essentials.enablecmd.Repair", true);//
-				c.set("essentials.enablecmd.Speed", true);
-				c.set("essentials.enablecmd.Suicide", true);
-				c.set("essentials.enablecmd.Vanish", true);
-				c.set("essentials.enablecmd.Whois", true);
-				c.set("essentials.enablecmd.Workbench", true);
-				c.set("essentials.enablecmd.Ban", true);
-				c.set("essentials.enablecmd.Helpop", true);
-				c.set("essentials.enablecmd.Kickall", true);
-				c.set("essentials.enablecmd.Kick", true);
-				c.set("essentials.enablecmd.TempBan", true);
-				c.set("essentials.enablecmd.Unban", true);
-				c.set("essentials.enablecmd.Tpall", true);
-				c.set("essentials.enablecmd.Tp", true);
-				c.set("essentials.enablecmd.ServerInfo", true);
-				c.set("essentials.enablecmd.Time", true);
-				c.set("essentials.enablecmd.Weather", true);
-				c.set("warps.warplimit", false);
-				c.set("warps.warplimitvalue", 10);
-				c.set("warps.enablecmd.Delwarp", true);
-				c.set("warps.enablecmd.Setwarp", true);
-				c.set("warps.enablecmd.Renamewarp", true);
-				c.set("warps.enablecmd.Listwarps", true);
-				c.set("groupmanager.enablecmd.AddGroup", true);
-				c.save(file);
-				*/
+				Bukkit.getLogger().warning("Config.yml was not found... Creating!");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			/*
-			 * Create some type of for loop on startup. Go into the commands.player package get the class names and cut off "Command" from them
-			 * It will be easier to check if enabled or not. 
-			 * 
-			 * public String getClassName(Class class) (if doing AfkCommand it would return Afk).
-			 * 
-			 * public boolean isEnabled(getClassName(AfkCommand)) (this would hvae the "essentials.enablecmd." in front of it in the original method)
-			 * if ()
-			 */
-			
 		}
 		else {
 			Path.checkExist();
@@ -102,52 +43,190 @@ public class Config implements IConfiguration{
 	}
 
 	public boolean isGroupmanagerEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_GM));
+		}
+		else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (c.contains(Path.get(Path.ENABLE_GM))) {
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_GM));
+			}
+			else {
+				Path.checkExist();
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_GM));
+			}
+		}
 	}
 
 	public void setGroupmanagerEnabled(boolean enable) {
-		// TODO Auto-generated method stub
-		
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			YamlConfiguration.loadConfiguration(file).set(Path.get(Path.ENABLE_GM), enable);
+			Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_GM)+"\" has been changed to " + enable);
+			return;
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(Path.get(Path.ENABLE_GM), enable);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_GM)+"\" has been changed to " + enable);
+		return;
 	}
 
 	public boolean isBannermanagerEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_BM));
+		}
+		else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (c.contains(Path.get(Path.ENABLE_BM))) {
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_BM));
+			}
+			else {
+				Path.checkExist();
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_BM));
+			}
+		}
 	}
 
 	public void setBannermanagerEnabled(boolean enable) {
-		// TODO Auto-generated method stub
-		
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			YamlConfiguration.loadConfiguration(file).set(Path.get(Path.ENABLE_BM), enable);
+			Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_BM)+"\" has been changed to " + enable);
+			return;
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(Path.get(Path.ENABLE_BM), enable);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_BM)+"\" has been changed to " + enable);
+		return;
 	}
 
 	public boolean isChatcolorEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_CC));
+		}
+		else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (c.contains(Path.get(Path.ENABLE_CC))) {
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_CC));
+			}
+			else {
+				Path.checkExist();
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_CC));
+			}
+		}
 	}
 
 	public void setChatcolorEnabled(boolean enable) {
-		// TODO Auto-generated method stub
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			YamlConfiguration.loadConfiguration(file).set(Path.get(Path.ENABLE_CC), enable);
+			Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_CC)+"\" has been changed to " + enable);
+			return;
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(Path.get(Path.ENABLE_CC), enable);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_CC)+"\" has been changed to " + enable);
+		return;
 		
 	}
 
 	public boolean isHomesEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_HOMES));
+		}
+		else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (c.contains(Path.get(Path.ENABLE_HOMES))) {
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_HOMES));
+			}
+			else {
+				Path.checkExist();
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_HOMES));
+			}
+		}
 	}
 
 	public void setHomesrEnabled(boolean enable) {
-		// TODO Auto-generated method stub
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			YamlConfiguration.loadConfiguration(file).set(Path.get(Path.ENABLE_HOMES), enable);
+			Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_HOMES)+"\" has been changed to " + enable);
+			return;
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(Path.get(Path.ENABLE_HOMES), enable);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_HOMES)+"\" has been changed to " + enable);
+		return;
 		
 	}
 
 	public boolean isWarpsEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_WARPS));
+		}
+		else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (c.contains(Path.get(Path.ENABLE_WARPS))) {
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_WARPS));
+			}
+			else {
+				Path.checkExist();
+				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.get(Path.ENABLE_WARPS));
+			}
+		}
 	}
 
 	public void setWarpsEnabled(boolean enable) {
-		// TODO Auto-generated method stub
+		File file = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"config.yml");
+		if (!file.exists()) {
+			this.newConfig();
+			YamlConfiguration.loadConfiguration(file).set(Path.get(Path.ENABLE_WARPS), enable);
+			Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_WARPS)+"\" has been changed to " + enable);
+			return;
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(Path.get(Path.ENABLE_WARPS), enable);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bukkit.getLogger().info("[EssentialCommands] Configuration option \""+Path.get(Path.ENABLE_WARPS)+"\" has been changed to " + enable);
+		return;
 		
 	}
 }
