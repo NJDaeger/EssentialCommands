@@ -1,4 +1,4 @@
-package com.njdaeger.essentials;
+package com.njdaeger.java;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -202,7 +202,7 @@ public enum Path {
 
 		@Override
 		public String getPath() {
-			return "main.nickname.maxnicknamelength";
+			return "main.nickname.max-nickname-length";
 		}
 
 		@Override

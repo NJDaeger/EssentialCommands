@@ -2,6 +2,7 @@ package com.configapi.configuration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -266,6 +267,71 @@ public class Config implements IConfiguration{
 	}
 
 	public void setWorldWarpLimit(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getOpNameColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setOpNameColor(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getNicknamePrefix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setNicknamePrefix(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getMaxNicknameLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setMaxNicknameLength(int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<String> getBlacklistedCommands() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addBlacklistedCommands(List<String> commands) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeBlacklistedCommands(List<String> commands) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isCommandNotifyCsl() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setCommandNotifyCsl(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getCommandNotifyCslMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setNotifyCslMessage(String message) {
 		// TODO Auto-generated method stub
 		
 	}
