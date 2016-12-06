@@ -2,7 +2,8 @@ package com.njdaeger.java.chat.formatter;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.essentials.enums.Permission;
+import com.njdaeger.java.Holder;
+import com.njdaeger.java.essentials.enums.Permission;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -13,7 +14,7 @@ public class AllowColor {
 		return format;
 	}
 	public static boolean canColorChat(Player player) {
-		if (player.hasPermission(Permission.ESS_ALL.getPermission()) || player.hasPermission(Permission.ESS_CHATCOLOR.getPermission()) || player.isOp()) {
+		if (Holder.hasPermission(player, Permission.ESS_CHATCOLOR)) {
 			return true;
 		}
 		else return false;
