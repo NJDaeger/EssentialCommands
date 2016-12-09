@@ -11,7 +11,6 @@ public abstract class EssCommand extends Command{
 		super(name);
 	}
 	protected abstract void register();
-	
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel,
 			String[] args) {

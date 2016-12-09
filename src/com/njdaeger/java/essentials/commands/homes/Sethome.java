@@ -7,22 +7,30 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Homes;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class Sethome extends BukkitCommand{
+public class Sethome extends EssCommand{
+	
+	static String name = "sethome";
 	
 	public Sethome() {
-		super("sethome");
+		super(name);
 		List<String> a = Arrays.asList("newhome", "addhome");
 		this.description = "Create a new home.";
 		this.usageMessage = "/sethome <name>";
 		this.setAliases(a);
+	}
+	
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
 	}
 	
 	Homes homes = new Homes();

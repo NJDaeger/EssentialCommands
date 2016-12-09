@@ -7,19 +7,13 @@ import com.njdaeger.java.chat.listener.ChatHandler;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.descrete.editors.bannermanager.BannerManager;
 import com.njdaeger.java.descrete.editors.bannermanager.listeners.Listener;
-import com.njdaeger.java.essentials.commands.homes.Delhome;
-import com.njdaeger.java.essentials.commands.homes.Home;
-import com.njdaeger.java.essentials.commands.homes.Listhomes;
-import com.njdaeger.java.essentials.commands.homes.Sethome;
-import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
-import com.njdaeger.java.essentials.commands.messaging.MeCommand;
+import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.messaging.MessageCommand;
 import com.njdaeger.java.essentials.commands.player.AfkCommand;
 import com.njdaeger.java.essentials.commands.player.BreakCommand;
 import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
-import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
 import com.njdaeger.java.essentials.commands.player.GiveCommand;
@@ -52,9 +46,9 @@ public class Core extends JavaPlugin{
 		new PlayerJoinListener(this);
 		new AfkListener(this);
 	}
+	@SuppressWarnings("deprecation")
 	public void registerCommands() {
 		Plugin.getCommand("afk", new AfkCommand()); //Finished
-		Plugin.getCommand("broadcast", new BroadcastCommand()); //Finished
 		Plugin.getCommand("serverinfo", new ServerInfoCommand()); //Finished
 		Plugin.getCommand("gamemode", new GamemodeCommand()); //Finished
 		Plugin.getCommand("i", new GiveCommand()); //Finished 
@@ -66,7 +60,6 @@ public class Core extends JavaPlugin{
 		Plugin.getCommand("clear", new ClearInvCommand()); //Finished
 		Plugin.getCommand("position", new GetPositionCommand()); //Finished
 		Plugin.getCommand("heal", new HealCommand()); //Finished
-		Plugin.getCommand("me", new MeCommand()); //Finished
 		Plugin.getCommand("message", new MessageCommand()); //Finished
 		Plugin.getCommand("tempban", new TempBanCommand()); //Finished
 		Plugin.getCommand("ban", new BanCommand()); //Finished
@@ -75,11 +68,12 @@ public class Core extends JavaPlugin{
 		Plugin.getCommand("hat", new HatCommand()); //Finished
 		Plugin.getCommand("helpop", new HelpopCommand()); //Finished
 		Plugin.getCommand("kickall", new KickallCommand()); //Finished
-		new FlyCommand().register();
 		
 		
 	}
+	@SuppressWarnings("deprecation")
 	public void enableSubplugins() {
+		/*
 		if (config.isHomesEnabled() == true) {
 			Plugin.getCommand("sethome", new Sethome()); //Finished
 			Plugin.getCommand("delhome", new Delhome()); //Finished
@@ -87,6 +81,7 @@ public class Core extends JavaPlugin{
 			Plugin.getCommand("homes", new Listhomes()); //Finished
 			Bukkit.getLogger().info("Subplugin \"Homes\" is now attached and enabled.");
 		}
+		*/
 		if (config.isWarpsEnabled() == true) {
 			Plugin.getCommand("setwarp", new SetwarpCommand()); //Finished
 			Plugin.getCommand("delwarp", new DelwarpCommand()); //Finished
@@ -118,12 +113,14 @@ public class Core extends JavaPlugin{
 	 */
 	@Override
 	public void onEnable() {
+		CommandCore.registerCommands();
 		config.newConfig();
 		TPS.getTPSClass();
 		enableSubplugins();
 		registerListeners();
 		registerCommands();
 		registerPermissions();
+		
 	}
 	
 	@Override

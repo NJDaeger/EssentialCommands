@@ -7,24 +7,32 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class Delhome extends BukkitCommand{
+public class Delhome extends EssCommand{
+	
+	static String name = "delhome";
 	
 	public Delhome() {
-		super("delhome");
+		super(name);
 		List<String> a = Arrays.asList("deletehome", "removehome", "clearhome");
 		this.description = "Delete an existing home.";
 		this.usageMessage = "/delhome <homename> [player]";
 		this.setAliases(a);
+	}
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+		
 	}
 	Database database = new Database();
 	Homes homes = new Homes();
@@ -124,4 +132,5 @@ public class Delhome extends BukkitCommand{
 			return true;
 		}
 	}
+	
 }

@@ -7,14 +7,17 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class BroadcastCommand extends BukkitCommand {
+public class BroadcastCommand extends EssCommand {
+	
+	static String name = "broadcast";
 	
 	private ChatColor gold = ChatColor.GOLD;
 	private ChatColor red = ChatColor.DARK_RED;
@@ -28,22 +31,14 @@ public class BroadcastCommand extends BukkitCommand {
 		this.setAliases(a);
 	}
 	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_BROADCAST)) {
-				if (args.length < 1) {
-					sndr.sendMessage("" + Error.NOT_ENOUGH_ARGS.sendError());
-					return true;
-				}
-				else if (args.length >= 1) {
-					String message = "";
-					for (String bc : args) {
-						message = (message + bc + " ");
-					}
-					Bukkit.broadcastMessage(gold + "[" + red + "Broadcast"+ gold + "] " + green + ChatColor.translateAlternateColorCodes('&', message));
-					return true;
-				}
 			}
 			else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
@@ -54,7 +49,7 @@ public class BroadcastCommand extends BukkitCommand {
 			sndr.sendMessage("" + Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		else if (args.length >= 1) {
+		else {
 			String message = "";
 			for (String bc : args) {
 				message = (message + bc + " ");
@@ -62,6 +57,5 @@ public class BroadcastCommand extends BukkitCommand {
 			Bukkit.broadcastMessage(gold + "[" + red + "Broadcast"+ gold + "] " + green + ChatColor.translateAlternateColorCodes('&', message));
 			return true;
 		}
-		return true;
 	}
 }

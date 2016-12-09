@@ -4,21 +4,27 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class MeCommand extends BukkitCommand {
+public class MeCommand extends EssCommand {
+	
+	static String name = "me";
 	
 	public MeCommand() {
-		super("me");
+		super(name);
 		this.description = "Describe what you're doing.";
 		this.usageMessage = "/me <message>";
 	}
-
+	@Override 
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {

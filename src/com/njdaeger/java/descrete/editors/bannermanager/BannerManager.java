@@ -6,6 +6,7 @@ import com.njdaeger.java.descrete.editors.bannermanager.commands.CreatebannerCom
 
 public class BannerManager {
 	
+	@SuppressWarnings("deprecation")
 	public static void enableBannerManager() {
 		//check if the configuration has this enabled. if not dont register any commands or permissions from it.
 		Plugin.getCommand("createbanner", new CreatebannerCommand());

@@ -16,14 +16,6 @@ import com.njdaeger.java.essentials.utils.SpyStatus;
 import com.njdaeger.java.essentials.utils.Status;
 import com.njdaeger.java.essentials.utils.Util;
 
-/**
- * @author Noah
- *
- */
-/**
- * @author Noah
- *
- */
 public class PlayerConfig{
 	
 	public static void warn(String message) {
