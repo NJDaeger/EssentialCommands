@@ -3,7 +3,8 @@ package com.njdaeger.java.configuration.interfaces;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.LastLocation;
+import com.njdaeger.java.configuration.Location;
+
 
 /**
  * The main player configuration interface.
@@ -124,5 +125,5 @@ public interface IPlayerConfig {
 	
 	boolean isOp(Player player);
 	
-	LastLocation getLastLocation(Player player);
+	Location is(Player player);
 }
