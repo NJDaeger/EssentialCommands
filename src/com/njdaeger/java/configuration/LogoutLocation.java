@@ -10,7 +10,7 @@ public class LogoutLocation extends PlayerConfig{
 	public static Player player;
 	
 	public static LogoutLocationData getLogoutLocation(Player player) {
-		return getLogoutLocation(player);
+		return LogoutLocation.getLogoutLocation(player);
 	}
 	
 }

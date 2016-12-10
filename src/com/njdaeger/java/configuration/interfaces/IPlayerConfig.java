@@ -64,7 +64,7 @@ public interface IPlayerConfig {
 	
 	/**
 	 * Set a player enabled or disabled for teleportation.
-	 * @param player
+	 * @param player Enable or disable teleportation for this player
 	 */
 	void setTpToggled(Player player);
 	
@@ -75,55 +75,158 @@ public interface IPlayerConfig {
 	 */
 	void setGroup(Player player, String group);
 	
+	/**
+	 * Set the nickname of a player.
+	 * @param player Set the nickname of this player.
+	 */
 	void setNick(Player player);
 	
+	/**
+	 * Set a player into flying mode or not.
+	 * @param player Set this player into flying mode or not.
+	 */
 	void setFlying(Player player);
 	
+	/**
+	 * Set a players gamemode.
+	 * @param player Player whos gamemode to change.
+	 * @param gamemode Gamemode to be set to.
+	 */
 	void setGamemode(Player player, String gamemode);
 	
-	void setFlySpeed(Player player, float speed);
+	/**
+	 * Set a players fly speed.
+	 * @param player Player whos fly speed to set.
+	 * @param speed Speed value 0-10
+	 */
+	void setFlySpeed(Player player, int speed);
 	
-	void setWalkingSpeed(Player player, float speed);
+	/**
+	 * Set a players walking speed.
+	 * @param player Player whos walking speed to set.
+	 * @param speed Speed value 0-10
+	 */
+	void setWalkingSpeed(Player player, int speed);
 	
+	/**
+	 * Set a player to operator mode.
+	 * @param player Player to set into operator
+	 */
 	void setOp(Player player);
 	
+	/**
+	 * Set the players last location.
+	 * @param player Set the last location of this player.
+	 * <p>		- This is used when the player tp's or does the back command</p>
+	 */
 	void setLastLocation(Player player);
 	
+	/**
+	 * Set the players logout location upon logging out.
+	 * @param player Player to set logout location
+	 */
 	void setLogoutLocation(Player player);
 	
-	void setLoginLocation(Player player);
-	
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/**
+	 * Checks if a player is muted.
+	 * @param player Player to check.
+	 * @return
+	 */
 	boolean isMuted(Player player);
 	
+	/**
+	 * Checks if a player has spcialspy enabled.
+	 * @param player Player to check
+	 * @return
+	 */
 	boolean isSpying(Player player);
 	
+	/**
+	 * Checks if a player has god mode enabled.
+	 * @param player Player to check
+	 * @return
+	 */
 	boolean isGod(Player player);
 	
+	/**
+	 * Checks if a player has messaging enabled.
+	 * @param player Player to check.
+	 * @return
+	 */
 	boolean isMessageable(Player player);
 	
+	/**
+	 * Checks if a player is AFK
+	 * @param player Player to check.
+	 * @return
+	 */
 	boolean isAfk(Player player);
 	
+	/**
+	 * Checks if a player can be tp'ed
+	 * @param player Player to check
+	 * @return
+	 */
 	boolean isTpToggled(Player player);
 	
+	/**
+	 * Checks what group the player is in
+	 * @param player Player to check
+	 * @return
+	 */
 	String getGroup(Player player);
 	
+	/**
+	 * Get the nickname of a player.
+	 * @param player Player to get nickname from.
+	 * @return
+	 */
 	String getNick(Player player);
 	
+	/**
+	 * Checks if a player is flying or not.
+	 * @param player Player to check.
+	 * @return
+	 */
 	boolean isFlying(Player player);
 	
+	/**
+	 * Gets the gamemode of a player.
+	 * @param player Player to check
+	 * @return
+	 */
 	String getGamemode(Player player);
 	
+	/**
+	 * Gets the fly speed of a player.
+	 * @param player Player to check
+	 * @return
+	 */
 	int getFlySpeed(Player player);
 	
+	/**
+	 * Gets the walk speed of a player.
+	 * @param player Player to check
+	 * @return
+	 */
 	int getWalkingSpeed(Player player);
 	
+	/**
+	 * Checks if the player is an operator
+	 * @param player Player to check
+	 * @return
+	 */
 	boolean isOp(Player player);
 	
-	Location is(Player player);
+	/**
+	 * The location values.
+	 * @return
+	 */
+	Location getLocations();
 }

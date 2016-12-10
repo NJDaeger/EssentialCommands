@@ -4,7 +4,7 @@ import com.njdaeger.java.configuration.LastLocation;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ILastValues;
 
-public class LastLocationData extends LastLocation implements ILastValues {
+public class LastLocationData extends LastLocation implements ILastValues{
 	
 	public int getX() {
 		return getPlayerFile(player).getInt(PlayerPaths.LAST_X.getPath());

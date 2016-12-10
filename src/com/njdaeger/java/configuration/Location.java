@@ -2,13 +2,26 @@ package com.njdaeger.java.configuration;
 
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.configuration.locations.LastLocationData;
+import com.njdaeger.java.configuration.locations.LogoutLocationData;
+
 public class Location {
 	
-	public static LastLocation getLastLocation(Player player) {
-		return LastLocation.getLastLocation(player);
+	/**
+	 * Get the last location values from a player individually. 
+	 * @param player Player to get the values from. 
+	 * @return
+	 */
+	public static LastLocationData getLastLocation(Player player) {
+		return Location.getLastLocation(player);
 	}
-	public static LogoutLocation getLogoutLocation(Player player) {
-		return LogoutLocation.getLogoutLocation(player);
+	/**
+	 * Get the logout location values from a player individually.
+	 * @param player Player to get the values from.
+	 * @return
+	 */
+	public static LogoutLocationData getLogoutLocation(Player player) {
+		return Location.getLogoutLocation(player);
 	}
 	
 }

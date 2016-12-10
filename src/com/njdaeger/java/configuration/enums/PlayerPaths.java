@@ -13,13 +13,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "playername";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -28,13 +26,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "displayname";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -43,14 +39,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "afk";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -58,14 +52,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "hidden";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -73,14 +65,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "messageable";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return true;
 		}
 		
 	},
@@ -88,14 +78,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "rank";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return "default";
 		}
 		
 	},
@@ -103,14 +91,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "muted";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -118,14 +104,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "socialspy";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -133,14 +117,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "tptoggled";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -148,13 +130,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "ip";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -163,13 +143,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "flying";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -178,13 +156,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "gamemode";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -193,14 +169,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "god";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 		
 	},
@@ -208,14 +182,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "flyspeed";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return 1;
 		}
 		
 	},
@@ -223,14 +195,12 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "walkspeed";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
-			return null;
+			return 1;
 		}
 		
 	},
@@ -238,13 +208,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "op";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -253,13 +221,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "last-login";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -268,13 +234,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "last-logout";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -283,13 +247,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.world";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -298,13 +260,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.x";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -313,13 +273,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.y";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -328,13 +286,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.z";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -343,13 +299,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.yaw";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -358,13 +312,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "lastlocation.pitch";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -373,13 +325,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.world";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -388,13 +338,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.x";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -403,13 +351,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.y";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -418,13 +364,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.z";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -433,13 +377,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.yaw";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
@@ -448,13 +390,11 @@ public enum PlayerPaths {
 
 		@Override
 		public String getPath() {
-			// TODO Auto-generated method stub
-			return null;
+			return "logoutlocation.pitch";
 		}
 
 		@Override
 		public Object defValue() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
