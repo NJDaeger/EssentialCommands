@@ -1,4 +1,4 @@
-package com.njdaeger.java.essentials.utils;
+package com.njdaeger.java.essentials.utils.status;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.essentials.exceptions.UnknownStatusException;
 
-public class Messageable {
+public class MessageStatus {
 	
 	public static void setMessageable(Player p, Status status, CommandSender sender) { //For Commands
 		if (status.equals(Status.AUTO)) {
@@ -61,7 +61,7 @@ public class Messageable {
 		}
 		else throw new UnknownStatusException();
 	}
-	public static void setMessageable(Player p, Messageable status) { //For Plugin
+	public static void setMessageable(Player p, Status status) { //For Plugin
 		if (status.equals(Status.AUTO)) {
 			if (Groups.nomessaging.contains(p)) {
 				Groups.nomessaging.remove(p);

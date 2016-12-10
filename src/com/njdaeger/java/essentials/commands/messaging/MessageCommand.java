@@ -12,6 +12,7 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.essentials.utils.messages.Messenger;
 
 public class MessageCommand extends BukkitCommand {
 	
@@ -29,10 +30,6 @@ public class MessageCommand extends BukkitCommand {
 			return true;
 		}
 		Player target = Bukkit.getPlayer(args[0]);
-		if (target == null) {
-			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-			return true;
-		}
 		String msg = "";
 		String finalmsg = "";
 		for (String message : args) {
@@ -42,11 +39,7 @@ public class MessageCommand extends BukkitCommand {
 		}
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {	
-				if (player.isOp()) {
-					Util.sendPM(target, player, finalmsg, true, true);
-					return true;
-				}
+			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {
 				if (Util.isHidden(target) == true) {
 					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 					return true;
@@ -59,19 +52,15 @@ public class MessageCommand extends BukkitCommand {
 					sndr.sendMessage(Error.MESSAGING_DISABLED_SENDER.sendError());
 					return true;
 				}
-				if (Holder.hasPermission(player, Permission.ESS_MESSAGE_CHATCOLOR)) {
-					Util.sendPM(target, player, finalmsg, true, true);
-					return true;
-				}
 				else {
-					Util.sendPM(target, target, finalmsg, false, true);
+					Messenger.sendPM(target, sndr, finalmsg);
 					return true;
 				}
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
-		Util.sendPM(target, target, finalmsg, true, false);
+		Messenger.sendPM(target, sndr, finalmsg);
 		return true;
 	}
 }

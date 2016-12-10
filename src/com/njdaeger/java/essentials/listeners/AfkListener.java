@@ -15,8 +15,8 @@ import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.essentials.exceptions.UnknownActionException;
-import com.njdaeger.java.essentials.utils.AfkStatus;
-import com.njdaeger.java.essentials.utils.Status;
+import com.njdaeger.java.essentials.utils.status.AfkStatus;
+import com.njdaeger.java.essentials.utils.status.Status;
 
 public class AfkListener implements Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");

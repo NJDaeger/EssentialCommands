@@ -11,12 +11,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.essentials.exceptions.UnknownStatusException;
-import com.njdaeger.java.essentials.utils.MuteStatus;
-import com.njdaeger.java.essentials.utils.SpyStatus;
-import com.njdaeger.java.essentials.utils.Status;
 import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.essentials.utils.status.MuteStatus;
+import com.njdaeger.java.essentials.utils.status.SpyStatus;
+import com.njdaeger.java.essentials.utils.status.Status;
 
-public class PlayerConfig{
+public class PlayerConfig {
 	
 	public static void warn(String message) {
 		Bukkit.getServer().getLogger().warning(message);

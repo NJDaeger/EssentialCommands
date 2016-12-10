@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.AfkStatus;
-import com.njdaeger.java.essentials.utils.Status;
+import com.njdaeger.java.essentials.utils.status.AfkStatus;
+import com.njdaeger.java.essentials.utils.status.Status;
 
 public class AfkCommand extends BukkitCommand{
 

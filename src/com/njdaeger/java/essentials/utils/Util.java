@@ -8,8 +8,6 @@ import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -24,10 +22,6 @@ import com.njdaeger.java.essentials.enums.Permission;
  *
  */
 public class Util {
-	
-	private static ChatColor gy = ChatColor.GRAY;
-	private static ChatColor gr = ChatColor.GREEN;
-	private static ChatColor rd = ChatColor.RED;
 	
 	//#####MISC#####//
 	public static void broadcast(String message, Permission... permission) {
@@ -50,28 +44,6 @@ public class Util {
 			return true;
 		}
 		else return false;
-	}
-	public static void sendPM(Player target, CommandSender player, String message, boolean allowChatColor, boolean isPlayer) {
-		if (isPlayer == true) {
-			Player sender = (Player) player;
-			if (allowChatColor == true) {
-				target.sendMessage(gy + "[" + gr + sender.getDisplayName() + gy + " -> " + rd + "me" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-				target.playSound(target.getLocation(), Sound.BLOCK_NOTE_HARP, 2, 1);
-				sender.sendMessage(gy + "[" + rd + "me" + gy + " -> " + gr + target.getDisplayName() + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-				return;
-			}
-			else {
-				target.sendMessage(gy + "[" + gr + sender.getDisplayName() + gy + " ->" + rd + "me" + gy + "] " + ChatColor.RESET + message);
-				target.playSound(target.getLocation(), Sound.BLOCK_NOTE_HARP, 2, 1);
-				sender.sendMessage(gy + "[" + rd + "me" + gy + " -> " + gr + target.getDisplayName() + gy + "] " + ChatColor.RESET + message);
-				return;
-			}
-		}
-		else {
-			target.sendMessage(gy + "[" + gr + player.getName() + gy + " -> " + rd + "me" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-			player.sendMessage(gy + "[" + rd + "me" + gy + " -> " + gr + target.getDisplayName() + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-			return;
-		}
 	}
 	public static boolean isNumber(String input) {
 		try {

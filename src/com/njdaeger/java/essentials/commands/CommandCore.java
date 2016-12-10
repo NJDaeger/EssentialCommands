@@ -7,6 +7,7 @@ import com.njdaeger.java.essentials.commands.homes.Listhomes;
 import com.njdaeger.java.essentials.commands.homes.Sethome;
 import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
 import com.njdaeger.java.essentials.commands.messaging.MeCommand;
+import com.njdaeger.java.essentials.commands.messaging.ReplyCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 
 public class CommandCore {
@@ -24,6 +25,7 @@ public class CommandCore {
 		new FlyCommand().register();
 		new BroadcastCommand().register();
 		new MeCommand().register();
+		new ReplyCommand().register();
 		
 		
 	}
