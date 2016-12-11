@@ -3,7 +3,6 @@ package com.njdaeger.java.essentials.commands.messaging;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
@@ -28,7 +27,6 @@ public class MessageCommand extends BukkitCommand {
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		Player target = Bukkit.getPlayer(args[0]);
 		String msg = "";
 		String finalmsg = "";
 		for (String message : args) {
@@ -39,13 +37,13 @@ public class MessageCommand extends BukkitCommand {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {
-				Messenger.newPM(sndr, target.getName(), finalmsg);
+				Messenger.newPM(sndr, args[0], finalmsg);
 				return true;
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
-		Messenger.newPM(sndr, target.getName(), finalmsg);
+		Messenger.newPM(sndr, args[0], finalmsg);
 		return true;
 	}
 }

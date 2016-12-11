@@ -37,7 +37,7 @@ public class ReplyCommand extends EssCommand {
 		}
 		String msg = "";
 		for (String message : args) {
-			msg = message;
+			msg = (msg + message + " ");
 		}
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;

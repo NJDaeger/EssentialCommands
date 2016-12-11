@@ -54,13 +54,16 @@ public class Messenger {
 		return true;
 	}
 	public static void sendReply(CommandSender sender, String message) {
-		Player target = Bukkit.getPlayer(conversation.get(sender.getName()));
 		if (!(sender instanceof Player)) {
-			if (sender.getName() == "CONSOLE") {
-				if(!(target instanceof Player)) {
+			if (sender.getName().equalsIgnoreCase("CONSOLE")) {
+				if(conversation.get(sender.getName()) == null) {
+					sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
+					return;
+				}
+				if(Bukkit.getPlayer(conversation.get(sender.getName())) == null) { //<- this son of a bitch
 					if (conversation.get(sender.getName()) == "CONSOLE") {
 						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-						sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
+						sender.sendMessage(gy + "[" + rd + conversation.get(sender.getName()) + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 						conversation.put(sender.getName(), conversation.get(sender.getName()));
 						return;
 					}
@@ -70,6 +73,7 @@ public class Messenger {
 					}
 				}
 				else {
+					Player target = Bukkit.getPlayerExact(conversation.get(sender.getName()));
 					target.sendMessage(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 					sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 					conversation.put(sender.getName(), target.getName());
@@ -82,18 +86,24 @@ public class Messenger {
 			}
 		}
 		else {
-			if (!(target instanceof Player)) {
-				if (conversation.get(sender.getName()) == "CONSOLE") {
+			if(conversation.get(sender.getName()) == null) {
+				sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
+				return;
+			}
+			if (Bukkit.getPlayer(conversation.get(sender.getName())) == null) {
+				if (conversation.get(sender.getName()).equalsIgnoreCase("CONSOLE")) {
 					if (sender.hasPermission(Permission.ESS_MESSAGE_CHATCOLOR.getPermission())) {
 						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-						sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
+						sender.sendMessage(gy + "[" + rd + conversation.get(sender.getName()) + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 						conversation.put(sender.getName(), conversation.get(sender.getName()));
 						return;
 					}
-					System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + message);
-					sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + message);
-					conversation.put(sender.getName(), conversation.get(sender.getName()));
-					return;
+					else {
+						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + message);
+						sender.sendMessage(gy + "[" + rd + conversation.get(sender.getName()) + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + message);
+						conversation.put(sender.getName(), conversation.get(sender.getName()));
+						return;
+					}
 				}
 				else {
 					sender.sendMessage(Error.UNKNOWN_PLAYER.sendError());
@@ -101,6 +111,7 @@ public class Messenger {
 				}
 			}
 			else {
+				Player target = Bukkit.getPlayerExact(conversation.get(sender.getName()));
 				if (canMessage(sender.getName(), true) == false) {
 					sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
 					return;
@@ -127,7 +138,7 @@ public class Messenger {
 	public static void newPM(CommandSender sender, String player, String message) {
 		Player target = Bukkit.getPlayer(player);
 		if (!(sender instanceof Player)) {
-			if (sender.getName() == "CONSOLE") {
+			if (sender.getName().equalsIgnoreCase("CONSOLE")) {
 				if (!(target instanceof Player)) {
 					if (player == "CONSOLE") {
 						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
@@ -154,17 +165,19 @@ public class Messenger {
 		}
 		else {
 			if (!(target instanceof Player)) {
-				if (player == "CONSOLE") {
+				if (player.equalsIgnoreCase("CONSOLE")) {
 					if (sender.hasPermission(Permission.ESS_MESSAGE_CHATCOLOR.getPermission())) {
 						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
-						sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
+						sender.sendMessage(gy + "[" + rd + player + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 						conversation.put(sender.getName(), player);
+						conversation.put(player, sender.getName());
 						return;
 					}
 					else {
 						System.out.println(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + message);
-						sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + message);
+						sender.sendMessage(gy + "[" + rd + player + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + message);
 						conversation.put(sender.getName(), player);
+						conversation.put(player, sender.getName());
 						return;
 					}
 				}
@@ -186,12 +199,14 @@ public class Messenger {
 					target.sendMessage(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 					sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message));
 					conversation.put(sender.getName(), player);
+					conversation.put(player, sender.getName());
 					return;
 				}
 				else {
 					target.sendMessage(gy + "[" + rd + sender.getName() + gy + " -> " + rd + "you" + gy + "] " + ChatColor.RESET + message);
 					sender.sendMessage(gy + "[" + rd + target.getDisplayName() + gy + " <- " + rd + "you" + gy + "] " + ChatColor.RESET + message);
 					conversation.put(sender.getName(), player);
+					conversation.put(player, sender.getName());
 					return;
 				}
 			}
