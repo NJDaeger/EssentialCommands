@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.essentials.utils.messages.Messenger;
 
 public class MessageCommand extends BukkitCommand {
@@ -40,27 +39,13 @@ public class MessageCommand extends BukkitCommand {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {
-				if (Util.isHidden(target) == true) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-					return true;
-				}
-				if (Util.allowsMessaging(target) == false) {
-					sndr.sendMessage(Error.MESSAGING_DISABLED_TARGET.sendError());
-					return true;
-				}
-				if (Util.allowsMessaging(player) == false) {
-					sndr.sendMessage(Error.MESSAGING_DISABLED_SENDER.sendError());
-					return true;
-				}
-				else {
-					Messenger.sendPM(target, sndr, finalmsg);
-					return true;
-				}
+				Messenger.newPM(sndr, target.getName(), finalmsg);
+				return true;
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
-		Messenger.sendPM(target, sndr, finalmsg);
+		Messenger.newPM(sndr, target.getName(), finalmsg);
 		return true;
 	}
 }

@@ -335,6 +335,20 @@ public enum Error{
 			String error = ChatColor.RED + "No previous layer.";
 			return error;
 		}
+	},
+	INVALID_COMMAND_SENDER{
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "Invalid command sender.";
+			return error;
+		}
+	},
+	CANNOT_SEND_PM {
+		@Override
+		public String sendError() {
+			String error = ChatColor.RED + "Cannot send message.";
+			return error;
+		}
 	};
 	
 	public abstract String sendError();
