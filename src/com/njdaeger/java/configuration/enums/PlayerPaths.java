@@ -407,6 +407,16 @@ public enum PlayerPaths {
 		UUID userID = player.getUniqueId();
 		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID);
 		File dir1 = new File(dir+File.separator+"user.yml");
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		if (!dir1.exists()) {
+			try {
+				dir1.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		YamlConfiguration c = YamlConfiguration.loadConfiguration(dir1);
 		for (PlayerPaths path : PlayerPaths.values()) {
 			if (!c.contains(path.getPath())) {

@@ -30,6 +30,8 @@ public class PlayerJoinListener extends Database implements Listener{
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
+		PlayerConfig.getConfig(e.getPlayer()).createConfig();
+		/*
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
 			Date expire = Bukkit.getServer().getBanList(Type.NAME).getBanEntry(player.getName()).getExpiration();
@@ -68,6 +70,7 @@ public class PlayerJoinListener extends Database implements Listener{
 			Bukkit.getLogger().info("Config file for " + e.getPlayer().getName() + " loaded.");
 			return;
 		}
+		*/
 	}
 	@EventHandler
 	public void updateDatabase(PlayerJoinEvent e) {

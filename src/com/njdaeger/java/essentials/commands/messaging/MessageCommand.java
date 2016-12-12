@@ -4,22 +4,29 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.messages.Messenger;
 
-public class MessageCommand extends BukkitCommand {
+public class MessageCommand extends EssCommand {
+	
+	static String name = "message";
 	
 	public MessageCommand() {
-		super("message");
+		super(name);
 		List<String> a = Arrays.asList("msg", "pm", "write", "private");
 		this.description = "Send a private message to a player.";
 		this.usageMessage = "/message <player> <message>";
 		this.setAliases(a);
+	}
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
 	}
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
