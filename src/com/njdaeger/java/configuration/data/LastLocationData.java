@@ -6,15 +6,15 @@ import com.njdaeger.java.configuration.interfaces.ILastValues;
 
 public class LastLocationData extends PlayerConfig implements ILastValues{
 	
-	public int getX() {
+	public double getX() {
 		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_X.getPath());
 	}
 
-	public int getY() {
+	public double getY() {
 		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_Y.getPath());
 	}
 
-	public int getZ() {
+	public double getZ() {
 		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_Z.getPath());
 	}
 

@@ -1,22 +1,21 @@
 package com.njdaeger.java.configuration.data;
 
-import com.njdaeger.java.configuration.Location;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ILastValues;
 
-public class LogoutLocationData extends Location implements ILastValues{
+public class LogoutLocationData extends PlayerConfig implements ILastValues{
 	
-	public int getX() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LOGOUT_X.getPath());
+	public double getX() {
+		return PlayerConfig.getConfig(player).getValue().getDouble(PlayerPaths.LOGOUT_X.getPath());
 	}
 
-	public int getY() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LOGOUT_Y.getPath());
+	public double getY() {
+		return PlayerConfig.getConfig(player).getValue().getDouble(PlayerPaths.LOGOUT_Y.getPath());
 	}
 
-	public int getZ() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LOGOUT_Z.getPath());
+	public double getZ() {
+		return PlayerConfig.getConfig(player).getValue().getDouble(PlayerPaths.LOGOUT_Z.getPath());
 	}
 
 	public int getYaw() {

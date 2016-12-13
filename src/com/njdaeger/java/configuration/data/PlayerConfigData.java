@@ -3,6 +3,10 @@ package com.njdaeger.java.configuration.data;
 import java.io.File;
 import java.io.IOException;
 
+import net.md_5.bungee.api.ChatColor;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.njdaeger.java.Groups;
@@ -15,6 +19,20 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	
 	private File path = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+player.getUniqueId());
 	private File file = new File(path+File.separator+"user.yml");
+	
+	@Override
+	public void setValue(String path, Object value) {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		c.set(path, value);
+		try {
+			c.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public YamlConfiguration getValue() {
@@ -56,7 +74,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void loginUpdate() {
+		setNick(getValue().getString(PlayerPaths.DISPLAYNAME.getPath()));
 		setMuted();
+		setSpying();
+		setGod();
+		setMessageable();
+		setTpToggled();
 		
 	}
 
@@ -116,7 +139,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isSpying() == false) {
+		if (isGod() == false) {
 			if (Groups.god.contains(player)) {
 				Groups.god.remove(player);
 			}
@@ -141,7 +164,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isSpying() == false) {
+		if (isMessageable() == false) {
 			if (Groups.nomessaging.contains(player)) {
 				Groups.nomessaging.remove(player);
 			}
@@ -167,23 +190,21 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isSpying() == false) {
-			if (Groups.afk.contains(player)) {
-				Groups.afk.remove(player);
-			}
-			return;
+		if (isAfk() == true) {
+			Groups.afk.remove(player);
+			Groups.afkloc.remove(player.getName());
+			player.setCollidable(true);
+			System.out.println("1");
+			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
+			this.setValue(PlayerPaths.AFK.getPath(), false);
 		}
 		else {
-			if (!Groups.afk.contains(player)) {
-				Groups.afk.add(player);
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.AFK.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			return;
+			Groups.afk.add(player);
+			Groups.afkloc.put(player.getName(), player.getLocation());
+			player.setCollidable(false);
+			System.out.println("2");
+			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
+			this.setValue(PlayerPaths.AFK.getPath(), true);
 		}
 	}
 
@@ -192,7 +213,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isSpying() == false) {
+		if (isTpToggled() == false) {
 			if (Groups.tptoggled.contains(player)) {
 				Groups.tptoggled.remove(player);
 			}
@@ -214,14 +235,42 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void setGroup(String group) {
-		// TODO Auto-generated method stub
-		
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		YamlConfiguration.loadConfiguration(file).set(PlayerPaths.RANK.getPath(), group);
+		try {
+			YamlConfiguration.loadConfiguration(file).save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void setNick(String nickname) {
-		// TODO Auto-generated method stub
-		
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		YamlConfiguration.loadConfiguration(file).set(PlayerPaths.DISPLAYNAME.getPath(), nickname);
+		try {
+			YamlConfiguration.loadConfiguration(file).save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void setNickAuto() {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		if (getValue().getString(PlayerPaths.DISPLAYNAME.getPath()) == null) {
+			return;
+		}
+		else {
+			player.setDisplayName(ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath()) + ChatColor.WHITE);
+			return;
+		}
 	}
 
 	@Override
@@ -232,8 +281,47 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void setGamemode(String gamemode) {
-		// TODO Auto-generated method stub
-		
+		if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("1")) {
+			player.setGameMode(GameMode.CREATIVE);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.CREATIVE);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("0")) {
+			player.setGameMode(GameMode.CREATIVE);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SURVIVAL);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("2")) {
+			player.setGameMode(GameMode.CREATIVE);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.ADVENTURE);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		if (gamemode.equalsIgnoreCase("spectator") || gamemode.equalsIgnoreCase("3")) {
+			player.setGameMode(GameMode.CREATIVE);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SPECTATOR);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		return;
 	}
 
 	@Override
@@ -250,19 +338,50 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void setOp() {
-		// TODO Auto-generated method stub
-		
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		else {
+			player.setOp(true);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), true);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+	
 	@Override
-	public void setLastLocation() {
-		// TODO Auto-generated method stub
-		
+	public void setDeopped() {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		else {
+			player.setOp(false);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), false);
+			try {
+				YamlConfiguration.loadConfiguration(file).save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+	
 	@Override
-	public void setLogoutLocation() {
-		
+	public void setOpAuto() {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		if (player.isOp() && isOp() == false) {
+			setDeopped();
+			return;
+		}
+		if (!player.isOp() && isOp() == true) {
+			setOp();
+			return;
+		}
+		return;
 	}
 
 	@Override
@@ -315,14 +434,18 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public String getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.RANK.getPath());
 	}
 
 	@Override
 	public String getNick() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.DISPLAYNAME.getPath());
 	}
 
 	@Override
@@ -333,31 +456,38 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public String getGamemode() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.GAMEMODE.getPath());
 	}
 
 	@Override
 	public int getFlySpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getInt(PlayerPaths.FLYSPEED.getPath());
 	}
 
 	@Override
 	public int getWalkingSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getInt(PlayerPaths.WALKSPEED.getPath());
 	}
 
 	@Override
 	public boolean isOp() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.OP.getPath());
 	}
 
 	@Override
 	public Location getLocations() {
 		return new Location();
 	}
-
 }

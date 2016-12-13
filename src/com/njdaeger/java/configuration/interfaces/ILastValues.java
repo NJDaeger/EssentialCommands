@@ -7,17 +7,17 @@ public interface ILastValues {
 	 * Returns the players x value
 	 * @return
 	 */
-	int getX();
+	double getX();
 	/**
 	 * Returns the players y value
 	 * @return
 	 */
-	int getY();
+	double getY();
 	/**
 	 * Returns the players z value
 	 * @return
 	 */
-	int getZ();
+	double getZ();
 	/**
 	 * Returns the players yaw value
 	 * @return

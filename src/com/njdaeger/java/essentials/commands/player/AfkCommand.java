@@ -6,17 +6,19 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.status.AfkStatus;
-import com.njdaeger.java.essentials.utils.status.Status;
 
-public class AfkCommand extends BukkitCommand{
+public class AfkCommand extends EssCommand{
 
+	static String name = "afk";
+	
 	public AfkCommand() {
 		super("afk");
 		List<String> a = Arrays.asList("akf", "away", "brb");
@@ -25,60 +27,54 @@ public class AfkCommand extends BukkitCommand{
 		this.setAliases(a);
 	}
 	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+	
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (!(sndr instanceof Player)) {
-			if (args.length == 1) {
-				if (Bukkit.getPlayer(args[0]) == null) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-					return true;
-				}
-				else {
-					Player player = Bukkit.getPlayer(args[0]);
-					AfkStatus.setAfk(player, Status.AUTO);
-					return true;
-				}
-			} 
-			if (args.length == 0) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			} 
-			else {
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-				return true;
-			}
+		if (args.length > 1) {
+			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+			return true;
 		}
-		Player player = (Player) sndr;
-		if (args.length == 1) {
-			
-			if(Holder.hasPermission(player, Permission.ESS_AFK_OTHER)) {
-				if (Bukkit.getPlayer(args[0]) == null) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-					return true;
-				}
-				else {
-					Player target = Bukkit.getPlayer(args[0]);
-					AfkStatus.setAfk(target, Status.AUTO);
-					return true;
-				}
-			} 
+		if (sndr instanceof Player) {
+			Player player = (Player) sndr;
+			if (Holder.hasPermission(player, Permission.ESS_AFK, Permission.ESS_AFK_OTHER)) {
+				
+			}
 			else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
 		}
 		if (args.length == 0) {
-			if (Holder.hasPermission(player, Permission.ESS_AFK, Permission.ESS_AFK_OTHER)) {
-				AfkStatus.setAfk(player, Status.AUTO);
+			if (sndr instanceof Player) {
+				Player player = (Player) sndr;
+				PlayerConfig.getConfig(player).setAfk();
 				return true;
 			}
 			else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-		} 
+		}
 		else {
-			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+			if (sndr instanceof Player) {
+				Player player = (Player) sndr;
+				if (Holder.hasPermission(player, Permission.ESS_AFK_OTHER)) {
+				}
+				else {
+					sndr.sendMessage(Error.NO_PERMISSION.sendError());
+					return true;
+				}
+			}
+			Player target = Bukkit.getPlayer(args[0]);
+			if (target == null) {
+				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+				return true;
+			}
+			PlayerConfig.getConfig(target).setAfk();
 			return true;
 		}
-	}	
+	}
 }

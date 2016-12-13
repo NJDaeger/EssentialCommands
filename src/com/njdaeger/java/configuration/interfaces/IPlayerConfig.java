@@ -13,6 +13,13 @@ import com.njdaeger.java.configuration.Location;
 public interface IPlayerConfig {
 	
 	/**
+	 * Allows easy change of the player config file.
+	 * @param path Path of the value wanting to be changed
+	 * @param value Value to set that path to.
+	 */
+	void setValue(String path, Object value);
+	
+	/**
 	 * Checks if a config exists
 	 * @return
 	 */
@@ -98,20 +105,24 @@ public interface IPlayerConfig {
 	void setWalkingSpeed(int speed);
 	
 	/**
-	 * Set a player to operator mode.
+	 * Set the player to operator.
 	 */
 	void setOp();
 	
 	/**
-	 * Set the players last location.
-	 * <p>		- This is used when the player tp's or does the back command</p>
+	 * deop the selected player.
 	 */
-	void setLastLocation();
+	void setDeopped();
 	
 	/**
-	 * Set the players logout location upon logging out.
+	 * Automatically sets the player opped or not.
 	 */
-	void setLogoutLocation();
+	void setOpAuto();
+	
+	/**
+	 * Updates the player nickname. This is mainly used for startup.
+	 */
+	void setNickAuto();
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////

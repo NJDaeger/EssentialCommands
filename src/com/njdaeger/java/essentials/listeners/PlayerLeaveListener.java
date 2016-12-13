@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 
 public class PlayerLeaveListener implements Listener{
 	
@@ -25,7 +24,6 @@ public class PlayerLeaveListener implements Listener{
 	
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		/*
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
 			Date expire = Bukkit.getServer().getBanList(Type.NAME).getBanEntry(player.getName()).getExpiration();
@@ -53,6 +51,7 @@ public class PlayerLeaveListener implements Listener{
 				
 			}
 		}
+		/*
 		if (PlayerConfig.getPlayerFile(e.getPlayer()) == null) {
 			PlayerConfig.create(e.getPlayer());
 			Bukkit.getLogger().info("Config file for " + e.getPlayer().getName() + " is being created.");
