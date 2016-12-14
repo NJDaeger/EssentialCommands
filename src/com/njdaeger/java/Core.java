@@ -18,7 +18,6 @@ import com.njdaeger.java.essentials.commands.player.GodCommand;
 import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
-import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
 import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
@@ -51,7 +50,6 @@ public class Core extends JavaPlugin{
 		Plugin.getCommand("nick", new NickCommand()); //Finished //Make it so there can only be one of each nickname
 		Plugin.getCommand("break", new BreakCommand()); //Finished 
 		Plugin.getCommand("burn", new BurnCommand()); //Finished
-		Plugin.getCommand("speed", new SpeedCommand()); //Finished ADD ABILITY TO DO DECIMAL NUMBERS
 		Plugin.getCommand("clear", new ClearInvCommand()); //Finished
 		Plugin.getCommand("position", new GetPositionCommand()); //Finished
 		Plugin.getCommand("heal", new HealCommand()); //Finished

@@ -350,7 +350,9 @@ public enum Error{
 			return error;
 		}
 	};
-	
+	public static String throwError(String error) {
+		return ChatColor.RED + error;
+	}
 	public abstract String sendError();
 	
 }

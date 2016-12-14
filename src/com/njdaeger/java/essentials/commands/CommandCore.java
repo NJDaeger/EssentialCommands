@@ -12,6 +12,7 @@ import com.njdaeger.java.essentials.commands.messaging.ReplyCommand;
 import com.njdaeger.java.essentials.commands.player.AfkCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
+import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 
 public class CommandCore {
 	
@@ -32,6 +33,7 @@ public class CommandCore {
 		new MessageCommand().register();
 		new GamemodeCommand().register();
 		new AfkCommand().register();
+		new SpeedCommand().register();
 		
 		
 	}

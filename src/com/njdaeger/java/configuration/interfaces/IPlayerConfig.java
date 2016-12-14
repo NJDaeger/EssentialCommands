@@ -96,13 +96,13 @@ public interface IPlayerConfig {
 	 * Set a players fly speed.
 	 * @param speed Speed value 0-10
 	 */
-	void setFlySpeed(int speed);
+	void setFlySpeed(double speed);
 	
 	/**
 	 * Set a players walking speed.
 	 * @param speed Speed value 0-10
 	 */
-	void setWalkingSpeed(int speed);
+	void setWalkingSpeed(double speed);
 	
 	/**
 	 * Set the player to operator.

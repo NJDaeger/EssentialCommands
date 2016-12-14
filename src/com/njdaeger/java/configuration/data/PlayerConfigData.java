@@ -164,21 +164,17 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isMessageable() == false) {
+		if (isMessageable() == true) {
 			if (Groups.nomessaging.contains(player)) {
 				Groups.nomessaging.remove(player);
+				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), true);
 			}
 			return;
 		}
 		else {
 			if (!Groups.nomessaging.contains(player)) {
 				Groups.nomessaging.add(player);
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.MESSAGEABLE.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), false);
 			}
 			return;
 		}
@@ -213,7 +209,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isTpToggled() == false) {
+		if (isTpToggled() == true) {
 			if (Groups.tptoggled.contains(player)) {
 				Groups.tptoggled.remove(player);
 			}
@@ -222,6 +218,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		else {
 			if (!Groups.tptoggled.contains(player)) {
 				Groups.tptoggled.add(player);
+				
 				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.TPTOGGLED.getPath(), false);
 				try {
 					YamlConfiguration.loadConfiguration(file).save(file);
@@ -325,15 +322,19 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	}
 
 	@Override
-	public void setFlySpeed(int speed) {
-		// TODO Auto-generated method stub
-		
+	public void setFlySpeed(double speed) {
+		double a = speed / 10;
+		float value = (float) a;
+		player.setFlySpeed(value);
+		this.setValue(PlayerPaths.FLYSPEED.getPath(), speed);
 	}
 
 	@Override
-	public void setWalkingSpeed(int speed) {
-		// TODO Auto-generated method stub
-		
+	public void setWalkingSpeed(double speed) {
+		double a = (((10 * speed)-speed)/100)+1/10;
+		float value = (float) a; 
+		player.setWalkSpeed(value);
+		this.setValue(PlayerPaths.WALKSPEED.getPath(), speed);
 	}
 
 	@Override
