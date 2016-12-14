@@ -331,7 +331,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void setWalkingSpeed(double speed) {
-		double a = (((10 * speed)-speed)/100)+1/10;
+		double a = 0;
+		a = (((10 * speed)-speed)/100)+1/10+((1/100)/speed);
+		if (a > 1) {
+			double b = a - 1;
+			a += a - b;
+		}
 		float value = (float) a; 
 		player.setWalkSpeed(value);
 		this.setValue(PlayerPaths.WALKSPEED.getPath(), speed);

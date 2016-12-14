@@ -50,6 +50,14 @@ public class SpeedCommand extends EssCommand {
 			}
 			Player player = (Player) sndr;
 			if (!Util.isDouble(args[0])) {
+				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+					if (player.isFlying()) {
+						PlayerConfig.getConfig(player).setFlySpeed(1);
+						return true;
+					}
+					PlayerConfig.getConfig(player).setWalkingSpeed(1);
+					return true;
+				}
 				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 				return true;
 			}
@@ -93,6 +101,14 @@ public class SpeedCommand extends EssCommand {
 			}
 			Player target = Bukkit.getPlayer(args[1]);
 			if (!Util.isDouble(args[0])) {
+				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+					if (target.isFlying()) {
+						PlayerConfig.getConfig(target).setFlySpeed(1);
+						return true;
+					}
+					PlayerConfig.getConfig(target).setWalkingSpeed(1);
+					return true;
+				}
 				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 				return true;
 			}
@@ -137,6 +153,14 @@ public class SpeedCommand extends EssCommand {
 		}
 		Player target = Bukkit.getPlayer(args[1]);
 		if (!Util.isDouble(args[0])) {
+			if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+				if (target.isFlying()) {
+					PlayerConfig.getConfig(target).setFlySpeed(1);
+					return true;
+				}
+				PlayerConfig.getConfig(target).setWalkingSpeed(1);
+				return true;
+			}
 			sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 			return true;
 		}
