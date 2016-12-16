@@ -289,7 +289,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			return;
 		}
 		if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("0")) {
-			player.setGameMode(GameMode.CREATIVE);
+			player.setGameMode(GameMode.SURVIVAL);
 			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SURVIVAL);
 			try {
 				YamlConfiguration.loadConfiguration(file).save(file);
@@ -299,7 +299,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			return;
 		}
 		if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("2")) {
-			player.setGameMode(GameMode.CREATIVE);
+			player.setGameMode(GameMode.ADVENTURE);
 			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.ADVENTURE);
 			try {
 				YamlConfiguration.loadConfiguration(file).save(file);
@@ -309,7 +309,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			return;
 		}
 		if (gamemode.equalsIgnoreCase("spectator") || gamemode.equalsIgnoreCase("3")) {
-			player.setGameMode(GameMode.CREATIVE);
+			player.setGameMode(GameMode.SPECTATOR);
 			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SPECTATOR);
 			try {
 				YamlConfiguration.loadConfiguration(file).save(file);
@@ -332,12 +332,18 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	@Override
 	public void setWalkingSpeed(double speed) {
 		double a = 0;
-		a = (((10 * speed)-speed)/100)+1/10+((1/100)/speed);
-		if (a > 1) {
+		a += ((19 * speed) - Math.pow(speed, 2)) / 90;
+		if (a> 1) {
 			double b = a - 1;
-			a += a - b;
+			a -= b;
+			System.out.println(a + "trig");
 		}
-		float value = (float) a; 
+		if (a < 0) {
+			a -= a;
+			System.out.println(a);
+		}
+		System.out.println(a);
+		float value = Float.parseFloat(Double.toString(a));
 		player.setWalkSpeed(value);
 		this.setValue(PlayerPaths.WALKSPEED.getPath(), speed);
 	}
