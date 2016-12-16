@@ -31,7 +31,6 @@ public class PlayerJoinListener extends Database implements Listener{
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		PlayerConfig.getConfig(e.getPlayer()).createConfig();
-		System.out.println(PlayerConfig.getConfig(e.getPlayer()).getLocations().getLastLocation().getX());
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
 			Date expire = Bukkit.getServer().getBanList(Type.NAME).getBanEntry(player.getName()).getExpiration();

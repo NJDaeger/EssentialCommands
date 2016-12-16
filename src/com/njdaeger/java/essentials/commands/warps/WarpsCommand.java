@@ -10,8 +10,8 @@ import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.configuration.controllers.Warps;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
 public class WarpsCommand extends BukkitCommand{

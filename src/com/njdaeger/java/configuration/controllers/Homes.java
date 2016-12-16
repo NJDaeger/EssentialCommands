@@ -10,10 +10,10 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
 import com.njdaeger.java.configuration.exceptions.HomeNotFoundException;
 import com.njdaeger.java.configuration.interfaces.IHomeHandler;
+import com.njdaeger.java.essentials.enums.Error;
 
 public class Homes extends Database implements IHomeHandler{
 	

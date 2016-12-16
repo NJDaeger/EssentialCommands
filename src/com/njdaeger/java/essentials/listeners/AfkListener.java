@@ -11,10 +11,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.essentials.exceptions.UnknownActionException;
+import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.essentials.utils.status.AfkStatus;
 import com.njdaeger.java.essentials.utils.status.Status;
 

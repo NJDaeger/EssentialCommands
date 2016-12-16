@@ -7,9 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
 import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.essentials.enums.Error;
 
 public class CreatebannerCommand extends BukkitCommand{
 	

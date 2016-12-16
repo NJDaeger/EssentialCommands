@@ -11,8 +11,8 @@ import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
 public class ClearInvCommand extends BukkitCommand {

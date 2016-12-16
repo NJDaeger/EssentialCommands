@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.BannerMeta;
 
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.descrete.editors.bannermanager.Banner;
 import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
 import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.essentials.enums.Error;
 
 public class MainGUI extends Banner{
 	BannerGUI bGui = new BannerGUI();

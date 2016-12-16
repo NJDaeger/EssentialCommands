@@ -14,11 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.descrete.editors.bannermanager.exceptions.BannerExists;
 import com.njdaeger.java.descrete.editors.bannermanager.exceptions.MetadataException;
 import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerMissing;
 import com.njdaeger.java.descrete.editors.bannermanager.utils.IBannerHandler;
+import com.njdaeger.java.essentials.enums.Error;
 
 public class Banner implements IBannerHandler{
 	

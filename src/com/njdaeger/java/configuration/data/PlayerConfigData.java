@@ -97,12 +97,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		else {
 			if (!Groups.muted.contains(player)) {
 				Groups.muted.add(player);
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.MUTED.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.setValue(PlayerPaths.MUTED.getPath(), true);
 			}
 			return;
 		}
@@ -323,6 +318,13 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 
 	@Override
 	public void setFlySpeed(double speed) {
+		if (speed > 10)  {
+			double b = speed - 10;
+			speed -= b;
+		}
+		if (speed < 0) {
+			speed -= speed;
+		}
 		double a = speed / 10;
 		float value = (float) a;
 		player.setFlySpeed(value);
@@ -333,7 +335,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	public void setWalkingSpeed(double speed) {
 		double a = 0;
 		a += ((19 * speed) - Math.pow(speed, 2)) / 90;
-		if (a> 1) {
+		if (a > 1) {
 			double b = a - 1;
 			a -= b;
 			System.out.println(a + "trig");
@@ -401,7 +403,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.MUTED.getPath());
+		return this.getValue().getBoolean(PlayerPaths.MUTED.getPath());
 	}
 
 	@Override
@@ -409,7 +411,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.SOCIALSPY.getPath());
+		return this.getValue().getBoolean(PlayerPaths.SOCIALSPY.getPath());
 	}
 
 	@Override
@@ -417,7 +419,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.GOD.getPath());
+		return this.getValue().getBoolean(PlayerPaths.GOD.getPath());
 	}
 
 	@Override
@@ -425,7 +427,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.MESSAGEABLE.getPath());
+		return this.getValue().getBoolean(PlayerPaths.MESSAGEABLE.getPath());
 	}
 
 	@Override
@@ -433,7 +435,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.AFK.getPath());
+		return this.getValue().getBoolean(PlayerPaths.AFK.getPath());
 	}
 
 	@Override
@@ -441,7 +443,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.TPTOGGLED.getPath());
+		return this.getValue().getBoolean(PlayerPaths.TPTOGGLED.getPath());
 	}
 
 	@Override
@@ -449,7 +451,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.RANK.getPath());
+		return this.getValue().getString(PlayerPaths.RANK.getPath());
 	}
 
 	@Override
@@ -457,7 +459,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.DISPLAYNAME.getPath());
+		return this.getValue().getString(PlayerPaths.DISPLAYNAME.getPath());
 	}
 
 	@Override
@@ -471,7 +473,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getString(PlayerPaths.GAMEMODE.getPath());
+		return this.getValue().getString(PlayerPaths.GAMEMODE.getPath());
 	}
 
 	@Override
@@ -479,7 +481,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getInt(PlayerPaths.FLYSPEED.getPath());
+		return this.getValue().getInt(PlayerPaths.FLYSPEED.getPath());
 	}
 
 	@Override
@@ -487,7 +489,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getInt(PlayerPaths.WALKSPEED.getPath());
+		return this.getValue().getInt(PlayerPaths.WALKSPEED.getPath());
 	}
 
 	@Override
@@ -495,7 +497,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file).getBoolean(PlayerPaths.OP.getPath());
+		return this.getValue().getBoolean(PlayerPaths.OP.getPath());
 	}
 
 	@Override

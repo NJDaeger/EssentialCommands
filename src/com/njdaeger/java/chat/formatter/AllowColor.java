@@ -1,11 +1,11 @@
 package com.njdaeger.java.chat.formatter;
 
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Permission;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class AllowColor {
 	

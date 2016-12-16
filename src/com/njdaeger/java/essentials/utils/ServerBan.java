@@ -15,8 +15,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.essentials.enums.BanMessage;
-import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.essentials.enums.Permission;
 
 public class ServerBan {
 	
