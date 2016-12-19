@@ -7,15 +7,18 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class ClearInvCommand extends BukkitCommand {
+public class ClearInvCommand extends EssCommand {
+	
+	static String name = "clear";
 	
 	public ClearInvCommand() {
 		super("clear");
@@ -24,7 +27,12 @@ public class ClearInvCommand extends BukkitCommand {
 		this.usageMessage = "/clear [player]";
 		this.setAliases(a);
 	}
-
+	
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+	
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {

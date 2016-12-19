@@ -7,22 +7,30 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class BreakCommand extends BukkitCommand {
+public class BreakCommand extends EssCommand {
+	
+	static String name = "break";
 	
 	private ChatColor green = ChatColor.GREEN;
 	private ChatColor gray = ChatColor.GRAY;
 	
 	public BreakCommand() {
-		super("break");
+		super(name);
 		this.description = "Break the block you are looking at.";
 		this.usageMessage = "/break";
+	}
+	
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
 	}
 
 	@Override

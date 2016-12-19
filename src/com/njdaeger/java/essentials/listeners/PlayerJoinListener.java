@@ -83,6 +83,7 @@ public class PlayerJoinListener extends Database implements Listener{
 			}
 			else if (getDatabaseEntry("playerdata", player.getName()) == null) {
 				createDatabaseEntry("playerdata", player.getName(), player.getUniqueId().toString());
+				return;
 			}
 			else {
 				if (getDatabaseEntry("playerdata", player.getName()).matches(player.getUniqueId().toString())) {
