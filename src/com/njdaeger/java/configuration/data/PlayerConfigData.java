@@ -3,6 +3,11 @@ package com.njdaeger.java.configuration.data;
 import java.io.File;
 import java.io.IOException;
 
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.Store;
+import javax.mail.URLName;
+
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -65,13 +70,30 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		}
 		return;
 	}
-
+	
 	@Override
 	public void logoutUpdate() {
-		// TODO Auto-generated method stub
-		
+		Store store = new Store(null, null) {
+			
+			@Override
+			public Folder getFolder(URLName arg0) throws MessagingException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public Folder getFolder(String arg0) throws MessagingException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public Folder getDefaultFolder() throws MessagingException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
 	}
-
 	@Override
 	public void loginUpdate() {
 		setNick(getValue().getString(PlayerPaths.DISPLAYNAME.getPath()));
@@ -117,6 +139,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		else {
 			if (!Groups.socialspy.contains(player)) {
 				Groups.socialspy.add(player);
+				this.setValue(PlayerPaths.SOCIALSPY.getPath(), false);
 				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.SOCIALSPY.getPath(), false);
 				try {
 					YamlConfiguration.loadConfiguration(file).save(file);
@@ -315,7 +338,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		}
 		return;
 	}
-
+	
 	@Override
 	public void setFlySpeed(double speed) {
 		if (speed > 10)  {

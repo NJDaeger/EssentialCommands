@@ -4,3 +4,10 @@
 /.project
 plugin.yml
 /bin/
+
+javadoc.xml
+mail.jar
+/javax/
+/META-INF/
+/.settings/
+/com/
