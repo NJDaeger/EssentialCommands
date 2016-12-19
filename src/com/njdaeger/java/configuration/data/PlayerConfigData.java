@@ -3,11 +3,6 @@ package com.njdaeger.java.configuration.data;
 import java.io.File;
 import java.io.IOException;
 
-import javax.mail.Folder;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-import javax.mail.URLName;
-
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -73,26 +68,6 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	
 	@Override
 	public void logoutUpdate() {
-		Store store = new Store(null, null) {
-			
-			@Override
-			public Folder getFolder(URLName arg0) throws MessagingException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Folder getFolder(String arg0) throws MessagingException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Folder getDefaultFolder() throws MessagingException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
 	}
 	@Override
 	public void loginUpdate() {
