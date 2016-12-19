@@ -8,9 +8,6 @@ import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.descrete.editors.bannermanager.BannerManager;
 import com.njdaeger.java.descrete.editors.bannermanager.listeners.Listener;
 import com.njdaeger.java.essentials.commands.CommandCore;
-import com.njdaeger.java.essentials.commands.player.BreakCommand;
-import com.njdaeger.java.essentials.commands.player.BurnCommand;
-import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
 import com.njdaeger.java.essentials.commands.player.GiveCommand;
@@ -48,9 +45,6 @@ public class Core extends JavaPlugin{
 		Plugin.getCommand("i", new GiveCommand()); //Finished 
 		Plugin.getCommand("god", new GodCommand()); //Finished
 		Plugin.getCommand("nick", new NickCommand()); //Finished //Make it so there can only be one of each nickname
-		Plugin.getCommand("break", new BreakCommand()); //Finished 
-		Plugin.getCommand("burn", new BurnCommand()); //Finished
-		Plugin.getCommand("clear", new ClearInvCommand()); //Finished
 		Plugin.getCommand("position", new GetPositionCommand()); //Finished
 		Plugin.getCommand("heal", new HealCommand()); //Finished
 		Plugin.getCommand("tempban", new TempBanCommand()); //Finished

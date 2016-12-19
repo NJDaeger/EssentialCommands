@@ -10,6 +10,9 @@ import com.njdaeger.java.essentials.commands.messaging.MeCommand;
 import com.njdaeger.java.essentials.commands.messaging.MessageCommand;
 import com.njdaeger.java.essentials.commands.messaging.ReplyCommand;
 import com.njdaeger.java.essentials.commands.player.AfkCommand;
+import com.njdaeger.java.essentials.commands.player.BreakCommand;
+import com.njdaeger.java.essentials.commands.player.BurnCommand;
+import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
@@ -34,6 +37,9 @@ public class CommandCore {
 		new GamemodeCommand().register();
 		new AfkCommand().register();
 		new SpeedCommand().register();
+		new BreakCommand().register();
+		new BurnCommand().register();
+		new ClearInvCommand().register();
 		
 		
 	}
