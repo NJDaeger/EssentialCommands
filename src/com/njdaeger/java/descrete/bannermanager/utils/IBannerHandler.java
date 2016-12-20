@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.utils;
+package com.njdaeger.java.descrete.bannermanager.utils;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

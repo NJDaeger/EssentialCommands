@@ -10,12 +10,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
 
-public class NickCommand extends BukkitCommand {
+public class NickCommand extends EssCommand {
+	
+	static String name = "nick";
 	
 	public NickCommand() {
 		super("nick");
@@ -24,9 +29,55 @@ public class NickCommand extends BukkitCommand {
 		this.usageMessage = "/nick <Nickname> [Player]";
 		this.setAliases(a);
 	}
-
+	
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
+		if (sndr instanceof Player) {
+			Player player = (Player) sndr;
+			if (Holder.hasPermission(player, Permission.ESS_NICK, Permission.ESS_NICK_OTHER)) {
+				
+			}
+			else sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			return true;
+		}
+		if (args.length > 2) {
+			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+			return true;
+		}
+		if (args.length == 0) {
+			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+			return true;
+		}
+		if (args.length == 1) {
+			if (sndr instanceof Player) {
+				if (((Player) sndr).getDisplayName() == sndr.getName()) {
+					//This will go down past the next if statement to check the length of the name and set their name if the checks pass.
+					//TODO add ability to adjust how long the nickname name can be in the essentials configuration.
+				}
+				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
+					PlayerConfig.getConfig((Player)sndr).setNick(sndr.getName());
+					sndr.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
+					return true;
+				}
+				if (args[0].length() > 30) {
+					sndr.sendMessage(Error.NICKNAME_TOO_LONG.sendError());
+					return true;
+				}
+				PlayerConfig.getConfig((Player)sndr).setNick(ChatColor.translateAlternateColorCodes('&', args[0]));
+				sndr.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
+			}
+			else {
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+				return true;
+			}
+		}
+		if (args.length == 2) {
+			
+		}
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_NICK, Permission.ESS_NICK_OTHER)) {

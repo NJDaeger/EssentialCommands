@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager;
+package com.njdaeger.java.descrete.bannermanager;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.njdaeger.java.descrete.editors.bannermanager.exceptions.BannerExists;
-import com.njdaeger.java.descrete.editors.bannermanager.exceptions.MetadataException;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerMissing;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.IBannerHandler;
+import com.njdaeger.java.descrete.bannermanager.exceptions.BannerExists;
+import com.njdaeger.java.descrete.bannermanager.exceptions.MetadataException;
+import com.njdaeger.java.descrete.bannermanager.utils.BannerMissing;
+import com.njdaeger.java.descrete.bannermanager.utils.IBannerHandler;
 import com.njdaeger.java.essentials.enums.Error;
 
 public class Banner implements IBannerHandler{

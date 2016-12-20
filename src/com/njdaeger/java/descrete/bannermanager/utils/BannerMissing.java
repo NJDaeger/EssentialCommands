@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.utils;
+package com.njdaeger.java.descrete.bannermanager.utils;
 
 public class BannerMissing extends Exception{
 	

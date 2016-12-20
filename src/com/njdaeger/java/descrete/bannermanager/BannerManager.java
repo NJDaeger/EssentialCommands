@@ -1,7 +1,7 @@
-package com.njdaeger.java.descrete.editors.bannermanager;
+package com.njdaeger.java.descrete.bannermanager;
 
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.descrete.editors.bannermanager.commands.CreatebannerCommand;
+import com.njdaeger.java.descrete.bannermanager.commands.CreatebannerCommand;
 
 
 public class BannerManager {

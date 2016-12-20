@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.exceptions;
+package com.njdaeger.java.descrete.bannermanager.exceptions;
 
 public class BannerExists extends Exception{
 

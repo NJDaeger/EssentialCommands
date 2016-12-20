@@ -1,13 +1,13 @@
-package com.njdaeger.java.descrete.editors.bannermanager.listeners;
+package com.njdaeger.java.descrete.bannermanager.listeners;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.BannerMeta;
 
-import com.njdaeger.java.descrete.editors.bannermanager.Banner;
-import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.descrete.bannermanager.Banner;
+import com.njdaeger.java.descrete.bannermanager.GuiType;
+import com.njdaeger.java.descrete.bannermanager.utils.BannerGUI;
 import com.njdaeger.java.essentials.enums.Error;
 
 public class MainGUI extends Banner{

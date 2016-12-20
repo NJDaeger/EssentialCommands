@@ -1,8 +1,8 @@
-package com.njdaeger.java.descrete.editors.bannermanager.listeners;
+package com.njdaeger.java.descrete.bannermanager.listeners;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import com.njdaeger.java.descrete.editors.bannermanager.Banner;
+import com.njdaeger.java.descrete.bannermanager.Banner;
 
 public class EColorGUI extends Banner{
 	

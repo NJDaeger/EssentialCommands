@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.listeners;
+package com.njdaeger.java.descrete.bannermanager.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -6,14 +6,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.njdaeger.java.descrete.editors.bannermanager.Banner;
-import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.descrete.bannermanager.Banner;
+import com.njdaeger.java.descrete.bannermanager.GuiType;
+import com.njdaeger.java.descrete.bannermanager.utils.BannerGUI;
 
-public class Effects1GUI extends Banner{
-	
+public class Effects2GUI extends Banner{
 	BannerGUI bGui = new BannerGUI();
-	
 	public void listen(InventoryClickEvent e) {
 		int s = e.getSlot();
 		Player player = (Player) e.getWhoClicked();
@@ -44,23 +42,23 @@ public class Effects1GUI extends Banner{
 		}
 		if (s == 4) {
 			main.add(player.getName());
-			effects1.remove(player.getName());
+			effects2.remove(player.getName());
 			e.setCancelled(true);
 			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-			bGui.newBannerGui(player, GuiType.COLOR, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 0);
+			bGui.newBannerGui(player, GuiType.COLOR, this.getPreview(e.getInventory().getItem(25).getItemMeta(),  e.getInventory().getItem(25)), 0);
 			return;
 		}
 		if (s == 5) {
+			effects1.add(player.getName());
+			effects2.remove(player.getName());
 			e.setCancelled(true);
-			player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
+			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+			bGui.newBannerGui(player, GuiType.EFFECTS, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 1);
 			return;
 		}
 		if (s == 6) {
-			effects2.add(player.getName());
-			effects1.remove(player.getName());
 			e.setCancelled(true);
-			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-			bGui.newBannerGui(player, GuiType.EFFECTS2, this.getPreview(e.getInventory().getItem(25).getItemMeta(), e.getInventory().getItem(25)), 1);
+			player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1, 1);
 			return;
 		}
 		if (s == 8) {
@@ -81,10 +79,7 @@ public class Effects1GUI extends Banner{
 				s == 21 || s == 22 || s == 23 || 
 				s == 27 || s == 28 || s == 29 || 
 				s == 30 || s == 31 || s == 32 || 
-				s == 36 || s == 37 || s == 38 || 
-				s == 39 || s == 40 || s == 41 || 
-				s == 45 || s == 46 || s == 47 || 
-				s == 48 || s == 49 || s == 50) {
+				s == 38 || s == 39) {
 			e.setCancelled(true);
 			e.getInventory().setItem(25, this.getPreview(e.getCurrentItem().getItemMeta(), e.getCurrentItem()));
 			player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);

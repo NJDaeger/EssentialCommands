@@ -5,8 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.listener.ChatHandler;
 import com.njdaeger.java.configuration.controllers.Config;
-import com.njdaeger.java.descrete.editors.bannermanager.BannerManager;
-import com.njdaeger.java.descrete.editors.bannermanager.listeners.Listener;
+import com.njdaeger.java.descrete.bannermanager.BannerManager;
+import com.njdaeger.java.descrete.bannermanager.listeners.Listener;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;

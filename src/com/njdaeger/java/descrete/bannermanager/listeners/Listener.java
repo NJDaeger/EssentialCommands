@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.listeners;
+package com.njdaeger.java.descrete.bannermanager.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,8 +8,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.descrete.editors.bannermanager.Banner;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.descrete.bannermanager.Banner;
+import com.njdaeger.java.descrete.bannermanager.utils.BannerGUI;
 
 public class Listener extends Banner implements org.bukkit.event.Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");

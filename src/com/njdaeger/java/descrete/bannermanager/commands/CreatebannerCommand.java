@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.commands;
+package com.njdaeger.java.descrete.bannermanager.commands;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
-import com.njdaeger.java.descrete.editors.bannermanager.utils.BannerGUI;
+import com.njdaeger.java.descrete.bannermanager.GuiType;
+import com.njdaeger.java.descrete.bannermanager.utils.BannerGUI;
 import com.njdaeger.java.essentials.enums.Error;
 
 public class CreatebannerCommand extends BukkitCommand{

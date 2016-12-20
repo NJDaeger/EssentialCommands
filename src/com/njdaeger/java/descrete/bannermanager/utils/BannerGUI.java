@@ -1,4 +1,4 @@
-package com.njdaeger.java.descrete.editors.bannermanager.utils;
+package com.njdaeger.java.descrete.bannermanager.utils;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.njdaeger.java.descrete.editors.bannermanager.Banner;
-import com.njdaeger.java.descrete.editors.bannermanager.GuiType;
+import com.njdaeger.java.descrete.bannermanager.Banner;
+import com.njdaeger.java.descrete.bannermanager.GuiType;
 
 /**
  * Main class to generate the banner. Contains little banner logic. 

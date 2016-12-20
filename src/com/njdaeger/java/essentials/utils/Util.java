@@ -117,7 +117,6 @@ public class Util {
 	 * ####################
 	 * 
 	 * 
-	 */
 	public static void setNick(Player p, String nickname) {
 		UUID userID = p.getUniqueId();
 		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID);
