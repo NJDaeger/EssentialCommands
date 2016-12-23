@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 
 import com.sun.management.OperatingSystemMXBean;
 
-@SuppressWarnings("restriction")
 public class Server{
 	
 	public static Object getCPULoad() {
