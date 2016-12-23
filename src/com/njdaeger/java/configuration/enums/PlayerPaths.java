@@ -398,6 +398,17 @@ public enum PlayerPaths {
 			return null;
 		}
 		
+	},
+	IS_BUBBLED {
+		@Override
+		public String getPath() {
+			return "bubblemode";
+		}
+
+		@Override
+		public Object defValue() {
+			return false;
+		}
 	};
 	
 	public abstract String getPath();

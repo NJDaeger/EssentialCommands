@@ -241,12 +241,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		YamlConfiguration.loadConfiguration(file).set(PlayerPaths.DISPLAYNAME.getPath(), nickname);
-		try {
-			YamlConfiguration.loadConfiguration(file).save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (nickname.equals(player.getName())) {
+			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
+			return;
 		}
+		this.setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname + "&r");
+		player.setDisplayName(ChatColor.translateAlternateColorCodes('&', nickname + "&r"));
 	}
 	
 	@Override
@@ -255,6 +255,10 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			this.createConfig();
 		}
 		if (getValue().getString(PlayerPaths.DISPLAYNAME.getPath()) == null) {
+			return;
+		}
+		if (player.getDisplayName() == player.getName()) {
+			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
 			return;
 		}
 		else {
@@ -501,5 +505,23 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	@Override
 	public Location getLocations() {
 		return new Location();
+	}
+
+	@Override
+	public boolean isBubbleMode() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setBubbleMode() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBubbleAuto() {
+		// TODO Auto-generated method stub
+		
 	}
 }

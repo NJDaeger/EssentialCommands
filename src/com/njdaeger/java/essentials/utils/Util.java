@@ -2,10 +2,7 @@ package com.njdaeger.java.essentials.utils;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
-
-import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -107,37 +104,6 @@ public class Util {
 			return true;
 		}
 		else return false;
-	}
-	
-	/*
-	 * 
-	 * 
-	 * ####################
-	 * NICKNAME
-	 * ####################
-	 * 
-	 * 
-	public static void setNick(Player p, String nickname) {
-		UUID userID = p.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID);
-		File dir1 = new File(dir+File.separator+"user.yml");
-		YamlConfiguration configuration = YamlConfiguration.loadConfiguration(dir1);
-		if (!dir.exists()) {
-			return;
-		}
-		if (!dir1.exists()) {
-			return;
-		}
-		else {
-			p.setDisplayName(ChatColor.translateAlternateColorCodes('&', nickname) + ChatColor.WHITE);
-			configuration.set("displayname", nickname);
-			try {
-				configuration.save(dir1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
 	}
 	/*
 	 * 

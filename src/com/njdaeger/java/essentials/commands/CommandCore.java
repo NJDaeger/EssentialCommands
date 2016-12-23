@@ -15,6 +15,7 @@ import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
+import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 
 public class CommandCore {
@@ -40,7 +41,7 @@ public class CommandCore {
 		new BreakCommand().register();
 		new BurnCommand().register();
 		new ClearInvCommand().register();
-		
+		new NickCommand().register();
 		
 	}
 }

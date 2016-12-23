@@ -213,4 +213,20 @@ public interface IPlayerConfig {
 	 * @return
 	 */
 	Location getLocations();
+	
+	/**
+	 * Checks if the player is in bubble mode. 
+	 * @return
+	 */
+	boolean isBubbleMode();
+	
+	/**
+	 * Sets the player in bubble mode if he isn't, and vice versa.
+	 */
+	void setBubbleMode();
+	
+	/**
+	 * Sets the player in bubble mode according to the players configuration.
+	 */
+	void setBubbleAuto();
 }

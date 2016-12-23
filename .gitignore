@@ -1,13 +1,14 @@
-/bin/
-
+#USELESS CRAP
 /.classpath
 /.project
-plugin.yml
+/.settings
+
+##FILES
+javadoc.xml
+spigot-1.11.2.jar
+
+##FOLDERS
 /bin/
 
-javadoc.xml
-mail.jar
-/javax/
-/META-INF/
-/.settings/
 /com/
+/target/

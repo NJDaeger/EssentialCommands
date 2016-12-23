@@ -37,10 +37,11 @@ public class NickCommand extends EssCommand {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_NICK, Permission.ESS_NICK_OTHER)) {
-				
 			}
-			else sndr.sendMessage(Error.NO_PERMISSION.sendError());
-			return true;
+			else {
+				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				return true;
+			}
 		}
 		if (args.length > 2) {
 			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
@@ -65,7 +66,7 @@ public class NickCommand extends EssCommand {
 					sndr.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
 					return true;
 				}
-				PlayerConfig.getConfig((Player)sndr).setNick(ChatColor.translateAlternateColorCodes('&', args[0]));
+				PlayerConfig.getConfig((Player)sndr).setNick(args[0]);
 				sndr.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
 				return true;
 			}
@@ -90,12 +91,12 @@ public class NickCommand extends EssCommand {
 		if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
 			PlayerConfig.getConfig(target).setNick(target.getName());
 			target.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
-			sndr.sendMessage(ChatColor.GRAY + "You removed " + target.getDisplayName() + "'s nickname.");
+			sndr.sendMessage(ChatColor.GRAY + "You removed " + target.getDisplayName() + ChatColor.GRAY + "'s nickname.");
 			return true;
 		}
-		PlayerConfig.getConfig(target).setNick(ChatColor.translateAlternateColorCodes('&', args[0]));
+		PlayerConfig.getConfig(target).setNick(args[0]);
 		target.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
-		sndr.sendMessage(ChatColor.GRAY + "You changed" + target.getName() + "'s nickname to \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
+		sndr.sendMessage(ChatColor.GRAY + "You changed " + target.getName() + ChatColor.GRAY + "'s nickname to \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
 		return true;
 	}
 	public String getNick(String nick) {
