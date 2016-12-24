@@ -2,11 +2,17 @@ package com.njdaeger.java.configuration.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.google.common.io.Files;
+import com.njdaeger.java.configuration.Warnings;
 import com.njdaeger.java.configuration.controllers.Database;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseBackupExists;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IDatabaseHandler;
@@ -22,8 +28,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Bukkit.getLogger().info(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.");
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return null;
 			}
@@ -39,8 +46,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Bukkit.getLogger().info(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.");
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
 			}
@@ -65,8 +73,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Bukkit.getLogger().info(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.");
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 			}
 		}
@@ -76,36 +85,61 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 
 	@Override
 	public void clear() {
-		Thread clear = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				File file = new File(dir + File.separator + database + ".yml");
-				if (!file.exists()) {
-					try {
-						throw new DatabaseNotFound();
-					} catch (DatabaseNotFound e) {
-						Bukkit.getLogger().info("The database \"" + database
-								+ "\" has been moved, or does not exist. Creating it for you.");
-						Database.getDatabase(database).create();
-						return;
-					}
-				}
-				YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
-				for (String entries : base.getKeys(true)) {
-					if (entries == null) {
-						break;
-					}
-					DatabaseData.save(file, entries, null);
-				}
+		File file = new File(dir + File.separator + database + ".yml");
+		if (!file.exists()) {
+			try {
+				throw new DatabaseNotFound();
+			} catch (DatabaseNotFound e) {
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
+				Database.getDatabase(database).create();
+				return;
 			}
-		});
-		clear.run();
+		}
+		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
+		for (String entries : base.getKeys(true)) {
+			if (entries == null) {
+				break;
+			}
+			DatabaseData.save(file, entries, null);
+		}
 	}
 
 	@Override
 	public void backup() {
-		// TODO Auto-generated method stub
-
+		DateFormat format = new SimpleDateFormat("yyyy/dd/MM-hh:mm:ss");
+		File file = new File(dir + File.separator + database + ".yml");
+		File bckp = new File(
+				dir + File.separator + "backups" + File.separator + database + format.format(new Date()) + ".yml");
+		if (!file.exists()) {
+			try {
+				throw new DatabaseNotFound();
+			} catch (DatabaseNotFound e) {
+				Warnings.warn(
+						"The database \"" + database
+								+ "\" has been moved, or does not exist. Creating it for you. Backup was not created.",
+						new DatabaseNotFound(), false);
+				Database.getDatabase(database).create();
+				return;
+			}
+		}
+		if (bckp.exists()) {
+			try {
+				throw new DatabaseBackupExists();
+			} catch (DatabaseBackupExists e) {
+				Warnings.warn("The database backup \"" + bckp.getName() + "\" already exists.",
+						new DatabaseBackupExists(), true);
+				return;
+			}
+		}
+		try {
+			Files.copy(file, bckp);
+		} catch (IOException e) {
+			Warnings.warn("An error occurred while creating backup \"" + bckp.getName() + "\".", new IOException(),
+					true);
+			return;
+		}
 	}
 
 	@Override
@@ -122,8 +156,12 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 
 	@Override
 	public YamlConfiguration getBase() {
-		// TODO Auto-generated method stub
-		return null;
+		File file = new File(dir + File.separator + database + ".yml");
+		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
+		if (file.exists()) {
+			return base;
+		} else
+			return null;
 	}
 
 	private static void save(File base, String entry, Object value) {
@@ -132,7 +170,8 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		try {
 			base2.save(base);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Warnings.warn("An error occurred while saving " + entry + " to the file " + base.getName(),
+					new IOException(), false);
 		}
 	}
 	/*
