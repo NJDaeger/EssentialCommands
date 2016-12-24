@@ -1,4 +1,4 @@
-package com.njdaeger.java.configuration.exceptions;
+package com.njdaeger.java.configuration.exceptions.db;
 
 public class DatabaseExists extends Exception{
 

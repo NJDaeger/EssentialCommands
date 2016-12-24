@@ -15,7 +15,7 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
-import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 

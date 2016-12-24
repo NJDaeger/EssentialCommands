@@ -28,46 +28,46 @@ import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
 import com.njdaeger.java.essentials.listeners.PlayerLeaveListener;
 import com.njdaeger.java.essentials.utils.Util;
 
-public class Core extends JavaPlugin{
-	
-	Config config = new Config();
-	
+public class Core extends JavaPlugin {
+
+	private static Config config = new Config();
+
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
 		new PlayerJoinListener(this);
 		new CoreListener(this);
 	}
+
 	@SuppressWarnings("deprecation")
 	public void registerCommands() {
-		Plugin.getCommand("serverinfo", new ServerInfoCommand()); //Finished
-		Plugin.getCommand("i", new GiveCommand()); //Finished 
-		Plugin.getCommand("god", new GodCommand()); //Finished
-		Plugin.getCommand("position", new GetPositionCommand()); //Finished
-		Plugin.getCommand("heal", new HealCommand()); //Finished
-		Plugin.getCommand("tempban", new TempBanCommand()); //Finished
-		Plugin.getCommand("ban", new BanCommand()); //Finished
-		Plugin.getCommand("unban", new UnbanCommand());//Finished
-		Plugin.getCommand("editsign", new EditsignCommand()); //Finished
-		Plugin.getCommand("hat", new HatCommand()); //Finished
-		Plugin.getCommand("helpop", new HelpopCommand()); //Finished
-		Plugin.getCommand("kickall", new KickallCommand()); //Finished
-		
-		
+		Plugin.getCommand("serverinfo", new ServerInfoCommand()); // Finished
+		Plugin.getCommand("i", new GiveCommand()); // Finished
+		Plugin.getCommand("god", new GodCommand()); // Finished
+		Plugin.getCommand("position", new GetPositionCommand()); // Finished
+		Plugin.getCommand("heal", new HealCommand()); // Finished
+		Plugin.getCommand("tempban", new TempBanCommand()); // Finished
+		Plugin.getCommand("ban", new BanCommand()); // Finished
+		Plugin.getCommand("unban", new UnbanCommand());// Finished
+		Plugin.getCommand("editsign", new EditsignCommand()); // Finished
+		Plugin.getCommand("hat", new HatCommand()); // Finished
+		Plugin.getCommand("helpop", new HelpopCommand()); // Finished
+		Plugin.getCommand("kickall", new KickallCommand()); // Finished
+
 	}
+
 	@SuppressWarnings("deprecation")
 	public void enableSubplugins() {
 		/*
-		if (config.isHomesEnabled() == true) {
-			Plugin.getCommand("sethome", new Sethome()); //Finished
-			Plugin.getCommand("delhome", new Delhome()); //Finished
-			Plugin.getCommand("home", new Home()); //Finished
-			Plugin.getCommand("homes", new Listhomes()); //Finished
-			Bukkit.getLogger().info("Subplugin \"Homes\" is now attached and enabled.");
-		}
-		*/
+		 * if (config.isHomesEnabled() == true) { Plugin.getCommand("sethome",
+		 * new Sethome()); //Finished Plugin.getCommand("delhome", new
+		 * Delhome()); //Finished Plugin.getCommand("home", new Home());
+		 * //Finished Plugin.getCommand("homes", new Listhomes()); //Finished
+		 * Bukkit.getLogger().info(
+		 * "Subplugin \"Homes\" is now attached and enabled."); }
+		 */
 		if (config.isWarpsEnabled() == true) {
-			Plugin.getCommand("setwarp", new SetwarpCommand()); //Finished
-			Plugin.getCommand("delwarp", new DelwarpCommand()); //Finished
+			Plugin.getCommand("setwarp", new SetwarpCommand()); // Finished
+			Plugin.getCommand("delwarp", new DelwarpCommand()); // Finished
 			Plugin.getCommand("warps", new WarpsCommand());
 			Plugin.getCommand("warp", new WarpCommand());
 			Bukkit.getLogger().info("Subplugin \"Warps\" is now attached and enabled.");
@@ -81,14 +81,18 @@ public class Core extends JavaPlugin{
 			Bukkit.getLogger().info("Subplugin \"GroupManager\" is now attached and enabled.");
 		}
 	}
+
 	public void registerPermissions() {
 		Util.generatePermissions();
-		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by " + this.getDescription().getAuthors() + " is now Enabled!");
+		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by "
+				+ this.getDescription().getAuthors() + " is now Enabled!");
 	}
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
-	 * check if the plugin is enabled with a checkenabled method and call it in the onenable.
+	 * 
+	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable() check if the plugin is
+	 * enabled with a checkenabled method and call it in the onenable.
 	 */
 	@Override
 	public void onEnable() {
@@ -99,11 +103,11 @@ public class Core extends JavaPlugin{
 		registerListeners();
 		registerCommands();
 		registerPermissions();
-		
+
 	}
-	
+
 	@Override
 	public void onDisable() {
-		
+
 	}
 }

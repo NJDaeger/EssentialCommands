@@ -19,8 +19,8 @@ import org.bukkit.plugin.Plugin;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
-import com.njdaeger.java.configuration.exceptions.DatabaseExists;
-import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseExists;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 
 public class PlayerJoinListener extends Database implements Listener{
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");

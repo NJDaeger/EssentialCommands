@@ -1,82 +1,74 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import java.io.IOException;
-
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.njdaeger.java.configuration.exceptions.DatabaseExists;
-import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 
 public interface IDatabaseHandler {
-	
-	/*
+
+	/**
+	 * Gets an entry from the database.
 	 * 
-	 * getDatabaseEntry(String player);
-	 * removeDatabaseEntry(String player);
-	 * createDatabaseEntry(String player);
-	 * clearDatabase();
-	 * backupDatabase();
-	 * createDatabase();
+	 * @param entry
+	 *            Entry to get.
+	 * @return Returns null if the entry doesn't exist, otherwise it returns the
+	 *         entry.
+	 * @throws Exception
+	 * @throws DatabaseNotFound
+	 */
+	String getEntry(String entry) throws Exception;
+
+	/**
+	 * Removes an entry from the database.
 	 * 
+	 * @param entry
+	 *            Entry to remove.
 	 */
-	
+	void removeEntry(String entry);
+
 	/**
-	 * @param database Specify database to get
-	 * @param entry What entry to find.
-	 * @return
-	 * @throws DatabaseNotFound 
+	 * Adds an entry to the database.
+	 * 
+	 * @param entry
+	 *            Entry you want to add.
+	 * @param value
+	 *            What to set that entry to.
 	 */
-	String getDatabaseEntry(String database, String entry) throws DatabaseNotFound;
-	
+	void addEntry(String entry, String value);
+
 	/**
-	 * @param database Specify database to get
-	 * @param entry entry What entry to find.
-	 * @throws IOException
-	 * @throws DatabaseNotFound
+	 * Clears the entire database.
 	 */
-	void removeDatabaseEntry(String database, String entry) throws IOException, DatabaseNotFound;
-	
+	void clear();
+
 	/**
-	 * @param database Specify database to get
-	 * @param entry entry What entry to find.
-	 * @param value what to set the entry value to.
-	 * @throws IOException
-	 * @throws DatabaseNotFound
+	 * Creates a backup of the database.
+	 * <p>
+	 * <li>Located at: EssentialCommands/database/backups/</li>
+	 * <li>Stored as: DATABASE_NAME-DATE.yml</li>
+	 * </p>
 	 */
-	void createDatabaseEntry(String database, String entry, String value) throws IOException, DatabaseNotFound;
-	
+	void backup();
+
 	/**
-	 * @param database Specify database to get
-	 * @throws DatabaseNotFound
-	 * @throws IOException
+	 * Creates a new database.
+	 * <p>
+	 * <li>Located at: EssentialCommands/database/</li>
+	 * </p>
 	 */
-	void clearDatabase(String database) throws DatabaseNotFound, IOException;
-	
+	void create();
+
 	/**
-	 * @param database Specify database to get
-	 * @throws DatabaseNotFound
-	 * @throws IOException
+	 * Deletes a database.
 	 */
-	void backupDatabase(String database) throws DatabaseNotFound, IOException;
-	
+	void delete();
+
 	/**
-	 * @param database Specify database to get
-	 * @throws DatabaseExists
-	 * @throws IOException 
+	 * Attempts to get the database.
+	 * 
+	 * @return Returns null if the database doesn't exist, otherwise it returns
+	 *         the database.
 	 */
-	void createDatabase(String database) throws DatabaseExists, IOException;
-	
-	/**
-	 * @param database Specify database to get
-	 * @throws DatabaseNotFound
-	 */
-	void deleteDatabase(String database) throws DatabaseNotFound;
-	
-	/**
-	 * @param database Specify database to get
-	 * @return
-	 * @throws DatabaseNotFound
-	 */
-	YamlConfiguration getDatabase(String database) throws DatabaseNotFound;
-	
+	YamlConfiguration getBase();
+
 }

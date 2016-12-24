@@ -10,27 +10,31 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.exceptions.DatabaseNotFound;
 import com.njdaeger.java.configuration.exceptions.HomeNotFoundException;
 import com.njdaeger.java.configuration.interfaces.IHomeHandler;
 import com.njdaeger.java.essentials.enums.Error;
 
-public class Homes extends Database implements IHomeHandler{
-	
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#createHome(java.lang.String, org.bukkit.entity.Player)
+public class Homes implements IHomeHandler {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#createHome(java.lang.
+	 * String, org.bukkit.entity.Player)
 	 */
+	@Override
 	public void createHome(String name, Player target) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID);
-		File dir1 = new File(dir+File.separator+"homes");
-		File dir2 = new File(dir1+File.separator+name+".yml");
+		File dir = new File(
+				"plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator + userID);
+		File dir1 = new File(dir + File.separator + "homes");
+		File dir2 = new File(dir1 + File.separator + name + ".yml");
 		if (dir.exists()) {
 			if (dir1.exists()) {
 				if (dir2.exists()) {
 					return;
-				}
-				else {
+				} else {
 					try {
 						dir2.createNewFile();
 						YamlConfiguration home = YamlConfiguration.loadConfiguration(dir2);
@@ -41,13 +45,11 @@ public class Homes extends Database implements IHomeHandler{
 						home.set("yaw", target.getLocation().getYaw());
 						home.set("world", target.getLocation().getWorld().getName());
 						home.save(dir2);
-					}
-					catch (IOException e) {
+					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-			}
-			else {
+			} else {
 				dir1.mkdirs();
 				try {
 					dir2.createNewFile();
@@ -59,13 +61,11 @@ public class Homes extends Database implements IHomeHandler{
 					home.set("yaw", target.getLocation().getYaw());
 					home.set("world", target.getLocation().getWorld().getName());
 					home.save(dir2);
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}
-		else {
+		} else {
 			dir.mkdirs();
 			dir1.mkdirs();
 			try {
@@ -78,44 +78,63 @@ public class Homes extends Database implements IHomeHandler{
 				home.set("yaw", target.getLocation().getYaw());
 				home.set("world", target.getLocation().getWorld().getName());
 				home.save(dir2);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#getHome(java.lang.String, org.bukkit.entity.Player)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#getHome(java.lang.
+	 * String, org.bukkit.entity.Player)
 	 */
+	@Override
 	public YamlConfiguration getHome(String name, Player target) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+name+".yml");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + name + ".yml");
 		if (dir.exists()) {
 			YamlConfiguration home = YamlConfiguration.loadConfiguration(dir);
 			return home;
 		}
 		return null;
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#removeHome(java.lang.String, org.bukkit.entity.Player)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#removeHome(java.lang.
+	 * String, org.bukkit.entity.Player)
 	 */
+	@Override
 	public void removeHome(String name, Player target) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+name+".yml");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + name + ".yml");
 		if (dir.exists()) {
 			dir.delete();
 			return;
 		}
 		throw new HomeNotFoundException();
-		
-		
+
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#listHomes(org.bukkit.entity.Player)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#listHomes(org.bukkit.
+	 * entity.Player)
 	 */
+	@Override
 	public String listHomes(Player target) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes");
 		if (dir.exists()) {
 			String[] homes = dir.list();
 			StringBuilder sb = new StringBuilder();
@@ -129,12 +148,19 @@ public class Homes extends Database implements IHomeHandler{
 		}
 		throw new HomeNotFoundException();
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#sendHome(java.lang.String, org.bukkit.entity.Player)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#sendHome(java.lang.
+	 * String, org.bukkit.entity.Player)
 	 */
+	@Override
 	public void sendHome(String name, Player target) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+name+".yml");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + name + ".yml");
 		if (dir.exists()) {
 			YamlConfiguration home = YamlConfiguration.loadConfiguration(dir);
 			double x = Double.parseDouble(home.get("x").toString());
@@ -151,17 +177,23 @@ public class Homes extends Database implements IHomeHandler{
 			}
 			Location location = new Location(world, x, y, z, fw, fp);
 			target.teleport(location);
-		}
-		else {
+		} else {
 			throw new HomeNotFoundException();
 		}
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#sendOtherHome(java.lang.String, org.bukkit.entity.Player, org.bukkit.entity.Player)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#sendOtherHome(java.
+	 * lang.String, org.bukkit.entity.Player, org.bukkit.entity.Player)
 	 */
+	@Override
 	public void sendOtherHome(String name, Player target, Player sender) {
 		UUID userID = target.getUniqueId();
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+name+".yml");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + name + ".yml");
 		if (dir.exists()) {
 			YamlConfiguration home = YamlConfiguration.loadConfiguration(dir);
 			double x = Double.parseDouble(home.get("x").toString());
@@ -181,56 +213,69 @@ public class Homes extends Database implements IHomeHandler{
 		}
 		throw new HomeNotFoundException();
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#getOfflineHome(java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#getOfflineHome(java.
+	 * lang.String, java.lang.String)
 	 */
+	@Override
 	public YamlConfiguration getOfflineHome(String home, String target) {
 		String userID = "";
-		try {
-			userID = getDatabaseEntry("playerdata", target);
-			if (userID == null) {
-				return null;
-			}
-		} catch (DatabaseNotFound e) {}
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID.toString()+File.separator+"homes"+File.separator+home+".yml");
-		
+		userID = Database.getDatabase("playerdata").getEntry(target);
+		if (userID == null) {
+			return null;
+		}
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID.toString() + File.separator + "homes" + File.separator + home + ".yml");
+
 		if (dir.exists()) {
 			YamlConfiguration homelocation = YamlConfiguration.loadConfiguration(dir);
 			return homelocation;
 		}
 		return null;
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#removeOfflineHome(java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#removeOfflineHome(
+	 * java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void removeOfflineHome(String home, String target) {
-		String userID = "";
-		try {
-			userID = getDatabaseEntry("playerdata", target).toString();
-		} catch (DatabaseNotFound e) {}
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+home+".yml");
+		String userID = Database.getDatabase("playerdata").getEntry(target);
 		if (userID == null) {
 			return;
 		}
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + home + ".yml");
 		if (dir.exists()) {
 			dir.delete();
 			return;
 		}
 		throw new HomeNotFoundException();
-		
+
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#listOfflineHomes(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#listOfflineHomes(java
+	 * .lang.String)
 	 */
+	@Override
 	public String listOfflineHomes(String target) {
-		String userID = "";
-		try {
-			userID = getDatabaseEntry("playerdata", target);
-			if (userID == null) {
-				return null;
-			}
-		} catch (DatabaseNotFound e) {}
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID.toString()+File.separator+"homes");
+		String userID = Database.getDatabase("playerdata").getEntry(target);
+		if (userID == null) {
+			return null;
+		}
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID.toString() + File.separator + "homes");
 		if (dir.exists()) {
 			String[] homes = dir.list();
 			StringBuilder sb = new StringBuilder();
@@ -244,18 +289,22 @@ public class Homes extends Database implements IHomeHandler{
 		}
 		return null;
 	}
-	/* (non-Javadoc)
-	 * @see com.configapi.configuration.interfaces.IHomeHandler#sendOfflineHome(java.lang.String, java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.configapi.configuration.interfaces.IHomeHandler#sendOfflineHome(java.
+	 * lang.String, java.lang.String)
 	 */
+	@Override
 	public void sendOfflineHome(String home, String target, Player sender) {
-		String userID = "";
-		try {
-			userID = getDatabaseEntry("playerdata", target).toString();
-		} catch (DatabaseNotFound e) {}
+		String userID = Database.getDatabase("playerdata").getEntry(target);
 		if (userID == null) {
 			return;
 		}
-		File dir = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+userID+File.separator+"homes"+File.separator+home+".yml");
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID + File.separator + "homes" + File.separator + home + ".yml");
 		if (dir.exists()) {
 			YamlConfiguration homelocation = YamlConfiguration.loadConfiguration(dir);
 			double x = Double.parseDouble(homelocation.get("x").toString());
@@ -275,6 +324,6 @@ public class Homes extends Database implements IHomeHandler{
 			return;
 		}
 		throw new HomeNotFoundException();
-		
+
 	}
 }

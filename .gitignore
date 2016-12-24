@@ -1,11 +1,12 @@
 #USELESS CRAP
 /.classpath
 /.project
-/.settings
+.settings
 
 ##FILES
 javadoc.xml
 spigot-1.11.2.jar
+spigot-javadoc-1.11.2.jar
 
 ##FOLDERS
 /bin/

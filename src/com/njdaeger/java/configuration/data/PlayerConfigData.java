@@ -3,8 +3,6 @@ package com.njdaeger.java.configuration.data;
 import java.io.File;
 import java.io.IOException;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,11 +13,14 @@ import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
 
-public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
-	
-	private File path = new File("plugins"+File.separator+"EssentialCommands"+File.separator+"users"+File.separator+player.getUniqueId());
-	private File file = new File(path+File.separator+"user.yml");
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
+
+	private File path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
+			+ File.separator + player.getUniqueId());
+	private File file = new File(path + File.separator + "user.yml");
+
 	@Override
 	public void setValue(String path, Object value) {
 		if (!file.exists()) {
@@ -33,7 +34,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public YamlConfiguration getValue() {
 		if (!file.exists()) {
@@ -41,9 +42,10 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		}
 		return YamlConfiguration.loadConfiguration(file);
 	}
+
 	@Override
 	public void createConfig() {
-		if(!path.exists()) {
+		if (!path.exists()) {
 			path.mkdirs();
 			try {
 				file.createNewFile();
@@ -65,10 +67,11 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		}
 		return;
 	}
-	
+
 	@Override
 	public void logoutUpdate() {
 	}
+
 	@Override
 	public void loginUpdate() {
 		setNick(getValue().getString(PlayerPaths.DISPLAYNAME.getPath()));
@@ -77,7 +80,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		setGod();
 		setMessageable();
 		setTpToggled();
-		
+
 	}
 
 	@Override
@@ -90,8 +93,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 				Groups.muted.remove(player);
 			}
 			return;
-		}
-		else {
+		} else {
 			if (!Groups.muted.contains(player)) {
 				Groups.muted.add(player);
 				this.setValue(PlayerPaths.MUTED.getPath(), true);
@@ -110,8 +112,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 				Groups.socialspy.remove(player);
 			}
 			return;
-		}
-		else {
+		} else {
 			if (!Groups.socialspy.contains(player)) {
 				Groups.socialspy.add(player);
 				this.setValue(PlayerPaths.SOCIALSPY.getPath(), false);
@@ -124,7 +125,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			}
 			return;
 		}
-		
+
 	}
 
 	@Override
@@ -137,8 +138,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 				Groups.god.remove(player);
 			}
 			return;
-		}
-		else {
+		} else {
 			if (!Groups.god.contains(player)) {
 				Groups.god.add(player);
 				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GOD.getPath(), false);
@@ -163,15 +163,14 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), true);
 			}
 			return;
-		}
-		else {
+		} else {
 			if (!Groups.nomessaging.contains(player)) {
 				Groups.nomessaging.add(player);
 				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), false);
 			}
 			return;
 		}
-		
+
 	}
 
 	@Override
@@ -183,15 +182,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			Groups.afk.remove(player);
 			Groups.afkloc.remove(player.getName());
 			player.setCollidable(true);
-			System.out.println("1");
 			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
 			this.setValue(PlayerPaths.AFK.getPath(), false);
-		}
-		else {
+		} else {
 			Groups.afk.add(player);
 			Groups.afkloc.put(player.getName(), player.getLocation());
 			player.setCollidable(false);
-			System.out.println("2");
 			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
 			this.setValue(PlayerPaths.AFK.getPath(), true);
 		}
@@ -207,11 +203,10 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 				Groups.tptoggled.remove(player);
 			}
 			return;
-		}
-		else {
+		} else {
 			if (!Groups.tptoggled.contains(player)) {
 				Groups.tptoggled.add(player);
-				
+
 				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.TPTOGGLED.getPath(), false);
 				try {
 					YamlConfiguration.loadConfiguration(file).save(file);
@@ -248,7 +243,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		this.setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname + "&r");
 		player.setDisplayName(ChatColor.translateAlternateColorCodes('&', nickname + "&r"));
 	}
-	
+
 	@Override
 	public void setNickAuto() {
 		if (!file.exists()) {
@@ -260,9 +255,9 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		if (player.getDisplayName() == player.getName()) {
 			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
 			return;
-		}
-		else {
-			player.setDisplayName(ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath()) + ChatColor.WHITE);
+		} else {
+			player.setDisplayName(
+					ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath()) + ChatColor.WHITE);
 			return;
 		}
 	}
@@ -270,7 +265,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	@Override
 	public void setFlying() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -317,10 +312,10 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 		}
 		return;
 	}
-	
+
 	@Override
 	public void setFlySpeed(double speed) {
-		if (speed > 10)  {
+		if (speed > 10) {
 			double b = speed - 10;
 			speed -= b;
 		}
@@ -356,8 +351,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	public void setOp() {
 		if (!file.exists()) {
 			this.createConfig();
-		}
-		else {
+		} else {
 			player.setOp(true);
 			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), true);
 			try {
@@ -367,13 +361,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			}
 		}
 	}
-	
+
 	@Override
 	public void setDeopped() {
 		if (!file.exists()) {
 			this.createConfig();
-		}
-		else {
+		} else {
 			player.setOp(false);
 			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), false);
 			try {
@@ -383,7 +376,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 			}
 		}
 	}
-	
+
 	@Override
 	public void setOpAuto() {
 		if (!file.exists()) {
@@ -516,12 +509,12 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig{
 	@Override
 	public void setBubbleMode() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setBubbleAuto() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
