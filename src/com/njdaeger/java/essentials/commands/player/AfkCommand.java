@@ -1,6 +1,5 @@
 package com.njdaeger.java.essentials.commands.player;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,10 +14,10 @@ import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class AfkCommand extends EssCommand{
+public class AfkCommand extends EssCommand {
 
-	static String name = "afk";
-	
+	public static String name = "afk";
+
 	public AfkCommand() {
 		super("afk");
 		List<String> a = Arrays.asList("akf", "away", "brb");
@@ -26,11 +25,12 @@ public class AfkCommand extends EssCommand{
 		this.usageMessage = "/afk [player]";
 		this.setAliases(a);
 	}
+
 	@Override
 	public void register() {
 		Plugin.getCommand(name, this);
 	}
-	
+
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (args.length > 1) {
@@ -40,9 +40,8 @@ public class AfkCommand extends EssCommand{
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_AFK, Permission.ESS_AFK_OTHER)) {
-				
-			}
-			else {
+
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
@@ -52,18 +51,15 @@ public class AfkCommand extends EssCommand{
 				Player player = (Player) sndr;
 				PlayerConfig.getConfig(player).setAfk();
 				return true;
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (sndr instanceof Player) {
 				Player player = (Player) sndr;
 				if (Holder.hasPermission(player, Permission.ESS_AFK_OTHER)) {
-				}
-				else {
+				} else {
 					sndr.sendMessage(Error.NO_PERMISSION.sendError());
 					return true;
 				}

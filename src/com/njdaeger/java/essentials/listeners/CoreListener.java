@@ -15,29 +15,32 @@ import com.njdaeger.java.essentials.listeners.events.CommandEvent;
 import com.njdaeger.java.essentials.listeners.events.InteractEvent;
 import com.njdaeger.java.essentials.listeners.events.MoveEvent;
 
-public class CoreListener implements Listener{
-	
+public class CoreListener implements Listener {
+
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
+
 	public CoreListener(Core plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
-	
+
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		new InteractEvent().whenAfk(e);
 	}
+
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e) {
 		new CommandEvent().whenAfk(e);
 	}
+
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		new MoveEvent().whenAfk(e);
 	}
+
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		new ChatEvent().forAfk(e);
 		new ChatEvent().forColor(e);
-		new ChatEvent().forFormat(e);
 	}
 }
