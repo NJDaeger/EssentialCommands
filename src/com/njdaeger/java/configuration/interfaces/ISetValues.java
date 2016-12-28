@@ -1,7 +1,7 @@
 package com.njdaeger.java.configuration.interfaces;
 
 
-public interface ISetLastValues {
+public interface ISetValues {
 	
 	/**
 	 * Sets the last or logout location X value.

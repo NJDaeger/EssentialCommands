@@ -2,27 +2,17 @@ package com.njdaeger.java.configuration.interfaces;
 
 import org.bukkit.entity.Player;
 
-public interface IHomeHandler {
-
-	/**
-	 * Creates the home specified
-	 */
-	void create();
+public interface IOfflineHome {
 
 	/**
 	 * Removes the home specified
 	 */
-	void remove();
+	public void remove();
 
 	/**
 	 * List the homes of the specified player.
 	 */
-	String listHomes();
-
-	/**
-	 * Send the specified player to their home.
-	 */
-	void sendHome();
+	public String listHomes();
 
 	/**
 	 * Send someone to another home.
@@ -30,5 +20,6 @@ public interface IHomeHandler {
 	 * @param target
 	 *            Player to send.
 	 */
-	void sendOtherHome(Player target);
+	public void sendOtherHome(Player target);
+
 }

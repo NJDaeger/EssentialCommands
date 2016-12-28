@@ -14,6 +14,7 @@ import com.njdaeger.java.configuration.Warnings;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseBackupExists;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseExists;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IDatabaseHandler;
 
@@ -144,8 +145,21 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
-
+		File file = new File(dir + File.separator + database + ".yml");
+		if (file.exists()) {
+			try {
+				throw new DatabaseExists();
+			} catch (DatabaseExists e) {
+				Warnings.warn("The creation of database \"" + database + "\" was stopped. Database already exists.",
+						new DatabaseExists(), true);
+			}
+			return;
+		}
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

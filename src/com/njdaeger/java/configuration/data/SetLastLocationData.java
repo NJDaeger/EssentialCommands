@@ -2,9 +2,9 @@ package com.njdaeger.java.configuration.data;
 
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
-import com.njdaeger.java.configuration.interfaces.ISetLastValues;
+import com.njdaeger.java.configuration.interfaces.ISetValues;
 
-public class SetLastLocationData extends PlayerConfig implements ISetLastValues {
+public class SetLastLocationData extends PlayerConfig implements ISetValues {
 
 	@Override
 	public void setX(double value) {

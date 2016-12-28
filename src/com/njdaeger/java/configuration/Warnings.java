@@ -10,7 +10,9 @@ public class Warnings {
 	 * @param warningMessage
 	 *            Message to be sent to the console.
 	 * @param thrown
+	 *            This is what's thrown when the error occurs.
 	 * @param showCanceled
+	 *            Whether to display the canceled operation message.
 	 */
 	public static void warn(String warningMessage, Throwable thrown, boolean showCanceled) {
 		Bukkit.getLogger().warning("");
@@ -33,8 +35,8 @@ public class Warnings {
 			Bukkit.getLogger().warning("Error: " + warningMessage);
 		}
 		Bukkit.getLogger().warning("");
-		Bukkit.getLogger().warning("Paste the entire error into your issue ticket. You should recieve a");
-		Bukkit.getLogger().warning("response shortly after submitting.");
+		Bukkit.getLogger().warning("If this error persists, please paste the entire error into your issue");
+		Bukkit.getLogger().warning("ticket. You should recieve a response shortly after submitting.");
 		Bukkit.getLogger().warning("");
 		Bukkit.getLogger().warning("==============================EndOfError=============================");
 		Bukkit.getLogger().warning("");
