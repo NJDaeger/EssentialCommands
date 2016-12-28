@@ -5,6 +5,13 @@ import org.bukkit.entity.Player;
 public interface IOfflineHome {
 
 	/**
+	 * Checks if the home exists.
+	 * 
+	 * @return Returns true if it exists, false otherwise.
+	 */
+	public boolean exists();
+
+	/**
 	 * Removes the home specified
 	 */
 	public void remove();

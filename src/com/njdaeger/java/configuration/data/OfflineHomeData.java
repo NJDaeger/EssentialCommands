@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.configuration.Warnings;
@@ -25,7 +26,7 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 
 	@Override
 	public void remove() {
-		if (homes.exists()) {
+		if (exists()) {
 			homes.delete();
 			return;
 		} else
@@ -40,7 +41,7 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public String listHomes() {
 		if (dir.exists()) {
 			if (dir.list() == null) {
-				return new HomeNotFound().getMessage();
+				return null;
 			}
 			String[] homes = dir.list();
 			StringBuilder sb = new StringBuilder();
@@ -52,93 +53,98 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 			String wcommas = finalmsg.replaceAll(" ", ", ");
 			return wcommas;
 		}
-		return new HomeNotFound().getMessage();
+		return null;
 	}
 
 	@Override
 	public void sendOtherHome(Player target) {
-		if (homes.exists()) {
-			World world = Bukkit.getWorld(getWorld());
-			if (world == null) {
-				target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
-				return;
-			}
-			Location location = new Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
-			target.teleport(location);
+		World world = Bukkit.getWorld(getWorld());
+		if (world == null) {
+			target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
 			return;
 		}
+		Location location = new Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
+		target.teleport(location);
 		return;
 	}
 
 	@Override
 	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return YamlConfiguration.loadConfiguration(homes).getDouble("x");
 	}
 
 	@Override
 	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return YamlConfiguration.loadConfiguration(homes).getDouble("y");
 	}
 
 	@Override
 	public double getZ() {
-		// TODO Auto-generated method stub
-		return 0;
+		return YamlConfiguration.loadConfiguration(homes).getDouble("z");
 	}
 
 	@Override
 	public int getYaw() {
-		// TODO Auto-generated method stub
-		return 0;
+		return YamlConfiguration.loadConfiguration(homes).getInt("yaw");
 	}
 
 	@Override
 	public int getPitch() {
-		// TODO Auto-generated method stub
-		return 0;
+		return YamlConfiguration.loadConfiguration(homes).getInt("pitch");
 	}
 
 	@Override
 	public String getWorld() {
-		// TODO Auto-generated method stub
-		return null;
+		return YamlConfiguration.loadConfiguration(homes).getString("world");
 	}
 
 	@Override
 	public void setX(double value) {
-		// TODO Auto-generated method stub
-
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("x", value);
+		return;
 	}
 
 	@Override
 	public void setY(double value) {
-		// TODO Auto-generated method stub
-
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("y", value);
+		return;
 	}
 
 	@Override
 	public void setZ(double value) {
-		// TODO Auto-generated method stub
-
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("z", value);
+		return;
 	}
 
 	@Override
 	public void setYaw(float value) {
-		// TODO Auto-generated method stub
-
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("yaw", value);
+		return;
 	}
 
 	@Override
 	public void setPitch(float value) {
-		// TODO Auto-generated method stub
-
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("pitch", value);
+		return;
 	}
 
 	@Override
 	public void setWorld(String value) {
-		// TODO Auto-generated method stub
+		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
+		home.set("world", value);
+		return;
+	}
 
+	@Override
+	public boolean exists() {
+		if (homes.exists()) {
+			return true;
+		} else
+			return false;
 	}
 }
