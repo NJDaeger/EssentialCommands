@@ -73,11 +73,11 @@ public class Listhomes extends EssCommand {
 						return true;
 					}
 					sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
-							+ Homes.getOfflineHome(null, args[0]));
+							+ Homes.getOfflineHome(null, args[0]).listHomes());
 					return true;
 				}
 				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
-						+ Homes.getHome(null, target));
+						+ Homes.getHome(null, target).listHomes());
 				return true;
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());

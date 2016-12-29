@@ -51,7 +51,7 @@ public class Home extends EssCommand {
 					}
 					Homes.getHome(args[0], player).sendHome();
 					sndr.sendMessage(
-							ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
+							ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
 					return true;
 				case 2:
 					if (Holder.hasPermission(player, Permission.ESS_HOME_OTHER)) {
@@ -66,8 +66,8 @@ public class Home extends EssCommand {
 								return true;
 							}
 							Homes.getOfflineHome(args[0], args[1]).sendOtherHome(player);
-							sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN
-									+ args[0]);
+							sndr.sendMessage(
+									ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
 							return true;
 						}
 						if (!Homes.getHome(args[0], target).exists()) {
@@ -76,7 +76,7 @@ public class Home extends EssCommand {
 						}
 						Homes.getHome(args[0], target).sendOtherHome(player);
 						sndr.sendMessage(
-								ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
+								ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
 						return true;
 
 					}
