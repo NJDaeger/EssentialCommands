@@ -5,6 +5,13 @@ import org.bukkit.entity.Player;
 public interface IHomeHandler {
 
 	/**
+	 * Checks if the home exists.
+	 * 
+	 * @return Returns true if exists, false otherwise.
+	 */
+	boolean exists();
+
+	/**
 	 * Creates the home specified
 	 */
 	void create();

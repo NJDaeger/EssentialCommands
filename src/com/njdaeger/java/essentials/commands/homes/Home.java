@@ -35,73 +35,62 @@ public class Home extends EssCommand {
 		Plugin.getCommand(name, this);
 	}
 
-	Homes homes = new Homes();
-
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_HOME, Permission.ESS_HOME_OTHER)) {
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
-			if (args.length == 0) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			if (args.length == 1) {
-				if (homes.getHome(args[0], player) == null) {
-					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + homes.listHomes(player));
+				switch (args.length) {
+				case 0:
+					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 					return true;
-				}
-				homes.sendHome(args[0], player);
-				sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
-				return true;
-			}
-			if (args.length == 2) {
-				if (Holder.hasPermission(player, Permission.ESS_HOME_OTHER)) {
-					Player target = Bukkit.getPlayer(args[1]);
-					if (!target.isOnline()) {
-						if (Database.getDatabase("playerdata").getEntry(target.getName()) == null) {
-							sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-							return true;
-						}
-						if (homes.getOfflineHome(args[0],
-								Database.getDatabase("playerdata").getEntry(args[1])) == null) {
-							sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-							sndr.sendMessage(ChatColor.GRAY + args[1] + "'s current homes: " + ChatColor.GREEN
-									+ homes.listHomes(target));
-							return true;
-						}
-						homes.sendOfflineHome(args[0], Database.getDatabase("playerdata").getEntry(args[1]), player);
-						sndr.sendMessage(
-								ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
-						return true;
-					}
-					if (homes.getHome(args[0], target) == null) {
+				case 1:
+					if (!Homes.getHome(args[0], player).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-						sndr.sendMessage(ChatColor.GRAY + target.getName() + "'s current homes: " + ChatColor.GREEN
-								+ homes.listHomes(target));
 						return true;
 					}
-					homes.sendOtherHome(args[0], target, player);
+					Homes.getHome(args[0], player).sendHome();
 					sndr.sendMessage(
 							ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
 					return true;
-				} else {
+				case 2:
+					if (Holder.hasPermission(player, Permission.ESS_HOME_OTHER)) {
+						Player target = Bukkit.getPlayer(args[1]);
+						if (target == null) {
+							if (Database.getDatabase("playerdata").getEntry(args[1]) == null) {
+								sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+								return true;
+							}
+							if (!Homes.getOfflineHome(args[0], args[1]).exists()) {
+								sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
+								return true;
+							}
+							Homes.getOfflineHome(args[0], args[1]).sendOtherHome(player);
+							sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN
+									+ args[0]);
+							return true;
+						}
+						if (!Homes.getHome(args[0], target).exists()) {
+							sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
+							return true;
+						}
+						Homes.getHome(args[0], target).sendOtherHome(player);
+						sndr.sendMessage(
+								ChatColor.GRAY + "You have successfully been sent too " + ChatColor.GREEN + args[0]);
+						return true;
+
+					}
 					sndr.sendMessage(Error.NO_PERMISSION.sendError());
 					return true;
+				default:
+					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				}
-			} else {
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
-		} else {
-			sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
+		sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+		return true;
 	}
-
 }

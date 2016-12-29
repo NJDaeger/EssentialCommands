@@ -15,12 +15,13 @@ public class Homes {
 	 * Gets the home of an online player.
 	 * 
 	 * @param home
-	 *            Name of home.
+	 *            Name of home. Note: this can be null because not all
+	 *            accessible methods use it.
 	 * @param target
 	 *            Target to get home from.
 	 * @return
 	 */
-	public HomeData getHome(String home, Player target) {
+	public static HomeData getHome(String home, Player target) {
 		Homes.home = home;
 		Homes.target = target;
 		return new HomeData();
@@ -30,12 +31,13 @@ public class Homes {
 	 * Gets an offline player's home. Must get target from player database.
 	 * 
 	 * @param home
-	 *            Name of home.
+	 *            Name of home. Note: this can be null because not all
+	 *            accessible methods use it.
 	 * @param target
 	 *            Name of target.
 	 * @return
 	 */
-	public OfflineHomeData getOfflineHome(String home, String offlinetarget) {
+	public static OfflineHomeData getOfflineHome(String home, String offlinetarget) {
 		Homes.home = home;
 		Homes.offlinetarget = offlinetarget;
 		return new OfflineHomeData();

@@ -35,100 +35,70 @@ public class Delhome extends EssCommand {
 
 	}
 
-	Homes homes = new Homes();
-
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER)) {
-				if (args.length == 0) {
-					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-					return true;
-				}
-				if (args.length == 1) {
-					if (homes.getHome(args[0], player) == null) {
+		switch (args.length) {
+		case 0:
+			if (Holder.hasPermission(sndr, Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER)) {
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+				return true;
+			}
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+		case 1:
+			if (sndr instanceof Player) {
+				Player player = (Player) sndr;
+				if (Holder.hasPermission(player, Permission.ESS_DELHOME)) {
+					if (!Homes.getHome(args[0], player).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
 						sndr.sendMessage(
-								ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + homes.listHomes(player));
+								ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, player));
 						return true;
 					}
-					homes.removeHome(args[0], player);
+					Homes.getHome(args[0], player).remove();
 					sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
 							+ " from homes.");
 					return true;
 				}
-				if (args.length == 2) {
-					if (Holder.hasPermission(player, Permission.ESS_DELHOME_OTHER)) {
-						Player target = Bukkit.getPlayer(args[1]);
-						if (target == null) {
-							if (Database.getDatabase("playerdata").getEntry(args[1]) == null) {
-								sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-								return true;
-							}
-							if (homes.getOfflineHome(args[0], args[1]) == null) {
-								sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-								return true;
-							}
-							homes.removeOfflineHome(args[0], args[1]);
-							sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0]
-									+ ChatColor.GRAY + " from " + args[1] + "'s homes.");
-							return true;
-						}
-						if (homes.getHome(args[0], target) == null) {
-							sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-							sndr.sendMessage(ChatColor.GRAY + target.getName() + "'s current homes: " + ChatColor.GREEN
-									+ homes.listHomes(target));
-							return true;
-						}
-						homes.removeHome(args[0], target);
-						sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
-								+ " from " + target.getName() + "'s homes.");
-						return true;
-					}
-					sndr.sendMessage(Error.NO_PERMISSION.sendError());
-					return true;
-				}
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-				return true;
+				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
-		} else {
-			if (args.length <= 1) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			if (args.length == 2) {
+		case 2:
+			if (Holder.hasPermission(sndr, Permission.ESS_DELHOME_OTHER)) {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
 					if (Database.getDatabase("playerdata").getEntry(args[1]) == null) {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return true;
 					}
-					if (homes.getOfflineHome(args[0], args[1]) == null) {
+					if (!Homes.getOfflineHome(args[0], args[1]).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
+						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN
+								+ Homes.getOfflineHome(null, args[1]));
 						return true;
 					}
-					homes.removeOfflineHome(args[0], args[1]);
+					Homes.getOfflineHome(args[0], args[1]).remove();
 					sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
 							+ " from " + args[1] + "'s homes.");
 					return true;
 				}
-				if (homes.getHome(args[0], target) == null) {
+				if (!Homes.getHome(args[0], target).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(ChatColor.GRAY + target.getName() + "'s current homes: " + ChatColor.GREEN
-							+ homes.listHomes(target));
+					sndr.sendMessage(
+							ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, target));
 					return true;
 				}
-				homes.removeHome(args[0], target);
-				sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
-						+ " from " + target.getName() + "'s homes.");
+				Homes.getHome(args[0], target).remove();
+				sndr.sendMessage(
+						ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY + " from homes.");
 				return true;
+
 			}
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			return true;
+		default:
 			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 			return true;
 		}
 	}
-
 }

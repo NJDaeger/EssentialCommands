@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.EssCommand;
@@ -13,6 +12,8 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
+import com.njdaeger.java.configuration.data.HomeData;
+import com.njdaeger.java.configuration.data.OfflineHomeData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -35,101 +36,94 @@ public class Listhomes extends EssCommand {
 		Plugin.getCommand(name, this);
 	}
 
-	Database database = new Database();
-	Homes homes = new Homes();
-
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER)) {
+			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER,
+					Permission.ESS_LISTHOMES_DETAIL)) {
 			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
 		}
-		if (args.length == 0) {
+		switch (args.length) {
+		case 0:
 			if (sndr instanceof Player) {
 				Player player = (Player) sndr;
-				if (homes.listHomes(player).length() == 0) {
+				if (Holder.hasPermission(player, Permission.ESS_LISTHOMES)) {
+
+				}
+				if (Homes.getHome(null, player).listHomes() == null) {
 					sndr.sendMessage(Error.NO_HOMES.sendError());
 					return true;
 				}
-				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + homes.listHomes(player));
+				sndr.sendMessage(
+						ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, player).listHomes());
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
-		}
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES_OTHER)) {
-
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
-		}
-		if (args.length == 1) {
-			Player target = Bukkit.getPlayer(args[0]);
-			if (target == null) {
-				if (Database.getDatabase("playerdata").getEntry(args[0]) == null) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+		case 1:
+			if (Holder.hasPermission(sndr, Permission.ESS_LISTHOMES_OTHER)) {
+				Player target = Bukkit.getPlayer(args[0]);
+				if (target == null) {
+					if (Database.getDatabase("playerdata").getEntry(args[0]) == null) {
+						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+						return true;
+					}
+					sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
+							+ Homes.getOfflineHome(null, args[0]));
 					return true;
 				}
 				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
-						+ homes.listOfflineHomes(args[0]));
+						+ Homes.getHome(null, target));
 				return true;
 			}
-			if (homes.listHomes(target).length() == 0) {
-				sndr.sendMessage(Error.NO_HOMES.sendError());
-				return true;
-			}
-			sndr.sendMessage(ChatColor.GRAY + target.getName() + "'s current homes: " + ChatColor.GREEN
-					+ homes.listHomes(target));
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
-
-		}
-		if (args.length == 2) {
-			Player target = Bukkit.getPlayer(args[0]);
-			if (target == null) {
-				if (Database.getDatabase("playerdata").getEntry(args[0]) == null) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+		case 2:
+			if (Holder.hasPermission(sndr, Permission.ESS_LISTHOMES_DETAIL)) {
+				Player target = Bukkit.getPlayer(args[0]);
+				if (target == null) {
+					if (Database.getDatabase("playerdata").getEntry(args[0]) == null) {
+						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+						return true;
+					}
+					if (!Homes.getOfflineHome(args[1], args[0]).exists()) {
+						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
+						return true;
+					}
+					OfflineHomeData home = Homes.getOfflineHome(args[1], args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "Home \"" + args[1] + "\" information.");
+					sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + home.getX());
+					sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + home.getY());
+					sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + home.getZ());
+					sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + home.getYaw());
+					sndr.sendMessage(ChatColor.GRAY + "pitch: " + ChatColor.GREEN + home.getPitch());
+					sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.getWorld());
 					return true;
 				}
-				if (homes.getOfflineHome(args[1], args[0]) == null) {
+				if (!Homes.getHome(args[1], target).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
 					return true;
 				}
-				YamlConfiguration home = homes.getOfflineHome(args[1], args[0]);
+				HomeData home = Homes.getHome(args[1], target);
 				sndr.sendMessage(ChatColor.GRAY + "Home \"" + args[1] + "\" information.");
-				sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + home.get("x"));
-				sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + home.get("y"));
-				sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + home.get("z"));
-				sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + home.get("yaw"));
-				sndr.sendMessage(ChatColor.GRAY + "pitch: " + ChatColor.GREEN + home.get("pitch"));
-				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.get("world"));
+				sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + home.getX());
+				sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + home.getY());
+				sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + home.getZ());
+				sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + home.getYaw());
+				sndr.sendMessage(ChatColor.GRAY + "pitch: " + ChatColor.GREEN + home.getPitch());
+				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.getWorld());
 				return true;
 			}
-			if (homes.listHomes(target).length() == 0) {
-				sndr.sendMessage(Error.NO_HOMES.sendError());
-				return true;
-			}
-			if (homes.getHome(args[1], target) == null) {
-				sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-				return true;
-			}
-			YamlConfiguration home = homes.getHome(args[1], target);
-			sndr.sendMessage(ChatColor.GRAY + "Home \"" + args[1] + "\" information.");
-			sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + home.get("x"));
-			sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + home.get("y"));
-			sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + home.get("z"));
-			sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + home.get("yaw"));
-			sndr.sendMessage(ChatColor.GRAY + "pitch: " + ChatColor.GREEN + home.get("pitch"));
-			sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.get("world"));
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
+		default:
+			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+			break;
 		}
-		sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 		return true;
 	}
 }

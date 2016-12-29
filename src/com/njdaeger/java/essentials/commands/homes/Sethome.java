@@ -3,9 +3,6 @@ package com.njdaeger.java.essentials.commands.homes;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,13 +10,16 @@ import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Homes;
+import com.njdaeger.java.configuration.data.HomeData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class Sethome extends EssCommand{
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class Sethome extends EssCommand {
+
 	static String name = "sethome";
-	
+
 	public Sethome() {
 		super(name);
 		List<String> a = Arrays.asList("newhome", "addhome");
@@ -27,46 +27,42 @@ public class Sethome extends EssCommand{
 		this.usageMessage = "/sethome <name>";
 		this.setAliases(a);
 	}
-	
+
 	@Override
 	public void register() {
 		Plugin.getCommand(name, this);
 	}
-	
-	Homes homes = new Homes();
+
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_SETHOME)) {
-				if (args.length == 0) {
+				switch (args.length) {
+				case 0:
 					sndr.sendMessage(Error.ADD_HOME_NAME.sendError());
 					return true;
-				}
-				if (args.length > 1) {
+				case 1:
+					HomeData home = Homes.getHome(args[0], player);
+					if (!home.exists()) {
+						sndr.sendMessage(Error.HOME_EXISTS.sendError());
+						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN
+								+ Homes.getHome(args[0], player).listHomes());
+						return true;
+					}
+					home.create();
+					sndr.sendMessage(ChatColor.GRAY + "Created a new home at " + ChatColor.GREEN + "x:" + home.getX()
+							+ " y:" + home.getY() + " z:" + home.getZ());
+					return true;
+				default:
 					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 					return true;
 				}
-				if (homes.getHome(args[0], player) != null) {
-					sndr.sendMessage(Error.HOME_EXISTS.sendError());
-					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + homes.listHomes(player));
-					return true;
-				}
-				else {
-					homes.createHome(args[0], player);
-					Location a = player.getLocation();
-					sndr.sendMessage(ChatColor.GRAY + "Created a new home at " + ChatColor.GREEN + "x:" + a.getBlockX() + " y:" + a.getBlockY() + " z:" + a.getBlockZ());
-					return true;
-				}
 			}
-			else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
-		}
-		else {
-			sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
+		sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+		return true;
 	}
 }

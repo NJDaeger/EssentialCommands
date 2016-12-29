@@ -146,6 +146,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 	@Override
 	public void create() {
 		File file = new File(dir + File.separator + database + ".yml");
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
 		if (file.exists()) {
 			try {
 				throw new DatabaseExists();
@@ -164,7 +167,16 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
+		File file = new File(dir + File.separator + database + ".yml");
+		if (!dir.exists()) {
+			Warnings.warn("No databases currently exist.", null, true);
+			return;
+		}
+		if (!file.exists()) {
+			Warnings.warn("Database does not exist.", null, true);
+			return;
+		}
+		file.delete();
 
 	}
 
@@ -188,78 +200,4 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 					new IOException(), false);
 		}
 	}
-	/*
-	 * (non-Javadoc) public String getDatabaseEntry(String database, String
-	 * entry) throws DatabaseNotFound { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); YamlConfiguration base =
-	 * YamlConfiguration.loadConfiguration(file); if (file.exists()) { return
-	 * base.getString(entry); } throw new DatabaseNotFound();
-	 * 
-	 * }
-	 * 
-	 * 
-	 * public void removeDatabaseEntry(String database, String entry) throws
-	 * IOException, DatabaseNotFound { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (file.exists()) { YamlConfiguration base =
-	 * YamlConfiguration.loadConfiguration(file); base.set(entry, null);
-	 * base.save(file); return; } throw new DatabaseNotFound();
-	 * 
-	 * }
-	 * 
-	 * public void createDatabaseEntry(String database, String entry, String
-	 * value) throws IOException, DatabaseNotFound { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (file.exists()) { YamlConfiguration base =
-	 * YamlConfiguration.loadConfiguration(file); base.set(entry, value);
-	 * base.save(file); return; } throw new DatabaseNotFound();
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public void clearDatabase(String database) throws DatabaseNotFound,
-	 * IOException { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (file.exists()) { YamlConfiguration base =
-	 * YamlConfiguration.loadConfiguration(file); for (String keys :
-	 * base.getKeys(true)) { base.set(keys, null); } base.save(file); return; }
-	 * throw new DatabaseNotFound();
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public void backupDatabase(String database) throws DatabaseNotFound,
-	 * IOException { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); File backup = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+
-	 * "backups"+File.separator+database+System.currentTimeMillis()+".yml"); if
-	 * (file.exists()) { Files.copy(file, backup); return; } throw new
-	 * DatabaseNotFound(); }
-	 * 
-	 * public void createDatabase(String database) throws DatabaseExists,
-	 * IOException { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (!file.exists()) { file.createNewFile();
-	 * YamlConfiguration.loadConfiguration(file).save(file); return; } throw new
-	 * DatabaseExists();
-	 * 
-	 * }
-	 * 
-	 * public void deleteDatabase(String database) throws DatabaseNotFound {
-	 * File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (file.exists()) { file.delete(); return; } throw new
-	 * DatabaseNotFound(); }
-	 * 
-	 * public YamlConfiguration getDatabase(String database) throws
-	 * DatabaseNotFound { File file = new
-	 * File("plugins"+File.separator+"EssentialCommands"+File.separator+database
-	 * +".yml"); if (file.exists()) { return
-	 * YamlConfiguration.loadConfiguration(file); }
-	 * 
-	 * return null; }
-	 */
-
 }

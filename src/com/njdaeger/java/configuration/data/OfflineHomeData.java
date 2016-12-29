@@ -1,6 +1,7 @@
 package com.njdaeger.java.configuration.data;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,10 +9,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.Warnings;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
-import com.njdaeger.java.configuration.exceptions.homes.HomeNotFound;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
@@ -26,15 +25,7 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 
 	@Override
 	public void remove() {
-		if (exists()) {
-			homes.delete();
-			return;
-		} else
-			try {
-				throw new HomeNotFound();
-			} catch (HomeNotFound e) {
-				Warnings.warn("The home \"" + home + "\" could not be deleted.", new HomeNotFound(), true);
-			}
+		homes.delete();
 	}
 
 	@Override
@@ -102,6 +93,11 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setX(double value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("x", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
@@ -109,6 +105,11 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setY(double value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("y", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
@@ -116,6 +117,11 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setZ(double value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("z", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
@@ -123,6 +129,11 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setYaw(float value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("yaw", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
@@ -130,6 +141,11 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setPitch(float value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("pitch", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
@@ -137,12 +153,17 @@ public class OfflineHomeData extends Homes implements IValues, ISetValues, IOffl
 	public void setWorld(String value) {
 		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
 		home.set("world", value);
+		try {
+			home.save(homes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
 	}
 
 	@Override
 	public boolean exists() {
-		if (homes.exists()) {
+		if (YamlConfiguration.loadConfiguration(homes) != null) {
 			return true;
 		} else
 			return false;
