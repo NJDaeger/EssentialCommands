@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -19,6 +17,8 @@ import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class GiveCommand extends BukkitCommand {
 
 	public GiveCommand() {
@@ -27,8 +27,9 @@ public class GiveCommand extends BukkitCommand {
 		this.description = "Give yourself items.";
 		this.usageMessage = "/i <item:[data]> [amount] [player]";
 		this.setAliases(a);
-		
+
 	}
+
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (sndr instanceof Player) {
@@ -39,7 +40,7 @@ public class GiveCommand extends BukkitCommand {
 					return true;
 				}
 				if (args.length == 1) {
-					this.give(args[0], player, sndr, 64, Error.INVENTORY_IS_FULL_P);
+					this.give(args[0], player, sndr, 64, Error.INVENTORY_IS_FULL);
 					return true;
 				}
 				if (args.length == 2) {
@@ -48,7 +49,7 @@ public class GiveCommand extends BukkitCommand {
 						return true;
 					}
 					int amount = Integer.parseInt(args[1]);
-					this.give(args[0], player, sndr, amount, Error.INVENTORY_IS_FULL_P);
+					this.give(args[0], player, sndr, amount, Error.INVENTORY_IS_FULL);
 					return true;
 				}
 				if (args.length == 3) {
@@ -58,31 +59,27 @@ public class GiveCommand extends BukkitCommand {
 							sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 							return true;
 						}
-						
+
 						if (Util.isNumber(args[1]) == false) {
 							sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 							return true;
 						}
 						int amount = Integer.parseInt(args[1]);
-						this.give(args[0], target, sndr, amount, Error.INVENTORY_IS_FULL_PO);
+						this.give(args[0], target, sndr, amount, Error.INVENTORY_IS_FULL);
 						return true;
-					}
-					else {
+					} else {
 						sndr.sendMessage(Error.NO_PERMISSION.sendError());
 						return true;
 					}
-				}
-				else {
+				} else {
 					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 					return true;
 				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (args.length < 3) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
@@ -98,15 +95,15 @@ public class GiveCommand extends BukkitCommand {
 					return true;
 				}
 				int amount = Integer.parseInt(args[1]);
-				this.give(args[0], target, sndr, amount, Error.INVENTORY_IS_FULL_PO);
+				this.give(args[0], target, sndr, amount, Error.INVENTORY_IS_FULL);
 				return true;
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
 		}
 	}
+
 	@SuppressWarnings("deprecation")
 	public void give(String item, Player player, CommandSender sndr, int amount, Error fullerror) {
 		if (Util.hasFullInventory(player)) {
@@ -136,11 +133,14 @@ public class GiveCommand extends BukkitCommand {
 				if (Util.isNumber(split[1])) {
 					ItemStack stack = new ItemStack(type, amount, damage);
 					player.getInventory().addItem(stack);
-					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(type).name().toLowerCase());
-					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(type).name().toLowerCase());
+					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(type).name().toLowerCase());
+					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(type).name().toLowerCase());
 					return;
-				}
-				else {
+				} else {
 					sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 					return;
 				}
@@ -150,12 +150,15 @@ public class GiveCommand extends BukkitCommand {
 				if (Material.getMaterial(mat) == null) {
 					sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 					return;
-				}
-				else {
+				} else {
 					ItemStack stack = new ItemStack(Material.getMaterial(mat), amount);
 					player.getInventory().addItem(stack);
-					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
-					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
+					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
+					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
 					return;
 				}
 			}
@@ -165,51 +168,58 @@ public class GiveCommand extends BukkitCommand {
 					short damage = Short.parseShort(split[1]);
 					ItemStack stack = new ItemStack(Material.getMaterial(mat), amount, damage);
 					player.getInventory().addItem(stack);
-					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
-					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
+					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
+					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
 					return;
-				}
-				else {
+				} else {
 					sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 					return;
 				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 				return;
 			}
-		}
-		else {
+		} else {
 			if (Util.isNumber(item)) {
 				int type = Integer.parseInt(item);
 				if (Material.getMaterial(type) == null) {
 					sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 					return;
-				}
-				else {
+				} else {
 					ItemStack stack = new ItemStack(type, amount);
 					player.getInventory().addItem(stack);
-					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(type).name().toLowerCase());
-					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(type).name().toLowerCase());
+					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(type).name().toLowerCase());
+					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(type).name().toLowerCase());
 					return;
 				}
-			}
-			else {
+			} else {
 				String mat = item.toUpperCase();
 				if (Material.getMaterial(mat) == null) {
 					sndr.sendMessage(Error.UNKNOWN_ITEM.sendError());
 					return;
-				}
-				else {
+				} else {
 					ItemStack stack = new ItemStack(Material.getMaterial(mat), amount);
 					player.getInventory().addItem(stack);
-					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
-					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN + amount + ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());
+					sndr.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
+					player.sendMessage(ChatColor.GREEN + sndr.getName() + ChatColor.GRAY + " added " + ChatColor.GREEN
+							+ amount + ChatColor.GRAY + " items of " + ChatColor.GREEN
+							+ Material.getMaterial(mat).name().toLowerCase());
 					return;
 				}
 			}
 		}
 	}
+
 	public boolean contains(String input) {
 		Pattern pattern = Pattern.compile("[:]");
 		Matcher matcher = pattern.matcher(input);
@@ -219,7 +229,7 @@ public class GiveCommand extends BukkitCommand {
 		}
 		if (count > 1) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
 }
