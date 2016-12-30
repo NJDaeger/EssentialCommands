@@ -353,7 +353,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 			this.createConfig();
 		} else {
 			player.setOp(true);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), true);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OPPED.getPath(), true);
 			try {
 				YamlConfiguration.loadConfiguration(file).save(file);
 			} catch (IOException e) {
@@ -368,7 +368,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 			this.createConfig();
 		} else {
 			player.setOp(false);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OP.getPath(), false);
+			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OPPED.getPath(), false);
 			try {
 				YamlConfiguration.loadConfiguration(file).save(file);
 			} catch (IOException e) {
@@ -492,7 +492,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.OP.getPath());
+		return this.getValue().getBoolean(PlayerPaths.OPPED.getPath());
 	}
 
 	@Override

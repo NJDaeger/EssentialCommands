@@ -8,22 +8,25 @@ import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class GiveCommand extends BukkitCommand {
+public class GiveCommand extends EssCommand {
+
+	static String name = "item";
 
 	public GiveCommand() {
-		super("i");
-		List<String> a = Arrays.asList("item", "give", "get", "take");
+		super(name);
+		List<String> a = Arrays.asList("i", "give", "get", "take");
 		this.description = "Give yourself items.";
 		this.usageMessage = "/i <item:[data]> [amount] [player]";
 		this.setAliases(a);
@@ -231,5 +234,10 @@ public class GiveCommand extends BukkitCommand {
 			return true;
 		} else
 			return false;
+	}
+
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
 	}
 }
