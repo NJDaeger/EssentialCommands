@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.configuration.controllers.Config;
-import com.njdaeger.java.descrete.bannermanager.BannerManager;
-import com.njdaeger.java.descrete.bannermanager.listeners.Listener;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
@@ -30,8 +28,6 @@ import com.njdaeger.java.essentials.utils.Util;
 
 public class Core extends JavaPlugin {
 
-	private static Config config = new Config();
-
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
 		new PlayerJoinListener(this);
@@ -52,34 +48,33 @@ public class Core extends JavaPlugin {
 		Plugin.getCommand("hat", new HatCommand()); // Finished
 		Plugin.getCommand("helpop", new HelpopCommand()); // Finished
 		Plugin.getCommand("kickall", new KickallCommand()); // Finished
+		Plugin.getCommand("delwarp", new DelwarpCommand()); //Finished
+		Plugin.getCommand("setwarp", new SetwarpCommand()); //Finished
+		Plugin.getCommand("warp", new WarpCommand()); //Finished
+		Plugin.getCommand("warps", new WarpsCommand()); //Finished
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public void enableSubplugins() {
-		/*
-		 * if (config.isHomesEnabled() == true) { Plugin.getCommand("sethome",
-		 * new Sethome()); //Finished Plugin.getCommand("delhome", new
-		 * Delhome()); //Finished Plugin.getCommand("home", new Home());
-		 * //Finished Plugin.getCommand("homes", new Listhomes()); //Finished
-		 * Bukkit.getLogger().info(
-		 * "Subplugin \"Homes\" is now attached and enabled."); }
-		 */
-		if (config.isWarpsEnabled() == true) {
-			Plugin.getCommand("setwarp", new SetwarpCommand()); // Finished
-			Plugin.getCommand("delwarp", new DelwarpCommand()); // Finished
-			Plugin.getCommand("warps", new WarpsCommand());
-			Plugin.getCommand("warp", new WarpCommand());
-			Bukkit.getLogger().info("Subplugin \"Warps\" is now attached and enabled.");
+		if (Config.getConfig().isAnnotationsEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
 		}
-		if (config.isBannermanagerEnabled() == true) {
-			BannerManager.enableBannerManager();
-			new Listener(this);
-			Bukkit.getLogger().info("Subplugin \"BannerManager\" is now attached and enabled.");
+		if (Config.getConfig().isBannermanagerEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] Bannermanager is now Enabled.");
 		}
-		if (config.isGroupmanagerEnabled() == true) {
-			Bukkit.getLogger().info("Subplugin \"GroupManager\" is now attached and enabled.");
+		if (Config.getConfig().isCodesEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] Codes is now Enabled.");
 		}
+		if (Config.getConfig().isLoginclearanceEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] LoginClearance is now Enabled.");
+		}
+		if (Config.getConfig().isNJPermsEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] NJPerms is now Enabled.");
+		}
+		if (Config.getConfig().isServerprotectEnabled() == true) {
+			Bukkit.getLogger().info("[EssentialCommands] ServerProtect is now Enabled.");
+		} else
+			Bukkit.getLogger().info("No sub-plugins have been enabled in EssentialCommands.");
 	}
 
 	public void registerPermissions() {
@@ -97,7 +92,7 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		CommandCore.registerCommands();
-		config.newConfig();
+		Config.getConfig().newConfig();
 		TPS.getTPSClass();
 		enableSubplugins();
 		registerListeners();

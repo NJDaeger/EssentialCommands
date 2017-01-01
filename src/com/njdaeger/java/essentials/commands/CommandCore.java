@@ -1,6 +1,5 @@
 package com.njdaeger.java.essentials.commands;
 
-import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.homes.Delhome;
 import com.njdaeger.java.essentials.commands.homes.Home;
 import com.njdaeger.java.essentials.commands.homes.Listhomes;
@@ -19,17 +18,12 @@ import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 
 public class CommandCore {
-	
-	private static Config config = new Config();
-	
+
 	public static void registerCommands() {
-		if (config.isHomesEnabled() == true) {
-			new Delhome().register();
-			new Home().register();
-			new Listhomes().register();
-			new Sethome().register();
-			System.out.println("Homes is now enabled.");
-		}
+		new Delhome().register();
+		new Home().register();
+		new Listhomes().register();
+		new Sethome().register();
 		new FlyCommand().register();
 		new BroadcastCommand().register();
 		new MeCommand().register();
@@ -42,6 +36,6 @@ public class CommandCore {
 		new BurnCommand().register();
 		new ClearInvCommand().register();
 		new NickCommand().register();
-		
+
 	}
 }

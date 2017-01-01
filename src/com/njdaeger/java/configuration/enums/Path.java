@@ -2,693 +2,78 @@ package com.njdaeger.java.configuration.enums;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.njdaeger.java.Groups;
+
 public enum Path {
-
-	/**
-	 * GroupManager Path
+	/*
+	 * Subplugins
 	 */
-	ENABLE_GM {
-		@Override
-		public String getPath() {
-			return "groupmanager.enablegroupmanager";
-		}
+	ENABLE_NJP("subplugin.groupmanager", true),
+	ENABLE_BM("subplugin.bannermanager", true),
+	ENABLE_CODES("subplugin.codes", true),
+	ENABLE_ANNO("subplugin.annotations", true),
+	ENABLE_SP("subplugin.serverprotect", true),
+	ENABLE_LC("subplugin.loginclearance", true),
 
-		@Override
-		public Object defValue() {
-			return true;
-		}
-	},
-	/**
-	 * BannerManager Path
+	/*
+	 * Warp options
 	 */
-	ENABLE_BM {
-		@Override
-		public String getPath() {
-			return "bannermanager.enablebannermanager";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-	},
-	/**
-	 * ChatColor Path
+	WARPS_WARPLIMIT("warps.enable-warp-limit", false),
+	WARPS_WARPLIMIT_LIM("warps.warp-limit", 50),
+	WARPS_WARPLIMIT_PERWORLD("warps.limit-per-world", false),
+	/*
+	 * Main essentials options
 	 */
-	ENABLE_CC {
+	SPIED_COMMANDS("main.various.spied-commands", Groups.spiedCommands),
+	OP_NAME_COLOR("main.various.op-namecolor", "&4"),
+	NICKNAME_PREFIX("main.various.nickname-prefix", "~"),
+	NICKNAME_MAXLENGTH("main.various.nickname-max-length", "15"),
+	BLACKLIST_COMMANDS("main.blacklist.command.command-list", Groups.blacklistedCommands),
+	BLACKLIST_COMMANDS_NOTIFY_CSL("main.blacklist.command.notify-console", true),
+	BLACKLIST_COMMANDS_NOTIFY_OP("main.blacklist.command.notify-ops", true),
+	BLACKLIST_COMMANDS_NOTIFY_PLR("main.blacklist.command.notify-player", true),
+	BLACKLIST_COMMAND_LOGGING("main.blacklist.command.log-unpermitted-cmds", true),
+	BLACKLIST_BLOCKS("main.blacklist.block.block-id-list", Groups.blacklistedBlocks),
+	BLACKLIST_BLOCKS_NOTIFY_CSL("main.blacklist.block.notify-console", true),
+	BLACKLIST_BLOCKS_NOTIFY_OP("main.blacklist.block.notify-ops", true),
+	BLACKLIST_BLOCKS_NOTIFY_PLR("main.blacklist.block.notify-player", true),
+	BLACKLIST_BLOCKS_LOGGING("main.blacklist.block.log-unpermitted-blocks", true),
 
-		@Override
-		public String getPath() {
-			return "chat.enablechatcolor";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * Homes Path
+	/*
+	 * Chat stuffs
 	 */
-	ENABLE_HOMES {
+	CHAT_CHATCOLOR("main.chat.allow-chat-color", true),
+	CHAT_FORMAT("main.chat.format", "&7[{RANK}] &r{DISPLAYNAME}&7:&r"),
+	CHAT_JOINMESSAGE("main.chat.custom-join-message", "none"),
+	CHAT_QUITMESSAGE("main.chat.custom-quit-message", "none"),
+	CHAT_PER_WORLD_MOTD("main.chat.per-world-motd", false),
+	CHAT_SERVER_MOTD("main.chat.per-world-motd", true),
 
-		@Override
-		public String getPath() {
-			return "homes.enablehomes";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * Warps Path
+	/*
+	 * Homes stuffs
 	 */
-	ENABLE_WARPS {
-
-		@Override
-		public String getPath() {
-			return "warps.enablewarps";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Limit of warps allowed for the server.
-	 */
-	WARPS_WARPLIMIT {
-
-		@Override
-		public String getPath() {
-			return "warps.warp-limit";
-		}
-
-		@Override
-		public Object defValue() {
-			return false;
-		}
-
-	},
-	/**
-	 * Limits the warps to per world.
-	 */
-	WARPS_PERWORLD_LIMIT {
-
-		@Override
-		public String getPath() {
-			return "warps.max-per-world";
-		}
-
-		@Override
-		public Object defValue() {
-			return false;
-		} // List of worlds then beside it have an integer value
-
-	},
-	/**
-	 * Determine whether to limit warps at all.
-	 */
-	WARPS_WARPLIMIT_VALUE {
-
-		@Override
-		public String getPath() {
-			return "warps.max-for-server-value";
-		}
-
-		@Override
-		public Object defValue() {
-			return "~";
-		}
-
-	},
-	WARPS_PERWORLD_LIMIT_VALUE {
-
-		@Override
-		public String getPath() {
-			return "warps.max-per-world-value";
-		}
-
-		@Override
-		public Object defValue() {
-			return "~";
-		}
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Whether to have an opped name color or not. Default is "&4"
-	 */
-	OP_NAME_COLOR {
-
-		@Override
-		public String getPath() {
-			return "main.operators.opnamecolor";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&4";
-		} // String that has chatcolor translation.
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * If not set to "null" then the prefix will be whatever the value is.
-	 */
-	NICKNAME_PREFIX {
-
-		@Override
-		public String getPath() {
-			return "main.nickname.nickprefix";
-		}
-
-		@Override
-		public Object defValue() {
-			return "~";
-		} // String that has chatcolor translation.
-
-	},
-	/**
-	 * Set a maximum character count for nicknames.
-	 */
-	NICK_MAX_LENGTH {
-
-		@Override
-		public String getPath() {
-			return "main.nickname.max-nickname-length";
-		}
-
-		@Override
-		public Object defValue() {
-			return 15;
-		} // Int default is 15
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * List of blacklisted Commands.
-	 */
-	BLACKLIST_COMMANDS {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.command-list";
-		}
-
-		@Override
-		public Object defValue() {
-			List<String> blacklistedCommands = Arrays.asList("nick", "nickname", "disguise", "newname");
-			return blacklistedCommands;
-		} // List of commands that are cancelled via commandevent
-
-	},
-	/**
-	 * Enables or disables the console warn
-	 *
-	 */
-	BLACKLIST_COMMANDS_NOTIFYCSL {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.enable-console-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * The message to send to the console if a non-permitted command is
-	 * executed. Add support for tags like {COMMAND} {XPOS} {YPOS} {XPOS}
-	 * {PLAYER} {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_COMMANDS_NOTIFYCSL_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.console-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cSomeone has executed a non-permitted command.";
-		}
-
-	},
-	/**
-	 * Enables or disables the operator warn
-	 *
-	 */
-	BLACKLIST_COMMANDS_NOTIFYOP {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.enable-operator-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * The message to send to operators when a non-permitted command is
-	 * executed. Add support for tags like {COMMAND} {XPOS} {YPOS} {XPOS}
-	 * {PLAYER} {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_COMMANDS_NOTIFYOP_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.operator-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cSomeone has executed a non-permitted command.";
-		}
-
-	},
-	/**
-	 * Enable or disable the player warn message
-	 */
-	BLACKLIST_COMMANDS_NOTIFYPLR {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.enable-player-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-
-	/**
-	 * Message sent to command sender if the command is disabled. Add support
-	 * for tags like {COMMAND} {XPOS} {YPOS} {XPOS} {PLAYER} {DISPLAYNAME}
-	 * {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_COMMANDS_NOTIFYPLR_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.player-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cThe command you tried to execute is not permitted.";
-		}
-
-	},
-	BLACKLIST_COMMAND_LOGGING {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.commands.log-unpermitted-commands";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * List of blacklisted blocks
-	 */
-	BLACKLIST_BLOCKS {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.block-id-list";
-		}
-
-		@Override
-		public Object defValue() {
-			List<String> blacklistedBlocks = Arrays.asList("7", "166");
-			return blacklistedBlocks;
-		} // Make this block ID values instead of actual names.
-
-	},
-	/**
-	 * Enables or disables the console notification.
-	 *
-	 */
-	BLACKLIST_BLOCKS_NOTIFYCSL {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.enable-console-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * The notify message for the console when a non-permitted block is placed.
-	 * Add support for tags like {BLOCK} {BLOCKID} {XPOS} {YPOS} {XPOS} {PLAYER}
-	 * {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_BLOCKS_NOTIFYCSL_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.console-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cA player has tried to place a non-permitted block.";
-		}
-
-	},
-	/**
-	 * Enables or disables a warn message to operators if a non-permitted block
-	 * is placed.
-	 *
-	 */
-	BLACKLIST_BLOCKS_NOTIFYOP {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.enable-operator-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * The message being sent to an operator or admin when a non-permitted block
-	 * is placed. Add support for tags like {BLOCK} {BLOCKID} {XPOS} {YPOS}
-	 * {XPOS} {PLAYER} {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_BLOCKS_NOTIFYOP_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.operator-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cA player has tried to place a non-permitted block.";
-		}
-
-	},
-	/**
-	 * Enables or disables the player warn message.
-	 */
-	BLACKLIST_BLOCKS_NOTIFYPLR {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.enable-player-warn";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	/**
-	 * Message sent to the user of the block if it is blacklisted. Add support
-	 * for tags like {BLOCK} {BLOCKID} {XPOS} {YPOS} {XPOS} {PLAYER}
-	 * {DISPLAYNAME} {WORLD} {DATE} {TIME} and colorcodes.
-	 */
-	BLACKLIST_BLOCKS_NOTIFYPLR_MESSAGE {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.player-warn-message";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&cThe block you tried to use is not permitted.";
-		}
-
-	},
-	BLACKLIST_BLOCKS_LOGGING {
-
-		@Override
-		public String getPath() {
-			return "main.blacklist.blocks.log-unpermitted-blocks";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Commands that are relayed back to players with socialspy permissions.
-	 */
-	SPIED_COMMANDS {
-
-		@Override
-		public String getPath() {
-			return "main.spying.spycommands";
-		}
-
-		@Override
-		public Object defValue() {
-			List<String> spyedCommands = Arrays.asList("message", "write", "r", "reply", "pl", "plugins");
-			return spyedCommands;
-		} // List of commands that are spyed on.
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * The chat formatting for the server.
-	 */
-	CHAT_FORMAT {
-
-		@Override
-		public String getPath() {
-			return "chat.format.chatformat";
-		}
-
-		@Override
-		public Object defValue() {
-			return "&7[ThisWouldBeRank] &r{DISPLAYNAME}&7:&r ";
-		} // String with chatcolor translations.
-
-	},
-	/**
-	 * Custom join message.
-	 */
-	CHAT_JOINMESSAGE {
-
-		@Override
-		public String getPath() {
-			return "chat.format.joinmessage";
-		}
-
-		@Override
-		public Object defValue() {
-			return "none";
-		} // String with chatcolor translations.
-
-	},
-	/**
-	 * Custom quit message.
-	 */
-	CHAT_QUITMESSAGE {
-
-		@Override
-		public String getPath() {
-			return "chat.format.quitmessage";
-		}
-
-		@Override
-		public Object defValue() {
-			return "none";
-		} // String with chatcolor translations.
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	HOMES_LIMITHOMES {
-
-		@Override
-		public String getPath() {
-			return "homes.limithomes";
-		}
-
-		@Override
-		public Object defValue() {
-			return false;
-		}
-
-	},
-	/**
-	 * Maximum amount of homes for a user. Set none for no limit.
-	 */
-	HOMES_MAXHOMES {
-
-		@Override
-		public String getPath() {
-			return "homes.maxhomes";
-		}
-
-		@Override
-		public Object defValue() {
-			return 5;
-		} // int Default is 5
-
-	},
-	/**
-	 * Maximum amount of homes for a user in different worlds. Set none to use
-	 * server max and not world max.
-	 */
-	HOMES_MAXHOMES_PERWORLD {
-
-		@Override
-		public String getPath() {
-			return "homes.maxperworld";
-		}
-
-		@Override
-		public Object defValue() {
-			return "none";
-		} // int
-
-	},
-	/**
-	 * Allow to have players teleport to another players homes.
-	 */
-	HOMES_TELEPORT_OTHER {
-
-		@Override
-		public String getPath() {
-			return "homes.gotootherhome";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		} // boolean default is false
-
-	},
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Allow per world MOTD. Server MOTD must be enabled.
-	 */
-	PER_WORLD_MOTD {
-
-		@Override
-		public String getPath() {
-			return "main.motd.perworld";
-		}
-
-		@Override
-		public Object defValue() {
-			return false;
-		} // boolean default is false.
-
-	},
-	SERVER_MOTD {
-
-		@Override
-		public String getPath() {
-			return "main.motd.enablemotd";
-		}
-
-		@Override
-		public Object defValue() {
-			return true;
-		}
-
-	};
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * @return path.
-	 */
-	public abstract String getPath();
-
-	public abstract Object defValue();
-
-	/**
-	 * @param path
-	 *            What path in the configuration section to grab.
-	 * @return String of path.
-	 */
-	public static String get(Path path) {
-		return path.getPath();
+	HOMES_LIMITHOMES("homes.limithomes", false),
+	HOMES_MAXHOMES("homes.limithomes-value", 5), // Limits overall homes on entire server if value = ~ then there is no server wide limit Server limit will override this. (if ServLim = 3 and WldLim = 5 the max homes the player can have at all is 3)
+	HOMES_MAXHOMES_PERWORLD("homes.limithomes-perworld-value", "~"), // limits homes per world. if value = ~ then there is no world limit
+	HOMES_TELEPORT_OTHER("homes.goto-other-home", true);
+
+	public String path;
+	public Object value;
+
+	Path(String path, Object value) {
+		this.path = path;
+		this.value = value;
 	}
 
-	public static Path[] get(Path[] path) {
+	public String getPath() {
 		return path;
+	}
+
+	public Object defValue() {
+		return value;
 	}
 
 	/**
