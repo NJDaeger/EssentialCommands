@@ -3,6 +3,7 @@ package com.njdaeger.java;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
@@ -79,8 +80,8 @@ public class Core extends JavaPlugin {
 
 	public void registerPermissions() {
 		Util.generatePermissions();
-		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by "
-				+ this.getDescription().getAuthors() + " is now Enabled!");
+		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by " + this
+				.getDescription().getAuthors() + " is now Enabled!");
 	}
 
 	/*
@@ -91,6 +92,7 @@ public class Core extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable() {
+		MessageFile.create();
 		CommandCore.registerCommands();
 		Config.getConfig().newConfig();
 		TPS.getTPSClass();

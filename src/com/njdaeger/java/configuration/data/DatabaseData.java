@@ -29,9 +29,8 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
-						new DatabaseNotFound(), false);
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return null;
 			}
@@ -47,9 +46,8 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
-						new DatabaseNotFound(), false);
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
 			}
@@ -62,8 +60,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 				return;
 			}
 		}
-		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
-		base.set(entry, null);
+		save(file, entry, null);
 		return;
 	}
 
@@ -74,14 +71,12 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
-						new DatabaseNotFound(), false);
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 			}
 		}
-		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
-		base.set(entry, value);
+		save(file, entry, value);
 	}
 
 	@Override
@@ -91,9 +86,8 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn(
-						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
-						new DatabaseNotFound(), false);
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
 			}
@@ -111,15 +105,14 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 	public void backup() {
 		DateFormat format = new SimpleDateFormat("yyyy/dd/MM-hh:mm:ss");
 		File file = new File(dir + File.separator + database + ".yml");
-		File bckp = new File(
-				dir + File.separator + "backups" + File.separator + database + format.format(new Date()) + ".yml");
+		File bckp = new File(dir + File.separator + "backups" + File.separator + database + format.format(new Date())
+				+ ".yml");
 		if (!file.exists()) {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn(
-						"The database \"" + database
-								+ "\" has been moved, or does not exist. Creating it for you. Backup was not created.",
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you. Backup was not created.",
 						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
