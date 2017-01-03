@@ -16,31 +16,31 @@ public class BlacklistedCommand {
 		Date d = new Date();
 		String a = errormessage;
 		if (a.contains("{COMMAND}")) {
-			a.replace("{COMMAND}", command);
+			a = a.replace("{COMMAND}", command);
 		}
 		if (a.contains("{XPOS}")) {
-			a.replace("{XPOS}", String.valueOf(player.getLocation().getBlockX()));
+			a = a.replace("{XPOS}", String.valueOf(player.getLocation().getBlockX()));
 		}
 		if (a.contains("{YPOS}")) {
-			a.replace("{YPOS}", String.valueOf(player.getLocation().getBlockY()));
+			a = a.replace("{YPOS}", String.valueOf(player.getLocation().getBlockY()));
 		}
 		if (a.contains("{ZPOS}")) {
-			a.replace("{ZPOS}", String.valueOf(player.getLocation().getBlockZ()));
+			a = a.replace("{ZPOS}", String.valueOf(player.getLocation().getBlockZ()));
 		}
 		if (a.contains("{PLAYER}")) {
-			a.replace("{PLAYER}", player.getName());
+			a = a.replace("{PLAYER}", player.getName());
 		}
 		if (a.contains("{DISPLAYNAME}")) {
-			a.replace("{DISPLAYNAME}", player.getDisplayName());
+			a = a.replace("{DISPLAYNAME}", player.getDisplayName());
 		}
 		if (a.contains("{WORLD}")) {
-			a.replace("{WORLD}", player.getWorld().getName());
+			a = a.replace("{WORLD}", player.getWorld().getName());
 		}
 		if (a.contains("{DATE}")) {
-			a.replace("{DATE}", f.format(d));
+			a = a.replace("{DATE}", f.format(d));
 		}
 		if (a.contains("{TIME}")) {
-			a.replace("{TIME}", g.format(d));
+			a = a.replace("{TIME}", g.format(d));
 		}
 		return ChatColor.translateAlternateColorCodes('&', a);
 	}
