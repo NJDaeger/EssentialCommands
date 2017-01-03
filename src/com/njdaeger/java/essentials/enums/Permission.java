@@ -78,7 +78,8 @@ public enum Permission {
 	ESS_WARPS_DETAIL("essentials.warps.detail"),
 	ESS_BUBBLE("essentials.bubble"),
 	ESS_BUBBLE_OTHER("essentials.bubble.other"),
-	ESS_BUBBLE_EXEMPT_MAXRANGE("essentials.bubble.nolimit");
+	ESS_BUBBLE_EXEMPT_MAXRANGE("essentials.bubble.nolimit"),
+	ESS_BYPASS_BLOCKED_COMMANDS("essentials.bypass.commands");
 
 	public final String permission;
 

@@ -31,6 +31,7 @@ public class CoreListener implements Listener {
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e) {
 		new CommandEvent().whenAfk(e);
+		new CommandEvent().whenBlocked(e);
 	}
 
 	@EventHandler

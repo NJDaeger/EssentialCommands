@@ -1,9 +1,11 @@
 package com.njdaeger.java.essentials.enums;
 
+import com.njdaeger.java.configuration.enums.Messages;
+
 import net.md_5.bungee.api.ChatColor;
 
-public enum Error{
-	
+public enum Error {
+
 	NOT_ENOUGH_ARGS("Not enough arguments provided."),
 	TOO_MANY_ARGS("Too many arguments provided."),
 	NO_PERMISSION("You don't have sufficient permission to do that."),
@@ -44,18 +46,23 @@ public enum Error{
 	NO_NEXT_LAYER("No next layer exists."),
 	NO_PREVIOUS_LAYER("No previous layer exists."),
 	INVALID_COMMAND_SENDER("Invalid command sender."),
-	CANNOT_SEND_PM("Cannot send message.");
-	
+	CANNOT_SEND_PM("Cannot send message."),
+	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage());
+
 	public final String error;
-	
+
 	Error(String error) {
 		this.error = error;
 	}
-	
+
+	public String getError() {
+		return error;
+	}
+
 	public String sendError() {
 		return ChatColor.RED + "Error: " + ChatColor.DARK_RED + error;
 	}
-	
+
 	public static String throwError(String error) {
 		return ChatColor.RED + error;
 	}

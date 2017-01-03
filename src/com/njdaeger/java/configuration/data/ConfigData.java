@@ -359,8 +359,17 @@ public class ConfigData implements IConfiguration {
 
 	@Override
 	public List<String> getBlacklistedCommands() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!file.exists()) {
+			this.newConfig();
+			return YamlConfiguration.loadConfiguration(file).getStringList(Path.BLACKLIST_COMMANDS.getPath());
+		} else {
+			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+			if (!c.contains(Path.BLACKLIST_COMMANDS.getPath())) {
+				Path.checkExist();
+				return c.getStringList(Path.BLACKLIST_COMMANDS.getPath());
+			} else
+				return c.getStringList(Path.BLACKLIST_COMMANDS.getPath());
+		}
 	}
 
 	@Override
