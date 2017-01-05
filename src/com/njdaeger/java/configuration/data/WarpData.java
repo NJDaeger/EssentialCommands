@@ -17,7 +17,7 @@ import com.njdaeger.java.essentials.enums.Error;
 public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues {
 
 	private File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "warps");
-	private File file = new File(dir + warp + ".yml");
+	private File file = new File(dir + File.separator + warp + ".yml");
 
 	@Override
 	public void setX(double value) {
@@ -123,7 +123,7 @@ public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues
 
 	@Override
 	public boolean exists() {
-		if (YamlConfiguration.loadConfiguration(file) == null) {
+		if (!file.exists()) {
 			return false;
 		} else
 			return true;
@@ -161,11 +161,11 @@ public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues
 
 	@Override
 	public void sendWarp() {
-		World world = Bukkit.getWorld(getWorld());
-		if (world == null) {
+		if (Bukkit.getWorld(getWorld()) == null) {
 			player.sendMessage(Error.WORLD_NOT_FOUND.sendError());
 			return;
 		}
+		World world = Bukkit.getWorld(getWorld());
 		Location location = new Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
 		player.teleport(location);
 		return;

@@ -41,7 +41,7 @@ public class DelwarpCommand extends EssCommand {
 				return true;
 			case 1:
 				WarpData d = Warps.getWarp(args[0], null);
-				if (!d.exists()) {
+				if (d.exists() == false) {
 					sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 					return true;
 				}

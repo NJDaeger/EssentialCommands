@@ -38,7 +38,7 @@ public class WarpCommand extends EssCommand {
 				return true;
 			case 1:
 				if (sndr instanceof Player) {
-					if (!Warps.getWarp(args[0], null).exists()) {
+					if (Warps.getWarp(args[0], null).exists() == false) {
 						sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 						return true;
 					}
@@ -56,8 +56,8 @@ public class WarpCommand extends EssCommand {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return true;
 					}
-					if (!Warps.getWarp(args[0], null).exists()) {
-						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+					if (Warps.getWarp(args[0], null).exists() == false) {
+						sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 						return true;
 					}
 					Warps.getWarp(args[0], target).sendWarp();

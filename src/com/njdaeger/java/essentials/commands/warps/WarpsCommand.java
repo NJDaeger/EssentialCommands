@@ -39,6 +39,7 @@ public class WarpsCommand extends EssCommand {
 			if (Holder.hasPermission(sndr, Permission.ESS_WARPS)) {
 				if (Warps.getWarp(null, null).listWarps() == null) {
 					sndr.sendMessage(Error.throwError("No warps exist."));
+					return true;
 				}
 				sndr.sendMessage(ChatColor.GRAY + "Server warps: " + ChatColor.GREEN + Warps.getWarp(null, null)
 						.listWarps());
@@ -48,7 +49,7 @@ public class WarpsCommand extends EssCommand {
 			return true;
 		case 1:
 			if (Holder.hasPermission(sndr, Permission.ESS_WARPS_DETAIL)) {
-				if (!Warps.getWarp(args[0], null).exists()) {
+				if (Warps.getWarp(args[0], null).exists() == false) {
 					sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 					return true;
 				}
@@ -57,11 +58,12 @@ public class WarpsCommand extends EssCommand {
 				ChatColor gn = ChatColor.GREEN;
 				sndr.sendMessage(gr + "Information for warp \"" + gn + args[0] + gr + "\".");
 				sndr.sendMessage(gr + "World: " + gn + d.getWorld());
-				sndr.sendMessage(gr + "World: " + gn + d.getX());
-				sndr.sendMessage(gr + "World: " + gn + d.getY());
-				sndr.sendMessage(gr + "World: " + gn + d.getZ());
-				sndr.sendMessage(gr + "World: " + gn + d.getYaw());
-				sndr.sendMessage(gr + "World: " + gn + d.getPitch());
+				sndr.sendMessage(gr + "X: " + gn + d.getX());
+				sndr.sendMessage(gr + "Y: " + gn + d.getY());
+				sndr.sendMessage(gr + "X: " + gn + d.getZ());
+				sndr.sendMessage(gr + "Yaw: " + gn + d.getYaw());
+				sndr.sendMessage(gr + "Pitch: " + gn + d.getPitch());
+				return true;
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;

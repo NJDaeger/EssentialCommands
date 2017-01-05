@@ -43,7 +43,7 @@ public class SetwarpCommand extends EssCommand {
 					return true;
 				case 1:
 					WarpData d = Warps.getWarp(args[0], (Player) sndr);
-					if (d.exists()) {
+					if (d.exists() == true) {
 						sndr.sendMessage(Error.WARP_EXISTS.sendError());
 						return true;
 					}
@@ -56,6 +56,7 @@ public class SetwarpCommand extends EssCommand {
 				}
 			}
 		}
+		sndr.sendMessage(Error.PLAYER_ONLY.sendError());
 		return true;
 	}
 
