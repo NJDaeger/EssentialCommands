@@ -4,22 +4,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Warps;
+import com.njdaeger.java.configuration.data.WarpData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class WarpsCommand extends BukkitCommand {
+public class WarpsCommand extends EssCommand {
 
-	Warps warps = new Warps();
+	static String name = "warps";
 
 	public WarpsCommand() {
-		super("warps");
+		super(name);
 		List<String> a = Arrays.asList("listwarps");
 		this.description = "List all the warps on the server.";
 		this.usageMessage = "/warps [warpname]";
@@ -27,54 +28,41 @@ public class WarpsCommand extends BukkitCommand {
 	}
 
 	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_WARPS)) {
-				if (args.length == 0) {
-					sndr.sendMessage(ChatColor.GRAY + "Server warps: " + ChatColor.GREEN + warps.listWarps());
-					return true;
-				}
-				if (args.length == 1) {
-					if (warps.getWarp(args[0]) == null) {
-						sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
-						return true;
-					}
-					sndr.sendMessage(ChatColor.GRAY + "Information for warp \"" + args[0] + "\"");
-					sndr.sendMessage(
-							ChatColor.GRAY + "world: " + ChatColor.GREEN + warps.getWarp(args[0]).get("world"));
-					sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + warps.getWarp(args[0]).get("x"));
-					sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + warps.getWarp(args[0]).get("y"));
-					sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + warps.getWarp(args[0]).get("z"));
-					sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + warps.getWarp(args[0]).get("yaw"));
-					sndr.sendMessage(
-							ChatColor.GRAY + "pitch: " + ChatColor.GREEN + warps.getWarp(args[0]).get("pitch"));
-					return true;
-				}
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+		switch (args.length) {
+		case 0:
+			if (Holder.hasPermission(sndr, Permission.ESS_WARPS)) {
+				sndr.sendMessage(ChatColor.GRAY + "Server warps: " + ChatColor.GREEN + Warps.getWarp(null, null)
+						.listWarps());
 				return true;
 			}
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
-		} else {
-			if (args.length == 0) {
-				sndr.sendMessage(ChatColor.GRAY + "Server warps: " + ChatColor.GREEN + warps.listWarps());
-				return true;
-			}
-			if (args.length == 1) {
-				if (warps.getWarp(args[0]) == null) {
+		case 1:
+			if (Holder.hasPermission(sndr, Permission.ESS_WARPS_DETAIL)) {
+				if (!Warps.getWarp(args[0], null).exists()) {
 					sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 					return true;
 				}
-				sndr.sendMessage(ChatColor.GRAY + "Information for warp \"" + args[0] + "\"");
-				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + warps.getWarp(args[0]).get("world"));
-				sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + warps.getWarp(args[0]).get("x"));
-				sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + warps.getWarp(args[0]).get("y"));
-				sndr.sendMessage(ChatColor.GRAY + "z: " + ChatColor.GREEN + warps.getWarp(args[0]).get("z"));
-				sndr.sendMessage(ChatColor.GRAY + "yaw: " + ChatColor.GREEN + warps.getWarp(args[0]).get("yaw"));
-				sndr.sendMessage(ChatColor.GRAY + "pitch: " + ChatColor.GREEN + warps.getWarp(args[0]).get("pitch"));
-				return true;
+				WarpData d = Warps.getWarp(args[0], null);
+				ChatColor gr = ChatColor.GRAY;
+				ChatColor gn = ChatColor.GREEN;
+				sndr.sendMessage(gr + "Information for warp \"" + gn + args[0] + gr + "\".");
+				sndr.sendMessage(gr + "World: " + gn + d.getWorld());
+				sndr.sendMessage(gr + "World: " + gn + d.getX());
+				sndr.sendMessage(gr + "World: " + gn + d.getY());
+				sndr.sendMessage(gr + "World: " + gn + d.getZ());
+				sndr.sendMessage(gr + "World: " + gn + d.getYaw());
+				sndr.sendMessage(gr + "World: " + gn + d.getPitch());
 			}
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			return true;
+		default:
 			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 			return true;
 		}

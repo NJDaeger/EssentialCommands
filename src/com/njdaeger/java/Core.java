@@ -8,7 +8,6 @@ import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
-import com.njdaeger.java.essentials.commands.player.GiveCommand;
 import com.njdaeger.java.essentials.commands.player.GodCommand;
 import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
@@ -17,10 +16,6 @@ import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
 import com.njdaeger.java.essentials.commands.punish.TempBanCommand;
 import com.njdaeger.java.essentials.commands.punish.UnbanCommand;
-import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
-import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
-import com.njdaeger.java.essentials.commands.warps.WarpCommand;
-import com.njdaeger.java.essentials.commands.warps.WarpsCommand;
 import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
 import com.njdaeger.java.essentials.listeners.CoreListener;
 import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
@@ -38,7 +33,6 @@ public class Core extends JavaPlugin {
 	@SuppressWarnings("deprecation")
 	public void registerCommands() {
 		Plugin.getCommand("serverinfo", new ServerInfoCommand()); // Finished
-		Plugin.getCommand("i", new GiveCommand()); // Finished
 		Plugin.getCommand("god", new GodCommand()); // Finished
 		Plugin.getCommand("position", new GetPositionCommand()); // Finished
 		Plugin.getCommand("heal", new HealCommand()); // Finished
@@ -49,10 +43,6 @@ public class Core extends JavaPlugin {
 		Plugin.getCommand("hat", new HatCommand()); // Finished
 		Plugin.getCommand("helpop", new HelpopCommand()); // Finished
 		Plugin.getCommand("kickall", new KickallCommand()); // Finished
-		Plugin.getCommand("delwarp", new DelwarpCommand()); //Finished
-		Plugin.getCommand("setwarp", new SetwarpCommand()); //Finished
-		Plugin.getCommand("warp", new WarpCommand()); //Finished
-		Plugin.getCommand("warps", new WarpsCommand()); //Finished
 
 	}
 

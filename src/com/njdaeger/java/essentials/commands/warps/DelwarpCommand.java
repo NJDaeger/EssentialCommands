@@ -3,23 +3,24 @@ package com.njdaeger.java.essentials.commands.warps;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.configuration.controllers.Warps;
+import com.njdaeger.java.configuration.data.WarpData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class DelwarpCommand extends BukkitCommand{
-	
-	Warps warps = new Warps();
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class DelwarpCommand extends EssCommand {
+
+	static String name = "delwarp";
+
 	public DelwarpCommand() {
-		super("delwarp");
+		super(name);
 		List<String> a = Arrays.asList("removewarp", "deletewarp");
 		this.description = "Delete an existing warp.";
 		this.usageMessage = "/delwarp <warpname>";
@@ -27,45 +28,32 @@ public class DelwarpCommand extends BukkitCommand{
 	}
 
 	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_DELWARP)) {
-				if (args.length == 0) {
-					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-					return true;
-				}
-				if (args.length > 1) {
-					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-					return true;
-				}
-				if (warps.getWarp(args[0]) == null) {
+		if (Holder.hasPermission(sndr, Permission.ESS_DELWARP)) {
+			switch (args.length) {
+			case 0:
+				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+				return true;
+			case 1:
+				WarpData d = Warps.getWarp(args[0], null);
+				if (!d.exists()) {
 					sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 					return true;
 				}
-				warps.deleteWarp(args[0]);
+				d.remove();
 				sndr.sendMessage(ChatColor.GRAY + "You deleted warp " + ChatColor.GREEN + args[0]);
 				return true;
-			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
-			return true;
-		}
-		else {
-			if (args.length == 0) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			if (args.length > 1) {
+			default:
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
-			if (warps.getWarp(args[0]) == null) {
-				sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
-				return true;
-			}
-			warps.deleteWarp(args[0]);
-			sndr.sendMessage(ChatColor.GRAY + "You deleted warp " + ChatColor.GREEN + args[0]);
-			return true;
 		}
+		sndr.sendMessage(Error.NO_PERMISSION.sendError());
+		return true;
 	}
 }

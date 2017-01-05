@@ -14,8 +14,13 @@ import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
+import com.njdaeger.java.essentials.commands.player.GiveCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
+import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
+import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
+import com.njdaeger.java.essentials.commands.warps.WarpCommand;
+import com.njdaeger.java.essentials.commands.warps.WarpsCommand;
 
 public class CommandCore {
 
@@ -36,6 +41,11 @@ public class CommandCore {
 		new BurnCommand().register();
 		new ClearInvCommand().register();
 		new NickCommand().register();
+		new GiveCommand().register();
+		new DelwarpCommand().register();
+		new SetwarpCommand().register();
+		new WarpCommand().register();
+		new WarpsCommand().register();
 
 	}
 }
