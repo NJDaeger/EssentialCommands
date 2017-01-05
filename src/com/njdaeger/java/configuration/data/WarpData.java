@@ -123,10 +123,10 @@ public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues
 
 	@Override
 	public boolean exists() {
-		if (YamlConfiguration.loadConfiguration(file) != null) {
-			return true;
-		} else
+		if (YamlConfiguration.loadConfiguration(file) == null) {
 			return false;
+		} else
+			return true;
 	}
 
 	@Override

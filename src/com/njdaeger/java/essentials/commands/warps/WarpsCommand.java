@@ -37,6 +37,9 @@ public class WarpsCommand extends EssCommand {
 		switch (args.length) {
 		case 0:
 			if (Holder.hasPermission(sndr, Permission.ESS_WARPS)) {
+				if (Warps.getWarp(null, null).listWarps() == null) {
+					sndr.sendMessage(Error.throwError("No warps exist."));
+				}
 				sndr.sendMessage(ChatColor.GRAY + "Server warps: " + ChatColor.GREEN + Warps.getWarp(null, null)
 						.listWarps());
 				return true;

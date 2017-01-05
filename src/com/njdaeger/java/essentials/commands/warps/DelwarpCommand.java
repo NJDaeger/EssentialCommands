@@ -37,7 +37,7 @@ public class DelwarpCommand extends EssCommand {
 		if (Holder.hasPermission(sndr, Permission.ESS_DELWARP)) {
 			switch (args.length) {
 			case 0:
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			case 1:
 				WarpData d = Warps.getWarp(args[0], null);
