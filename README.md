@@ -1,4 +1,4 @@
-https://travis-ci.org/NJDaeger/EssentialCommands.svg?branch=master
+https://travis-ci.org/NJDaeger/EssentialCommands.svg
 # EssentialCommands
 A remake of Bukkit's Essentials plugin. This will also include built in plugins like groupmanager (remade), editors, and probably a few more things once I get this fully sorted out.
 
