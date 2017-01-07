@@ -79,7 +79,10 @@ public enum Permission {
 	ESS_BUBBLE("essentials.bubble"),
 	ESS_BUBBLE_OTHER("essentials.bubble.other"),
 	ESS_BUBBLE_EXEMPT_MAXRANGE("essentials.bubble.nolimit"),
-	ESS_BYPASS_BLOCKED_COMMANDS("essentials.bypass.commands");
+	ESS_BYPASS_BLOCKED_COMMANDS("essentials.bypass.commands"),
+	ESS_KILL_ALL("essentials.kill.all"),
+	ESS_KILL_OTHER("essentials.kill.other"),
+	ESS_SUICIDE("essentials.suicide");
 
 	public final String permission;
 

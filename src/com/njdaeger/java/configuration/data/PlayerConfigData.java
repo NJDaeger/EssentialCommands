@@ -133,23 +133,19 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		if (!file.exists()) {
 			this.createConfig();
 		}
-		if (isGod() == false) {
+		if (isGod() == true) {
 			if (Groups.god.contains(player)) {
 				Groups.god.remove(player);
 			}
-			return;
-		} else {
-			if (!Groups.god.contains(player)) {
-				Groups.god.add(player);
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GOD.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			player.setInvulnerable(false);
+			this.setValue(PlayerPaths.GOD.getPath(), false);
 			return;
 		}
+		Groups.god.add(player);
+		player.setInvulnerable(true);
+		this.setValue(PlayerPaths.GOD.getPath(), true);
+		return;
+
 	}
 
 	@Override
@@ -256,8 +252,8 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
 			return;
 		} else {
-			player.setDisplayName(
-					ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath()) + ChatColor.WHITE);
+			player.setDisplayName(ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath())
+					+ ChatColor.WHITE);
 			return;
 		}
 	}

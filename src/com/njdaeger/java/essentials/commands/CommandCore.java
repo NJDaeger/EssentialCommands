@@ -14,7 +14,11 @@ import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
+import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
 import com.njdaeger.java.essentials.commands.player.GiveCommand;
+import com.njdaeger.java.essentials.commands.player.GodCommand;
+import com.njdaeger.java.essentials.commands.player.HealCommand;
+import com.njdaeger.java.essentials.commands.player.KillCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
@@ -48,6 +52,10 @@ public class CommandCore {
 		new WarpCommand().register();
 		new WarpsCommand().register();
 		new ServerInfoCommand().register();
+		new GodCommand().register();
+		new GetPositionCommand().register();
+		new HealCommand().register();
+		new KillCommand().register();
 
 	}
 }

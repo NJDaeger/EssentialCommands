@@ -6,14 +6,13 @@ Progress:
 - NJPerms: 0%
 - LoginClearance: 0%
 - ServerProtect: 0%
-- BannerManager: 0% (redoing this)
+- REMOVING BannerManager: 0% Being moved to a new plugin.
 - Essentials: 40%
 - Entire plugin: 10%
 
 Possible/planned features:
 - Revamped version of LoginClearance
 - Server codes plugin
-- External Mail receiving feature (this might be cancelled)
 - Revamped version of ServerProtect
 - Banner Creator
 - Placed sign editor.

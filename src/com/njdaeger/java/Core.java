@@ -7,8 +7,6 @@ import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
-import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
-import com.njdaeger.java.essentials.commands.player.GodCommand;
 import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
@@ -16,7 +14,6 @@ import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
 import com.njdaeger.java.essentials.commands.punish.TempBanCommand;
 import com.njdaeger.java.essentials.commands.punish.UnbanCommand;
-import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
 import com.njdaeger.java.essentials.listeners.CoreListener;
 import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
 import com.njdaeger.java.essentials.listeners.PlayerLeaveListener;
@@ -32,9 +29,6 @@ public class Core extends JavaPlugin {
 
 	@SuppressWarnings("deprecation")
 	public void registerCommands() {
-		Plugin.getCommand("serverinfo", new ServerInfoCommand()); // Finished
-		Plugin.getCommand("god", new GodCommand()); // Finished
-		Plugin.getCommand("position", new GetPositionCommand()); // Finished
 		Plugin.getCommand("heal", new HealCommand()); // Finished
 		Plugin.getCommand("tempban", new TempBanCommand()); // Finished
 		Plugin.getCommand("ban", new BanCommand()); // Finished
