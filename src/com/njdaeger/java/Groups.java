@@ -33,4 +33,6 @@ public class Groups {
 
 	//Default spied commands
 	public static List<String> spiedCommands = Arrays.asList("message", "write", "r", "reply", "pl", "plugins");
+
+	public static ArrayList<Player> infobar = new ArrayList<Player>();
 }

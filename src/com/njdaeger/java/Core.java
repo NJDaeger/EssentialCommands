@@ -80,6 +80,7 @@ public class Core extends JavaPlugin {
 		CommandCore.registerCommands();
 		Config.getConfig().newConfig();
 		TPS.getTPSClass();
+		new InfoTask(this).run();
 		enableSubplugins();
 		registerListeners();
 		registerCommands();

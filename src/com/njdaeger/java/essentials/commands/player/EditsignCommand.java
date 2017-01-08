@@ -4,27 +4,35 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class EditsignCommand extends BukkitCommand{
+import net.md_5.bungee.api.ChatColor;
+
+public class EditsignCommand extends EssCommand {
+
+	static String name = "editsign";
 
 	public EditsignCommand() {
-		super("editsign");
+		super(name);
 		List<String> a = Arrays.asList("editsign", "edittext", "es", "edit");
 		this.description = "Edit a placed sign.";
 		this.usageMessage = "/editsign <line> [message]";
 		this.setAliases(a);
+	}
+
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
 	}
 
 	@Override
@@ -35,9 +43,8 @@ public class EditsignCommand extends BukkitCommand{
 				if (args.length < 1) {
 					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 					return true;
-				}
-				else {
-					HashSet<Material> tran = new HashSet<Material>(); 
+				} else {
+					HashSet<Material> tran = new HashSet<Material>();
 					tran.add(Material.AIR);
 					Block type = player.getTargetBlock(tran, 100);
 					if (type.getType().equals(Material.WALL_SIGN) || type.getType().equals(Material.SIGN_POST)) {
@@ -47,8 +54,7 @@ public class EditsignCommand extends BukkitCommand{
 								sign.setLine(0, "");
 								sign.update();
 								return true;
-							}
-							else {
+							} else {
 								Sign sign = (Sign) type.getState();
 								sign.setLine(0, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
 								sign.update();
@@ -61,13 +67,12 @@ public class EditsignCommand extends BukkitCommand{
 								sign.setLine(1, "");
 								sign.update();
 								return true;
-							}
-							else {
+							} else {
 								Sign sign = (Sign) type.getState();
 								sign.setLine(1, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
 								sign.update();
 								return true;
-							}						
+							}
 						}
 						if (args[0].equalsIgnoreCase("line3") || args[0].equals("3")) {
 							if (args.length == 1) {
@@ -75,8 +80,7 @@ public class EditsignCommand extends BukkitCommand{
 								sign.setLine(2, "");
 								sign.update();
 								return true;
-							}
-							else {
+							} else {
 								Sign sign = (Sign) type.getState();
 								sign.setLine(2, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
 								sign.update();
@@ -89,41 +93,38 @@ public class EditsignCommand extends BukkitCommand{
 								sign.setLine(3, "");
 								sign.update();
 								return true;
-							}
-							else {
+							} else {
 								Sign sign = (Sign) type.getState();
 								sign.setLine(3, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
 								sign.update();
 								return true;
 							}
-						}
-						else {
+						} else {
 							sndr.sendMessage(Error.LINE_NUMBER_INVALID.sendError());
 							return true;
 						}
-					}
-					else {
+					} else {
 						sndr.sendMessage(Error.TARGET_NOT_SIGN.sendError());
 						return true;
 					}
 				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			sndr.sendMessage(Error.PLAYER_ONLY.sendError());
 			return true;
 		}
 	}
+
 	private String setSign(String[] args) {
 		String msg = "";
 		for (String message : args) {
 			msg = (msg + message + " ");
 			StringBuilder builder = new StringBuilder();
-			for(int i = 1; i < args.length; i++) builder.append(args[i]).append(' ');
+			for (int i = 1; i < args.length; i++)
+				builder.append(args[i]).append(' ');
 			String reason = builder.toString();
 			return reason;
 		}

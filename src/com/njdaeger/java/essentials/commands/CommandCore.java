@@ -25,6 +25,7 @@ import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
 import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
 import com.njdaeger.java.essentials.commands.warps.WarpCommand;
 import com.njdaeger.java.essentials.commands.warps.WarpsCommand;
+import com.njdaeger.java.essentials.commands.world.InfoSidebarCommand;
 import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
 
 public class CommandCore {
@@ -56,6 +57,7 @@ public class CommandCore {
 		new GetPositionCommand().register();
 		new HealCommand().register();
 		new KillCommand().register();
+		new InfoSidebarCommand().register();
 
 	}
 }

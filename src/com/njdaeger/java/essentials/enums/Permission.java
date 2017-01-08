@@ -82,7 +82,14 @@ public enum Permission {
 	ESS_BYPASS_BLOCKED_COMMANDS("essentials.bypass.commands"),
 	ESS_KILL_ALL("essentials.kill.all"),
 	ESS_KILL_OTHER("essentials.kill.other"),
-	ESS_SUICIDE("essentials.suicide");
+	ESS_SUICIDE("essentials.suicide"),
+	ESS_INFOBAR("essentials.serverinfo.infobar"),
+	ESS_INFOBAR_OTHER("essentials.serverinfo.infobar.other"),
+	ESS_INFOBAR_ALL("essentials.serverinfo.infobar.*"),
+	ESS_INFOBAR_TPS("essentials.serverinfo.infobar.tps"),
+	ESS_INFOBAR_USAGE("essentials.serverinfo.infobar.usage"),
+	ESS_INFOBAR_FREERAM("essentials.serverinfo.infobar.freeram"),
+	ESS_INFOBAR_ALCDRAM("essentials.serverinfo.infobar.alcdram");
 
 	public final String permission;
 

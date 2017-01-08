@@ -3,19 +3,22 @@ package com.njdaeger.java.essentials.commands.player;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class HatCommand extends BukkitCommand{
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class HatCommand extends EssCommand {
+
+	static String name = "hat";
+
 	public HatCommand() {
 		super("hat");
 		List<String> a = Arrays.asList("hood", "helmet");
@@ -23,8 +26,15 @@ public class HatCommand extends BukkitCommand{
 		this.usageMessage = "/hat [player]";
 		this.setAliases(a);
 	}
+
+	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
+
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_HAT, Permission.ESS_HAT_OTHER)) {
@@ -32,8 +42,7 @@ public class HatCommand extends BukkitCommand{
 					if (player.getInventory().getItemInMainHand() == null) {
 						sndr.sendMessage(Error.CANNOT_BE_HAT.sendError());
 						return true;
-					}
-					else {
+					} else {
 						player.getInventory().setHelmet(player.getInventory().getItemInMainHand());
 						sndr.sendMessage(ChatColor.GRAY + "Enjoy your new hat!");
 						return true;
@@ -47,32 +56,27 @@ public class HatCommand extends BukkitCommand{
 				if (args.length == 1) {
 					if (Holder.hasPermission(player, Permission.ESS_HAT_OTHER)) {
 						if (target.getInventory().getItemInMainHand() == null) {
-						sndr.sendMessage(Error.CANNOT_BE_HAT.sendError());
-						return true;
-						}
-						else {
+							sndr.sendMessage(Error.CANNOT_BE_HAT.sendError());
+							return true;
+						} else {
 							target.getInventory().setHelmet(target.getInventory().getItemInMainHand());
 							target.sendMessage(ChatColor.GRAY + "Enjoy your new hat!");
 							return true;
 						}
-					}
-					else {
+					} else {
 						sndr.sendMessage(Error.NO_PERMISSION.sendError());
 						return true;
 					}
-					
-				}
-				else {
+
+				} else {
 					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 					return true;
 				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (args.length > 1) {
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
@@ -89,11 +93,11 @@ public class HatCommand extends BukkitCommand{
 			if (target.getInventory().getItemInMainHand() == null) {
 				sndr.sendMessage(Error.CANNOT_BE_HAT.sendError());
 				return true;
-			}
-			else {
+			} else {
 				target.getInventory().setHelmet(target.getInventory().getItemInMainHand());
 				target.sendMessage(ChatColor.GRAY + "Enjoy your new hat!");
-				sndr.sendMessage(ChatColor.GRAY + "You changed " + ChatColor.GREEN + target.getName() + ChatColor.GRAY + "'s hat!");
+				sndr.sendMessage(ChatColor.GRAY + "You changed " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+						+ "'s hat!");
 				return true;
 			}
 		}
