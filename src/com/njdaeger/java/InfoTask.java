@@ -40,6 +40,7 @@ public class InfoTask extends BukkitRunnable {
 						List<String> a2 = new ArrayList<String>();
 						List<String> a3 = new ArrayList<String>();
 						List<String> a4 = new ArrayList<String>();
+						InfoBoard.b.getTeam("Infobar").setPrefix("");
 						InfoBoard.createBar();
 						if (Holder.hasPermission(players, Permission.ESS_INFOBAR_ALCDRAM, Permission.ESS_INFOBAR_ALL)) {
 							int a = (int) Server.getAllocatedMemory();
@@ -48,8 +49,9 @@ public class InfoTask extends BukkitRunnable {
 								a1.add(0, a + "Mb");
 							}
 							if (a1.get(0) != a + "Mb") {
+								//InfoBoard.update(a1.get(0));
 								InfoBoard.reset(a1.get(0));
-								InfoBoard.addScore(a + "Mb", (byte) 11, a1.get(0));
+								InfoBoard.o.getScore(a + "Mb").setScore(11);
 								a1.clear();
 							}
 							a1.add(0, a + "Mb");
@@ -61,8 +63,9 @@ public class InfoTask extends BukkitRunnable {
 								a2.add(0, a + "Mb");
 							}
 							if (a2.get(0) != a + "Mb") {
+								//InfoBoard.update(a2.get(0));
 								InfoBoard.reset(a2.get(0));
-								InfoBoard.addScore(a + "Mb", (byte) 8, a2.get(0));
+								InfoBoard.o.getScore(a + "Mb").setScore(8);
 								a2.clear();
 							}
 							a2.add(0, a + "Mb");
@@ -74,8 +77,9 @@ public class InfoTask extends BukkitRunnable {
 								a3.add(0, a + "");
 							}
 							if (a3.get(0) != a + "") {
+								//InfoBoard.update(a3.get(0));
 								InfoBoard.reset(a3.get(0));
-								InfoBoard.addScore(a + "", (byte) 5, a3.get(0));
+								InfoBoard.o.getScore(a + "").setScore(5);
 								a3.clear();
 							}
 							a3.add(0, a + "");
@@ -87,8 +91,9 @@ public class InfoTask extends BukkitRunnable {
 								a4.add(0, a + "%");
 							}
 							if (a4.get(0) != a + "%") {
+								//InfoBoard.update(a4.get(0));
 								InfoBoard.reset(a4.get(0));
-								InfoBoard.addScore(a + "%", (byte) 2, a4.get(0));
+								InfoBoard.o.getScore(a + "%").setScore(2);
 								a4.clear();
 							}
 							a4.add(0, a + "%");

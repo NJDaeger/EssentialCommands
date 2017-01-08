@@ -74,6 +74,7 @@ public class ServerInfoCommand extends EssCommand {
 				if (Holder.hasPermission(sndr, Permission.ESS_SERVER_INFO_PORT)) {
 					sndr.sendMessage(g + "Port Number: " + a + Server.getPort());
 				}
+				return true;
 			default:
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
