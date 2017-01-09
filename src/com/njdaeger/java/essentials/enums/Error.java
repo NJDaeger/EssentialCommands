@@ -8,7 +8,7 @@ public enum Error {
 
 	NOT_ENOUGH_ARGS("Not enough arguments provided."),
 	TOO_MANY_ARGS("Too many arguments provided."),
-	NO_PERMISSION("You don't have sufficient permission to do that."),
+	NO_PERMISSION(Messages.ERROR_NO_PERMISSION.getMessage()),
 	UNKNOWN_PLAYER("Player provided does not exist."),
 	PLAYER_ONLY("This action is restricted to players only."),
 	UNKNOWN_GAMEMODE("Gamemode provided does not exist."),

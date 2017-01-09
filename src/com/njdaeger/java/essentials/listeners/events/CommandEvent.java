@@ -49,7 +49,7 @@ public class CommandEvent {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
-					e.getPlayer().sendMessage(Parse.parseCommand(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
+					e.getPlayer().sendMessage(Parse.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
 					e.setCancelled(true);
 					return;
 				}
@@ -61,7 +61,7 @@ public class CommandEvent {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
-					e.getPlayer().sendMessage(Parse.parseCommand(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
+					e.getPlayer().sendMessage(Parse.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
 					e.setCancelled(true);
 					return;
 				}

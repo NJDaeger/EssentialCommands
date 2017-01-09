@@ -33,7 +33,7 @@ public class InfoBoard {
 
 	public static void createFor(Player player) {
 		Board board = new Board("Info Board", Double.parseDouble(Server.getCPULoad().toString()) + "%", ChatColor.GREEN + "" + ChatColor.BOLD + "CPU Load", ChatColor.STRIKETHROUGH + "- - --- -",
-				Double.parseDouble(Server.getTPS()) + "", ChatColor.GREEN + "" + ChatColor.BOLD + "TPS", ChatColor.STRIKETHROUGH + "- --- - -",
+				InfoBoard.formatTps(Server.getTPS()) + "", ChatColor.GREEN + "" + ChatColor.BOLD + "TPS", ChatColor.STRIKETHROUGH + "- --- - -",
 				Server.getFreeMemory() + "Mb", ChatColor.GREEN + "" + ChatColor.BOLD + "Free RAM", ChatColor.STRIKETHROUGH + "--- - - -",
 				Server.getAllocatedMemory() + "Mb", ChatColor.GREEN + "" + ChatColor.BOLD + "Alcd RAM");
 		player.setScoreboard(board.getScoreboard());
@@ -41,5 +41,16 @@ public class InfoBoard {
 
 	public static void removeFor(Player player) {
 		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+	}
+	public static String formatTps(String tps) {
+		double ticks = Double.parseDouble(tps);
+		if (ticks > 20) {
+			return ChatColor.DARK_GREEN + "20";
+		} else if (ticks >= 18) {
+			return ChatColor.GREEN + tps;
+		} else if (ticks >= 15) {
+			return ChatColor.YELLOW + tps;
+		} else
+			return ChatColor.RED + tps;
 	}
 }
