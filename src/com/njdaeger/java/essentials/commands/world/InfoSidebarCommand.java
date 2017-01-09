@@ -47,7 +47,6 @@ public class InfoSidebarCommand extends EssCommand {
 				}
 				Groups.infobar.add((Player) sndr);
 				InfoBoard.createFor((Player) sndr);
-				InfoBoard.createBar();
 				sndr.sendMessage(ChatColor.GRAY + "Infobar is now active.");
 				return true;
 			case 1:
@@ -65,7 +64,6 @@ public class InfoSidebarCommand extends EssCommand {
 					return true;
 				}
 				InfoBoard.createFor(target);
-				InfoBoard.createBar();
 				Groups.infobar.add(target);
 				sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + "'s infobar now active.");
 				target.sendMessage(ChatColor.GRAY + "Infobar is now active.");
