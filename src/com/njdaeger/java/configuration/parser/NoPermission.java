@@ -29,6 +29,7 @@ public class NoPermission {
 				t.add(perm.getPermission());
 				i++;
 				if (i > t.size()) {
+					t.clear();
 					break;
 				}
 			}

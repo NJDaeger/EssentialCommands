@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.Parse;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.essentials.enums.Error;
@@ -50,8 +51,8 @@ public class Home extends EssCommand {
 						return true;
 					}
 					Homes.getHome(args[0], player).sendHome();
-					sndr.sendMessage(
-							ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN
+							+ args[0]);
 					return true;
 				case 2:
 					if (Holder.hasPermission(player, Permission.ESS_HOME_OTHER)) {
@@ -66,8 +67,8 @@ public class Home extends EssCommand {
 								return true;
 							}
 							Homes.getOfflineHome(args[0], args[1]).sendOtherHome(player);
-							sndr.sendMessage(
-									ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
+							sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN
+									+ args[0]);
 							return true;
 						}
 						if (!Homes.getHome(args[0], target).exists()) {
@@ -75,19 +76,21 @@ public class Home extends EssCommand {
 							return true;
 						}
 						Homes.getHome(args[0], target).sendOtherHome(player);
-						sndr.sendMessage(
-								ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN + args[0]);
+						sndr.sendMessage(ChatColor.GRAY + "You have successfully been sent to " + ChatColor.GREEN
+								+ args[0]);
 						return true;
 
 					}
-					sndr.sendMessage(Error.NO_PERMISSION.sendError());
+					sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+							Permission.ESS_HOME_OTHER));
 					return true;
 				default:
 					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				}
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown", Permission.ESS_HOME,
+					Permission.ESS_HOME_OTHER));
 			return true;
 		}
 		sndr.sendMessage(Error.PLAYER_ONLY.sendError());

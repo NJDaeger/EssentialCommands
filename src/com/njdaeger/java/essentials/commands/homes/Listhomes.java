@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.Parse;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.configuration.data.HomeData;
@@ -43,7 +44,8 @@ public class Listhomes extends EssCommand {
 			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER,
 					Permission.ESS_LISTHOMES_DETAIL)) {
 			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+						Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_DETAIL, Permission.ESS_LISTHOMES_OTHER));
 				return true;
 			}
 		}
@@ -58,8 +60,8 @@ public class Listhomes extends EssCommand {
 					sndr.sendMessage(Error.NO_HOMES.sendError());
 					return true;
 				}
-				sndr.sendMessage(
-						ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, player).listHomes());
+				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, player)
+						.listHomes());
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
@@ -72,15 +74,16 @@ public class Listhomes extends EssCommand {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return true;
 					}
-					sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
-							+ Homes.getOfflineHome(null, args[0]).listHomes());
+					sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN + Homes
+							.getOfflineHome(null, args[0]).listHomes());
 					return true;
 				}
-				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN
-						+ Homes.getHome(null, target).listHomes());
+				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN + Homes.getHome(null,
+						target).listHomes());
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		case 2:
 			if (Holder.hasPermission(sndr, Permission.ESS_LISTHOMES_DETAIL)) {
@@ -118,7 +121,8 @@ public class Listhomes extends EssCommand {
 				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.getWorld());
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		default:
 			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());

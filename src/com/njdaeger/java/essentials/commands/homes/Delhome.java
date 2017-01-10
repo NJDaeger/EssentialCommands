@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.Parse;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.essentials.enums.Error;
@@ -43,15 +44,17 @@ public class Delhome extends EssCommand {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+					Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER));
+			return true;
 		case 1:
 			if (sndr instanceof Player) {
 				Player player = (Player) sndr;
 				if (Holder.hasPermission(player, Permission.ESS_DELHOME)) {
 					if (!Homes.getHome(args[0], player).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-						sndr.sendMessage(
-								ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, player));
+						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null,
+								player));
 						return true;
 					}
 					Homes.getHome(args[0], player).remove();
@@ -59,7 +62,9 @@ public class Delhome extends EssCommand {
 							+ " from homes.");
 					return true;
 				}
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+						Permission.ESS_DELHOME));
+				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
@@ -73,8 +78,8 @@ public class Delhome extends EssCommand {
 					}
 					if (!Homes.getOfflineHome(args[0], args[1]).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN
-								+ Homes.getOfflineHome(null, args[1]));
+						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getOfflineHome(
+								null, args[1]));
 						return true;
 					}
 					Homes.getOfflineHome(args[0], args[1]).remove();
@@ -84,17 +89,18 @@ public class Delhome extends EssCommand {
 				}
 				if (!Homes.getHome(args[0], target).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(
-							ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, target));
+					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null,
+							target));
 					return true;
 				}
 				Homes.getHome(args[0], target).remove();
-				sndr.sendMessage(
-						ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY + " from homes.");
+				sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
+						+ " from homes.");
 				return true;
 
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+					Permission.ESS_DELHOME_OTHER));
 			return true;
 		default:
 			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
