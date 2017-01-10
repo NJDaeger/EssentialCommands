@@ -9,14 +9,15 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.configuration.Parse;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.messages.Messenger;
 
 public class MessageCommand extends EssCommand {
-	
+
 	static String name = "message";
-	
+
 	public MessageCommand() {
 		super(name);
 		List<String> a = Arrays.asList("msg", "pm", "write", "private");
@@ -24,10 +25,12 @@ public class MessageCommand extends EssCommand {
 		this.usageMessage = "/message <player> <message>";
 		this.setAliases(a);
 	}
+
 	@Override
 	public void register() {
 		Plugin.getCommand(name, this);
 	}
+
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (args.length < 2) {
@@ -44,10 +47,19 @@ public class MessageCommand extends EssCommand {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {
+				if (args[0].equalsIgnoreCase("console")) {
+					if (Holder.hasPermission(sndr, Permission.ESS_MESSAGE_CONSOLE)) {
+						Messenger.newPM(sndr, args[0], finalmsg);
+					}
+					sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+							Permission.ESS_MESSAGE_CONSOLE));
+					return true;
+				}
 				Messenger.newPM(sndr, args[0], finalmsg);
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+					Permission.ESS_MESSAGE_CHATCOLOR, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CONSOLE));
 			return true;
 		}
 		Messenger.newPM(sndr, args[0], finalmsg);
