@@ -46,23 +46,15 @@ public class MessageCommand extends EssCommand {
 		}
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CHATCOLOR)) {
-				if (args[0].equalsIgnoreCase("console")) {
-					if (Holder.hasPermission(sndr, Permission.ESS_MESSAGE_CONSOLE)) {
-						Messenger.newPM(sndr, args[0], finalmsg);
-					}
-					sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
-							Permission.ESS_MESSAGE_CONSOLE));
-					return true;
-				}
-				Messenger.newPM(sndr, args[0], finalmsg);
+			if (Holder.hasPermission(player, Permission.ESS_MESSAGE)) {
+				Messenger.sendMessage(sndr, args[0], finalmsg);
 				return true;
 			}
 			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
 					Permission.ESS_MESSAGE_CHATCOLOR, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CONSOLE));
 			return true;
 		}
-		Messenger.newPM(sndr, args[0], finalmsg);
+		Messenger.sendMessage(sndr, args[0], finalmsg);
 		return true;
 	}
 }
