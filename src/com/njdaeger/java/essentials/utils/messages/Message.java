@@ -21,10 +21,10 @@ public class Message {
 	public Message(CommandSender sndr, boolean chatColor, String message) {
 		if (chatColor) {
 			sndr.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "You >> " + ChatColor.GREEN + ChatColor.BOLD
-					+ "CONSOLE" + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.translateAlternateColorCodes('&',
-							message));
+					+ "CONSOLE" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor
+							.translateAlternateColorCodes('&', message));
 			console.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
-					+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor
+					+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor
 							.translateAlternateColorCodes('&', message));
 			return;
 		}
@@ -49,14 +49,15 @@ public class Message {
 					+ player.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor
 							.translateAlternateColorCodes('&', message));
 			player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
-					+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor
+					+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor
 							.translateAlternateColorCodes('&', message));
 			return;
 		}
 		sndr.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "You >> " + ChatColor.GREEN + ChatColor.BOLD + player
 				.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.RESET + message);
 		player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
-				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.RESET + message);
+				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor.RESET
+				+ message);
 		return;
 	}
 }

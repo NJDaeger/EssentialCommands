@@ -89,6 +89,8 @@ public class Messenger {
 					Permission.ESS_MESSAGE_CONSOLE));
 			return;
 		}
+		conversation.put(sndr.getName(), target);
+		conversation.put(target, sndr.getName());
 		if (Holder.hasPermission(sndr, Permission.ESS_MESSAGE_CHATCOLOR)) {
 			new Message(sndr, player, true, message);
 			return;
