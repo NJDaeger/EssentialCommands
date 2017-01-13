@@ -12,7 +12,6 @@ public enum Path {
 	 * Subplugins
 	 */
 	ENABLE_NJP("subplugin.groupmanager", true),
-	ENABLE_BM("subplugin.bannermanager", true),
 	ENABLE_CODES("subplugin.codes", true),
 	ENABLE_ANNO("subplugin.annotations", true),
 	ENABLE_SP("subplugin.serverprotect", true),

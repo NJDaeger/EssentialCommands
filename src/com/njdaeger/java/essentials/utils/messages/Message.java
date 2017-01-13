@@ -54,10 +54,9 @@ public class Message {
 			return;
 		}
 		sndr.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "You >> " + ChatColor.GREEN + ChatColor.BOLD + player
-				.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.RESET + message);
+				.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + message);
 		player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
-				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor.RESET
-				+ message);
+				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + message);
 		return;
 	}
 }

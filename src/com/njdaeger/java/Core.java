@@ -6,9 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
-import com.njdaeger.java.essentials.commands.player.EditsignCommand;
-import com.njdaeger.java.essentials.commands.player.HatCommand;
-import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
 import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
@@ -29,12 +26,9 @@ public class Core extends JavaPlugin {
 
 	@SuppressWarnings("deprecation")
 	public void registerCommands() {
-		Plugin.getCommand("heal", new HealCommand()); // Finished
 		Plugin.getCommand("tempban", new TempBanCommand()); // Finished
 		Plugin.getCommand("ban", new BanCommand()); // Finished
 		Plugin.getCommand("unban", new UnbanCommand());// Finished
-		Plugin.getCommand("editsign", new EditsignCommand()); // Finished
-		Plugin.getCommand("hat", new HatCommand()); // Finished
 		Plugin.getCommand("helpop", new HelpopCommand()); // Finished
 		Plugin.getCommand("kickall", new KickallCommand()); // Finished
 
@@ -43,9 +37,6 @@ public class Core extends JavaPlugin {
 	public void enableSubplugins() {
 		if (Config.getConfig().isAnnotationsEnabled() == true) {
 			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
-		}
-		if (Config.getConfig().isBannermanagerEnabled() == true) {
-			Bukkit.getLogger().info("[EssentialCommands] Bannermanager is now Enabled.");
 		}
 		if (Config.getConfig().isCodesEnabled() == true) {
 			Bukkit.getLogger().info("[EssentialCommands] Codes is now Enabled.");

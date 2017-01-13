@@ -86,43 +86,6 @@ public class ConfigData implements IConfiguration {
 	}
 
 	@Override
-	public boolean isBannermanagerEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_BM.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_BM.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_BM.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_BM.getPath());
-			}
-		}
-	}
-
-	@Override
-	public void setBannermanagerEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_BM.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_BM.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_BM.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_BM.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	}
-
-	@Override
 	public boolean isCodesEnabled() {
 		if (!file.exists()) {
 			this.newConfig();

@@ -36,20 +36,6 @@ public interface IConfiguration {
 	void setNJPermsEnabled(boolean enable);
 
 	/**
-	 * Checks if BannerManager is enabled.
-	 * 
-	 * @return True if enabled
-	 */
-	boolean isBannermanagerEnabled();
-
-	/**
-	 * Enables or disables BannerManager
-	 * 
-	 * @param enable True enables it, false disables it.
-	 */
-	void setBannermanagerEnabled(boolean enable);
-
-	/**
 	 * Checks if Codes is enabled.
 	 * 
 	 * @return True if enabled

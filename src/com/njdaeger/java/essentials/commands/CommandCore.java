@@ -12,11 +12,13 @@ import com.njdaeger.java.essentials.commands.player.AfkCommand;
 import com.njdaeger.java.essentials.commands.player.BreakCommand;
 import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
+import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
 import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
 import com.njdaeger.java.essentials.commands.player.GiveCommand;
 import com.njdaeger.java.essentials.commands.player.GodCommand;
+import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.player.KillCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
@@ -58,6 +60,9 @@ public class CommandCore {
 		new HealCommand().register();
 		new KillCommand().register();
 		new InfoSidebarCommand().register();
+		new HatCommand().register();
+		new EditsignCommand().register();
+		new HealCommand().register();
 
 	}
 }
