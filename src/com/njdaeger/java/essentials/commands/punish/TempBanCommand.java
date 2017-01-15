@@ -3,8 +3,6 @@ package com.njdaeger.java.essentials.commands.punish;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
@@ -13,10 +11,12 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.ServerBan;
+import com.njdaeger.java.essentials.utils.BanAPI;
 
-public class TempBanCommand extends BukkitCommand{
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class TempBanCommand extends BukkitCommand {
+
 	public TempBanCommand() {
 		super("tempban");
 		List<String> a = Arrays.asList("temp", "tb", "bantemp");
@@ -44,23 +44,24 @@ public class TempBanCommand extends BukkitCommand{
 					return true;
 				}
 				if (args.length == 2) {
-					ServerBan.newTempBan(target, null, sndr, args[1]);
+					new BanAPI().addBan(target.getName(), sndr, args[1], null);
+					target.kickPlayer("You have been temp banned.");
+					return true;
+				} else {
+					StringBuilder builder = new StringBuilder();
+					for (int i = 2; i < args.length; i++)
+						builder.append(args[i]).append(' ');
+					String reason = builder.toString();
+					new BanAPI().addBan(target.getName(), sndr, args[1], ChatColor.translateAlternateColorCodes('&',
+							reason));
+					target.kickPlayer("You have been temp banned.");
 					return true;
 				}
-				else {
-					StringBuilder builder = new StringBuilder();
-					for(int i = 2; i < args.length; i++) builder.append(args[i]).append(' ');
-					String reason = builder.toString();
-					ServerBan.newTempBan(target, ChatColor.translateAlternateColorCodes('&', reason), sndr, args[1]);
-					return true;	
-				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (args.length <= 1) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
@@ -71,14 +72,19 @@ public class TempBanCommand extends BukkitCommand{
 				return true;
 			}
 			if (args.length == 2) {
-				ServerBan.newTempBan(target, null, sndr, args[1]);
+				new BanAPI().addBan(target.getName(), sndr, args[1], null);
+				if (target.isBanned()) {
+					target.kickPlayer("You have been temp banned.");
+				}
 				return true;
-			}
-			else {
+			} else {
 				StringBuilder builder = new StringBuilder();
-				for(int i = 2; i < args.length; i++) builder.append(args[i]).append(' ');
+				for (int i = 2; i < args.length; i++)
+					builder.append(args[i]).append(' ');
 				String reason = builder.toString();
-				ServerBan.newTempBan(target, ChatColor.translateAlternateColorCodes('&', reason), sndr, args[1]);
+				new BanAPI().addBan(target.getName(), sndr, args[1], ChatColor.translateAlternateColorCodes('&',
+						reason));
+				target.kickPlayer("You have been temp banned.");
 				return true;
 			}
 		}

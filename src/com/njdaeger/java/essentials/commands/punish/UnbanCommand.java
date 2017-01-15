@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.ServerBan;
+import com.njdaeger.java.essentials.utils.BanAPI;
 
-public class UnbanCommand extends BukkitCommand{
+public class UnbanCommand extends BukkitCommand {
 
 	public UnbanCommand() {
 		super("unban");
@@ -32,32 +32,28 @@ public class UnbanCommand extends BukkitCommand{
 					return true;
 				}
 				if (args.length == 1) {
-					ServerBan.unban(args[0], sndr);
+					new BanAPI().unban(args[0]);
 					return true;
-				}
-				else {
+				} else {
 					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 					return true;
 				}
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (args.length == 0) {
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
 			if (args.length == 1) {
-				ServerBan.unban(args[0], sndr);
+				new BanAPI().unban(args[0]);
 				return true;
-			}
-			else {
+			} else {
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
 		}
-	} 
+	}
 }

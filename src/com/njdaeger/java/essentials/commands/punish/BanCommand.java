@@ -3,8 +3,6 @@ package com.njdaeger.java.essentials.commands.punish;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
@@ -13,18 +11,17 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.ServerBan;
+import com.njdaeger.java.essentials.utils.BanAPI;
 
-public class BanCommand extends BukkitCommand{
-	
+public class BanCommand extends BukkitCommand {
+
 	public BanCommand() {
 		super("ban");
 		List<String> a = Arrays.asList("perm", "banhammer");
 		this.description = "Ban a player from the server.";
 		this.usageMessage = "/ban <player> [reason]";
 		this.setAliases(a);
-		
-		
+
 	}
 
 	@Override
@@ -36,7 +33,7 @@ public class BanCommand extends BukkitCommand{
 					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 					return true;
 				}
-				Player target = (Player) Bukkit.getPlayer(args[0]);
+				Player target = Bukkit.getPlayer(args[0]);
 				if (target == null) {
 					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 					return true;
@@ -46,41 +43,43 @@ public class BanCommand extends BukkitCommand{
 					return true;
 				}
 				if (args.length == 1) {
-					ServerBan.newPermBan(target, null, sndr);
+					new BanAPI().addBan(target.getName(), sndr, null, null);
+					target.kickPlayer("You have been banned.");
+					return true;
+				} else {
+					StringBuilder builder = new StringBuilder();
+					for (int i = 2; i < args.length; i++)
+						builder.append(args[i]).append(' ');
+					String reason = builder.toString();
+					new BanAPI().addBan(target.getName(), sndr, null, reason);
+					target.kickPlayer("You have been banned for " + reason);
 					return true;
 				}
-				else {
-					StringBuilder builder = new StringBuilder();
-					for(int i = 2; i < args.length; i++) builder.append(args[i]).append(' ');
-					String reason = builder.toString();
-					ServerBan.newPermBan(target, ChatColor.translateAlternateColorCodes('&', reason), sndr);
-					return true;	
-				}
-			}
-			else {
+			} else {
 				player.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (args.length < 1) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			Player target = (Player) Bukkit.getPlayer(args[0]);
+			Player target = Bukkit.getPlayer(args[0]);
 			if (target == null) {
 				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return true;
 			}
 			if (args.length == 1) {
-				ServerBan.newPermBan(target, null, sndr);
+				new BanAPI().addBan(target.getName(), sndr, null, null);
+				target.kickPlayer("You have been banned.");
 				return true;
-			}
-			else {
+			} else {
 				StringBuilder builder = new StringBuilder();
-				for(int i = 2; i < args.length; i++) builder.append(args[i]).append(' ');
-				String reason = builder.toString();	
-				ServerBan.newPermBan(target, ChatColor.translateAlternateColorCodes('&', reason), sndr);
+				for (int i = 2; i < args.length; i++)
+					builder.append(args[i]).append(' ');
+				String reason = builder.toString();
+				new BanAPI().addBan(target.getName(), sndr, null, reason);
+				target.kickPlayer("You have been banned for " + reason);
 				return true;
 			}
 		}

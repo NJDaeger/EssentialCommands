@@ -1,13 +1,6 @@
 package com.njdaeger.java.essentials.listeners;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -15,15 +8,17 @@ import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
 
-public class PlayerLeaveListener implements Listener{
-	
+public class PlayerLeaveListener implements Listener {
+
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
+
 	public PlayerLeaveListener(Core plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
-	
+
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
+		/*
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
 			Date expire = Bukkit.getServer().getBanList(Type.NAME).getBanEntry(player.getName()).getExpiration();
@@ -64,5 +59,5 @@ public class PlayerLeaveListener implements Listener{
 		}
 		*/
 	}
-	
+
 }
