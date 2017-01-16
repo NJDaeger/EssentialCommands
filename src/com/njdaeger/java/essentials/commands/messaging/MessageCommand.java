@@ -6,10 +6,10 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.messages.Messenger;
@@ -50,7 +50,7 @@ public class MessageCommand extends EssCommand {
 				Messenger.sendMessage(sndr, args[0], finalmsg);
 				return true;
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
 					Permission.ESS_MESSAGE_CHATCOLOR, Permission.ESS_MESSAGE, Permission.ESS_MESSAGE_CONSOLE));
 			return true;
 		}

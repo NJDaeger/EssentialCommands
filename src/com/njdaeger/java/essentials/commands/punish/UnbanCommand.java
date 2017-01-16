@@ -4,18 +4,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.BanAPI;
 
-public class UnbanCommand extends BukkitCommand {
+import net.md_5.bungee.api.ChatColor;
+
+public class UnbanCommand extends EssCommand {
+
+	static String name = "unban";
 
 	public UnbanCommand() {
-		super("unban");
+		super(name);
 		List<String> a = Arrays.asList("pardon", "removeban");
 		this.description = "Unban a banned player.";
 		this.usageMessage = "/unban <player>";
@@ -23,37 +29,27 @@ public class UnbanCommand extends BukkitCommand {
 	}
 
 	@Override
+	public void register() {
+		Plugin.getCommand(name, this);
+	}
+
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_UNBAN)) {
-				if (args.length == 0) {
-					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-					return true;
-				}
-				if (args.length == 1) {
-					new BanAPI().unban(args[0]);
-					return true;
-				} else {
-					sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-					return true;
-				}
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+		if (Holder.hasPermission(sndr, Permission.ESS_UNBAN)) {
+			switch (args.length) {
+			case 0:
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
-			}
-		} else {
-			if (args.length == 0) {
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-				return true;
-			}
-			if (args.length == 1) {
+			case 1:
 				new BanAPI().unban(args[0]);
+				sndr.sendMessage(ChatColor.GRAY + "Successfully unbanned " + ChatColor.GREEN + args[0]);
 				return true;
-			} else {
+			default:
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 				return true;
 			}
 		}
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown", Permission.ESS_UNBAN));
+		return true;
 	}
 }

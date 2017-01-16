@@ -7,7 +7,7 @@ import com.njdaeger.java.configuration.parser.BlacklistedCommand;
 import com.njdaeger.java.configuration.parser.NoPermission;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class Parse implements IParser {
+public class Parser implements IParser {
 
 	/**
 	 * Parser for BlacklistedCommands error.

@@ -1,4 +1,4 @@
-package com.njdaeger.java;
+package com.njdaeger.java.command.util;
 
 import java.util.List;
 

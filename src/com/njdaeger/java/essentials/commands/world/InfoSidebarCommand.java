@@ -7,11 +7,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.InfoBoard;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 

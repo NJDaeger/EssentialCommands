@@ -6,9 +6,10 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.configuration.data.HomeData;
 import com.njdaeger.java.essentials.enums.Error;
@@ -46,8 +47,8 @@ public class Sethome extends EssCommand {
 					HomeData home = Homes.getHome(args[0], player);
 					if (!home.exists()) {
 						sndr.sendMessage(Error.HOME_EXISTS.sendError());
-						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN
-								+ Homes.getHome(args[0], player).listHomes());
+						sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(args[0],
+								player).listHomes());
 						return true;
 					}
 					home.create();
@@ -59,7 +60,7 @@ public class Sethome extends EssCommand {
 					return true;
 				}
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown", Permission.ESS_SETHOME));
 			return true;
 		}
 		sndr.sendMessage(Error.PLAYER_ONLY.sendError());

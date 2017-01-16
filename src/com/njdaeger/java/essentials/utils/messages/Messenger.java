@@ -8,7 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
@@ -85,7 +85,7 @@ public class Messenger {
 				new Message(sndr, false, message);
 				return;
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_MESSAGE_CONSOLE));
 			return;
 		}
@@ -134,7 +134,7 @@ public class Messenger {
 					new Message(sender, a, message);
 					return;
 				}
-				sender.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sender, "Unknown",
+				sender.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sender, "Unknown",
 						Permission.ESS_MESSAGE_CONSOLE));
 				return;
 			}

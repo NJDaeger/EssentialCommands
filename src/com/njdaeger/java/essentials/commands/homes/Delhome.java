@@ -7,10 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.essentials.enums.Error;
@@ -44,7 +44,7 @@ public class Delhome extends EssCommand {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER));
 			return true;
 		case 1:
@@ -62,7 +62,7 @@ public class Delhome extends EssCommand {
 							+ " from homes.");
 					return true;
 				}
-				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 						Permission.ESS_DELHOME));
 				return true;
 			}
@@ -99,7 +99,7 @@ public class Delhome extends EssCommand {
 				return true;
 
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_DELHOME_OTHER));
 			return true;
 		default:

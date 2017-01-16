@@ -3,7 +3,7 @@ package com.njdaeger.java.essentials.listeners.events;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
@@ -49,7 +49,7 @@ public class CommandEvent {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
-					e.getPlayer().sendMessage(Parse.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
+					e.getPlayer().sendMessage(Parser.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
 					e.setCancelled(true);
 					return;
 				}
@@ -61,7 +61,7 @@ public class CommandEvent {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
-					e.getPlayer().sendMessage(Parse.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
+					e.getPlayer().sendMessage(Parser.parse(Error.BLOCKED_COMMAND.getError(), e.getPlayer(), c));
 					e.setCancelled(true);
 					return;
 				}

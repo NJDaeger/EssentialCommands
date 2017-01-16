@@ -5,8 +5,11 @@ import java.lang.reflect.Field;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+
+import com.njdaeger.java.command.util.EssCommand;
+
 public class Plugin {
-	
+
 	/* This is the new command format */
 	public static void getCommand(String command, EssCommand getCommand) {
 		try {
@@ -18,7 +21,20 @@ public class Plugin {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public static CommandMap getMap() {
+		CommandMap map = null;
+		Field f;
+		try {
+			f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			f.setAccessible(true);
+			map = (CommandMap) f.get(Bukkit.getServer());
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
 	/* This is the old command format */
 	@Deprecated
 	public static void getCommand(String command, Command getCommand) {
@@ -31,6 +47,7 @@ public class Plugin {
 			e.printStackTrace();
 		}
 	}
+
 	public static Class<?> getNMSClass(String name) {
 		String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
@@ -40,6 +57,7 @@ public class Plugin {
 		}
 		return null;
 	}
+
 	public static Class<?> getCBClass(String name) {
 		String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
@@ -49,5 +67,5 @@ public class Plugin {
 		}
 		return null;
 	}
-	
+
 }

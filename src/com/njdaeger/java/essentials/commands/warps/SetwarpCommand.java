@@ -6,9 +6,9 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.controllers.Warps;
 import com.njdaeger.java.configuration.data.WarpData;
 import com.njdaeger.java.essentials.enums.Error;

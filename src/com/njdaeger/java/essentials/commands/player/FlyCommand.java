@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -68,7 +68,7 @@ public class FlyCommand extends EssCommand {
 					sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is now flying.");
 					return true;
 				}
-				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 						Permission.ESS_FLY_OTHER));
 				return true;
 			default:
@@ -76,8 +76,8 @@ public class FlyCommand extends EssCommand {
 				return true;
 			}
 		}
-		sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown", Permission.ESS_FLY_OTHER,
-				Permission.ESS_FLY));
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				Permission.ESS_FLY_OTHER, Permission.ESS_FLY));
 		return true;
 	}
 }

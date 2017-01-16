@@ -7,10 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.configuration.data.HomeData;
@@ -44,7 +44,7 @@ public class Listhomes extends EssCommand {
 			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER,
 					Permission.ESS_LISTHOMES_DETAIL)) {
 			} else {
-				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
 						Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_DETAIL, Permission.ESS_LISTHOMES_OTHER));
 				return true;
 			}
@@ -82,7 +82,7 @@ public class Listhomes extends EssCommand {
 						target).listHomes());
 				return true;
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		case 2:
@@ -121,7 +121,7 @@ public class Listhomes extends EssCommand {
 				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.getWorld());
 				return true;
 			}
-			sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		default:

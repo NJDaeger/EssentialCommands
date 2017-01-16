@@ -2,8 +2,8 @@ package com.njdaeger.java.essentials.commands.player;
 
 import org.bukkit.command.CommandSender;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.EssCommand;
 
 public class VanishCommand extends EssCommand{
 	

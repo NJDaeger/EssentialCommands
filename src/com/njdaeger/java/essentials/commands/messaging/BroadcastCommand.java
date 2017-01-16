@@ -7,10 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.EssCommand;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
-import com.njdaeger.java.configuration.Parse;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -43,7 +43,7 @@ public class BroadcastCommand extends EssCommand {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_BROADCAST)) {
 			} else {
-				sndr.sendMessage(Parse.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
 						Permission.ESS_BROADCAST));
 				return true;
 			}
