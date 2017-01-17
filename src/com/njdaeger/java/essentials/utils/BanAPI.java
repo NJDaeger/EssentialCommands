@@ -1,6 +1,8 @@
 package com.njdaeger.java.essentials.utils;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.Validate;
@@ -38,32 +40,32 @@ public class BanAPI {
 	 *            <table border=1>
 	 *            <caption>Expiration Date Information</caption>
 	 *            <tr>
-	 *            <th>Symbol</th>
-	 *            <th>Description</th>
+	 *            <th>Unit</th>
+	 *            <th>Aliases</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>s</th>
 	 *            <th>Seconds</th>
+	 *            <th>seconds, sec, s, second</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>m</th>
 	 *            <th>Minutes</th>
+	 *            <th>minutes, min, m, minute</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>h</th>
 	 *            <th>Hours</th>
+	 *            <th>hours, hr, h, hrs, hour</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>d</th>
 	 *            <th>Days</th>
+	 *            <th>days, day, d</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>w</th>
 	 *            <th>Weeks</th>
+	 *            <th>weeks, week, w, wk, wks</th>
 	 *            </tr>
 	 *            <tr>
-	 *            <th>M</th>
 	 *            <th>Months</th>
+	 *            <th>months, month, mth, mths</th>
 	 *            </tr>
 	 *            </p>
 	 * 
@@ -89,30 +91,28 @@ public class BanAPI {
 		}
 		long current = System.currentTimeMillis();
 		long total = 0;
-		TimeType type = null;
-		try {
-			type = TimeType.valueOf(split[1]);
-		} catch (IllegalArgumentException e) {
-			banCreator.sendMessage("§cCannot issue tempban. Unknown timeunit.");
+		TimeType type = TimeType.getAliasUsed(split[1]);
+		if (type == null) {
+			banCreator.sendMessage("§cCannot issue tempban. TimeUnit \"" + split[1] + "\" does not exist.");
 			return;
 		}
 		switch (type) {
-		case s:
+		case SECOND:
 			total += TimeUnit.SECONDS.toMillis(Long.parseLong(split[0])) + current;
 			break;
-		case m:
+		case MINUTE:
 			total += TimeUnit.MINUTES.toMillis(Long.parseLong(split[0])) + current;
 			break;
-		case h:
+		case HOUR:
 			total += TimeUnit.HOURS.toMillis(Long.parseLong(split[0])) + current;
 			break;
-		case d:
+		case DAY:
 			total += TimeUnit.DAYS.toMillis(Long.parseLong(split[0])) + current;
 			break;
-		case w:
+		case WEEK:
 			total += (TimeUnit.DAYS.toMillis(Long.parseLong(split[0])) * 7) + current;
 			break;
-		case M:
+		case MONTH:
 			total += (TimeUnit.DAYS.toMillis(Long.parseLong(split[0])) * 31) + current;
 			break;
 		default:
@@ -157,11 +157,49 @@ public class BanAPI {
 		final BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(target);
 		Validate.notNull(entry, "Cannot find BanList entry \"" + target + "\"");
 		final long currentTime = System.currentTimeMillis(); //Gets the current time
-		final long expiration = entry.getExpiration().getTime(); //Gets the time the ban expires.
-		if (expiration > currentTime) {
+		if (getExpirationLong(target) > currentTime) {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Gets the expiration date from a ban entry.
+	 * 
+	 * @param target Target to get the expiration date from.
+	 * @return Returns the expiration date as a long in milliseconds.
+	 */
+	public long getExpirationLong(String target) {
+		Validate.notNull(target, "Target cannot be null.");
+		final BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(target);
+		Validate.notNull(entry, "Cannot find BanList entry \"" + target + "\"");
+		return entry.getExpiration().getTime();
+	}
+
+	/**
+	 * Gets the expiration date from a ban entry.
+	 * 
+	 * @param target Target top get the expiration date from.
+	 * @return Returns the expiration date as a long in proper format.
+	 */
+	public Date getExpirationDate(String target) {
+		Validate.notNull(target, "Target cannot be null.");
+		final BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(target);
+		Validate.notNull(entry, "Cannot find BanList entry \"" + target + "\"");
+		return entry.getExpiration();
+	}
+
+	/**
+	 * Gets the reason for the ban.
+	 * 
+	 * @param target The target to get the ban reason from.
+	 * @return Returns the reason for the ban.
+	 */
+	public String getReason(String target) {
+		Validate.notNull(target, "Target cannot be null.");
+		final BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(target);
+		Validate.notNull(entry, "Cannot find BanList entry \"" + target + "\"");
+		return entry.getReason();
 	}
 
 	/**
@@ -180,43 +218,47 @@ public class BanAPI {
 	}
 
 	/**
-	 * Time type is an enum of all the possible values for the ban length.
-	 * <p>
-	 * <table border=1>
-	 * <caption>Time Type</caption>
-	 * <tr>
-	 * <th>Symbol</th>
-	 * <th>Description</th>
-	 * </tr>
-	 * <tr>
-	 * <th>s</th>
-	 * <th>Seconds</th>
-	 * </tr>
-	 * <tr>
-	 * <th>m</th>
-	 * <th>Minutes</th>
-	 * </tr>
-	 * <tr>
-	 * <th>h</th>
-	 * <th>Hours</th>
-	 * </tr>
-	 * <tr>
-	 * <th>d</th>
-	 * <th>Days</th>
-	 * </tr>
-	 * <tr>
-	 * <th>w</th>
-	 * <th>Weeks</th>
-	 * </tr>
-	 * <tr>
-	 * <th>M</th>
-	 * <th>Months</th>
-	 * </tr>
-	 * </p>
-	 * 
-	 * 
+	 * Time type is an enum of all the possible values for the ban length. You
+	 * can add more aliases to the list as well.
 	 */
 	public enum TimeType {
-		s, m, h, d, w, M;
+		SECOND(Arrays.asList("s", "seconds", "second", "sec")),
+		MINUTE(Arrays.asList("m", "minutes", "minute", "min")),
+		HOUR(Arrays.asList("h", "hours", "hour", "hr", "hrs")),
+		DAY(Arrays.asList("d", "days", "day")),
+		WEEK(Arrays.asList("w", "weeks", "week", "wk", "wks")),
+		MONTH(Arrays.asList("months", "month", "mth", "mths"));
+
+		public List<String> aliases;
+
+		TimeType(List<String> aliases) {
+			this.aliases = aliases;
+		}
+
+		/**
+		 * Gets the aliases from a given TimeType
+		 * 
+		 * @return A list of the aliases
+		 */
+		public List<String> getAlias() {
+			return aliases;
+		}
+
+		/**
+		 * Gets the alias used in the temp-ban
+		 * 
+		 * @param input Input to get alias from.
+		 * @return Returns the TimeType the alias came from.
+		 */
+		public static TimeType getAliasUsed(String input) {
+			for (TimeType alias : TimeType.values()) {
+				for (String value : alias.getAlias()) {
+					if (value.equals(input)) {
+						return alias;
+					}
+				}
+			}
+			return null;
+		}
 	}
 }

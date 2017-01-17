@@ -48,8 +48,9 @@ public class BanCommand extends BukkitCommand {
 					return true;
 				} else {
 					StringBuilder builder = new StringBuilder();
-					for (int i = 2; i < args.length; i++)
+					for (int i = 1; i < args.length; i++)
 						builder.append(args[i]).append(' ');
+
 					String reason = builder.toString();
 					new BanAPI().addBan(target.getName(), sndr, null, reason);
 					target.kickPlayer("You have been banned for " + reason);
@@ -75,7 +76,7 @@ public class BanCommand extends BukkitCommand {
 				return true;
 			} else {
 				StringBuilder builder = new StringBuilder();
-				for (int i = 2; i < args.length; i++)
+				for (int i = 1; i < args.length; i++)
 					builder.append(args[i]).append(' ');
 				String reason = builder.toString();
 				new BanAPI().addBan(target.getName(), sndr, null, reason);

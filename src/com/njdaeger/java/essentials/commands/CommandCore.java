@@ -22,6 +22,7 @@ import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.player.KillCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
+import com.njdaeger.java.essentials.commands.player.RepairCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
 import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
@@ -63,6 +64,7 @@ public class CommandCore {
 		new HatCommand().register();
 		new EditsignCommand().register();
 		new HealCommand().register();
+		new RepairCommand().register();
 
 	}
 }

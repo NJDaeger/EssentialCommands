@@ -4,10 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
-import com.njdaeger.java.command.util.CommandLauncher;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
-import com.njdaeger.java.essentials.commands.player.RepairCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
 import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
@@ -28,7 +26,6 @@ public class Core extends JavaPlugin {
 
 	@SuppressWarnings("deprecation")
 	public void registerCommands() {
-		new CommandLauncher(new RepairCommand());
 		Plugin.getCommand("tempban", new TempBanCommand()); // Finished
 		Plugin.getCommand("ban", new BanCommand()); // Finished
 		Plugin.getCommand("unban", new UnbanCommand());// Finished

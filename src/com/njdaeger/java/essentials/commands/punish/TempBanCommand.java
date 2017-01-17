@@ -36,7 +36,7 @@ public class TempBanCommand extends EssCommand {
 
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (Holder.hasPermission(sndr, Permission.ESS_TEMPBAN)) {
+		/*if (Holder.hasPermission(sndr, Permission.ESS_TEMPBAN)) {
 			switch (args.length) {
 			case 0:
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
@@ -51,7 +51,7 @@ public class TempBanCommand extends EssCommand {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-		}
+		}*/
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_TEMPBAN)) {
@@ -79,7 +79,7 @@ public class TempBanCommand extends EssCommand {
 					String reason = builder.toString();
 					new BanAPI().addBan(target.getName(), sndr, args[1], ChatColor.translateAlternateColorCodes('&',
 							reason));
-					target.kickPlayer("You have been temp banned.");
+					target.kickPlayer("You have been temp banned for " + reason);
 					return true;
 				}
 			} else {
@@ -109,7 +109,7 @@ public class TempBanCommand extends EssCommand {
 				String reason = builder.toString();
 				new BanAPI().addBan(target.getName(), sndr, args[1], ChatColor.translateAlternateColorCodes('&',
 						reason));
-				target.kickPlayer("You have been temp banned.");
+				target.kickPlayer("You have been temp banned for " + reason);
 				return true;
 			}
 		}
