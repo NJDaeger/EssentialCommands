@@ -31,6 +31,18 @@ public abstract class EssCommand extends Command implements IEssCommand {
 	}
 
 	public boolean canceled(CommandSender sndr, String[] args) {
+		if (cmd.executor() == Executor.PLAYER) {
+			if (!(sndr instanceof Player)) {
+				sndr.sendMessage(Error.PLAYER_ONLY.sendError());
+				return true;
+			}
+		}
+		if (cmd.executor() == Executor.CONSOLE) {
+			if (sndr instanceof Player) {
+				sndr.sendMessage(Error.CONSOLE_ONLY.sendError());
+				return true;
+			}
+		}
 		if (Holder.hasPermission(sndr, cmd.permissions())) {
 			if (args.length > cmd.max() && cmd.max() > -1) {
 				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());

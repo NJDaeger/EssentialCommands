@@ -47,6 +47,7 @@ public enum Error {
 	NO_PREVIOUS_LAYER("No previous layer exists."),
 	INVALID_COMMAND_SENDER("Invalid command sender."),
 	CANNOT_SEND_PM("Cannot send message."),
+	CONSOLE_ONLY("This action is restricted to console only."),
 	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage());
 
 	public final String error;

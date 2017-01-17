@@ -10,7 +10,10 @@ import com.njdaeger.java.command.util.EssCommand;
 
 public class Plugin {
 
-	/* This is the new command format */
+	/**
+	 * @param command
+	 * @param getCommand
+	 */
 	public static void getCommand(String command, EssCommand getCommand) {
 		try {
 			Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
@@ -35,19 +38,26 @@ public class Plugin {
 		return map;
 	}
 
-	/* This is the old command format */
+	/**
+	 * Registers a Command.
+	 * 
+	 * @param command The main name of the command.
+	 * @param getCommand The command instance.
+	 * 
+	 * @deprecated Please use the new command format. (EssCommand)
+	 */
 	@Deprecated
 	public static void getCommand(String command, Command getCommand) {
-		try {
-			Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-			f.setAccessible(true);
-			CommandMap map = (CommandMap) f.get(Bukkit.getServer());
-			map.register(command, getCommand);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		getMap().register("ess", getCommand);
+		return;
 	}
 
+	/**
+	 * Gets a NMS class.
+	 * 
+	 * @param name The class to get from NMS
+	 * @return Returns the class.
+	 */
 	public static Class<?> getNMSClass(String name) {
 		String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
@@ -58,6 +68,12 @@ public class Plugin {
 		return null;
 	}
 
+	/**
+	 * Gets a class from the CraftBukkit API
+	 * 
+	 * @param name The class to get
+	 * @return Returns the class you are grabbing.
+	 */
 	public static Class<?> getCBClass(String name) {
 		String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {

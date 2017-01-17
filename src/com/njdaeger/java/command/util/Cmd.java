@@ -34,4 +34,12 @@ public @interface Cmd {
 	 */
 	int min() default -1;
 
+	/**
+	 * Specifies who is able to do the command. Default is Executor.ALL so
+	 * everyone can use the command.
+	 * 
+	 * @return
+	 */
+	Executor executor() default Executor.ALL;
+
 }
