@@ -24,6 +24,12 @@ import com.njdaeger.java.essentials.commands.player.KillCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.RepairCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
+import com.njdaeger.java.essentials.commands.player.VanishCommand;
+import com.njdaeger.java.essentials.commands.punish.BanCommand;
+import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
+import com.njdaeger.java.essentials.commands.punish.KickallCommand;
+import com.njdaeger.java.essentials.commands.punish.TempBanCommand;
+import com.njdaeger.java.essentials.commands.punish.UnbanCommand;
 import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
 import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
 import com.njdaeger.java.essentials.commands.warps.WarpCommand;
@@ -34,10 +40,10 @@ import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
 public class CommandCore {
 
 	public static void registerCommands() {
-		new Delhome().register();
-		new Home().register();
-		new Listhomes().register();
-		new Sethome().register();
+		new Delhome().register();//
+		new Home().register();//
+		new Listhomes().register();//
+		new Sethome().register();//
 		new FlyCommand().register();
 		new BroadcastCommand().register();
 		new MeCommand().register();
@@ -64,7 +70,13 @@ public class CommandCore {
 		new HatCommand().register();
 		new EditsignCommand().register();
 		new HealCommand().register();
-		new RepairCommand().register();
+		new RepairCommand().register();//NOTDONE
+		new TempBanCommand().register();//
+		new BanCommand().register();//
+		new UnbanCommand().register();//
+		new HelpopCommand().register();//
+		new VanishCommand().register();//
+		new KickallCommand().register();//
 
 	}
 }

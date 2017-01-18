@@ -3,19 +3,18 @@ package com.njdaeger.java.essentials.commands.punish;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
+import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.essentials.enums.Permission;
+
 import net.md_5.bungee.api.ChatColor;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.entity.Player;
+public class HelpopCommand extends EssCommand {
 
-import com.njdaeger.java.Holder;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.Util;
-
-public class HelpopCommand extends BukkitCommand{
-	
 	public HelpopCommand() {
 		super("helpop");
 		List<String> a = Arrays.asList("admins", "staff");
@@ -25,40 +24,24 @@ public class HelpopCommand extends BukkitCommand{
 	}
 
 	@Override
+	public void register() {
+		Plugin.getCommand(this);
+	}
+
+	@Cmd(min = 1, permissions = { Permission.ESS_HELPOP, Permission.ESS_HELPOP_RECEIVE })
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_HELPOP, Permission.ESS_HELPOP_RECEIVE)) {
-				if (args.length == 0) {
-					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-					return true;
-				}
-				String message = "";
-				for (String msg :  args) {
-					message += msg;
-				}
-				Util.broadcast(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + player.getDisplayName() + ": " + ChatColor.BLUE + message, Permission.ESS_HELPOP_RECEIVE);
-				sndr.sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + player.getDisplayName() + ": " + ChatColor.BLUE + message);
-				return true;
-				
-			}
-			else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
-		}
-		else {
-			if (args.length == 0) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			String message = "";
-			for (String msg :  args) {
-				message += msg;
-			}
-			Util.broadcast(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + sndr.getName() + ": " + ChatColor.BLUE + message, Permission.ESS_HELPOP_RECEIVE);
-			sndr.sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + sndr.getName() + ": " + ChatColor.BLUE + message);
+		if (canceled(sndr, args)) {
 			return true;
 		}
+		String message = "";
+		for (String msg : args) {
+			message += msg;
+		}
+		Bukkit.broadcast(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + sndr.getName()
+				+ ": " + ChatColor.BLUE + message, Permission.ESS_HELPOP_RECEIVE.getPermission());
+		sndr.sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "HELPOP" + ChatColor.GRAY + "] " + sndr.getName()
+				+ ": " + ChatColor.BLUE + message);
+		return true;
 	}
 }

@@ -10,15 +10,13 @@ import com.njdaeger.java.essentials.enums.Permission;
 
 public class RepairCommand extends EssCommand {
 
-	static String name = "repair";
-
 	public RepairCommand() {
-		super(name);
+		super("repair");
 	}
 
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Cmd(min = 0, max = 0, permissions = { Permission.ESS_BURN })

@@ -19,29 +19,28 @@ import net.md_5.bungee.api.ChatColor;
 
 public class TempBanCommand extends EssCommand {
 
-	static final String name = "tempban";
 	private final BanAPI api = new BanAPI();
 
 	public TempBanCommand() {
-		super(name);
+		super("tempban");
 		List<String> a = Arrays.asList("temp", "tb", "bantemp");
 		this.description = "Temp ban a player.";
-		this.usageMessage = "/tempban <player> <time:<d/h/m/s>> [reason]";
+		this.usageMessage = "/tempban <player> <time:<d/h/m/s>> [reason...]";
 		this.setAliases(a);
 	}
 
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
-	@Cmd(max = -1, min = 2, permissions = { Permission.ESS_TEMPBAN })
+	@Cmd(min = 2, permissions = { Permission.ESS_TEMPBAN })
 	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
 		if (canceled(sndr, args)) {
 			return true;
 		}
-		Player target = Bukkit.getPlayer(args[1]);
+		Player target = Bukkit.getPlayer(args[0]);
 		if (target == null) {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;

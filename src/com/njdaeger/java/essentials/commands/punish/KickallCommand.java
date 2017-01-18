@@ -3,19 +3,20 @@ package com.njdaeger.java.essentials.commands.punish;
 import java.util.Arrays;
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
+import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class KickallCommand extends BukkitCommand{
-	
+import net.md_5.bungee.api.ChatColor;
+
+public class KickallCommand extends EssCommand {
+
 	public KickallCommand() {
 		super("kickall");
 		List<String> a = Arrays.asList("kickeveryone");
@@ -25,60 +26,33 @@ public class KickallCommand extends BukkitCommand{
 	}
 
 	@Override
+	public void register() {
+		Plugin.getCommand(this);
+	}
+
+	@Cmd(permissions = { Permission.ESS_KICKALL })
+	@Override
 	public boolean execute(CommandSender sndr, String label, String[] args) {
+		if (canceled(sndr, args)) {
+			return true;
+		}
 		if (Bukkit.getOnlinePlayers() == null) {
 			sndr.sendMessage(Error.NO_PLAYERS_ONLINE.sendError());
 			return true;
 		}
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
-				if (Holder.hasPermission(player, Permission.ESS_KICKALL)) {
-					for (Player players : Bukkit.getOnlinePlayers()) {
-						players.kickPlayer(sndr.getName() + " kicked all players.");
-						return true;
-					}
-				}
-				else {
-					sndr.sendMessage(Error.NO_PERMISSION.sendError());
-					return true;
-				}
-				return true;
+			for (Player players : Bukkit.getOnlinePlayers()) {
+				players.kickPlayer(sndr.getName() + " kicked all players.");
 			}
-			else {
-				for (Player players : Bukkit.getOnlinePlayers()) {
-					players.kickPlayer(sndr.getName() + " kicked all players.");
-					return true;
-				}
-				return true;
-			}
+			return true;
 		}
-		else {
-			String reason = "";
-			for (String msg : args) {
-				reason += msg;
-			}
-			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
-				if (Holder.hasPermission(player, Permission.ESS_KICKALL)) {
-					for (Player players : Bukkit.getOnlinePlayers()) {
-						players.kickPlayer(ChatColor.translateAlternateColorCodes('&', reason));
-						return true;
-					}
-				}
-				else {
-					sndr.sendMessage(Error.NO_PERMISSION.sendError());
-					return true;
-				}
-				return true;
-			}
-			else {
-				for (Player players : Bukkit.getOnlinePlayers()) {
-					players.kickPlayer(ChatColor.translateAlternateColorCodes('&', reason));
-					return true;
-				}
-				return true;
-			}
+		String reason = "";
+		for (String msg : args) {
+			reason += msg;
 		}
+		for (Player players : Bukkit.getOnlinePlayers()) {
+			players.kickPlayer(ChatColor.translateAlternateColorCodes('&', reason));
+		}
+		return true;
 	}
 }

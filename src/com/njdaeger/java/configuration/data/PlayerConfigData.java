@@ -513,4 +513,27 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public boolean isHidden() {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		return this.getValue().getBoolean(PlayerPaths.HIDDEN.getPath());
+	}
+
+	@Override
+	public void setHidden() {
+		if (!file.exists()) {
+			this.createConfig();
+		}
+		if (isHidden()) {
+			this.setValue(PlayerPaths.HIDDEN.getPath(), false);
+			player.showPlayer(player);
+			return;
+		}
+		this.setValue(PlayerPaths.HIDDEN.getPath(), true);
+		player.hidePlayer(player);
+		return;
+	}
 }

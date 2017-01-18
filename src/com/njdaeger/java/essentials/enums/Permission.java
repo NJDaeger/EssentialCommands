@@ -89,7 +89,9 @@ public enum Permission {
 	ESS_INFOBAR_TPS("essentials.serverinfo.infobar.tps"),
 	ESS_INFOBAR_USAGE("essentials.serverinfo.infobar.usage"),
 	ESS_INFOBAR_FREERAM("essentials.serverinfo.infobar.freeram"),
-	ESS_INFOBAR_ALCDRAM("essentials.serverinfo.infobar.alcdram");
+	ESS_INFOBAR_ALCDRAM("essentials.serverinfo.infobar.alcdram"),
+	ESS_VANISH("essentials.vanish"),
+	ESS_VANISH_OTHER("essentials.vanish.others");
 
 	public final String permission;
 

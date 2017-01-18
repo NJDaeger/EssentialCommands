@@ -203,6 +203,21 @@ public class BanAPI {
 	}
 
 	/**
+	 * Checks if the BanList contains an entry.
+	 * 
+	 * @param target The target to find in the list.
+	 * @return True if list contains target, false otherwise.
+	 */
+	public boolean isBanned(String target) {
+		Validate.notNull(target, "Target cannot be null.");
+		final BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(target);
+		if (entry == null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Checks if a value is a number or not.
 	 * 
 	 * @param string The string to check.

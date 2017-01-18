@@ -11,18 +11,12 @@ import com.njdaeger.java.command.util.EssCommand;
 public class Plugin {
 
 	/**
-	 * @param command
-	 * @param getCommand
+	 * Registers an EssCommand.
+	 * 
+	 * @param getCommand The command instance.
 	 */
-	public static void getCommand(String command, EssCommand getCommand) {
-		try {
-			Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-			f.setAccessible(true);
-			CommandMap map = (CommandMap) f.get(Bukkit.getServer());
-			map.register(command, getCommand);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void getCommand(EssCommand getCommand) {
+		getMap().register("ess", getCommand);
 	}
 
 	public static CommandMap getMap() {
@@ -49,7 +43,6 @@ public class Plugin {
 	@Deprecated
 	public static void getCommand(String command, Command getCommand) {
 		getMap().register("ess", getCommand);
-		return;
 	}
 
 	/**

@@ -11,42 +11,10 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.Util;
 
 public class Messenger {
 
 	public static HashMap<String, String> conversation = new HashMap<String, String>();
-
-	public static boolean canMessage(String player, boolean isSender) {
-		Player sender = Bukkit.getPlayer(player);
-		if (!(sender instanceof Player)) {
-			if (player == "CONSOLE") {
-				return true;
-			} else
-				return false;
-		}
-		if (sender.isOp()) {
-			return true;
-		}
-		if (isSender == true) {
-			if (Util.allowsMessaging(sender) == false) {
-				return false;
-			}
-			if (Util.isMuted(sender)) {
-				return false;
-			}
-		}
-		if (Util.allowsMessaging(sender) == false) {
-			return false;
-		}
-		if (Util.isMuted(sender)) {
-			return false;
-		}
-		if (Util.isHidden(sender)) {
-			return false;
-		}
-		return true;
-	}
 
 	/**
 	 * Sends a private message to a player or console.
