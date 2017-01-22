@@ -48,7 +48,8 @@ public enum Error {
 	INVALID_COMMAND_SENDER("Invalid command sender."),
 	CANNOT_SEND_PM("Cannot send message."),
 	CONSOLE_ONLY("This action is restricted to console only."),
-	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage());
+	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage()),
+	CANNOT_BURN_TARGET("Target cannot be burned.");
 
 	public final String error;
 

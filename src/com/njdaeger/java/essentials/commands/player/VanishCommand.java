@@ -1,10 +1,6 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -16,18 +12,11 @@ import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class VanishCommand extends EssCommand {
-
-	public VanishCommand() {
-		super("vanish");
-		List<String> a = Arrays.asList("v", "hide");
-		this.description = "Hide yourself from others";
-		this.usageMessage = "/vanish [player]";
-		this.setAliases(a);
-	}
 
 	@Override
 	public void register() {
@@ -35,12 +24,15 @@ public class VanishCommand extends EssCommand {
 
 	}
 
-	@Cmd(max = 1, permissions = { Permission.ESS_VANISH, Permission.ESS_VANISH_OTHER })
+	@Cmd(
+			name = "vanish",
+			desc = "Hide yourself from others.",
+			usage = "/vanish [player]",
+			max = 1,
+			aliases = { "v", "hide" },
+			permissions = { Permission.ESS_VANISH, Permission.ESS_VANISH_OTHER })
 	@Override
-	public boolean execute(CommandSender sndr, String commandLabel, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String commandLabel, String[] args) {
 		if (args.length == 0) {
 			if (!(sndr instanceof Player)) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());

@@ -1,47 +1,68 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.wrapper.Sender;
 
 public class SpeedCommand extends EssCommand {
-	
-	static String name = "speed";
-	
-	public SpeedCommand() {
-		super("speed");
-		List<String> a = Arrays.asList("flyspeed", "walkspeed", "setspeed");
-		this.description = "Set player speed.";
-		this.usageMessage = "/speed <speed> [player] [type]";
-		this.setAliases(a);
-		
-	}
-	
+
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (args.length == 0) {
-			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+	@Cmd(
+			max = 3,
+			min = 1,
+			permissions = { Permission.ESS_SPEED, Permission.ESS_SPEED_OTHER },
+			name = "speed",
+			desc = "Change your speed limits",
+			usage = "/speed <speed> [player] [type]",
+			aliases = { "flyspeed", "walkspeed", "setspeed" })
+	public boolean run(Sender sndr, String label, String[] args) {
+		switch (args.length) {
+		case 1:
+			if (!(sndr instanceof Player)) {
+				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+				return true;
+			}
+			Player player = (Player) sndr;
+			if (!Util.isDouble(args[0])) {
+				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+					PlayerConfig.getConfig(player).setFlySpeed(1);
+					PlayerConfig.getConfig(player).setWalkingSpeed(1);
+					return true;
+				}
+				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
+				return true;
+			}
+			if (label.equalsIgnoreCase("flypseed")) {
+				PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
+				return true;
+			}
+			if (label.equalsIgnoreCase("walkspeed")) {
+				PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
+				return true;
+			}
+			if (player.isFlying()) {
+				PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
+				return true;
+			}
+			PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
 			return true;
-		}
-		if (args.length > 3) {
-			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-			return true;
+		case 2:
+		default:
+			break;
 		}
 		if (args.length == 1) {
 			if (!(sndr instanceof Player)) {
@@ -77,8 +98,7 @@ public class SpeedCommand extends EssCommand {
 					}
 					PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
 					return true;
-				}
-				else {
+				} else {
 					if (player.isFlying()) {
 						PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
 						return true;
@@ -92,9 +112,8 @@ public class SpeedCommand extends EssCommand {
 			if (sndr instanceof Player) {
 				Player player = (Player) sndr;
 				if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
-					
-				}
-				else {
+
+				} else {
 					sndr.sendMessage(Error.NO_PERMISSION.sendError());
 					return true;
 				}
@@ -131,8 +150,7 @@ public class SpeedCommand extends EssCommand {
 				}
 				PlayerConfig.getConfig(target).setWalkingSpeed(Double.parseDouble(args[0]));
 				return true;
-			}
-			else {
+			} else {
 				if (target.isFlying()) {
 					PlayerConfig.getConfig(target).setFlySpeed(Double.parseDouble(args[0]));
 					return true;
@@ -144,9 +162,8 @@ public class SpeedCommand extends EssCommand {
 		if (sndr instanceof Player) {
 			Player player = (Player) sndr;
 			if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
-				
-			}
-			else {
+
+			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
 			}
@@ -179,8 +196,7 @@ public class SpeedCommand extends EssCommand {
 		if (args[2].equalsIgnoreCase("walk") || args[2].equalsIgnoreCase("walking")) {
 			PlayerConfig.getConfig(target).setWalkingSpeed(Double.parseDouble(args[0]));
 			return true;
-		}
-		else {
+		} else {
 			sndr.sendMessage(Error.throwError("Unknown walking type."));
 			return true;
 		}

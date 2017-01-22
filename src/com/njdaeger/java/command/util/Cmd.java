@@ -42,4 +42,32 @@ public @interface Cmd {
 	 */
 	Executor executor() default Executor.ALL;
 
+	/**
+	 * The name of the command being executed.
+	 * 
+	 * @return
+	 */
+	String name();
+
+	/**
+	 * The command description. Default is ""
+	 * 
+	 * @return
+	 */
+	String desc();
+
+	/**
+	 * The usage of the command. Default is ""
+	 * 
+	 * @return
+	 */
+	String usage();
+
+	/**
+	 * The command aliases. Default is ""
+	 * 
+	 * @return
+	 */
+	String[] aliases() default "";
+
 }

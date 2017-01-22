@@ -1,121 +1,89 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.command.util.Executor;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class EditsignCommand extends EssCommand {
 
-	static String name = "editsign";
-
-	public EditsignCommand() {
-		super(name);
-		List<String> a = Arrays.asList("editsign", "edittext", "es", "edit");
-		this.description = "Edit a placed sign.";
-		this.usageMessage = "/editsign <line> [message]";
-		this.setAliases(a);
-	}
-
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_EDITSIGN)) {
-				if (args.length < 1) {
-					sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+	@Cmd(
+			name = "editsign",
+			desc = "Edit a placed sign.",
+			usage = "/editsign <line> [message]",
+			min = 1,
+			executor = Executor.PLAYER,
+			aliases = { "editsign", "edittext", "es", "edit" },
+			permissions = { Permission.ESS_EDITSIGN })
+	public boolean run(Sender sndr, String label, String[] args) {
+		HashSet<Material> tran = new HashSet<Material>();
+		tran.add(Material.AIR);
+		Block type = ((Player) sndr).getTargetBlock(tran, 100);
+		if (type.getType().equals(Material.WALL_SIGN) || type.getType().equals(Material.SIGN_POST)) {
+			Line line = Line.getAliasUsed(args[0]);
+			Sign sign = (Sign) type.getState();
+			switch (line) {
+			case ONE:
+				if (args.length == 1) {
+					sign.setLine(0, "");
+					sign.update();
 					return true;
-				} else {
-					HashSet<Material> tran = new HashSet<Material>();
-					tran.add(Material.AIR);
-					Block type = player.getTargetBlock(tran, 100);
-					if (type.getType().equals(Material.WALL_SIGN) || type.getType().equals(Material.SIGN_POST)) {
-						if (args[0].equalsIgnoreCase("line1") || args[0].equals("1")) {
-							if (args.length == 1) {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(0, "");
-								sign.update();
-								return true;
-							} else {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(0, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
-								sign.update();
-								return true;
-							}
-						}
-						if (args[0].equalsIgnoreCase("line2") || args[0].equals("2")) {
-							if (args.length == 1) {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(1, "");
-								sign.update();
-								return true;
-							} else {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(1, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
-								sign.update();
-								return true;
-							}
-						}
-						if (args[0].equalsIgnoreCase("line3") || args[0].equals("3")) {
-							if (args.length == 1) {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(2, "");
-								sign.update();
-								return true;
-							} else {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(2, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
-								sign.update();
-								return true;
-							}
-						}
-						if (args[0].equalsIgnoreCase("line4") || args[0].equals("4")) {
-							if (args.length == 1) {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(3, "");
-								sign.update();
-								return true;
-							} else {
-								Sign sign = (Sign) type.getState();
-								sign.setLine(3, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
-								sign.update();
-								return true;
-							}
-						} else {
-							sndr.sendMessage(Error.LINE_NUMBER_INVALID.sendError());
-							return true;
-						}
-					} else {
-						sndr.sendMessage(Error.TARGET_NOT_SIGN.sendError());
-						return true;
-					}
 				}
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				sign.setLine(0, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
+				sign.update();
+				return true;
+			case TWO:
+				if (args.length == 1) {
+					sign.setLine(1, "");
+					sign.update();
+					return true;
+				}
+				sign.setLine(1, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
+				sign.update();
+				return true;
+			case THREE:
+				if (args.length == 1) {
+					sign.setLine(2, "");
+					sign.update();
+					return true;
+				}
+				sign.setLine(2, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
+				sign.update();
+				return true;
+			case FOUR:
+				if (args.length == 1) {
+					sign.setLine(3, "");
+					sign.update();
+					return true;
+				}
+				sign.setLine(3, ChatColor.translateAlternateColorCodes('&', this.setSign(args)));
+				sign.update();
+				return true;
+			default:
+				sndr.sendMessage(Error.LINE_NUMBER_INVALID.sendError());
 				return true;
 			}
-		} else {
-			sndr.sendMessage(Error.PLAYER_ONLY.sendError());
-			return true;
 		}
+		sndr.sendMessage(Error.TARGET_NOT_SIGN.sendError());
+		return true;
 	}
 
 	private String setSign(String[] args) {
@@ -129,5 +97,33 @@ public class EditsignCommand extends EssCommand {
 			return reason;
 		}
 		return null;
+	}
+
+	public enum Line {
+		ONE("line1", "1", "one"), 
+		TWO("line2", "2", "two"), 
+		THREE("line3", "3", "three"), 
+		FOUR("line4", "4", "four");
+
+		String[] names;
+
+		Line(String... name) {
+			this.names = name;
+		}
+
+		public String[] getAlias() {
+			return names;
+		}
+
+		public static Line getAliasUsed(String input) {
+			for (Line alias : Line.values()) {
+				for (String value : alias.getAlias()) {
+					if (value.equals(input)) {
+						return alias;
+					}
+				}
+			}
+			return null;
+		}
 	}
 }

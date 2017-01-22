@@ -1,7 +1,6 @@
 package com.njdaeger.java.essentials.commands.warps;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -11,28 +10,26 @@ import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.controllers.Warps;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class WarpCommand extends EssCommand {
-
-	public WarpCommand() {
-		super("warp");
-		this.description = "Warp to a location.";
-		this.usageMessage = "/warp <warpname> [player]";
-	}
 
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 	}
 
-	@Cmd(min = 1, max = 2, permissions = { Permission.ESS_WARP, Permission.ESS_WARP_OTHER })
+	@Cmd(
+			name = "warp",
+			desc = "Warp to a location.",
+			usage = "/warp <warpname> [player]",
+			min = 1,
+			max = 2,
+			permissions = { Permission.ESS_WARP, Permission.ESS_WARP_OTHER })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 1) {
 			if (sndr instanceof Player) {
 				if (Warps.getWarp(args[0], null).exists() == false) {

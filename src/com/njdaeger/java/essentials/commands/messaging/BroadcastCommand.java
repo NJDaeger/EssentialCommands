@@ -1,64 +1,40 @@
 package com.njdaeger.java.essentials.commands.messaging;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class BroadcastCommand extends EssCommand {
 
-	static String name = "broadcast";
-
-	private ChatColor gold = ChatColor.GOLD;
-	private ChatColor red = ChatColor.DARK_RED;
-	private ChatColor green = ChatColor.GREEN;
-
 	public BroadcastCommand() {
-		super("broadcast");
-		List<String> a = Arrays.asList("bc", "servermessage", "announce");
-		this.description = "Send a message to the entire server.";
-		this.usageMessage = "/broadcast <message>";
-		this.setAliases(a);
 	}
 
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_BROADCAST)) {
-			} else {
-				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
-						Permission.ESS_BROADCAST));
-				return true;
-			}
+	@Cmd(
+			name = "broadcast",
+			desc = "Send a message to the entire server.",
+			usage = "/broadcast <message>",
+			min = 1,
+			aliases = { "bc", "servermessage", "announce" },
+			permissions = { Permission.ESS_BROADCAST })
+	public boolean run(Sender sndr, String label, String[] args) {
+		String message = "";
+		for (String bc : args) {
+			message = (message + bc + " ");
 		}
-		if (args.length < 1) {
-			sndr.sendMessage("" + Error.NOT_ENOUGH_ARGS.sendError());
-			return true;
-		} else {
-			String message = "";
-			for (String bc : args) {
-				message = (message + bc + " ");
-			}
-			Bukkit.broadcastMessage(gold + "[" + red + "Broadcast" + gold + "] " + green + ChatColor
-					.translateAlternateColorCodes('&', message));
-			return true;
-		}
+		Bukkit.broadcastMessage(ChatColor.GOLD + "[" + ChatColor.DARK_RED + "Broadcast" + ChatColor.GOLD + "] "
+				+ ChatColor.GREEN + ChatColor.translateAlternateColorCodes('&', message));
+		return true;
 	}
 }

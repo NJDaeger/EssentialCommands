@@ -1,10 +1,6 @@
 package com.njdaeger.java.essentials.commands.punish;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Plugin;
@@ -12,30 +8,24 @@ import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class KickallCommand extends EssCommand {
-
-	public KickallCommand() {
-		super("kickall");
-		List<String> a = Arrays.asList("kickeveryone");
-		this.description = "Kick all players from the server.";
-		this.usageMessage = "/kickall [reason]";
-		this.setAliases(a);
-	}
 
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 	}
 
-	@Cmd(permissions = { Permission.ESS_KICKALL })
+	@Cmd(
+			name = "kickall",
+			desc = "Kick all players from the server.",
+			usage = "/kickall [reason]",
+			permissions = { Permission.ESS_KICKALL })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		if (Bukkit.getOnlinePlayers() == null) {
 			sndr.sendMessage(Error.NO_PLAYERS_ONLINE.sendError());
 			return true;

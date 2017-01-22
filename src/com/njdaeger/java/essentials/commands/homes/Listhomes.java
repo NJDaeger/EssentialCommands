@@ -1,14 +1,11 @@
 package com.njdaeger.java.essentials.commands.homes;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Database;
@@ -17,38 +14,25 @@ import com.njdaeger.java.configuration.data.HomeData;
 import com.njdaeger.java.configuration.data.OfflineHomeData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class Listhomes extends EssCommand {
-
-	static String name = "homes";
-
-	public Listhomes() {
-		super(name);
-		List<String> a = Arrays.asList("listhomes", "seehomes", "homelist");
-		this.description = "Gets a list of your homes.";
-		this.usageMessage = "/homes [player] [home]";
-		this.setAliases(a);
-	}
-
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
-			if (Holder.hasPermission(player, Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER,
-					Permission.ESS_LISTHOMES_DETAIL)) {
-			} else {
-				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), player, "Unknown",
-						Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_DETAIL, Permission.ESS_LISTHOMES_OTHER));
-				return true;
-			}
-		}
+	@Cmd(
+			name = "homes",
+			desc = "Gets a list of your homes.",
+			usage = "/homes [player] [detail]",
+			max = 2,
+			aliases = { "listhomes", "seehomes", "homelist" },
+			permissions = { Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER, Permission.ESS_LISTHOMES_DETAIL })
+	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
 		case 0:
 			if (sndr instanceof Player) {
@@ -85,7 +69,7 @@ public class Listhomes extends EssCommand {
 			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
-		case 2:
+		default:
 			if (Holder.hasPermission(sndr, Permission.ESS_LISTHOMES_DETAIL)) {
 				Player target = Bukkit.getPlayer(args[0]);
 				if (target == null) {
@@ -124,10 +108,6 @@ public class Listhomes extends EssCommand {
 			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
-		default:
-			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-			break;
 		}
-		return true;
 	}
 }

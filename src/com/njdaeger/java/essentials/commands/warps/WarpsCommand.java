@@ -1,10 +1,5 @@
 package com.njdaeger.java.essentials.commands.warps;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
@@ -13,30 +8,26 @@ import com.njdaeger.java.configuration.controllers.Warps;
 import com.njdaeger.java.configuration.data.WarpData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class WarpsCommand extends EssCommand {
-
-	public WarpsCommand() {
-		super("warps");
-		List<String> a = Arrays.asList("listwarps");
-		this.description = "List all the warps on the server.";
-		this.usageMessage = "/warps [warpname]";
-		this.setAliases(a);
-	}
 
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 	}
 
-	@Cmd(max = 1, permissions = { Permission.ESS_WARPS, Permission.ESS_WARPS_DETAIL })
+	@Cmd(
+			name = "warps",
+			desc = "List all the warps on the server.",
+			usage = "/warps [warpname]",
+			aliases = { "listwarps" },
+			max = 1,
+			permissions = { Permission.ESS_WARPS, Permission.ESS_WARPS_DETAIL })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (Holder.hasPermission(sndr, Permission.ESS_WARPS)) {
 				if (Warps.getWarp(null, null).listWarps() == null) {

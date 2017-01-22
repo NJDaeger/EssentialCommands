@@ -1,8 +1,12 @@
 package com.njdaeger.java.essentials.listeners.events;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.njdaeger.java.Holder;
+import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
@@ -24,12 +28,11 @@ public class CommandEvent {
 
 	public void whenAfk(PlayerCommandPreprocessEvent e) {
 		String message = e.getMessage().toLowerCase();
-		if (afkCommand.getAliases().contains(message) || afkCommand.getName().equalsIgnoreCase(message)
-				|| messageCommand.getAliases().contains(message) || messageCommand.getName().equalsIgnoreCase(message)
-				|| replyCommand.getAliases().contains(message) || replyCommand.getName().equalsIgnoreCase(message)
-				|| broadcastCommand.getAliases().contains(message) || broadcastCommand.getName().equalsIgnoreCase(
-						message) || vanishCommand.getAliases().contains(message) || vanishCommand.getName()
-								.equalsIgnoreCase(message)) {
+		if (getAliases(afkCommand).contains(message) || afkCommand.getName().equalsIgnoreCase(message) || getAliases(
+				broadcastCommand).contains(message) || messageCommand.getName().equalsIgnoreCase(message) || getAliases(
+						messageCommand).contains(message) || replyCommand.getName().equalsIgnoreCase(message)
+				|| getAliases(replyCommand).contains(message) || broadcastCommand.getName().equalsIgnoreCase(message)
+				|| getAliases(vanishCommand).contains(message) || vanishCommand.getName().equalsIgnoreCase(message)) {
 			if (PlayerConfig.getConfig(e.getPlayer()).isAfk() == true) {
 				return;
 			} else {
@@ -68,5 +71,9 @@ public class CommandEvent {
 			}
 			return;
 		}
+	}
+
+	private List<String> getAliases(EssCommand command) {
+		return Arrays.asList(command.getAliases());
 	}
 }

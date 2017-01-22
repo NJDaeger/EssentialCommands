@@ -22,7 +22,6 @@ import com.njdaeger.java.essentials.commands.player.HatCommand;
 import com.njdaeger.java.essentials.commands.player.HealCommand;
 import com.njdaeger.java.essentials.commands.player.KillCommand;
 import com.njdaeger.java.essentials.commands.player.NickCommand;
-import com.njdaeger.java.essentials.commands.player.RepairCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 import com.njdaeger.java.essentials.commands.player.VanishCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
@@ -70,7 +69,7 @@ public class CommandCore {
 		new HatCommand().register();
 		new EditsignCommand().register();
 		new HealCommand().register();
-		new RepairCommand().register();//NOTDONE
+		//new RepairCommand().register();//NOTDONE
 		new TempBanCommand().register();//
 		new BanCommand().register();//
 		new UnbanCommand().register();//

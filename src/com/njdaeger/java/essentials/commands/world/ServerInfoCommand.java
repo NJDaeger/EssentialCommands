@@ -1,16 +1,12 @@
 package com.njdaeger.java.essentials.commands.world;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
 import com.njdaeger.java.Server;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -19,29 +15,25 @@ public class ServerInfoCommand extends EssCommand {
 	private ChatColor g = ChatColor.GRAY;
 	private ChatColor a = ChatColor.AQUA;
 
-	public ServerInfoCommand() {
-		super("serverinfo");
-		List<String> alias = Arrays.asList("si", "server", "lag", "memory", "internal", "gc");
-		this.description = "Get server information.";
-		this.usageMessage = "/serverinfo";
-		this.setAliases(alias);
-	}
-
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 
 	}
 
-	@Cmd(max = 0, permissions = { Permission.ESS_SERVER_INFO, Permission.ESS_SERVER_INFO_ALCDRAM,
-			Permission.ESS_SERVER_INFO_ALL, Permission.ESS_SERVER_INFO_ARCH, Permission.ESS_SERVER_INFO_CORES,
-			Permission.ESS_SERVER_INFO_FREERAM, Permission.ESS_SERVER_INFO_MAXRAM, Permission.ESS_SERVER_INFO_OS,
-			Permission.ESS_SERVER_INFO_PORT, Permission.ESS_SERVER_INFO_TPS, Permission.ESS_SERVER_INFO_USAGE })
+	@Cmd(
+			name = "serverinfo",
+			desc = "Get server information.",
+			usage = "/serverinfo",
+			max = 0,
+			aliases = { "si", "server", "lag", "memory", "internal", "gc" },
+			permissions = { Permission.ESS_SERVER_INFO, Permission.ESS_SERVER_INFO_ALCDRAM,
+					Permission.ESS_SERVER_INFO_ALL, Permission.ESS_SERVER_INFO_ARCH, Permission.ESS_SERVER_INFO_CORES,
+					Permission.ESS_SERVER_INFO_FREERAM, Permission.ESS_SERVER_INFO_MAXRAM,
+					Permission.ESS_SERVER_INFO_OS, Permission.ESS_SERVER_INFO_PORT, Permission.ESS_SERVER_INFO_TPS,
+					Permission.ESS_SERVER_INFO_USAGE })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		sndr.sendMessage(g + "=-=-=- " + a + "Server Information" + g + " -=-=-=");
 		if (Holder.hasPermission(sndr, Permission.ESS_SERVER_INFO)) {
 			sndr.sendMessage(g + "Name: " + a + Server.getName());

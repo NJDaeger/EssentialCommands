@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 
+import com.njdaeger.java.command.util.BaseCommand;
 import com.njdaeger.java.command.util.EssCommand;
 
 public class Plugin {
@@ -16,9 +17,14 @@ public class Plugin {
 	 * @param getCommand The command instance.
 	 */
 	public static void getCommand(EssCommand getCommand) {
-		getMap().register("ess", getCommand);
+		getMap().register("ess", new BaseCommand(getCommand));
 	}
 
+	/**
+	 * Gets the bukkit command map.
+	 * 
+	 * @return CommandMap
+	 */
 	public static CommandMap getMap() {
 		CommandMap map = null;
 		Field f;

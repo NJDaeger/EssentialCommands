@@ -1,10 +1,6 @@
 package com.njdaeger.java.essentials.commands.world;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Groups;
@@ -15,32 +11,26 @@ import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class InfoSidebarCommand extends EssCommand {
-
-	static String name = "infobar";
-
-	public InfoSidebarCommand() {
-		super("infobar");
-		List<String> a = Arrays.asList("sibar", "serverinfobar", "lagbar", "gcbar");
-		this.description = "Toggles a sidebar of the basic server info.";
-		this.usageMessage = "/infobar [player]";
-		this.setAliases(a);
-	}
 
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 	}
 
-	@Cmd(max = 1, permissions = { Permission.ESS_INFOBAR, Permission.ESS_INFOBAR_OTHER })
+	@Cmd(
+			name = "infobar",
+			desc = "Toggles a sidebar of the basic server info.",
+			usage = "/infobar",
+			max = 1,
+			aliases = { "sibar", "serverinfobar", "lagbar", "gcbar" },
+			permissions = { Permission.ESS_INFOBAR, Permission.ESS_INFOBAR_OTHER })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (!(sndr instanceof Player)) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());

@@ -1,66 +1,55 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class GetPositionCommand extends EssCommand {
 
-	static String name = "position";
-
-	public GetPositionCommand() {
-		super(name);
-		List<String> a = Arrays.asList("getpos", "currentpos", "getposition", "getloc", "getlocation");
-		this.description = "Get your current position.";
-		this.usageMessage = "/position [player]";
-		this.setAliases(a);
-	}
-
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (Holder.hasPermission(sndr, Permission.ESS_POSITION, Permission.ESS_POSITION_OTHER)) {
-			switch (args.length) {
-			case 0:
-				if (sndr instanceof Player) {
-					this.sendLocation((Player) sndr, sndr);
-					return true;
-				}
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			case 1:
-				if (Holder.hasPermission(sndr, Permission.ESS_POSITION_OTHER)) {
-					Player target = Bukkit.getPlayer(args[0]);
-					if (target == null) {
-						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-						return true;
-					}
-					this.sendLocation(target, sndr);
-					return true;
-				}
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			default:
-				sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
+	@Cmd(
+			name = "position",
+			desc = "Get your current position.",
+			usage = "/position [player]",
+			max = 1,
+			aliases = { "getpos", "currentpos", "getposition", "getloc", "getlocation" },
+			permissions = { Permission.ESS_POSITION, Permission.ESS_POSITION_OTHER })
+	public boolean run(Sender sndr, String label, String[] args) {
+		if (args.length == 0) {
+			if (sndr instanceof Player) {
+				this.sendLocation((Player) sndr, sndr);
 				return true;
 			}
+			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
+			return true;
 		}
-		sndr.sendMessage(Error.NO_PERMISSION.sendError());
+		if (Holder.hasPermission(sndr, Permission.ESS_POSITION_OTHER)) {
+			Player target = Bukkit.getPlayer(args[0]);
+			if (target == null) {
+				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+				return true;
+			}
+			this.sendLocation(target, sndr);
+			return true;
+		}
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				Permission.ESS_POSITION_OTHER));
 		return true;
 	}
 

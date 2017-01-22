@@ -1,54 +1,42 @@
 package com.njdaeger.java.essentials.commands.homes;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.Plugin;
+import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class Delhome extends EssCommand {
 
-	static String name = "delhome";
-
-	public Delhome() {
-		super(name);
-		List<String> a = Arrays.asList("deletehome", "removehome", "clearhome");
-		this.description = "Delete an existing home.";
-		this.usageMessage = "/delhome <homename> [player]";
-		this.setAliases(a);
-	}
-
 	@Override
 	public void register() {
-		Plugin.getCommand(name, this);
+		Plugin.getCommand(this);
 
 	}
 
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
+	@Cmd(
+			name = "delhome",
+			desc = "Delete an existing home.",
+			usage = "/delhome <homename> [player]",
+			max = 2,
+			min = 1,
+			aliases = { "deletehome", "removehome", "clearhome" },
+			permissions = { Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER })
+	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
-		case 0:
-			if (Holder.hasPermission(sndr, Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER)) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
-					Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER));
-			return true;
 		case 1:
-			if (sndr instanceof Player) {
+			if (sndr.isPlayer()) {
 				Player player = (Player) sndr;
 				if (Holder.hasPermission(player, Permission.ESS_DELHOME)) {
 					if (!Homes.getHome(args[0], player).exists()) {
@@ -68,7 +56,7 @@ public class Delhome extends EssCommand {
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
-		case 2:
+		default:
 			if (Holder.hasPermission(sndr, Permission.ESS_DELHOME_OTHER)) {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
@@ -101,9 +89,6 @@ public class Delhome extends EssCommand {
 			}
 			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_DELHOME_OTHER));
-			return true;
-		default:
-			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
 			return true;
 		}
 	}

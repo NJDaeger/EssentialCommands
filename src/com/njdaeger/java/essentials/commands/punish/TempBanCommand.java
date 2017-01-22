@@ -1,10 +1,6 @@
 package com.njdaeger.java.essentials.commands.punish;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -14,6 +10,7 @@ import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.BanAPI;
+import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -21,25 +18,20 @@ public class TempBanCommand extends EssCommand {
 
 	private final BanAPI api = new BanAPI();
 
-	public TempBanCommand() {
-		super("tempban");
-		List<String> a = Arrays.asList("temp", "tb", "bantemp");
-		this.description = "Temp ban a player.";
-		this.usageMessage = "/tempban <player> <time:<d/h/m/s>> [reason...]";
-		this.setAliases(a);
-	}
-
 	@Override
 	public void register() {
 		Plugin.getCommand(this);
 	}
 
-	@Cmd(min = 2, permissions = { Permission.ESS_TEMPBAN })
+	@Cmd(
+			name = "tempban",
+			desc = "Temp ban a player.",
+			usage = "/tempban <player> <time:<d/h/m/s>> [reason...]",
+			min = 2,
+			aliases = { "temp", "tb", "bantemp" },
+			permissions = { Permission.ESS_TEMPBAN })
 	@Override
-	public boolean execute(CommandSender sndr, String label, String[] args) {
-		if (canceled(sndr, args)) {
-			return true;
-		}
+	public boolean run(Sender sndr, String label, String[] args) {
 		Player target = Bukkit.getPlayer(args[0]);
 		if (target == null) {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
