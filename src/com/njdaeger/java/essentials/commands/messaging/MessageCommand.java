@@ -1,6 +1,5 @@
 package com.njdaeger.java.essentials.commands.messaging;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Permission;
@@ -8,11 +7,6 @@ import com.njdaeger.java.essentials.utils.messages.Messenger;
 import com.njdaeger.java.wrapper.Sender;
 
 public class MessageCommand extends EssCommand {
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Override
 	@Cmd(

@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
@@ -19,11 +18,6 @@ public class BreakCommand extends EssCommand {
 
 	private ChatColor green = ChatColor.GREEN;
 	private ChatColor gray = ChatColor.GRAY;
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Override
 	@Cmd(

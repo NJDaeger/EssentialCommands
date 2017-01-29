@@ -2,7 +2,6 @@ package com.njdaeger.java.essentials.commands.homes;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
@@ -15,11 +14,6 @@ import com.njdaeger.java.wrapper.Sender;
 import net.md_5.bungee.api.ChatColor;
 
 public class Sethome extends EssCommand {
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Override
 	@Cmd(

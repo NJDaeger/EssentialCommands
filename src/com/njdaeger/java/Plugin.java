@@ -16,7 +16,7 @@ public class Plugin {
 	 * 
 	 * @param getCommand The command instance.
 	 */
-	public static void getCommand(EssCommand getCommand) {
+	public static void addCommand(EssCommand getCommand) {
 		getMap().register("ess", new BaseCommand(getCommand));
 	}
 
@@ -47,7 +47,7 @@ public class Plugin {
 	 * @deprecated Please use the new command format. (EssCommand)
 	 */
 	@Deprecated
-	public static void getCommand(String command, Command getCommand) {
+	public static void addCommand(String command, Command getCommand) {
 		getMap().register("ess", getCommand);
 	}
 

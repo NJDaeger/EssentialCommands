@@ -40,7 +40,7 @@ public class BaseCommand extends PluginsCommand {
 			}
 		}
 		if (command.executor() == Executor.CONSOLE) {
-			if (sndr instanceof Player) {
+			if ((sndr instanceof Player)) {
 				sndr.sendMessage(Error.CONSOLE_ONLY.sendError());
 				return true;
 			}

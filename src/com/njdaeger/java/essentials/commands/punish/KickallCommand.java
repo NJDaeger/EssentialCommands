@@ -3,7 +3,6 @@ package com.njdaeger.java.essentials.commands.punish;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
@@ -13,11 +12,6 @@ import com.njdaeger.java.wrapper.Sender;
 import net.md_5.bungee.api.ChatColor;
 
 public class KickallCommand extends EssCommand {
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Cmd(
 			name = "kickall",

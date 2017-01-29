@@ -1,16 +1,8 @@
 package com.njdaeger.java.command.util;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.wrapper.Sender;
 
 public interface IEssCommand {
-
-	/**
-	 * The register method for the command.
-	 * 
-	 * @see Plugin#getCommand(EssCommand)
-	 */
-	void register();
 
 	/**
 	 * The command method. This is where the command and its args are contained.

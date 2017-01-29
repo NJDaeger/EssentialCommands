@@ -1,6 +1,5 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,9 +9,8 @@ public interface IConfiguration {
 	/**
 	 * Generates a new configuration file if it exists.
 	 * 
-	 * @throws IOException
 	 */
-	void newConfig() throws IOException;
+	void newConfig();
 
 	/**
 	 * Gets the configuration.

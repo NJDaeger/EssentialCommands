@@ -1,7 +1,6 @@
 package com.njdaeger.java.essentials.commands.world;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.Server;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
@@ -14,12 +13,6 @@ public class ServerInfoCommand extends EssCommand {
 
 	private ChatColor g = ChatColor.GRAY;
 	private ChatColor a = ChatColor.AQUA;
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-
-	}
 
 	@Cmd(
 			name = "serverinfo",

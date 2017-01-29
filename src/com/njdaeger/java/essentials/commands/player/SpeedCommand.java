@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
@@ -14,11 +13,6 @@ import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.wrapper.Sender;
 
 public class SpeedCommand extends EssCommand {
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Override
 	@Cmd(

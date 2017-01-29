@@ -1,5 +1,6 @@
 package com.njdaeger.java.essentials.commands;
 
+import com.njdaeger.java.Plugin;
 import com.njdaeger.java.essentials.commands.homes.Delhome;
 import com.njdaeger.java.essentials.commands.homes.Home;
 import com.njdaeger.java.essentials.commands.homes.Listhomes;
@@ -39,43 +40,56 @@ import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
 public class CommandCore {
 
 	public static void registerCommands() {
-		new Delhome().register();//
-		new Home().register();//
-		new Listhomes().register();//
-		new Sethome().register();//
-		new FlyCommand().register();
-		new BroadcastCommand().register();
-		new MeCommand().register();
-		new ReplyCommand().register();
-		new MessageCommand().register();
-		new GamemodeCommand().register();
-		new AfkCommand().register();
-		new SpeedCommand().register();
-		new BreakCommand().register();
-		new BurnCommand().register();
-		new ClearInvCommand().register();
-		new NickCommand().register();
-		new GiveCommand().register();
-		new DelwarpCommand().register();
-		new SetwarpCommand().register();
-		new WarpCommand().register();
-		new WarpsCommand().register();
-		new ServerInfoCommand().register();
-		new GodCommand().register();
-		new GetPositionCommand().register();
-		new HealCommand().register();
-		new KillCommand().register();
-		new InfoSidebarCommand().register();
-		new HatCommand().register();
-		new EditsignCommand().register();
-		new HealCommand().register();
-		//new RepairCommand().register();//NOTDONE
-		new TempBanCommand().register();//
-		new BanCommand().register();//
-		new UnbanCommand().register();//
-		new HelpopCommand().register();//
-		new VanishCommand().register();//
-		new KickallCommand().register();//
+		Plugin.addCommand(new AfkCommand());
+		Plugin.addCommand(new BreakCommand());
+		Plugin.addCommand(new BurnCommand());
+		Plugin.addCommand(new ClearInvCommand());
+		Plugin.addCommand(new EditsignCommand());
+		Plugin.addCommand(new FlyCommand());
+		Plugin.addCommand(new GamemodeCommand());
+		Plugin.addCommand(new GetPositionCommand());
+		Plugin.addCommand(new GiveCommand());
+		Plugin.addCommand(new GodCommand());
+		Plugin.addCommand(new HatCommand());
+		Plugin.addCommand(new HealCommand());
+		Plugin.addCommand(new KillCommand());
+		//Plugin.addCommand(new MoreCommand());
+		Plugin.addCommand(new NickCommand());
+		//Plugin.addCommand(new PtimeCommand());
+		//Plugin.addCommand(new PweatherCommand());
+		//Plugin.addCommand(new RealnameCommand());
+		//Plugin.addCommand(new RepairCommand());
+		Plugin.addCommand(new SpeedCommand());
+		Plugin.addCommand(new VanishCommand());
+		//Plugin.addCommand(new WhoisCommand());
+		//Plugin.addCommand(new WorkbenchCommand());
+		Plugin.addCommand(new BanCommand());
+		Plugin.addCommand(new HelpopCommand());
+		Plugin.addCommand(new KickallCommand());
+		//Plugin.addCommand(new KickCommand());
+		Plugin.addCommand(new TempBanCommand());
+		Plugin.addCommand(new TempBanCommand());
+		Plugin.addCommand(new UnbanCommand());
+		//Plugin.addCommand(new TpallCommand());
+		//Plugin.addCommand(new TpCommand());
+		Plugin.addCommand(new DelwarpCommand());
+		Plugin.addCommand(new SetwarpCommand());
+		Plugin.addCommand(new WarpCommand());
+		Plugin.addCommand(new WarpsCommand());
+		Plugin.addCommand(new InfoSidebarCommand());
+		Plugin.addCommand(new ServerInfoCommand());
+		//Plugin.addCommand(new TimeCommand());
+		//Plugin.addCommand(new WeatherCommand());
+		//Plugin.addCommand(new SocialspyCommand());
+		Plugin.addCommand(new ReplyCommand());
+		Plugin.addCommand(new MessageCommand());
+		Plugin.addCommand(new MeCommand());
+		//Plugin.addCommand(new DisableMessageCommand());
+		Plugin.addCommand(new BroadcastCommand());
+		Plugin.addCommand(new Sethome());
+		Plugin.addCommand(new Listhomes());
+		Plugin.addCommand(new Home());
+		Plugin.addCommand(new Delhome());
 
 	}
 }

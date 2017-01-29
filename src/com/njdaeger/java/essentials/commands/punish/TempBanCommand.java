@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.essentials.enums.Error;
@@ -17,11 +16,6 @@ import net.md_5.bungee.api.ChatColor;
 public class TempBanCommand extends EssCommand {
 
 	private final BanAPI api = new BanAPI();
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Cmd(
 			name = "tempban",

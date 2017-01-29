@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.Plugin;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
@@ -18,11 +17,6 @@ import com.njdaeger.java.wrapper.Sender;
 import net.md_5.bungee.api.ChatColor;
 
 public class EditsignCommand extends EssCommand {
-
-	@Override
-	public void register() {
-		Plugin.getCommand(this);
-	}
 
 	@Override
 	@Cmd(
@@ -100,10 +94,7 @@ public class EditsignCommand extends EssCommand {
 	}
 
 	public enum Line {
-		ONE("line1", "1", "one"), 
-		TWO("line2", "2", "two"), 
-		THREE("line3", "3", "three"), 
-		FOUR("line4", "4", "four");
+		ONE("line1", "1", "one"), TWO("line2", "2", "two"), THREE("line3", "3", "three"), FOUR("line4", "4", "four");
 
 		String[] names;
 

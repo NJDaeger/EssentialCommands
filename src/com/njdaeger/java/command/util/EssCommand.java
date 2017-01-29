@@ -29,11 +29,6 @@ public class EssCommand implements IEssCommand {
 	}
 
 	@Override
-	public void register() {
-
-	}
-
-	@Override
 	public boolean run(Sender sender, String label, String[] args) {
 		return false;
 	}
