@@ -1,10 +1,13 @@
 package com.njdaeger.api.json;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.plugin.Plugin;
 
+import com.google.gson.JsonObject;
 import com.njdaeger.api.json.data.JsonHandler;
 import com.njdaeger.api.json.interfaces.IJsonCreator;
 
@@ -19,6 +22,13 @@ public class JsonAPI implements IJsonCreator {
 	@Override
 	public JsonHandler create(String name) {
 		Validate.notNull(name, "Name cannot be null.");
+		JsonObject object = new JsonObject();
+		File jsonfile = new File("plugins" + File.separator + plugin.getName() + File.separator + name + ".json");
+		try (FileWriter file = new FileWriter(jsonfile)) {
+			file.write(object.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return new JsonHandler(name);
 	}
 
@@ -40,7 +50,11 @@ public class JsonAPI implements IJsonCreator {
 
 	@Override
 	public void delete(String path, String name) {
-
+		Validate.notNull(name, "Name cannot be null.");
+		Validate.notNull(path, "Path cannot be null.");
+		File file = new File(path + File.separator + name + ".json");
+		Validate.notNull(file, "Cannot delete file " + name + ".json... It does not exist.");
+		file.delete();
 	}
 
 	/**
@@ -50,7 +64,7 @@ public class JsonAPI implements IJsonCreator {
 	 * @return Returns the JSON file.
 	 */
 	public JsonHandler getJsonObj(String name) {
-		return null;
+		return new JsonHandler(name);
 	}
 
 	/**
@@ -61,7 +75,7 @@ public class JsonAPI implements IJsonCreator {
 	 * @return Returns the JSON file.
 	 */
 	public JsonHandler getJsonObj(String name, String path) {
-		return null;
+		return new JsonHandler(name, path);
 	}
 
 	public static Plugin getPlugin() {

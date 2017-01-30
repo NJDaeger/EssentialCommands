@@ -226,7 +226,7 @@
     </repositories>
 
     <build>
-        <sourceDirectory>src/com/njdaeger/java</sourceDirectory>
+        <sourceDirectory>src/com/njdaeger/</sourceDirectory>
         <defaultGoal>clean install</defaultGoal>
         <resources>
             <resource>
