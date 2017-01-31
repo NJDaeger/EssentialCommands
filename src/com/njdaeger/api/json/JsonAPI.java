@@ -60,7 +60,10 @@ public class JsonAPI implements IJsonCreator {
 	/**
 	 * Get a JSON Object from the default directory.
 	 * 
-	 * @param name Name of the file you want to get.
+	 * @param name Name of the file you want to get. Note: Do not include
+	 *            extension.
+	 *            <li>Good: file
+	 *            <li>Bad: file.json
 	 * @return Returns the JSON file.
 	 */
 	public JsonHandler getJsonObj(String name) {
@@ -70,8 +73,14 @@ public class JsonAPI implements IJsonCreator {
 	/**
 	 * Get a JSON Object from the specified directory.
 	 * 
-	 * @param name Name of the file you want to get.
-	 * @param path The path of the file you want to get.
+	 * @param name Name of the file you want to get. Note: do not include
+	 *            extension.
+	 *            <li>Good: file
+	 *            <li>Bad: file.json
+	 * @param path The path of the file you want to get. Note: Only go up to the
+	 *            folder its in
+	 *            <li>Good: plugins/ExamplePlugin/
+	 *            <li>Bad: plugins/ExamplePlugin/file.json
 	 * @return Returns the JSON file.
 	 */
 	public JsonHandler getJsonObj(String name, String path) {

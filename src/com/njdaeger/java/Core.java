@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.api.json.JsonAPI;
+import com.njdaeger.api.json.data.JsonHandler;
 import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
@@ -53,7 +54,9 @@ public class Core extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable() {
-		new JsonAPI(this).create("test");
+		JsonHandler handler = new JsonAPI(this).create("test");
+		handler.set("test", false);
+		handler.set("messages", true);
 		MessageFile.create();
 		CommandCore.registerCommands();
 		Config.getConfig().newConfig();
