@@ -1,5 +1,6 @@
 package com.njdaeger.java.essentials.commands.player;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -31,40 +32,56 @@ public class PtimeCommand extends EssCommand {
 			Player player = (Player) sender;
 			if (unit != null) {
 				player.setPlayerTime(unit.getTime(), false);
-				player.sendMessage(ChatColor.GRAY + "Changed your client time to " + ChatColor.GREEN + args[0]);
-			}
-			if (args[0].startsWith("@") || args[0].endsWith("ticks") || args[0].equalsIgnoreCase("reset")) {
-				String[] a;
-				if (args[0].startsWith("@")) {
-					a = args[0].split("@");
-					if (Util.isNumber(a[1])) {
-						player.setPlayerTime(Long.parseLong(a[1]), false);
-						player.sendMessage(ChatColor.GRAY + "Changed your client time to " + ChatColor.GREEN + a[1]
-								+ " ticks");
-						return true;
-					}
-					sender.sendMessage(Error.INPUT_NOT_NUM.sendError());
-					return true;
-				}
-				if (args[0].endsWith("ticks")) {
-					a = args[0].split("test");
-					if (Util.isNumber(a[0])) {
-						player.setPlayerTime(Long.parseLong(a[0]), false);
-						player.sendMessage(ChatColor.GRAY + "Changed your client time to " + ChatColor.GREEN + a[0]
-								+ " ticks");
-						return true;
-					}
-					sender.sendMessage(Error.INPUT_NOT_NUM.sendError());
-					return true;
-
-				}
-				player.resetPlayerTime();
+				player.sendMessage(ChatColor.GRAY + "Client time changed to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
-			sender.sendMessage(Error.CANNOT_CHANGE_TO_TIME.sendError());
+			setTime(sender, player, args[0]);
 			return true;
 		}
+		TimeUnit unit = TimeUnit.getAliasUsed(args[0]);
+		Player player = Bukkit.getPlayer(args[1]);
+		if (player == null) {
+			sender.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+			return true;
+		}
+		if (unit != null) {
+			player.setPlayerTime(unit.getTime(), false);
+			player.sendMessage(ChatColor.GRAY + "Client time changed to " + ChatColor.GREEN + args[0]);
+			return true;
+		}
+		setTime(sender, player, args[0]);
 		return true;
+	}
+
+	private void setTime(Sender sender, Player player, String input) {
+		if (input.startsWith("@") || input.endsWith("ticks") || input.equalsIgnoreCase("reset")) {
+			String[] a;
+			if (input.startsWith("@")) {
+				a = input.split("@");
+				if (Util.isNumber(a[1])) {
+					player.setPlayerTime(Long.parseLong(a[1]), false);
+					player.sendMessage(ChatColor.GRAY + "Client time changed to " + ChatColor.GREEN + a[1] + " ticks");
+					return;
+				}
+				sender.sendMessage(Error.INPUT_NOT_NUM.sendError());
+				return;
+			}
+			if (input.endsWith("ticks")) {
+				a = input.split("test");
+				if (Util.isNumber(a[0])) {
+					player.setPlayerTime(Long.parseLong(a[0]), false);
+					player.sendMessage(ChatColor.GRAY + "Client time changed to " + ChatColor.GREEN + a[0] + " ticks");
+					return;
+				}
+				sender.sendMessage(Error.INPUT_NOT_NUM.sendError());
+				return;
+
+			}
+			player.resetPlayerTime();
+			return;
+		}
+		sender.sendMessage(Error.CANNOT_CHANGE_TO_TIME.sendError());
+		return;
 	}
 
 	public enum TimeUnit {
