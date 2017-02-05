@@ -55,8 +55,7 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		JsonHandler handler = new JsonAPI(this).create("test");
-		handler.set("test", false);
-		handler.set("messages", true);
+		handler.set("test", false).set("messages", true);
 		MessageFile.create();
 		CommandCore.registerCommands();
 		Config.getConfig().newConfig();

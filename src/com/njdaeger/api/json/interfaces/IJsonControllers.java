@@ -57,7 +57,7 @@ public interface IJsonControllers {
 
 	boolean isString(String path);
 
-	void set(String path, Object value);
+	IJsonControllers set(String path, Object value);
 
 	/**
 	 * Set the value of a key in a JSON file.

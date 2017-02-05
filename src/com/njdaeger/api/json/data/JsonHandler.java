@@ -3,15 +3,15 @@ package com.njdaeger.api.json.data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.njdaeger.api.json.JsonAPI;
 import com.njdaeger.api.json.interfaces.IJsonControllers;
 import com.njdaeger.api.json.interfaces.IJsonData;
@@ -244,20 +244,18 @@ public final class JsonHandler extends JsonAPI implements IJsonData, IJsonContro
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public void set(String key, Object value) {
+	public JsonHandler set(String key, Object value) {
+		HashMap<String, Object> values = new HashMap<String, Object>();
+		values.put(key, value);
 		File file = new File(path + File.separator + name + ".json");
-		JSONObject o = new JSONObject();
-		JsonParser parser = new JsonParser();
-		JSONParser parser2 = new JSONParser();
-		o.put(key, value);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		try (FileWriter writer = new FileWriter(file)) {
-			writer.write(o.toJSONString());
-			writer.flush();
+			gson.toJson(values, writer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return this;
 	}
 
 }

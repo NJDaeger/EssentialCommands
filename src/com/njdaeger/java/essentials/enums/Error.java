@@ -15,6 +15,8 @@ public enum Error {
 	INPUT_NOT_NUM("Input provided must be an integer."),
 	UNKNOWN_ITEM("Input provided is an unknown item."),
 	INVENTORY_IS_FULL("Targets inventory is full."),
+	NO_ITEM_IN_HAND("Invalid item in hand"),
+	ITEM_ALREADY_MAXED("Item currently held is already maxed."),
 	NICKNAME_TOO_LONG("The nickname given is too long."),
 	PLAYER_IS_OPPED("Cannot perform action. Player is opped."),
 	INPUT_TOO_LARGE("The input given is too large."),
@@ -49,7 +51,8 @@ public enum Error {
 	CANNOT_SEND_PM("Cannot send message."),
 	CONSOLE_ONLY("This action is restricted to console only."),
 	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage()),
-	CANNOT_BURN_TARGET("Target cannot be burned.");
+	CANNOT_BURN_TARGET("Target cannot be burned."),
+	CANNOT_CHANGE_TO_TIME("Time cannot be changed to that.");
 
 	public final String error;
 
