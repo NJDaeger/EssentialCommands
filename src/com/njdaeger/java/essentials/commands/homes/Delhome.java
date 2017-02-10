@@ -30,7 +30,7 @@ public class Delhome extends EssCommand {
 		switch (args.length) {
 		case 1:
 			if (sndr.isPlayer()) {
-				Player player = (Player) sndr;
+				Player player = sndr.asPlayer();
 				if (Holder.hasPermission(player, Permission.ESS_DELHOME)) {
 					if (!Homes.getHome(args[0], player).exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
@@ -43,7 +43,7 @@ public class Delhome extends EssCommand {
 							+ " from homes.");
 					return true;
 				}
-				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 						Permission.ESS_DELHOME));
 				return true;
 			}
@@ -80,7 +80,7 @@ public class Delhome extends EssCommand {
 				return true;
 
 			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 					Permission.ESS_DELHOME_OTHER));
 			return true;
 		}

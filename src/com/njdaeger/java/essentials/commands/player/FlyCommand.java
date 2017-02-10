@@ -24,15 +24,15 @@ public class FlyCommand extends EssCommand {
 			permissions = { Permission.ESS_FLY, Permission.ESS_FLY_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
-				if (((Player) sndr).isFlying()) {
-					((Player) sndr).setFlying(false);
-					((Player) sndr).setAllowFlight(false);
+			if (sndr.isPlayer()) {
+				if (sndr.asPlayer().isFlying()) {
+					sndr.asPlayer().setFlying(false);
+					sndr.asPlayer().setAllowFlight(false);
 					sndr.sendMessage(ChatColor.GRAY + "You are no longer flying.");
 					return true;
 				}
-				((Player) sndr).setAllowFlight(true);
-				((Player) sndr).setFlying(true);
+				sndr.asPlayer().setAllowFlight(true);
+				sndr.asPlayer().setFlying(true);
 				sndr.sendMessage(ChatColor.GRAY + "You are now flying.");
 				return true;
 			}
@@ -58,7 +58,7 @@ public class FlyCommand extends EssCommand {
 			sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is now flying.");
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_FLY_OTHER));
 		return true;
 	}

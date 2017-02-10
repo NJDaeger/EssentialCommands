@@ -1,7 +1,5 @@
 package com.njdaeger.java.essentials.commands.warps;
 
-import org.bukkit.entity.Player;
-
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
@@ -26,7 +24,7 @@ public class SetwarpCommand extends EssCommand {
 			permissions = { Permission.ESS_SETWARP })
 	@Override
 	public boolean run(Sender sndr, String label, String[] args) {
-		WarpData d = Warps.getWarp(args[0], (Player) sndr);
+		WarpData d = Warps.getWarp(args[0], sndr.asPlayer());
 		if (d.exists() == true) {
 			sndr.sendMessage(Error.WARP_EXISTS.sendError());
 			return true;

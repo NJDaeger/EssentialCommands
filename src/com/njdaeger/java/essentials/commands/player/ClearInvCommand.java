@@ -27,7 +27,7 @@ public class ClearInvCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (sndr.isPlayer()) {
-				Player player = (Player) sndr;
+				Player player = sndr.asPlayer();
 				ItemStack[] stack = player.getInventory().getContents();
 				int amount = 0;
 				for (ItemStack item : stack) {
@@ -63,7 +63,7 @@ public class ClearInvCommand extends EssCommand {
 					+ amount + ChatColor.GRAY + " items from you.");
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_CLEAR_OTHER));
 		return true;
 	}

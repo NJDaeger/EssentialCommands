@@ -26,11 +26,11 @@ public class SpeedCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
 		case 1:
-			if (!(sndr instanceof Player)) {
+			if (!sndr.isPlayer()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			Player player = (Player) sndr;
+			Player player = sndr.asPlayer();
 			if (!Util.isDouble(args[0])) {
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
 					PlayerConfig.getConfig(player).setFlySpeed(1);
@@ -59,11 +59,11 @@ public class SpeedCommand extends EssCommand {
 			break;
 		}
 		if (args.length == 1) {
-			if (!(sndr instanceof Player)) {
+			if (!sndr.isPlayer()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			Player player = (Player) sndr;
+			Player player = sndr.asPlayer();
 			if (!Util.isDouble(args[0])) {
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
 					if (player.isFlying()) {
@@ -103,8 +103,8 @@ public class SpeedCommand extends EssCommand {
 			}
 		}
 		if (args.length == 2) {
-			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
+			if (sndr.isPlayer()) {
+				Player player = sndr.asPlayer();
 				if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
 
 				} else {
@@ -153,8 +153,8 @@ public class SpeedCommand extends EssCommand {
 				return true;
 			}
 		}
-		if (sndr instanceof Player) {
-			Player player = (Player) sndr;
+		if (sndr.isPlayer()) {
+			Player player = sndr.asPlayer();
 			if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
 
 			} else {

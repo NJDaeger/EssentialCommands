@@ -31,7 +31,7 @@ public class Listhomes extends EssCommand {
 		switch (args.length) {
 		case 0:
 			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
+				Player player = sndr.asPlayer();
 				if (Holder.hasPermission(player, Permission.ESS_LISTHOMES)) {
 
 				}
@@ -61,7 +61,7 @@ public class Listhomes extends EssCommand {
 						target).listHomes());
 				return true;
 			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		default:
@@ -100,7 +100,7 @@ public class Listhomes extends EssCommand {
 				sndr.sendMessage(ChatColor.GRAY + "world: " + ChatColor.GREEN + home.getWorld());
 				return true;
 			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 					Permission.ESS_LISTHOMES_OTHER));
 			return true;
 		}

@@ -29,7 +29,7 @@ public class Home extends EssCommand {
 			aliases = { "gohome", "tphome", "tohome" },
 			permissions = { Permission.ESS_HOME, Permission.ESS_HOME_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
-		Player player = (Player) sndr;
+		Player player = sndr.asPlayer();
 		if (args.length == 1) {
 			if (!Homes.getHome(args[0], player).exists()) {
 				sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
@@ -63,7 +63,7 @@ public class Home extends EssCommand {
 			return true;
 
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_HOME_OTHER));
 		return true;
 	}

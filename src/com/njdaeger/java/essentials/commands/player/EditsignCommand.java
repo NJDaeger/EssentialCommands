@@ -5,7 +5,6 @@ import java.util.HashSet;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
@@ -30,7 +29,7 @@ public class EditsignCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		HashSet<Material> tran = new HashSet<Material>();
 		tran.add(Material.AIR);
-		Block type = ((Player) sndr).getTargetBlock(tran, 100);
+		Block type = sndr.asPlayer().getTargetBlock(tran, 100);
 		if (type.getType().equals(Material.WALL_SIGN) || type.getType().equals(Material.SIGN_POST)) {
 			Line line = Line.getAliasUsed(args[0]);
 			Sign sign = (Sign) type.getState();

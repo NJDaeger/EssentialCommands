@@ -25,11 +25,11 @@ public class HatCommand extends EssCommand {
 			permissions = { Permission.ESS_HAT, Permission.ESS_HAT_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (!(sndr instanceof Player)) {
+			if (!sndr.isPlayer()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			Player player = (Player) sndr;
+			Player player = sndr.asPlayer();
 			if (player.getInventory().getItemInMainHand() == null) {
 				sndr.sendMessage(Error.CANNOT_BE_HAT.sendError());
 				return true;
@@ -54,7 +54,7 @@ public class HatCommand extends EssCommand {
 					+ " a new hat!");
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_HAT_OTHER));
 		return true;
 	}

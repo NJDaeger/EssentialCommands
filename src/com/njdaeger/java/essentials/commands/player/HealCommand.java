@@ -25,8 +25,8 @@ public class HealCommand extends EssCommand {
 			permissions = { Permission.ESS_HEAL, Permission.ESS_HEAL_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
-				((Player) sndr).setHealth(20);
+			if (sndr.isPlayer()) {
+				sndr.asPlayer().setHealth(20);
 				sndr.sendMessage(ChatColor.GRAY + "You have been healed.");
 				return true;
 			}
@@ -44,7 +44,7 @@ public class HealCommand extends EssCommand {
 			sndr.sendMessage(ChatColor.GRAY + "You healed " + ChatColor.GREEN + target.getName());
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_HEAL_OTHER));
 		return true;
 	}

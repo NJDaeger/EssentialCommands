@@ -33,14 +33,14 @@ public class GiveCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
 		case 1:
-			give((Player) sndr, sndr, args[0], 64);
+			give(sndr.asPlayer(), sndr, args[0], 64);
 			return true;
 		case 2:
 			if (!Util.isNumber(args[1])) {
 				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 				return true;
 			}
-			give((Player) sndr, sndr, args[0], Integer.parseInt(args[1]));
+			give(sndr.asPlayer(), sndr, args[0], Integer.parseInt(args[1]));
 			return true;
 		default:
 			if (Holder.hasPermission(sndr, Permission.ESS_GIVE_OTHER)) {
@@ -56,7 +56,7 @@ public class GiveCommand extends EssCommand {
 				give(target, sndr, args[0], Integer.parseInt(args[1]));
 				return true;
 			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 					Permission.ESS_GIVE_OTHER));
 			return true;
 		}

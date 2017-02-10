@@ -1,7 +1,6 @@
 package com.njdaeger.java.essentials.commands.messaging;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.Cmd;
@@ -31,11 +30,11 @@ public class MeCommand extends EssCommand {
 		for (String message : args) {
 			me = (me + message + " ");
 			if (color) {
-				Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "* " + ChatColor.RESET + ((Player) sndr)
+				Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "* " + ChatColor.RESET + (sndr.asPlayer())
 						.getDisplayName() + " " + ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', me));
 				return true;
 			}
-			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "* " + ChatColor.RESET + ((Player) sndr).getDisplayName()
+			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "* " + ChatColor.RESET + (sndr.asPlayer()).getDisplayName()
 					+ " " + ChatColor.GRAY + me);
 
 		}

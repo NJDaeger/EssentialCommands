@@ -29,7 +29,7 @@ public class PtimeCommand extends EssCommand {
 				return true;
 			}
 			TimeUnit unit = TimeUnit.getAliasUsed(args[0]);
-			Player player = (Player) sender;
+			Player player = sender.asPlayer();
 			if (unit != null) {
 				player.setPlayerTime(unit.getTime(), false);
 				player.sendMessage(ChatColor.GRAY + "Client time changed to " + ChatColor.GREEN + args[0]);

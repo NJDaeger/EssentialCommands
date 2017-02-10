@@ -23,7 +23,7 @@ public class MoreCommand extends EssCommand {
 			executor = Executor.PLAYER,
 			permissions = { Permission.ESS_MORE })
 	public boolean run(Sender sender, String label, String[] args) {
-		Player player = (Player) sender;
+		Player player = sender.asPlayer();
 		if ((player.getInventory().getItemInMainHand() == null)) {
 			sender.sendMessage(Error.NO_ITEM_IN_HAND.sendError());
 			return true;

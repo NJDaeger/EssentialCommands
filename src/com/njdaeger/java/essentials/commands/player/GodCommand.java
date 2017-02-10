@@ -26,8 +26,8 @@ public class GodCommand extends EssCommand {
 			permissions = { Permission.ESS_GOD, Permission.ESS_GOD_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
-				PlayerConfigData c = PlayerConfig.getConfig((Player) sndr);
+			if (sndr.isPlayer()) {
+				PlayerConfigData c = PlayerConfig.getConfig(sndr.asPlayer());
 				if (c.isGod() == true) {
 					c.setGod();
 					sndr.sendMessage(ChatColor.GRAY + "You are no longer in God mode.");

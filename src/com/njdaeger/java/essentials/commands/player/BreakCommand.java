@@ -29,7 +29,7 @@ public class BreakCommand extends EssCommand {
 			executor = Executor.PLAYER,
 			permissions = { Permission.ESS_BREAK })
 	public boolean run(Sender sndr, String label, String[] args) {
-		Player player = (Player) sndr;
+		Player player = sndr.asPlayer();
 		HashSet<Material> tran = new HashSet<Material>();
 		tran.add(Material.AIR);
 		Block block = player.getTargetBlock(tran, 100).getLocation().getBlock();

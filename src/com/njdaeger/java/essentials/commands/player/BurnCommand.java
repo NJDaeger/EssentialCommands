@@ -26,8 +26,8 @@ public class BurnCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
 		case 0:
-			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
+			if (sndr.isPlayer()) {
+				Player player = sndr.asPlayer();
 				player.setFireTicks(100);
 				player.sendMessage(ChatColor.GRAY + "You are now on fire.");
 				return true;
@@ -50,7 +50,7 @@ public class BurnCommand extends EssCommand {
 				target.sendMessage(ChatColor.GRAY + "You are now on fire.");
 				return true;
 			}
-			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 					Permission.ESS_BURN_OTHER));
 			return true;
 		default:

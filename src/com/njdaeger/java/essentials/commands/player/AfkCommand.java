@@ -24,7 +24,7 @@ public class AfkCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (sndr.isPlayer()) {
-				Player player = (Player) sndr;
+				Player player = sndr.asPlayer();
 				PlayerConfig.getConfig(player).setAfk();
 				return true;
 			} else {
@@ -33,7 +33,7 @@ public class AfkCommand extends EssCommand {
 			}
 		}
 		if (sndr.isPlayer()) {
-			Player player = (Player) sndr;
+			Player player = sndr.asPlayer();
 			if (Holder.hasPermission(player, Permission.ESS_AFK_OTHER)) {
 			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());

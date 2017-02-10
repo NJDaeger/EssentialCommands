@@ -26,18 +26,18 @@ public class InfoSidebarCommand extends EssCommand {
 	@Override
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (!(sndr instanceof Player)) {
+			if (!sndr.isPlayer()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
 			if (Groups.infobar.contains(sndr)) {
 				Groups.infobar.remove(sndr);
-				InfoBoard.removeFor((Player) sndr);
+				InfoBoard.removeFor(sndr.asPlayer());
 				sndr.sendMessage(ChatColor.GRAY + "Infobar is no longer active.");
 				return true;
 			}
-			Groups.infobar.add((Player) sndr);
-			InfoBoard.createFor((Player) sndr);
+			Groups.infobar.add(sndr.asPlayer());
+			InfoBoard.createFor(sndr.asPlayer());
 			sndr.sendMessage(ChatColor.GRAY + "Infobar is now active.");
 			return true;
 		}

@@ -27,7 +27,7 @@ public class BanCommand extends EssCommand {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;
 		}
-		if (Holder.hasPermission(target, Permission.ESS_BAN_EXEMPT) && sndr instanceof Player) {
+		if (Holder.hasPermission(target, Permission.ESS_BAN_EXEMPT) && sndr.isPlayer()) {
 			sndr.sendMessage(Error.CANNOT_BAN_TARGET.sendError());
 			return true;
 		}

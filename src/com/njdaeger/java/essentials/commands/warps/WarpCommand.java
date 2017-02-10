@@ -25,12 +25,12 @@ public class WarpCommand extends EssCommand {
 	@Override
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 1) {
-			if (sndr instanceof Player) {
+			if (sndr.isPlayer()) {
 				if (Warps.getWarp(args[0], null).exists() == false) {
 					sndr.sendMessage(Error.WARP_NOTEXISTS.sendError());
 					return true;
 				}
-				Warps.getWarp(args[0], (Player) sndr).sendWarp();
+				Warps.getWarp(args[0], sndr.asPlayer()).sendWarp();
 				sndr.sendMessage(ChatColor.GRAY + "You were sent to \"" + ChatColor.GREEN + args[0] + "\"");
 				return true;
 			}

@@ -25,7 +25,7 @@ public class KillCommand extends EssCommand {
 			permissions = { Permission.ESS_SUICIDE, Permission.ESS_KILL_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (label.equalsIgnoreCase("suicide")) {
-			if (sndr instanceof Player) {
+			if (sndr.isPlayer()) {
 				switch (args.length) {
 				case 0:
 					if (Holder.hasPermission(sndr, Permission.ESS_SUICIDE)) {
@@ -33,7 +33,7 @@ public class KillCommand extends EssCommand {
 						sndr.sendMessage(ChatColor.GRAY + "You committed suicide.");
 						return true;
 					}
-					sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+					sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 							Permission.ESS_SUICIDE));
 					return true;
 				default:
@@ -45,13 +45,13 @@ public class KillCommand extends EssCommand {
 			return true;
 		}
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
+			if (sndr.isPlayer()) {
 				if (Holder.hasPermission(sndr, Permission.ESS_SUICIDE)) {
-					((Player) sndr).setHealth(0);
+					sndr.asPlayer().setHealth(0);
 					sndr.sendMessage(ChatColor.GRAY + "You committed suicide.");
 					return true;
 				}
-				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+				sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 						Permission.ESS_SUICIDE));
 				return true;
 			}
@@ -68,7 +68,7 @@ public class KillCommand extends EssCommand {
 			target.setHealth(0);
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_SUICIDE));
 		return true;
 	}

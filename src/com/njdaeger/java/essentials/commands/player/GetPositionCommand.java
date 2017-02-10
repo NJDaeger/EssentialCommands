@@ -26,8 +26,8 @@ public class GetPositionCommand extends EssCommand {
 			permissions = { Permission.ESS_POSITION, Permission.ESS_POSITION_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr instanceof Player) {
-				this.sendLocation((Player) sndr, sndr);
+			if (sndr.isPlayer()) {
+				this.sendLocation(sndr.asPlayer(), sndr);
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
@@ -42,7 +42,7 @@ public class GetPositionCommand extends EssCommand {
 			this.sendLocation(target, sndr);
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_POSITION_OTHER));
 		return true;
 	}

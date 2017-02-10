@@ -27,7 +27,7 @@ public class Sethome extends EssCommand {
 			permissions = { Permission.ESS_SETHOME })
 
 	public boolean run(Sender sndr, String label, String[] args) {
-		Player player = (Player) sndr;
+		Player player = sndr.asPlayer();
 		HomeData home = Homes.getHome(args[0], player);
 		if (!home.exists()) {
 			sndr.sendMessage(Error.HOME_EXISTS.sendError());

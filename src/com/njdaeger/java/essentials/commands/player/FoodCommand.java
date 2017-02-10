@@ -36,7 +36,7 @@ public class FoodCommand extends EssCommand {
 				target.sendMessage(ChatColor.GRAY + "Your food level has been restored.");
 				return true;
 			}
-			sender.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sender, "Unknown",
+			sender.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sender.asPlayer(), "Unknown",
 					Permission.ESS_FOOD_OTHER));
 			return true;
 		}
@@ -44,7 +44,7 @@ public class FoodCommand extends EssCommand {
 			sender.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		((Player) sender).setFoodLevel(20);
+		sender.asPlayer().setFoodLevel(20);
 		sender.sendMessage(ChatColor.GRAY + "Your food level has been restored.");
 		return true;
 	}
