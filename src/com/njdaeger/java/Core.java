@@ -15,6 +15,8 @@ import com.njdaeger.java.essentials.utils.Util;
 
 public class Core extends JavaPlugin {
 
+	private static Core INSTANCE;
+
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
 		new PlayerJoinListener(this);
@@ -54,6 +56,7 @@ public class Core extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable() {
+		INSTANCE = this;
 		JsonHandler handler = new JsonAPI(this).create("test");
 		handler.set("test", false).set("messages", true);
 		MessageFile.create();
@@ -70,5 +73,9 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onDisable() {
 
+	}
+
+	public static Core getInstance() {
+		return INSTANCE;
 	}
 }

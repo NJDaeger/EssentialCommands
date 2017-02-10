@@ -2,55 +2,118 @@ package com.njdaeger.java.configuration.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.configuration.Location;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
+import com.njdaeger.java.configuration.interfaces.IBasePlayerConf;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
+import com.njdaeger.java.essentials.commands.player.GamemodeCommand.Mode;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
+public class PlayerConfigData implements IPlayerConfig, IBasePlayerConf {
 
+	//Player object
+	private Player player;
+	//The player file path.
 	private File path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
 			+ File.separator + player.getUniqueId());
+	//The main configuration file of the player.
 	private File file = new File(path + File.separator + "user.yml");
+	//The YAML file the players configuration is in.
+	private YamlConfiguration yamlfile = YamlConfiguration.loadConfiguration(file);
+
+	/**
+	 * Gets an online player's configuration files.
+	 * 
+	 * @param player Player to get the configuration files from.
+	 */
+	public PlayerConfigData(Player player) {
+		this.player = player;
+	}
+
+	/**
+	 * Gets an offline player's configuration files.
+	 * 
+	 * @param offlinePlayer The offline player to get the configuration files
+	 *            from.
+	 */
+	public PlayerConfigData(String offlinePlayer) {
+		if (Database.getDatabase("playerdata").getBase() == null) {
+			Database.getDatabase("playerdata").create();
+			UUID id = UUID.fromString(Database.getDatabase("playerdata").getEntry(offlinePlayer));
+			this.player = (Player) Bukkit.getOfflinePlayer(id);
+			return;
+		}
+		UUID id = UUID.fromString(Database.getDatabase("playerdata").getEntry(offlinePlayer));
+		this.player = (Player) Bukkit.getOfflinePlayer(id);
+	}
+
+	@Override
+	public Player getPlayer() {
+		return player;
+	}
+
+	@Override
+	public File getPath() {
+		return path;
+	}
+
+	@Override
+	public File getFile() {
+		return file;
+	}
+
+	@Override
+	public boolean exists() {
+		if (getFile().exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public YamlConfiguration getYamlFile() {
+		return yamlfile;
+	}
 
 	@Override
 	public void setValue(String path, Object value) {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(path, value);
+		yamlfile.set(path, value);
 		try {
-			c.save(file);
+			yamlfile.save(getFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public YamlConfiguration getValue() {
-		if (!file.exists()) {
-			this.createConfig();
+	public Object getValue(String path) {
+		if (!exists()) {
+			createConfig();
 		}
-		return YamlConfiguration.loadConfiguration(file);
+		return getYamlFile().get(path);
 	}
 
 	@Override
 	public void createConfig() {
-		if (!path.exists()) {
-			path.mkdirs();
+		if (!getPath().exists()) {
+			getPath().mkdirs();
 			try {
-				file.createNewFile();
+				getFile().createNewFile();
 				PlayerPaths.checkExist(player);
 				System.out.println("Player configuration has been created for " + player.getName());
 			} catch (IOException e) {
@@ -58,9 +121,9 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 			}
 			return;
 		}
-		if (!file.exists()) {
+		if (!getFile().exists()) {
 			try {
-				file.createNewFile();
+				getFile().createNewFile();
 				PlayerPaths.checkExist(player);
 				System.out.println("Player configuration has been created for " + player.getName());
 			} catch (IOException e) {
@@ -76,7 +139,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 
 	@Override
 	public void loginUpdate() {
-		setNick(getValue().getString(PlayerPaths.DISPLAYNAME.getPath()));
+		setNick((String) getValue(PlayerPaths.DISPLAYNAME.getPath()));
 		setMuted();
 		setSpying();
 		setGod();
@@ -87,233 +150,165 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 
 	@Override
 	public void setMuted() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isMuted() == false) {
-			if (Groups.muted.contains(player)) {
-				Groups.muted.remove(player);
-			}
-			return;
-		} else {
-			if (!Groups.muted.contains(player)) {
-				Groups.muted.add(player);
-				this.setValue(PlayerPaths.MUTED.getPath(), true);
-			}
+		if (!isMuted()) {
+			Groups.muted.add(player);
+			setValue(PlayerPaths.MUTED.getPath(), true);
 			return;
 		}
+		Groups.muted.remove(player);
+		setValue(PlayerPaths.MUTED.getPath(), false);
 	}
 
 	@Override
 	public void setSpying() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isSpying() == false) {
-			if (Groups.socialspy.contains(player)) {
-				Groups.socialspy.remove(player);
-			}
-			return;
-		} else {
-			if (!Groups.socialspy.contains(player)) {
-				Groups.socialspy.add(player);
-				this.setValue(PlayerPaths.SOCIALSPY.getPath(), false);
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.SOCIALSPY.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		if (!isSpying()) {
+			Groups.socialspy.add(player);
+			setValue(PlayerPaths.SOCIALSPY.getPath(), true);
 			return;
 		}
-
+		Groups.socialspy.remove(player);
+		setValue(PlayerPaths.SOCIALSPY.getPath(), false);
 	}
 
 	@Override
 	public void setGod() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isGod() == true) {
-			if (Groups.god.contains(player)) {
-				Groups.god.remove(player);
-			}
-			player.setInvulnerable(false);
-			this.setValue(PlayerPaths.GOD.getPath(), false);
+		if (!isGod()) {
+			Groups.god.add(player);
+			player.setInvulnerable(true);
+			setValue(PlayerPaths.GOD.getPath(), true);
 			return;
 		}
-		Groups.god.add(player);
-		player.setInvulnerable(true);
-		this.setValue(PlayerPaths.GOD.getPath(), true);
-		return;
+		Groups.god.remove(player);
+		player.setInvulnerable(false);
+		setValue(PlayerPaths.GOD.getPath(), false);
 
 	}
 
 	@Override
 	public void setMessageable() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isMessageable() == true) {
-			if (Groups.nomessaging.contains(player)) {
-				Groups.nomessaging.remove(player);
-				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), true);
-			}
-			return;
-		} else {
-			if (!Groups.nomessaging.contains(player)) {
-				Groups.nomessaging.add(player);
-				this.setValue(PlayerPaths.MESSAGEABLE.getPath(), false);
-			}
+		if (!isMessageable()) {
+			Groups.nomessaging.add(player);
+			setValue(PlayerPaths.MESSAGEABLE.getPath(), true);
 			return;
 		}
-
+		Groups.nomessaging.remove(player);
+		setValue(PlayerPaths.MESSAGEABLE.getPath(), false);
 	}
 
 	@Override
 	public void setAfk() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isAfk() == true) {
-			Groups.afk.remove(player);
-			Groups.afkloc.remove(player.getName());
-			player.setCollidable(true);
-			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
-			this.setValue(PlayerPaths.AFK.getPath(), false);
-		} else {
+		if (!isAfk()) {
 			Groups.afk.add(player);
 			Groups.afkloc.put(player.getName(), player.getLocation());
 			player.setCollidable(false);
 			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
-			this.setValue(PlayerPaths.AFK.getPath(), true);
+			setValue(PlayerPaths.AFK.getPath(), true);
+			return;
 		}
+		Groups.afk.remove(player);
+		Groups.afkloc.remove(player.getName());
+		player.setCollidable(true);
+		Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
+		setValue(PlayerPaths.AFK.getPath(), false);
 	}
 
 	@Override
 	public void setTpToggled() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isTpToggled() == true) {
-			if (Groups.tptoggled.contains(player)) {
-				Groups.tptoggled.remove(player);
-			}
-			return;
-		} else {
-			if (!Groups.tptoggled.contains(player)) {
-				Groups.tptoggled.add(player);
-
-				YamlConfiguration.loadConfiguration(file).set(PlayerPaths.TPTOGGLED.getPath(), false);
-				try {
-					YamlConfiguration.loadConfiguration(file).save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		if (!isTpToggled()) {
+			Groups.tptoggled.add(player);
+			setValue(PlayerPaths.TPTOGGLED.getPath(), true);
 			return;
 		}
+		Groups.tptoggled.remove(player);
+		setValue(PlayerPaths.TPTOGGLED.getPath(), false);
 	}
 
 	@Override
 	public void setGroup(String group) {
-		if (!file.exists()) {
+		if (!exists()) {
 			this.createConfig();
 		}
-		YamlConfiguration.loadConfiguration(file).set(PlayerPaths.RANK.getPath(), group);
-		try {
-			YamlConfiguration.loadConfiguration(file).save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		setValue(PlayerPaths.RANK.getPath(), group);
 	}
 
 	@Override
 	public void setNick(String nickname) {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
 		if (nickname.equals(player.getName())) {
-			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
+			setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
 			player.setDisplayName(player.getName());
 			return;
 		}
-		this.setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname + "&r");
+		setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname + "&r");
 		player.setDisplayName(ChatColor.translateAlternateColorCodes('&', nickname + "&r"));
 	}
 
 	@Override
-	public void setNickAuto() {
-		if (!file.exists()) {
-			this.createConfig();
-		}
-		if (getValue().getString(PlayerPaths.DISPLAYNAME.getPath()) == null) {
-			return;
-		}
-		if (player.getDisplayName() == player.getName()) {
-			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
-			return;
-		} else {
-			player.setDisplayName(ChatColor.translateAlternateColorCodes('&', PlayerPaths.DISPLAYNAME.getPath())
-					+ ChatColor.WHITE);
-			return;
-		}
-	}
-
-	@Override
 	public void setFlying() {
-		// TODO Auto-generated method stub
-
+		if (!exists()) {
+			createConfig();
+		}
+		if (!isFlying()) {
+			player.setFlying(true);
+			player.setAllowFlight(true);
+			setValue(PlayerPaths.FLYING.getPath(), true);
+			return;
+		}
+		player.setFlying(false);
+		player.setAllowFlight(false);
+		setValue(PlayerPaths.FLYING.getPath(), false);
 	}
 
 	@Override
 	public void setGamemode(String gamemode) {
-		if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("1")) {
+		if (!exists()) {
+			createConfig();
+		}
+		Mode mode = Mode.getAliasUsed(gamemode);
+		switch (mode) {
+		case CREATIVE:
 			player.setGameMode(GameMode.CREATIVE);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.CREATIVE);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-		if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("0")) {
+			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.CREATIVE.name());
+		case SURVIVAL:
 			player.setGameMode(GameMode.SURVIVAL);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SURVIVAL);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-		if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("2")) {
+			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.SURVIVAL.name());
+		case ADVENTURE:
 			player.setGameMode(GameMode.ADVENTURE);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.ADVENTURE);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-		if (gamemode.equalsIgnoreCase("spectator") || gamemode.equalsIgnoreCase("3")) {
+			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.ADVENTURE.name());
+		case SPECTATOR:
 			player.setGameMode(GameMode.SPECTATOR);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.GAMEMODE.getPath(), GameMode.SPECTATOR);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.SPECTATOR.name());
+			return;
+		default:
 			return;
 		}
-		return;
 	}
 
 	@Override
 	public void setFlySpeed(double speed) {
+		if (!exists()) {
+			createConfig();
+		}
 		if (speed > 10) {
 			double b = speed - 10;
 			speed -= b;
@@ -324,11 +319,14 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		double a = speed / 10;
 		float value = (float) a;
 		player.setFlySpeed(value);
-		this.setValue(PlayerPaths.FLYSPEED.getPath(), speed);
+		setValue(PlayerPaths.FLYSPEED.getPath(), speed);
 	}
 
 	@Override
 	public void setWalkingSpeed(double speed) {
+		if (!exists()) {
+			createConfig();
+		}
 		double a = 0;
 		a += ((19 * speed) - Math.pow(speed, 2)) / 90;
 		if (a > 1) {
@@ -343,203 +341,178 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		System.out.println(a);
 		float value = Float.parseFloat(Double.toString(a));
 		player.setWalkSpeed(value);
-		this.setValue(PlayerPaths.WALKSPEED.getPath(), speed);
+		setValue(PlayerPaths.WALKSPEED.getPath(), speed);
 	}
 
 	@Override
 	public void setOp() {
-		if (!file.exists()) {
-			this.createConfig();
-		} else {
+		if (!exists()) {
+			createConfig();
+		}
+		if (!isOp()) {
 			player.setOp(true);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OPPED.getPath(), true);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void setDeopped() {
-		if (!file.exists()) {
-			this.createConfig();
-		} else {
-			player.setOp(false);
-			YamlConfiguration.loadConfiguration(file).set(PlayerPaths.OPPED.getPath(), false);
-			try {
-				YamlConfiguration.loadConfiguration(file).save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void setOpAuto() {
-		if (!file.exists()) {
-			this.createConfig();
-		}
-		if (player.isOp() && isOp() == false) {
-			setDeopped();
+			setValue(PlayerPaths.OPPED.getPath(), true);
 			return;
 		}
-		if (!player.isOp() && isOp() == true) {
-			setOp();
-			return;
-		}
-		return;
+		player.setOp(false);
+		setValue(PlayerPaths.OPPED.getPath(), false);
 	}
 
 	@Override
 	public boolean isMuted() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.MUTED.getPath());
+		return (boolean) getValue(PlayerPaths.MUTED.getPath());
 	}
 
 	@Override
 	public boolean isSpying() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.SOCIALSPY.getPath());
+		return (boolean) getValue(PlayerPaths.SOCIALSPY.getPath());
 	}
 
 	@Override
 	public boolean isGod() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.GOD.getPath());
+		return (boolean) getValue(PlayerPaths.GOD.getPath());
 	}
 
 	@Override
 	public boolean isMessageable() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.MESSAGEABLE.getPath());
+		return (boolean) getValue(PlayerPaths.MESSAGEABLE.getPath());
 	}
 
 	@Override
 	public boolean isAfk() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.AFK.getPath());
+		return (boolean) getValue(PlayerPaths.AFK.getPath());
 	}
 
 	@Override
 	public boolean isTpToggled() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.TPTOGGLED.getPath());
-	}
-
-	@Override
-	public String getGroup() {
-		if (!file.exists()) {
-			this.createConfig();
-		}
-		return this.getValue().getString(PlayerPaths.RANK.getPath());
-	}
-
-	@Override
-	public String getNick() {
-		if (!file.exists()) {
-			this.createConfig();
-		}
-		return this.getValue().getString(PlayerPaths.DISPLAYNAME.getPath());
+		return (boolean) getValue(PlayerPaths.TPTOGGLED.getPath());
 	}
 
 	@Override
 	public boolean isFlying() {
-		// TODO Auto-generated method stub
+		if (!exists()) {
+			createConfig();
+		}
+		if (player.isFlying() || player.getAllowFlight()) {
+			return true;
+		}
 		return false;
+	}
+
+	@Override
+	public String getGroup() {
+		if (!exists()) {
+			createConfig();
+		}
+		return (String) getValue(PlayerPaths.RANK.getPath());
+	}
+
+	@Override
+	public String getNick() {
+		if (!exists()) {
+			createConfig();
+		}
+		return (String) getValue(PlayerPaths.DISPLAYNAME.getPath());
 	}
 
 	@Override
 	public String getGamemode() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getString(PlayerPaths.GAMEMODE.getPath());
+		return (String) getValue(PlayerPaths.GAMEMODE.getPath());
 	}
 
 	@Override
 	public int getFlySpeed() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getInt(PlayerPaths.FLYSPEED.getPath());
+		return (int) getValue(PlayerPaths.FLYSPEED.getPath());
 	}
 
 	@Override
 	public int getWalkingSpeed() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getInt(PlayerPaths.WALKSPEED.getPath());
+		return (int) getValue(PlayerPaths.WALKSPEED.getPath());
 	}
 
 	@Override
 	public boolean isOp() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.OPPED.getPath());
+		return (boolean) getValue(PlayerPaths.OPPED.getPath());
 	}
 
 	@Override
 	public Location getLocations() {
-		return new Location();
+		return new Location(player);
 	}
 
 	@Override
 	public boolean isBubbleMode() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists()) {
+			createConfig();
+		}
+		return (boolean) getValue(PlayerPaths.IS_BUBBLED.getPath());
 	}
 
 	@Override
 	public void setBubbleMode() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setBubbleAuto() {
-		// TODO Auto-generated method stub
-
+		if (!exists()) {
+			createConfig();
+		}
+		if (!isBubbleMode()) {
+			setValue(PlayerPaths.IS_BUBBLED.getPath(), true);
+			return;
+		}
+		setValue(PlayerPaths.IS_BUBBLED.getPath(), false);
 	}
 
 	@Override
 	public boolean isHidden() {
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		return this.getValue().getBoolean(PlayerPaths.HIDDEN.getPath());
+		return (boolean) getValue(PlayerPaths.HIDDEN.getPath());
 	}
 
 	@Override
 	public void setHidden() {
 		PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 100000000, 1, false, false);
-		if (!file.exists()) {
-			this.createConfig();
+		if (!exists()) {
+			createConfig();
 		}
-		if (isHidden()) {
-			this.setValue(PlayerPaths.HIDDEN.getPath(), false);
-			player.showPlayer(player);
-			player.removePotionEffect(PotionEffectType.INVISIBILITY);
+		if (!isHidden()) {
+			setValue(PlayerPaths.HIDDEN.getPath(), true);
+			player.hidePlayer(player);
+			player.addPotionEffect(effect);
 			return;
 		}
-		this.setValue(PlayerPaths.HIDDEN.getPath(), true);
-		player.hidePlayer(player);
-		player.addPotionEffect(effect);
+		setValue(PlayerPaths.HIDDEN.getPath(), true);
+		player.showPlayer(player);
+		player.removePotionEffect(PotionEffectType.INVISIBILITY);
 		return;
 	}
 }

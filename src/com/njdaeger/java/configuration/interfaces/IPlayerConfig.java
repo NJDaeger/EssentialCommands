@@ -1,7 +1,5 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import com.njdaeger.java.configuration.Location;
 
 /**
@@ -11,21 +9,6 @@ import com.njdaeger.java.configuration.Location;
  *
  */
 public interface IPlayerConfig {
-
-	/**
-	 * Allows easy change of the player config file.
-	 * 
-	 * @param path Path of the value wanting to be changed
-	 * @param value Value to set that path to.
-	 */
-	void setValue(String path, Object value);
-
-	/**
-	 * Checks if a config exists
-	 * 
-	 * @return
-	 */
-	YamlConfiguration getValue();
 
 	/**
 	 * Creates a new player configuration
@@ -116,21 +99,6 @@ public interface IPlayerConfig {
 	 * Set the player to operator.
 	 */
 	void setOp();
-
-	/**
-	 * deop the selected player.
-	 */
-	void setDeopped();
-
-	/**
-	 * Automatically sets the player opped or not.
-	 */
-	void setOpAuto();
-
-	/**
-	 * Updates the player nickname. This is mainly used for startup.
-	 */
-	void setNickAuto();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,8 +229,4 @@ public interface IPlayerConfig {
 	 */
 	void setBubbleMode();
 
-	/**
-	 * Sets the player in bubble mode according to the players configuration.
-	 */
-	void setBubbleAuto();
 }

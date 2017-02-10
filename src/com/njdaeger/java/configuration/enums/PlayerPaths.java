@@ -7,8 +7,11 @@ import java.util.UUID;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
+
 public enum PlayerPaths {
 
+	CFG_VERSION("conf-version", Core.getInstance().getDescription().getVersion()),
 	PLAYERNAME("playername", null),
 	DISPLAYNAME("displayname", null),
 	AFK("afk", false),
@@ -40,27 +43,27 @@ public enum PlayerPaths {
 	LOGOUT_YAW("logoutlocation.yaw", null),
 	LOGOUT_PITCH("logoutlocation.world", null),
 	IS_BUBBLED("bubbled", false);
-	
+
 	public String path;
 	public Object value;
-	
+
 	PlayerPaths(String path, Object value) {
 		this.path = path;
 		this.value = value;
 	}
-	
+
 	public Object defValue() {
 		return this.value;
 	}
-	
+
 	public String getPath() {
 		return this.path;
 	}
-	
+
 	public static void checkExist(Player player) {
 		UUID userID = player.getUniqueId();
-		File dir = new File(
-				"plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator + userID);
+		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ userID);
 		File dir1 = new File(dir + File.separator + "user.yml");
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -84,7 +87,5 @@ public enum PlayerPaths {
 			}
 		}
 	}
-
-	
 
 }

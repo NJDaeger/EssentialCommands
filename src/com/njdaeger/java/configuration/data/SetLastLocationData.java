@@ -1,45 +1,49 @@
 package com.njdaeger.java.configuration.data;
 
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import org.bukkit.entity.Player;
+
+import com.njdaeger.java.configuration.Location;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 
-public class SetLastLocationData extends PlayerConfig implements ISetValues {
+public class SetLastLocationData extends Location implements ISetValues {
+
+	private PlayerConfigData config;
+
+	public SetLastLocationData(Player player) {
+		super(player);
+		config = new PlayerConfigData(player);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void setX(double value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_X.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_X.getPath(), value);
 	}
 
 	@Override
 	public void setY(double value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_Y.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_Y.getPath(), value);
 	}
 
 	@Override
 	public void setZ(double value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_Z.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_Z.getPath(), value);
 	}
 
 	@Override
 	public void setYaw(float value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_YAW.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_YAW.getPath(), value);
 	}
 
 	@Override
 	public void setPitch(float value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_PITCH.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_PITCH.getPath(), value);
 	}
 
 	@Override
 	public void setWorld(String value) {
-		getConfig(player).getValue().set(PlayerPaths.LAST_WORLD.getPath(), value);
-		return;
+		config.setValue(PlayerPaths.LAST_WORLD.getPath(), value);
 	}
 
 }

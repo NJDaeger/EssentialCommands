@@ -125,8 +125,8 @@ public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues
 	public boolean exists() {
 		if (!file.exists()) {
 			return false;
-		} else
-			return true;
+		}
+		return true;
 	}
 
 	@Override

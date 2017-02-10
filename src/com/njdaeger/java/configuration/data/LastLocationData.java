@@ -1,39 +1,48 @@
 package com.njdaeger.java.configuration.data;
 
+import org.bukkit.entity.Player;
+
+import com.njdaeger.java.configuration.Location;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.IValues;
 
-public class LastLocationData extends PlayerConfig implements IValues {
+public class LastLocationData extends Location implements IValues {
+
+	private Player player;
+
+	public LastLocationData(Player player) {
+		super(player);
+	}
 
 	@Override
 	public double getX() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_X.getPath());
+		return (double) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_X.getPath());
 	}
 
 	@Override
 	public double getY() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_Y.getPath());
+		return (double) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_X.getPath());
 	}
 
 	@Override
 	public double getZ() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_Z.getPath());
+		return (double) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_Z.getPath());
 	}
 
 	@Override
 	public int getYaw() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_YAW.getPath());
+		return (int) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_YAW.getPath());
 	}
 
 	@Override
 	public int getPitch() {
-		return PlayerConfig.getConfig(player).getValue().getInt(PlayerPaths.LAST_PITCH.getPath());
+		return (int) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_PITCH.getPath());
 	}
 
 	@Override
 	public String getWorld() {
-		return PlayerConfig.getConfig(player).getValue().getString(PlayerPaths.LAST_WORLD.getPath());
+		return (String) PlayerConfig.getConfig(player).getValue(PlayerPaths.LAST_WORLD.getPath());
 	}
 
 }
