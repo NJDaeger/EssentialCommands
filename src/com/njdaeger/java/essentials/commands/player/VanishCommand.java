@@ -27,11 +27,11 @@ public class VanishCommand extends EssCommand {
 	@Override
 	public boolean run(Sender sndr, String commandLabel, String[] args) {
 		if (args.length == 0) {
-			if (!(sndr instanceof Player)) {
+			if (!sndr.isPlayer()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			PlayerConfigData config = PlayerConfig.getConfig((Player) sndr);
+			PlayerConfigData config = PlayerConfig.getConfig(sndr.asPlayer());
 			config.setHidden();
 			if (config.isHidden()) {
 				sndr.sendMessage(ChatColor.GRAY + "You are now hidden.");
@@ -57,7 +57,7 @@ public class VanishCommand extends EssCommand {
 			target.sendMessage(ChatColor.GRAY + "You are no longer hidden.");
 			return true;
 		}
-		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
+		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
 				Permission.ESS_VANISH_OTHER));
 		return true;
 	}

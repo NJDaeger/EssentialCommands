@@ -35,11 +35,13 @@ public class InfoSidebarCommand extends EssCommand {
 				InfoBoard.removeFor(sndr.asPlayer());
 				sndr.sendMessage(ChatColor.GRAY + "Infobar is no longer active.");
 				return true;
+			} else {
+				Groups.infobar.add(sndr.asPlayer());
+				InfoBoard.createFor(sndr.asPlayer());
+				sndr.sendMessage(ChatColor.GRAY + "Infobar is now active.");
+				return true;
 			}
-			Groups.infobar.add(sndr.asPlayer());
-			InfoBoard.createFor(sndr.asPlayer());
-			sndr.sendMessage(ChatColor.GRAY + "Infobar is now active.");
-			return true;
+
 		}
 		if (Holder.hasPermission(sndr, Permission.ESS_INFOBAR_OTHER)) {
 			Player target = Bukkit.getPlayer(args[0]);
@@ -54,11 +56,13 @@ public class InfoSidebarCommand extends EssCommand {
 						+ "'s infobar is no longer active.");
 				target.sendMessage(ChatColor.GRAY + "Infobar is no longer active.");
 				return true;
+			} else {
+				InfoBoard.createFor(target);
+				Groups.infobar.add(target);
+				sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + "'s infobar now active.");
+				target.sendMessage(ChatColor.GRAY + "Infobar is now active.");
 			}
-			InfoBoard.createFor(target);
-			Groups.infobar.add(target);
-			sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + "'s infobar now active.");
-			target.sendMessage(ChatColor.GRAY + "Infobar is now active.");
+
 		}
 		return true;
 	}

@@ -155,6 +155,10 @@ public class GiveCommand extends EssCommand {
 			sender.sendMessage(Error.UNKNOWN_ITEM.sendError());
 		}
 		ItemStack stack = new ItemStack(Material.getMaterial(mat), amount);
+		if (stack.equals(null)) {
+			sender.sendMessage(Error.UNKNOWN_ITEM.sendError());
+			return;
+		}
 		player.getInventory().addItem(stack);
 		sender.sendMessage(ChatColor.GREEN + player.getName() + ChatColor.GRAY + " now has " + ChatColor.GREEN + amount
 				+ ChatColor.GRAY + " items of " + ChatColor.GREEN + Material.getMaterial(mat).name().toLowerCase());

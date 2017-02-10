@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.configuration.Location;
@@ -234,6 +236,7 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 		}
 		if (nickname.equals(player.getName())) {
 			this.setValue(PlayerPaths.DISPLAYNAME.getPath(), null);
+			player.setDisplayName(player.getName());
 			return;
 		}
 		this.setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname + "&r");
@@ -524,16 +527,19 @@ public class PlayerConfigData extends PlayerConfig implements IPlayerConfig {
 
 	@Override
 	public void setHidden() {
+		PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 100000000, 1, false, false);
 		if (!file.exists()) {
 			this.createConfig();
 		}
 		if (isHidden()) {
 			this.setValue(PlayerPaths.HIDDEN.getPath(), false);
 			player.showPlayer(player);
+			player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			return;
 		}
 		this.setValue(PlayerPaths.HIDDEN.getPath(), true);
 		player.hidePlayer(player);
+		player.addPotionEffect(effect);
 		return;
 	}
 }

@@ -32,13 +32,14 @@ public class NickCommand extends EssCommand {
 		if (args.length == 1) {
 			if (sndr.isPlayer()) {
 				if (sndr.asPlayer().getDisplayName() == sndr.getName()) {
+
 				}
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
 					PlayerConfig.getConfig(sndr.asPlayer()).setNick(sndr.getName());
 					sndr.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
 					return true;
 				}
-				PlayerConfig.getConfig((Player) sndr).setNick(args[0]);
+				PlayerConfig.getConfig(sndr.asPlayer()).setNick(args[0]);
 				sndr.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY
 						+ "\".");
 				return true;
@@ -48,7 +49,7 @@ public class NickCommand extends EssCommand {
 			}
 		}
 		if (sndr.isPlayer()) {
-			if (Holder.hasPermission(sndr.asPlayer(), Permission.ESS_NICK_OTHER)) {
+			if (Holder.hasPermission(sndr, Permission.ESS_NICK_OTHER)) {
 			} else {
 				sndr.sendMessage(Error.NO_PERMISSION.sendError());
 				return true;
@@ -62,8 +63,7 @@ public class NickCommand extends EssCommand {
 		if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
 			PlayerConfig.getConfig(target).setNick(target.getName());
 			target.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
-			sndr.sendMessage(ChatColor.GRAY + "You removed " + target.getDisplayName() + ChatColor.GRAY
-					+ "'s nickname.");
+			sndr.sendMessage(ChatColor.GRAY + "You removed " + target.getName() + ChatColor.GRAY + "'s nickname.");
 			return true;
 		}
 		PlayerConfig.getConfig(target).setNick(args[0]);
