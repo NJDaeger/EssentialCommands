@@ -25,6 +25,13 @@ public class Sender implements CommandSender {
 		return false;
 	}
 
+	public Player asPlayer() {
+		if (isPlayer()) {
+			return (Player) sender;
+		}
+		return null;
+	}
+
 	@Override
 	public PermissionAttachment addAttachment(Plugin plugin) {
 		return sender.addAttachment(plugin);

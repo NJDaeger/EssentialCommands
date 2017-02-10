@@ -96,7 +96,10 @@ public enum Permission {
 	ESS_FOOD_OTHER("essentials.feed.other"),
 	ESS_MORE("essentials.more"),
 	ESS_PTIME("essentials.time.ptime"),
-	ESS_PTIME_OTHER("essentials.time.ptime.other");
+	ESS_PTIME_OTHER("essentials.time.ptime.other"),
+	ESS_WHOIS("essentials.whois"),
+	ESS_PWEATHER("essentials.weather.pweather"),
+	ESS_PWEATHER_OTHER("essentials.weather.pweather.other");
 
 	public final String permission;
 

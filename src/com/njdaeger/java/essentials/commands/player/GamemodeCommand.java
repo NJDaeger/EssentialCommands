@@ -30,8 +30,8 @@ public class GamemodeCommand extends EssCommand {
 			return true;
 		}
 		if (args.length == 1) {
-			if (sndr instanceof Player) {
-				Player player = (Player) sndr;
+			if (sndr.isPlayer()) {
+				Player player = sndr.asPlayer();
 				PlayerConfig.getConfig(player).setGamemode(args[0]);
 				player.sendMessage(ChatColor.GRAY + "Your gamemode is now set to " + ChatColor.GREEN + Mode
 						.getAliasUsed(args[0]).toString().toLowerCase());

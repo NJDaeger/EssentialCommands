@@ -28,6 +28,7 @@ import com.njdaeger.java.essentials.commands.player.NickCommand;
 import com.njdaeger.java.essentials.commands.player.PtimeCommand;
 import com.njdaeger.java.essentials.commands.player.SpeedCommand;
 import com.njdaeger.java.essentials.commands.player.VanishCommand;
+import com.njdaeger.java.essentials.commands.player.WhoisCommand;
 import com.njdaeger.java.essentials.commands.punish.BanCommand;
 import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
 import com.njdaeger.java.essentials.commands.punish.KickallCommand;
@@ -64,7 +65,7 @@ public class CommandCore extends Plugin {
 		//addCommand(new RepairCommand());
 		addCommand(new SpeedCommand());
 		addCommand(new VanishCommand());
-		//addCommand(new WhoisCommand());
+		addCommand(new WhoisCommand());
 		//addCommand(new WorkbenchCommand());
 		addCommand(new FoodCommand());
 		addCommand(new BanCommand());

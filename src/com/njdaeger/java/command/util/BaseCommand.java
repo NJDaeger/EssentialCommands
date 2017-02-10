@@ -26,10 +26,18 @@ public class BaseCommand extends PluginsCommand {
 			e.printStackTrace();
 		}
 		this.cmd = cmmd;
-		command = this.method.getAnnotation(Cmd.class);
-		this.description = command.desc();
-		this.usageMessage = command.usage();
-		this.setAliases(Arrays.asList(command.aliases()));
+		if (method.getAnnotation(Cmd.class) != null) {
+			command = this.method.getAnnotation(Cmd.class);
+			this.description = command.desc();
+			this.usageMessage = command.usage();
+			this.setAliases(Arrays.asList(command.aliases()));
+			return;
+		}
+		try {
+			throw new CmdAnnotationMissing(cmmd.getClass());
+		} catch (CmdAnnotationMissing e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean canceled(CommandSender sndr, String[] args) {
