@@ -1,9 +1,12 @@
-package com.njdaeger.java;
+package com.njdaeger.java.tasks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.njdaeger.java.Groups;
+import com.njdaeger.java.InfoBoard;
 
 public class InfoTask extends BukkitRunnable {
 

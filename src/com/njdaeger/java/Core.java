@@ -12,6 +12,7 @@ import com.njdaeger.java.essentials.listeners.CoreListener;
 import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
 import com.njdaeger.java.essentials.listeners.PlayerLeaveListener;
 import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.tasks.InfoTask;
 
 public class Core extends JavaPlugin {
 

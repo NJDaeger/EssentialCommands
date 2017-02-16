@@ -42,7 +42,8 @@ public enum PlayerPaths {
 	LOGOUT_Z("logoutlocation.z", null),
 	LOGOUT_YAW("logoutlocation.yaw", null),
 	LOGOUT_PITCH("logoutlocation.world", null),
-	IS_BUBBLED("bubbled", false);
+	IS_BUBBLED("bubbled", false),
+	LASTMOVE("lastmove", null);
 
 	public String path;
 	public Object value;
