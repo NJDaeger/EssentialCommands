@@ -1,6 +1,7 @@
 package com.njdaeger.java.command.util;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import com.njdaeger.java.wrapper.Sender;
 
@@ -31,6 +32,11 @@ public class EssCommand implements IEssCommand {
 	@Override
 	public boolean run(Sender sender, String label, String[] args) {
 		return false;
+	}
+
+	@Override
+	public List<String> tabComplete(Sender sender, String alias, String[] args) throws IllegalArgumentException {
+		return null;
 	}
 
 	@Override

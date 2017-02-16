@@ -2,9 +2,10 @@ package com.njdaeger.java.command.util;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.PluginsCommand;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -12,11 +13,12 @@ import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.wrapper.Sender;
 
-public class BaseCommand extends PluginsCommand {
+public class BaseCommand extends Command {
 
 	EssCommand cmd;
 	Method method;
 	Cmd command;
+	Sender sndr;
 
 	public BaseCommand(EssCommand cmmd) {
 		super(cmmd.getName());
@@ -41,6 +43,7 @@ public class BaseCommand extends PluginsCommand {
 	}
 
 	public boolean canceled(CommandSender sndr, String[] args) {
+		this.sndr = new Sender(sndr);
 		if (command.executor() == Executor.PLAYER) {
 			if (!(sndr instanceof Player)) {
 				sndr.sendMessage(Error.PLAYER_ONLY.sendError());
@@ -73,7 +76,11 @@ public class BaseCommand extends PluginsCommand {
 		if (canceled(sender, args)) {
 			return true;
 		}
-		Sender sndr = new Sender(sender);
 		return cmd.run(sndr, label, args);
+	}
+
+	@Override
+	public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+		return cmd.tabComplete(sndr, alias, args);
 	}
 }

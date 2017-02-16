@@ -1,5 +1,7 @@
 package com.njdaeger.java.command.util;
 
+import java.util.List;
+
 import com.njdaeger.java.wrapper.Sender;
 
 public interface IEssCommand {
@@ -13,6 +15,16 @@ public interface IEssCommand {
 	 * @return True if command not successful, false otherwise.
 	 */
 	boolean run(Sender sender, String commandLabel, String[] args);
+
+	/**
+	 * Tab completer.
+	 * 
+	 * @param sender The sender of the command.
+	 * @param alias The alias used to execute the command.
+	 * @param args The command arguments.
+	 * @throws IllegalArgumentException
+	 */
+	List<String> tabComplete(Sender sender, String alias, String[] args) throws IllegalArgumentException;
 
 	/**
 	 * Returns the name of the command. The name is gotten from the @Cmd
