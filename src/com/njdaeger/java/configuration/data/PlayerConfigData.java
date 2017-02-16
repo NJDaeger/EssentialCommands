@@ -15,6 +15,8 @@ import com.njdaeger.java.Groups;
 import com.njdaeger.java.configuration.Location;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
+import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IBasePlayerConf;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand.Mode;
@@ -26,12 +28,11 @@ public class PlayerConfigData implements IPlayerConfig, IBasePlayerConf {
 	//Player object
 	private Player player;
 	//The player file path.
-	private File path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
-			+ File.separator + player.getUniqueId());
+	private File path;
 	//The main configuration file of the player.
-	private File file = new File(path + File.separator + "user.yml");
+	private File file;
 	//The YAML file the players configuration is in.
-	private YamlConfiguration yamlfile = YamlConfiguration.loadConfiguration(file);
+	private YamlConfiguration yamlfile;
 
 	/**
 	 * Gets an online player's configuration files.
@@ -40,6 +41,10 @@ public class PlayerConfigData implements IPlayerConfig, IBasePlayerConf {
 	 */
 	public PlayerConfigData(Player player) {
 		this.player = player;
+		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
+				+ File.separator + this.player.getUniqueId());
+		this.file = new File(path + File.separator + "user.yml");
+		this.yamlfile = YamlConfiguration.loadConfiguration(file);
 	}
 
 	/**
@@ -51,12 +56,29 @@ public class PlayerConfigData implements IPlayerConfig, IBasePlayerConf {
 	public PlayerConfigData(String offlinePlayer) {
 		if (Database.getDatabase("playerdata").getBase() == null) {
 			Database.getDatabase("playerdata").create();
-			UUID id = UUID.fromString(Database.getDatabase("playerdata").getEntry(offlinePlayer));
-			this.player = (Player) Bukkit.getOfflinePlayer(id);
-			return;
+			try {
+				throw new DatabaseNotFound();
+			} catch (DatabaseNotFound e) {
+				e.printStackTrace();
+			}
 		}
 		UUID id = UUID.fromString(Database.getDatabase("playerdata").getEntry(offlinePlayer));
+		if (id == null) {
+			try {
+				throw new DatabaseEntryMissing();
+			} catch (DatabaseEntryMissing e) {
+				e.printStackTrace();
+			}
+		}
 		this.player = (Player) Bukkit.getOfflinePlayer(id);
+		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
+				+ File.separator + this.player.getUniqueId());
+		this.file = new File(path + File.separator + "user.yml");
+		this.yamlfile = YamlConfiguration.loadConfiguration(file);
+	}
+
+	public PlayerConfigData() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

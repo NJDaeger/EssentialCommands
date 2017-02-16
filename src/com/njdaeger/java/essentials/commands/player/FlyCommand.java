@@ -7,6 +7,8 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
+import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
@@ -25,14 +27,13 @@ public class FlyCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (sndr.isPlayer()) {
-				if (sndr.asPlayer().isFlying()) {
-					sndr.asPlayer().setFlying(false);
-					sndr.asPlayer().setAllowFlight(false);
+				PlayerConfigData config = PlayerConfig.getConfig(sndr.asPlayer());
+				if (config.isFlying()) {
+					config.setFlying();
 					sndr.sendMessage(ChatColor.GRAY + "You are no longer flying.");
 					return true;
 				}
-				sndr.asPlayer().setAllowFlight(true);
-				sndr.asPlayer().setFlying(true);
+				config.setFlying();
 				sndr.sendMessage(ChatColor.GRAY + "You are now flying.");
 				return true;
 			}
@@ -45,15 +46,14 @@ public class FlyCommand extends EssCommand {
 				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return true;
 			}
-			if (target.isFlying()) {
-				target.setFlying(false);
-				target.setAllowFlight(false);
+			PlayerConfigData config = PlayerConfig.getConfig(target);
+			if (config.isFlying()) {
+				config.setFlying();
 				target.sendMessage(ChatColor.GRAY + "You are no longer flying.");
 				sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is no longer flying.");
 				return true;
 			}
-			target.setAllowFlight(true);
-			target.setFlying(true);
+			config.setFlying();
 			target.sendMessage(ChatColor.GRAY + "You are now flying.");
 			sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is now flying.");
 			return true;
