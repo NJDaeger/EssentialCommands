@@ -8,9 +8,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
+import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.data.DatabaseData;
+import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.essentials.utils.BanAPI;
 
 public class PlayerJoinListener implements Listener {
@@ -28,6 +30,9 @@ public class PlayerJoinListener implements Listener {
 				new BanAPI().unban(e.getPlayer().getName());
 			}
 		}
+		new Transform(e.getPlayer());
+		System.out.println(Transform.getValue(e.getPlayer(), PlayerPaths.RANK));
+		PlayerConfig.getConfig(e.getPlayer()).getGroup();
 		return;
 		/*
 		 * if (PlayerConfig.getPlayerFile(e.getPlayer()) == null) {
