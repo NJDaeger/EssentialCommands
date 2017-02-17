@@ -3,21 +3,13 @@ package com.njdaeger.java.configuration.interfaces;
 import java.io.File;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 /**
- * Interface related to any player based configuration. Contains the basic
- * methods needed in order for a player configuration to work correctly.
+ * Interface related to any YAML based configuration. Contains the basic methods
+ * needed in order for a configuration to work correctly.
  *
  */
-public interface IBasePlayerConf {
-
-	/**
-	 * Gets the player the configuration is currently referencing to.
-	 * 
-	 * @return Player the configuration is pointing to.
-	 */
-	Player getPlayer();
+public interface IBaseConf {
 
 	/**
 	 * Gets the raw YAML file from the player configuration.

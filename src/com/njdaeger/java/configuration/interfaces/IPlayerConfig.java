@@ -1,5 +1,7 @@
 package com.njdaeger.java.configuration.interfaces;
 
+import org.bukkit.entity.Player;
+
 import com.njdaeger.java.configuration.Location;
 
 /**
@@ -228,5 +230,12 @@ public interface IPlayerConfig {
 	 * Sets the player in bubble mode if he isn't, and vice versa.
 	 */
 	void setBubbleMode();
+
+	/**
+	 * Gets the player the configuration is currently referencing to.
+	 * 
+	 * @return Player the configuration is pointing to.
+	 */
+	Player getPlayer();
 
 }

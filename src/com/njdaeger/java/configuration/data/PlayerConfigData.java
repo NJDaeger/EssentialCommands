@@ -17,13 +17,13 @@ import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
-import com.njdaeger.java.configuration.interfaces.IBasePlayerConf;
+import com.njdaeger.java.configuration.interfaces.IBaseConf;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand.Mode;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class PlayerConfigData implements IPlayerConfig, IBasePlayerConf {
+public class PlayerConfigData implements IPlayerConfig, IBaseConf {
 
 	//Player object
 	private Player player;

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -38,7 +37,7 @@ public class Messenger {
 			}
 			conversation.put(sndr.getName(), player.getName());
 			conversation.put(player.getName(), sndr.getName());
-			new Message(sndr, true, message);
+			new Message(sndr, player, true, message);
 			return;
 		}
 		Player player = Bukkit.getPlayer(target);
@@ -73,21 +72,18 @@ public class Messenger {
 			return;
 		}
 		if (!(sender instanceof Player)) {
-			if (sender instanceof ConsoleCommandSender) {
-				Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
-				conversation.put(sender.getName(), conversation.get(sender.getName()));
-				if (player == null) {
-					if (conversation.get(sender.getName()).equalsIgnoreCase("CONSOLE")) {
-						new Message(sender, true, message);
-						return;
-					}
-					sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
+			Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
+			conversation.put(sender.getName(), conversation.get(sender.getName()));
+			conversation.put(conversation.get(sender.getName()), sender.getName());
+			if (player == null) {
+				if (conversation.get(sender.getName()).equalsIgnoreCase("CONSOLE")) {
+					new Message(sender, true, message);
 					return;
 				}
-				new Message(sender, player, true, message);
+				sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
 				return;
 			}
-			sender.sendMessage(Error.INVALID_COMMAND_SENDER.sendError());
+			new Message(sender, player, true, message);
 			return;
 		}
 		Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
@@ -96,6 +92,7 @@ public class Messenger {
 			a = true;
 		}
 		conversation.put(sender.getName(), conversation.get(sender.getName()));
+		conversation.put(conversation.get(sender.getName()), sender.getName());
 		if (player == null) {
 			if (conversation.get(sender.getName()).equalsIgnoreCase("CONSOLE")) {
 				if (Holder.hasPermission(sender, Permission.ESS_MESSAGE_CONSOLE)) {

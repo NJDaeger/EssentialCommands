@@ -21,6 +21,20 @@ public interface IConfig {
 	void setConfigType(ConfigType type);
 
 	/**
+	 * Checks whether to load the player configuration files into memory or not.
+	 * 
+	 * @return True if it loads them in memory, false otherwise.
+	 */
+	boolean loadInMemory();
+
+	/**
+	 * Sets memory configuration loading to enabled or disabled.
+	 * 
+	 * @param value True means enabled, false disables it.
+	 */
+	void setLoadInMemory(boolean value);
+
+	/**
 	 * Checks if NJPerms is enabled.
 	 * 
 	 * @return True if enabled, false otherwise.
