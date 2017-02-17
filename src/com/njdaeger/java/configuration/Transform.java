@@ -7,12 +7,15 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
+import com.njdaeger.java.configuration.exceptions.PlayerNotInMemory;
 
 public class Transform {
 
-	private static Player player;
+	//The player's YAML configuration to get the default values from.
 	private static PlayerConfigData conf;
+	//The memory configuration.
 	private static HashMap<Player, HashMap<PlayerPaths, Object>> memconf = new HashMap<>();
+	//The keys from the YAML configuration as a hashmap.
 	private static HashMap<PlayerPaths, Object> values = new HashMap<>();
 
 	/**
@@ -21,24 +24,20 @@ public class Transform {
 	 * @param player
 	 */
 	public Transform(Player player) {
-		Transform.player = player;
 		Transform.conf = PlayerConfig.getConfig(player);
 		for (PlayerPaths paths : PlayerPaths.values()) {
-			values.put(paths, getConfig().getValue(paths.getPath()));
-			System.out.println(values.get(paths));
+			values.put(paths, conf.getValue(paths.getPath()));
 			memconf.put(player, values);
 		}
 
 	}
 
-	public static Player getPlayer() {
-		return player;
-	}
-
-	public static PlayerConfigData getConfig() {
-		return conf;
-	}
-
+	/**
+	 * Checks if the players configuration is loaded in memory.
+	 * 
+	 * @param player Player to check.
+	 * @return True if its in memory, false otherwise.
+	 */
 	public static boolean isLoaded(Player player) {
 		if (memconf.get(player) == null) {
 			return false;
@@ -46,8 +45,81 @@ public class Transform {
 		return true;
 	}
 
+	/**
+	 * Unloads a players configuration from memory.
+	 * 
+	 * @param player Player to take out of memory.
+	 */
+	public static void unload(Player player) {
+		if (isLoaded(player)) {
+			for (PlayerPaths paths : PlayerPaths.values()) {
+				conf.setValue(paths.getPath(), memconf.get(player).get(paths));
+			}
+			memconf.clear();
+			return;
+		}
+		try {
+			throw new PlayerNotInMemory();
+		} catch (PlayerNotInMemory e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Reloads the players memory configuration and syncs it with the YAML
+	 * configuration.
+	 * 
+	 * @param player Player whos configuration to reload.
+	 */
+	public static void reload(Player player) {
+		if (isLoaded(player)) {
+			unload(player);
+			new Transform(player);
+			return;
+		}
+		try {
+			throw new PlayerNotInMemory();
+		} catch (PlayerNotInMemory e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Gets the value from a players memory configuration.
+	 * 
+	 * @param player Player to get the value from.
+	 * @param path Path to get the value from.
+	 * @return The object value of the path.
+	 */
 	public static Object getValue(Player player, PlayerPaths path) {
-		return memconf.get(player).get(path);
+		if (isLoaded(player)) {
+			return memconf.get(player).get(path);
+		}
+		try {
+			throw new PlayerNotInMemory();
+		} catch (PlayerNotInMemory e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Set the value of the memory configuration for a player.
+	 * 
+	 * @param player Player to set the value to.
+	 * @param path Path in the config.
+	 * @param value The new value of the path.
+	 */
+	public static void setValue(Player player, PlayerPaths path, Object value) {
+		if (isLoaded(player)) {
+			memconf.get(player).put(path, value);
+		}
+		try {
+			throw new PlayerNotInMemory();
+		} catch (PlayerNotInMemory e) {
+			e.printStackTrace();
+		}
 	}
 
 }
