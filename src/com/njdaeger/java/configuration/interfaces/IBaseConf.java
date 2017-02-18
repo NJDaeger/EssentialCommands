@@ -55,4 +55,16 @@ public interface IBaseConf {
 	 */
 	File getFile();
 
+	/**
+	 * Create a new configuration file.
+	 * 
+	 * @return
+	 */
+	IBaseConf createConfig();
+
+	/**
+	 * Delete an existing configuration file.
+	 */
+	void deleteConfig();
+
 }

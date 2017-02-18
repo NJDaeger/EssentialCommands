@@ -19,11 +19,12 @@ import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IBaseConf;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
+import com.njdaeger.java.configuration.interfaces.Resettable;
 import com.njdaeger.java.essentials.commands.player.GamemodeCommand.Mode;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class PlayerConfigData implements IPlayerConfig, IBaseConf {
+public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 
 	//Player object
 	private Player player;
@@ -77,10 +78,6 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf {
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);
 	}
 
-	public PlayerConfigData() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public Player getPlayer() {
 		return player;
@@ -131,7 +128,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf {
 	}
 
 	@Override
-	public void createConfig() {
+	public PlayerConfigData createConfig() {
 		if (!getPath().exists()) {
 			getPath().mkdirs();
 			try {
@@ -141,7 +138,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return;
+			return this;
 		}
 		if (!getFile().exists()) {
 			try {
@@ -152,7 +149,22 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf {
 				e.printStackTrace();
 			}
 		}
-		return;
+		return this;
+	}
+
+	@Override
+	public void deleteConfig() {
+		String name = getFile().getName();
+		getFile().delete();
+		System.out.println("Deleted " + name);
+	}
+
+	@Override
+	public PlayerConfigData resetConfog() {
+		for (PlayerPaths path : PlayerPaths.values()) {
+			setValue(path.getPath(), path.defValue());
+		}
+		return this;
 	}
 
 	@Override

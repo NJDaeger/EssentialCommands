@@ -3,10 +3,8 @@ package com.njdaeger.java;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.njdaeger.api.json.JsonAPI;
-import com.njdaeger.api.json.data.JsonHandler;
 import com.njdaeger.java.chat.MessageFile;
-import com.njdaeger.java.configuration.controllers.Config;
+import com.njdaeger.java.configuration.data.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.listeners.CoreListener;
 import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
@@ -17,6 +15,7 @@ import com.njdaeger.java.tasks.InfoTask;
 public class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
+	private static Config CFGINSTANCE;
 
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
@@ -25,19 +24,19 @@ public class Core extends JavaPlugin {
 	}
 
 	public void enableSubplugins() {
-		if (Config.getConfig().isAnnotationsEnabled() == true) {
+		if (getConf().isAnnotationsEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
 		}
-		if (Config.getConfig().isCodesEnabled() == true) {
+		if (getConf().isCodesEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] Codes is now Enabled.");
 		}
-		if (Config.getConfig().isLoginclearanceEnabled() == true) {
+		if (getConf().isLoginClearanceEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] LoginClearance is now Enabled.");
 		}
-		if (Config.getConfig().isNJPermsEnabled() == true) {
+		if (getConf().isNJPermsEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] NJPerms is now Enabled.");
 		}
-		if (Config.getConfig().isServerprotectEnabled() == true) {
+		if (getConf().isServerProtectEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] ServerProtect is now Enabled.");
 		} else
 			Bukkit.getLogger().info("No sub-plugins have been enabled in EssentialCommands.");
@@ -58,11 +57,10 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		INSTANCE = this;
-		JsonHandler handler = new JsonAPI(this).create("test");
-		handler.set("test", false).set("messages", true);
+		CFGINSTANCE = new Config();
 		MessageFile.create();
 		CommandCore.registerCommands();
-		Config.getConfig().newConfig();
+		getConf().createConfig();
 		TPS.getTPSClass();
 		new InfoTask(this).run();
 		enableSubplugins();
@@ -78,5 +76,9 @@ public class Core extends JavaPlugin {
 
 	public static Core getInstance() {
 		return INSTANCE;
+	}
+
+	public static Config getConf() {
+		return CFGINSTANCE;
 	}
 }

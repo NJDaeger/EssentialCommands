@@ -13,11 +13,6 @@ import com.njdaeger.java.configuration.Location;
 public interface IPlayerConfig {
 
 	/**
-	 * Creates a new player configuration
-	 */
-	void createConfig();
-
-	/**
 	 * Update the configuration statistics while the player logs out.
 	 */
 	void logoutUpdate();

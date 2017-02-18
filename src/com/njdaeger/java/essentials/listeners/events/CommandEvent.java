@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.configuration.controllers.Config;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
 import com.njdaeger.java.essentials.commands.messaging.MessageCommand;
@@ -48,7 +48,7 @@ public class CommandEvent {
 		if (d.contains(" ")) {
 			String[] b = d.split(" ");
 			c += b[0];
-			if (Config.getConfig().getBlacklistedCommands().contains(c)) {
+			if (Core.getConf().getBlacklistedCommands().contains(c)) {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
@@ -60,7 +60,7 @@ public class CommandEvent {
 			return;
 		} else {
 			c += d;
-			if (Config.getConfig().getBlacklistedCommands().contains(c)) {
+			if (Core.getConf().getBlacklistedCommands().contains(c)) {
 				if (Holder.hasPermission(e.getPlayer(), Permission.ESS_BYPASS_BLOCKED_COMMANDS)) {
 					return;
 				} else {
