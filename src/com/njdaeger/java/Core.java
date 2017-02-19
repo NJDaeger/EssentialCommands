@@ -1,9 +1,11 @@
 package com.njdaeger.java;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
+import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.data.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.listeners.CoreListener;
@@ -16,6 +18,7 @@ public class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;
+	private static boolean reloading = false;
 
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
@@ -63,19 +66,59 @@ public class Core extends JavaPlugin {
 		enableSubplugins();
 		registerListeners();
 		registerPermissions();
-
+		if (getConf().loadInMemory()) {
+			setReloading(false);
+			for (Player players : Bukkit.getOnlinePlayers()) {
+				new Transform(players);
+			}
+		}
 	}
 
 	@Override
 	public void onDisable() {
-
+		if (isReloading()) {
+			if (getConf().loadInMemory()) {
+				for (Player players : Bukkit.getOnlinePlayers()) {
+					Transform.unload(players);
+				}
+			}
+			return;
+		}
 	}
 
+	/**
+	 * Get the instance of the plugin core.
+	 * 
+	 * @return The plugin core.
+	 */
 	public static Core getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * Get the plugin configuration.
+	 *
+	 * @return Returns the plugin configuration.
+	 */
 	public static Config getConf() {
 		return CFGINSTANCE;
+	}
+
+	/**
+	 * Checks if the server is reloading.
+	 * 
+	 * @return True if reloading, false otherwise.
+	 */
+	public static boolean isReloading() {
+		return reloading;
+	}
+
+	/**
+	 * Sets the reloading variable.
+	 * 
+	 * @param reloading True if reloading, false otherwise
+	 */
+	public static void setReloading(boolean reloading) {
+		Core.reloading = reloading;
 	}
 }

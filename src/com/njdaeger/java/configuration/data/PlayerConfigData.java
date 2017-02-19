@@ -37,9 +37,9 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 	//The YAML file the players configuration is in.
 	private YamlConfiguration yamlfile;
 	//The plugin configuration.
-	private Config conf;
+	//private Config conf;
 	//Whether the player configuration is loaded into memory.
-	private boolean memconf = false;
+	private boolean memconf = Core.getConf().loadInMemory();
 
 	/**
 	 * Gets an online player's configuration files.
@@ -52,7 +52,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 				+ File.separator + this.player.getUniqueId());
 		this.file = new File(path + File.separator + "user.yml");
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);
-		this.conf = Core.getConf();
+		//this.conf = Core.getConf();
 	}
 
 	/**
@@ -156,8 +156,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 				e.printStackTrace();
 			}
 		}
-		if (conf.loadInMemory()) {
-			memconf = true;
+		if (memconf) {
 			new Transform(player);
 		}
 		return this;
@@ -342,8 +341,8 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 			createConfig();
 		}
 		if (!isFlying()) {
-			player.setFlying(true);
 			player.setAllowFlight(true);
+			player.setFlying(true);
 			setValue(PlayerPaths.FLYING.getPath(), true);
 			return;
 		}
@@ -362,18 +361,21 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		case CREATIVE:
 			player.setGameMode(GameMode.CREATIVE);
 			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.CREATIVE.name());
+			break;
 		case SURVIVAL:
 			player.setGameMode(GameMode.SURVIVAL);
 			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.SURVIVAL.name());
+			break;
 		case ADVENTURE:
 			player.setGameMode(GameMode.ADVENTURE);
 			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.ADVENTURE.name());
+			break;
 		case SPECTATOR:
 			player.setGameMode(GameMode.SPECTATOR);
 			setValue(PlayerPaths.GAMEMODE.getPath(), GameMode.SPECTATOR.name());
-			return;
+			break;
 		default:
-			return;
+			break;
 		}
 	}
 

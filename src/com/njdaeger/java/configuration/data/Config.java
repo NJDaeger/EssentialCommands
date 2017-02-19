@@ -179,11 +179,10 @@ public class Config implements IConfig, IBaseConf, Resettable {
 		return (int) getValue(Path.NICKNAME_MAXLENGTH.getPath());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getBlacklistedCommands() {
-		String[] commands;
-		commands = (String[]) getValue(Path.BLACKLIST_COMMANDS.getPath());
-		return Arrays.asList(commands);
+		return (List<String>) getValue(Path.BLACKLIST_COMMANDS.getPath());
 	}
 
 	@Override

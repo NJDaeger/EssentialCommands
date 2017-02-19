@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
@@ -71,6 +72,20 @@ public class CommandEvent {
 			}
 			return;
 		}
+	}
+
+	public void checkReload(PlayerCommandPreprocessEvent e) {
+		if (e.getMessage().startsWith("rl") || e.getMessage().startsWith("reload")) {
+			Core.setReloading(true);
+		}
+		return;
+	}
+
+	public void checkServerReload(ServerCommandEvent e) {
+		if (e.getCommand().startsWith("rl") || e.getCommand().startsWith("reload")) {
+			Core.setReloading(true);
+		}
+		return;
 	}
 
 	private List<String> getAliases(EssCommand command) {

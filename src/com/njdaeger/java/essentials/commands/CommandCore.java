@@ -13,6 +13,7 @@ import com.njdaeger.java.essentials.commands.player.AfkCommand;
 import com.njdaeger.java.essentials.commands.player.BreakCommand;
 import com.njdaeger.java.essentials.commands.player.BurnCommand;
 import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
+import com.njdaeger.java.essentials.commands.player.DebugCommand;
 import com.njdaeger.java.essentials.commands.player.EditsignCommand;
 import com.njdaeger.java.essentials.commands.player.FlyCommand;
 import com.njdaeger.java.essentials.commands.player.FoodCommand;
@@ -59,6 +60,7 @@ public class CommandCore extends Plugin {
 		addCommand(new KillCommand());
 		addCommand(new MoreCommand());
 		addCommand(new NickCommand());
+		addCommand(new DebugCommand());
 		//addCommand(new PtimeCommand());
 		//addCommand(new PweatherCommand());
 		//addCommand(new RealnameCommand());
