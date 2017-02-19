@@ -25,7 +25,7 @@ public class FoodCommand extends EssCommand {
 	public boolean run(Sender sender, String label, String[] args) {
 		if (args.length == 1) {
 			if (Holder.hasPermission(sender, Permission.ESS_FOOD_OTHER)) {
-				Player target = Bukkit.getPlayer(args[1]);
+				Player target = Bukkit.getPlayer(args[0]);
 				if (target == null) {
 					sender.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 					return true;

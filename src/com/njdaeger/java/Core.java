@@ -27,9 +27,6 @@ public class Core extends JavaPlugin {
 		if (getConf().isAnnotationsEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
 		}
-		if (getConf().isCodesEnabled()) {
-			Bukkit.getLogger().info("[EssentialCommands] Codes is now Enabled.");
-		}
 		if (getConf().isLoginClearanceEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] LoginClearance is now Enabled.");
 		}

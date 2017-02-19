@@ -1,11 +1,13 @@
 package com.njdaeger.java.configuration.data;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.njdaeger.java.configuration.ConfigType;
+import com.njdaeger.java.configuration.enums.Path;
 import com.njdaeger.java.configuration.interfaces.IBaseConf;
 import com.njdaeger.java.configuration.interfaces.IConfig;
 import com.njdaeger.java.configuration.interfaces.Resettable;
@@ -29,567 +31,191 @@ public class Config implements IConfig, IBaseConf, Resettable {
 
 	@Override
 	public Object getValue(String path) {
+		if (ymlfile.get(path) == null) {
+			return Path.getFromString(path).defValue();
+		}
 		return ymlfile.get(path);
 	}
 
 	@Override
 	public void setValue(String path, Object value) {
 		ymlfile.set(path, value);
-
+		try {
+			ymlfile.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean exists() {
-		// TODO Auto-generated method stub
-		return false;
+		return file.exists();
 	}
 
 	@Override
 	public File getPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return path;
 	}
 
 	@Override
 	public File getFile() {
-		// TODO Auto-generated method stub
-		return null;
+		return file;
 	}
 
 	@Override
 	public Config createConfig() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		if (!exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		Path.checkExist();
+		return this;
 	}
 
 	@Override
 	public void deleteConfig() {
-		// TODO Auto-generated method stub
-
+		file.delete();
 	}
 
 	@Override
 	public Config resetConfog() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ConfigType getConfigType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setConfigType(ConfigType type) {
-		// TODO Auto-generated method stub
-
+		deleteConfig();
+		return createConfig();
 	}
 
 	@Override
 	public boolean loadInMemory() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.LOAD_TO_MEMORY.getPath());
 	}
 
 	@Override
 	public void setLoadInMemory(boolean value) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.LOAD_TO_MEMORY.getPath(), value);
 	}
 
 	@Override
 	public boolean isNJPermsEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.ENABLE_NJP.getPath());
 	}
 
 	@Override
 	public void setNJPermsEnabled(boolean value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isCodesEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setCodesEnabled(boolean value) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.ENABLE_NJP.getPath(), value);
 	}
 
 	@Override
 	public boolean isAnnotationsEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.ENABLE_ANNO.getPath());
 	}
 
 	@Override
 	public void setAnnotationsEnabled(boolean value) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.ENABLE_ANNO.getPath(), value);
 	}
 
 	@Override
 	public boolean isServerProtectEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.ENABLE_SP.getPath());
 	}
 
 	@Override
 	public void setServerProtectEnabled(boolean value) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.ENABLE_SP.getPath(), value);
 	}
 
 	@Override
 	public boolean isLoginClearanceEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.ENABLE_LC.getPath());
 	}
 
 	@Override
 	public void setLoginClearanceEnabled(boolean value) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.ENABLE_LC.getPath(), value);
 	}
 
 	@Override
 	public void setWarpLimit(int limit) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.WARPS_WARPLIMIT.getPath(), limit);
 	}
 
 	@Override
 	public int getWarpLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) getValue(Path.WARPS_WARPLIMIT.getPath());
 	}
 
 	@Override
 	public String getOpNameColor() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) getValue(Path.OP_NAME_COLOR.getPath());
 	}
 
 	@Override
 	public void setOpNameColor(String colorCode) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.OP_NAME_COLOR.getPath(), colorCode);
 	}
 
 	@Override
 	public void setNickPrefix(String prefix) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.NICKNAME_PREFIX.getPath(), prefix);
 	}
 
 	@Override
 	public String getNickPrefix() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) getValue(Path.NICKNAME_PREFIX.getPath());
 	}
 
 	@Override
 	public void setMaxNickLength(int max) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.NICKNAME_MAXLENGTH.getPath(), max);
 	}
 
 	@Override
 	public int getMaxNickLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) getValue(Path.NICKNAME_MAXLENGTH.getPath());
 	}
 
 	@Override
 	public List<String> getBlacklistedCommands() {
-		// TODO Auto-generated method stub
-		return null;
+		String[] commands;
+		commands = (String[]) getValue(Path.BLACKLIST_COMMANDS.getPath());
+		return Arrays.asList(commands);
 	}
 
 	@Override
 	public void addBlacklistedCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-
+		List<String> lastCommands = getBlacklistedCommands();
+		lastCommands.addAll(commands);
+		commands.clear();
+		setValue(Path.BLACKLIST_COMMANDS.getPath(), lastCommands);
+		lastCommands.clear();
 	}
 
 	@Override
 	public void removeBlacklistedCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-
+		List<String> lastCommands = getBlacklistedCommands();
+		List<List<String>> list = Arrays.asList(commands);
+		for (int i = 0; i <= commands.size(); i++) {
+			for (String command : list.get(i)) {
+				if (lastCommands.contains(command)) {
+					lastCommands.remove(command);
+				}
+			}
+		}
+		return;
 	}
 
 	@Override
 	public boolean isConsoleNotified() {
-		// TODO Auto-generated method stub
-		return false;
+		return (boolean) getValue(Path.BLACKLIST_COMMANDS_NOTIFY_CSL.getPath());
 	}
 
 	@Override
 	public void setConsoleNotified(boolean enable) {
-		// TODO Auto-generated method stub
-
+		setValue(Path.BLACKLIST_COMMANDS_NOTIFY_CSL.getPath(), enable);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.configapi.configuration.interfaces.IConfiguration#newConfig()
-	 
-	@Override
-	public void newConfig() {
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				Path.checkExist();
-				Bukkit.getLogger().warning("Config.yml was not found... Creating!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			Path.checkExist();
-			return;
-		}
-	}
-	
-	
-	 * (non-Javadoc)
-	 * 
-	 * @see com.configapi.configuration.interfaces.IConfiguration#getConfig()
-	 
-	@Override
-	public YamlConfiguration getConfig() {
-		if (file.exists()) {
-			return YamlConfiguration.loadConfiguration(file);
-		}
-		return null;
-	}
-	
-	@Override
-	public boolean isNJPermsEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_NJP.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_NJP.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_NJP.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_NJP.getPath());
-			}
-		}
-	}
-	
-	@Override
-	public void setNJPermsEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_NJP.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_NJP.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_NJP.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_NJP.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	}
-	
-	@Override
-	public boolean isCodesEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_CODES.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_CODES.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_CODES.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_CODES.getPath());
-			}
-		}
-	}
-	
-	@Override
-	public void setCodesEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_CODES.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_CODES.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_CODES.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_CODES.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	
-	}
-	
-	@Override
-	public boolean isAnnotationsEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_ANNO.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_ANNO.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_ANNO.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_ANNO.getPath());
-			}
-		}
-	}
-	
-	@Override
-	public void setAnnotationsEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_ANNO.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_ANNO.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_ANNO.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_ANNO.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	
-	}
-	
-	@Override
-	public boolean isServerprotectEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_SP.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_SP.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_SP.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_SP.getPath());
-			}
-		}
-	}
-	
-	@Override
-	public void setServerprotectEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_SP.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_SP.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_SP.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_SP.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	
-	}
-	
-	@Override
-	public boolean isLoginclearanceEnabled() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_LC.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (c.contains(Path.ENABLE_LC.getPath())) {
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_LC.getPath());
-			} else {
-				Path.checkExist();
-				return YamlConfiguration.loadConfiguration(file).getBoolean(Path.ENABLE_LC.getPath());
-			}
-		}
-	}
-	
-	@Override
-	public void setLoginclearanceEnabled(boolean enable) {
-		if (!file.exists()) {
-			this.newConfig();
-			YamlConfiguration.loadConfiguration(file).set(Path.ENABLE_LC.getPath(), enable);
-			Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_LC.getPath()
-					+ "\" has been changed to " + enable);
-			return;
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-		c.set(Path.ENABLE_LC.getPath(), enable);
-		try {
-			c.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getLogger().info("[EssentialCommands] Configuration option \"" + Path.ENABLE_LC.getPath()
-				+ "\" has been changed to " + enable);
-		return;
-	}
-	
-	@Override
-	public boolean isWarpLimit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public void setWarpLimitEnabled(boolean enable) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public String getWarpLimit() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void setWarpLimit(String value) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public boolean isWarpLimitWorld() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public void setWorldWarpLimitEnabled(boolean enable) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public String getWorldWarpLimit() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void setWorldWarpLimit(String value) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public String getOpNameColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void setOpNameColor(String value) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public String getNicknamePrefix() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void setNicknamePrefix(String value) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public int getMaxNicknameLength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	@Override
-	public void setMaxNicknameLength(int value) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public List<String> getBlacklistedCommands() {
-		if (!file.exists()) {
-			this.newConfig();
-			return YamlConfiguration.loadConfiguration(file).getStringList(Path.BLACKLIST_COMMANDS.getPath());
-		} else {
-			YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
-			if (!c.contains(Path.BLACKLIST_COMMANDS.getPath())) {
-				Path.checkExist();
-				return c.getStringList(Path.BLACKLIST_COMMANDS.getPath());
-			} else
-				return c.getStringList(Path.BLACKLIST_COMMANDS.getPath());
-		}
-	}
-	
-	@Override
-	public void addBlacklistedCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public void removeBlacklistedCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public boolean isCommandNotifyCsl() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public void setCommandNotifyCsl(boolean enable) {
-		// TODO Auto-generated method stub
-	
-	}
-	
-	@Override
-	public String getCommandNotifyCslMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void setNotifyCslMessage(String message) {
-		// TODO Auto-generated method stub
-	
-	}*/
 }

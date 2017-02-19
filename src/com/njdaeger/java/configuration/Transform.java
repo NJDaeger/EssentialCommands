@@ -9,6 +9,10 @@ import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.PlayerNotInMemory;
 
+/**
+ * Loads a player into memory and gets the player configuration from memory.
+ *
+ */
 public class Transform {
 
 	//The player's YAML configuration to get the default values from.
@@ -24,6 +28,11 @@ public class Transform {
 	 * @param player
 	 */
 	public Transform(Player player) {
+		if (isLoaded(player)) {
+			System.out.println("Player confifuration is already loaded into memory. Skipping.");
+			return;
+		}
+		System.out.println("Loading " + player.getName() + "'s configuration into memory.");
 		Transform.conf = PlayerConfig.getConfig(player);
 		for (PlayerPaths paths : PlayerPaths.values()) {
 			values.put(paths, conf.getValue(paths.getPath()));
@@ -56,6 +65,8 @@ public class Transform {
 				conf.setValue(paths.getPath(), memconf.get(player).get(paths));
 			}
 			memconf.clear();
+			values.clear();
+			System.out.println("Unloaded " + player.getName() + " from memory.");
 			return;
 		}
 		try {

@@ -12,7 +12,6 @@ public enum Path {
 	 * Subplugins
 	 */
 	ENABLE_NJP("subplugin.groupmanager", true),
-	ENABLE_CODES("subplugin.codes", true),
 	ENABLE_ANNO("subplugin.annotations", true),
 	ENABLE_SP("subplugin.serverprotect", true),
 	ENABLE_LC("subplugin.loginclearance", true),
@@ -26,6 +25,7 @@ public enum Path {
 	/*
 	 * Main essentials options
 	 */
+	LOAD_TO_MEMORY("main.various.load-to-memory", true),
 	SPIED_COMMANDS("main.various.spied-commands", Groups.spiedCommands),
 	OP_NAME_COLOR("main.various.op-namecolor", "&4"),
 	NICKNAME_PREFIX("main.various.nickname-prefix", "~"),
@@ -74,6 +74,15 @@ public enum Path {
 
 	public Object defValue() {
 		return value;
+	}
+
+	public static Path getFromString(String path) {
+		for (Path paths : Path.values()) {
+			if (paths.getPath().equalsIgnoreCase(path)) {
+				return paths;
+			}
+		}
+		return null;
 	}
 
 	/**

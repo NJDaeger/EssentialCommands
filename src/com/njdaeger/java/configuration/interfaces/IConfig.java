@@ -2,23 +2,7 @@ package com.njdaeger.java.configuration.interfaces;
 
 import java.util.List;
 
-import com.njdaeger.java.configuration.ConfigType;
-
 public interface IConfig {
-
-	/**
-	 * Gets the configuration type of the plugin.
-	 * 
-	 * @return The type of configuration.
-	 */
-	ConfigType getConfigType();
-
-	/**
-	 * Set the configuration type plugin.
-	 * 
-	 * @param type The type wanting to be used.
-	 */
-	void setConfigType(ConfigType type);
 
 	/**
 	 * Checks whether to load the player configuration files into memory or not.
@@ -47,20 +31,6 @@ public interface IConfig {
 	 * @param valueTrue enables false disables.
 	 */
 	void setNJPermsEnabled(boolean value);
-
-	/**
-	 * Checks if Codes is enabled.
-	 * 
-	 * @return True if enabled, false otherwise.
-	 */
-	boolean isCodesEnabled();
-
-	/**
-	 * Sets Codes enabled or not.
-	 * 
-	 * @param valueTrue enables false disables.
-	 */
-	void setCodesEnabled(boolean value);
 
 	/**
 	 * Checks if Annotations is enabled.

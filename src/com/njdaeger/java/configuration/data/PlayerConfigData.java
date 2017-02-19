@@ -11,8 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.configuration.Location;
+import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
@@ -34,6 +36,10 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 	private File file;
 	//The YAML file the players configuration is in.
 	private YamlConfiguration yamlfile;
+	//The plugin configuration.
+	private Config conf;
+	//Whether the player configuration is loaded into memory.
+	private boolean memconf = false;
 
 	/**
 	 * Gets an online player's configuration files.
@@ -46,6 +52,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 				+ File.separator + this.player.getUniqueId());
 		this.file = new File(path + File.separator + "user.yml");
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);
+		this.conf = Core.getConf();
 	}
 
 	/**
@@ -149,6 +156,10 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 				e.printStackTrace();
 			}
 		}
+		if (conf.loadInMemory()) {
+			memconf = true;
+			new Transform(player);
+		}
 		return this;
 	}
 
@@ -169,6 +180,19 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 
 	@Override
 	public void logoutUpdate() {
+		if (isAfk()) {
+			setAfk();
+		}
+		if (isGod()) {
+			setGod();
+		}
+		if (isHidden()) {
+			setHidden();
+		}
+		if (isBubbleMode()) {
+			setBubbleMode();
+		}
+		Transform.unload(getPlayer());
 	}
 
 	@Override
@@ -176,9 +200,11 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		setNick((String) getValue(PlayerPaths.DISPLAYNAME.getPath()));
 		setMuted();
 		setSpying();
-		setGod();
 		setMessageable();
 		setTpToggled();
+		if (memconf) {
+			new Transform(player);
+		}
 
 	}
 
@@ -215,16 +241,29 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		if (!exists()) {
 			createConfig();
 		}
-		if (!isGod()) {
-			Groups.god.add(player);
-			player.setInvulnerable(true);
-			setValue(PlayerPaths.GOD.getPath(), true);
+		if (memconf) {
+			if (!isGod()) {
+				Groups.god.add(player);
+				player.setInvulnerable(true);
+				Transform.setValue(getPlayer(), PlayerPaths.GOD, true);
+				return;
+			}
+			Groups.god.remove(player);
+			player.setInvulnerable(false);
+			Transform.setValue(getPlayer(), PlayerPaths.GOD, false);
 			return;
-		}
-		Groups.god.remove(player);
-		player.setInvulnerable(false);
-		setValue(PlayerPaths.GOD.getPath(), false);
 
+		} else {
+			if (!isGod()) {
+				Groups.god.add(player);
+				player.setInvulnerable(true);
+				setValue(PlayerPaths.GOD.getPath(), true);
+				return;
+			}
+			Groups.god.remove(player);
+			player.setInvulnerable(false);
+			setValue(PlayerPaths.GOD.getPath(), false);
+		}
 	}
 
 	@Override
@@ -413,7 +452,10 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		if (!exists()) {
 			createConfig();
 		}
-		return (boolean) getValue(PlayerPaths.GOD.getPath());
+		if (memconf) {
+			return (boolean) Transform.getValue(player, PlayerPaths.GOD);
+		} else
+			return (boolean) getValue(PlayerPaths.GOD.getPath());
 	}
 
 	@Override
