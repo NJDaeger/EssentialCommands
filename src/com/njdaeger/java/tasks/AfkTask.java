@@ -2,22 +2,14 @@ package com.njdaeger.java.tasks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.Groups;
 
-public class AfkTask extends BukkitRunnable {
+public class AfkTask {
 
-	public final JavaPlugin plugin;
-
-	public AfkTask(JavaPlugin plugin) {
-		this.plugin = plugin;
-	}
-
-	@Override
-	public void run() {
-		plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+	public AfkTask() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {

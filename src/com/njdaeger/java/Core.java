@@ -11,13 +11,16 @@ import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.listeners.CoreListener;
 import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
 import com.njdaeger.java.essentials.listeners.PlayerLeaveListener;
+import com.njdaeger.java.essentials.utils.BanAPI;
 import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.tasks.InfoTask;
+import com.njdaeger.java.tasks.MemoryTask;
 
 public class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;
+	private static BanAPI BANINSTANCE;
 	private static boolean reloading = false;
 
 	public void registerListeners() {
@@ -26,7 +29,7 @@ public class Core extends JavaPlugin {
 		new CoreListener(this);
 	}
 
-	public void enableSubplugins() {
+	private void enableSubplugins() {
 		if (getConf().isAnnotationsEnabled()) {
 			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
 		}
@@ -42,7 +45,7 @@ public class Core extends JavaPlugin {
 			Bukkit.getLogger().info("No sub-plugins have been enabled in EssentialCommands.");
 	}
 
-	public void registerPermissions() {
+	private void registerPermissions() {
 		Util.generatePermissions();
 		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by " + this
 				.getDescription().getAuthors() + " is now Enabled!");
@@ -58,11 +61,13 @@ public class Core extends JavaPlugin {
 	public void onEnable() {
 		INSTANCE = this;
 		CFGINSTANCE = new Config();
+		BANINSTANCE = new BanAPI();
 		MessageFile.create();
 		CommandCore.registerCommands();
 		getConf().createConfig();
 		TPS.getTPSClass();
 		new InfoTask(this).run();
+		new MemoryTask();
 		enableSubplugins();
 		registerListeners();
 		registerPermissions();
@@ -120,5 +125,14 @@ public class Core extends JavaPlugin {
 	 */
 	public static void setReloading(boolean reloading) {
 		Core.reloading = reloading;
+	}
+
+	/**
+	 * Gets the plugin BanAPI
+	 * 
+	 * @return The instance of the BanAPI.
+	 */
+	public static BanAPI getBanAPI() {
+		return BANINSTANCE;
 	}
 }
