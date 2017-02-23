@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.configuration.Transform;
+import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
 import com.njdaeger.java.essentials.listeners.CoreListener;
@@ -176,5 +177,20 @@ public class Core extends JavaPlugin {
 	 */
 	public static User getUser(UUID userUUID) {
 		return onlineUsers.get(userUUID);
+	}
+
+	/**
+	 * Attempts to get an offline player from the player database.
+	 * 
+	 * @param name The name of the offline player.
+	 * @return Null if the database doesn't contain the player, it returns the
+	 *         user otherwise.
+	 */
+	public static User getOfflineUser(String name) {
+		UUID uuid = UUID.fromString(Database.getDatabase("playerdata").getEntry(name));
+		if (uuid == null) {
+			return null;
+		}
+		return new User(Bukkit.getOfflinePlayer(uuid).getPlayer());
 	}
 }

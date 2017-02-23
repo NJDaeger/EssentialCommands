@@ -3,15 +3,36 @@ package com.njdaeger.java.wrapper;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
+import com.njdaeger.java.essentials.enums.Error;
 
 public interface IUser {
 
+	/**
+	 * CHecks if the User is muted or not.
+	 * 
+	 * @return True if muted, false otherwise.
+	 */
 	boolean isMuted();
 
+	/**
+	 * Sets a user muted or not.
+	 * 
+	 * @param value True will mute them, false will unmute.
+	 */
 	void setMuted(boolean value);
 
+	/**
+	 * Checks if the user is using socialspy.
+	 * 
+	 * @return True if using it, false otherwise.
+	 */
 	boolean isSpying();
 
+	/**
+	 * Turns a users socialspy on or off.
+	 * 
+	 * @param value True enables it, false disables it.
+	 */
 	void setSpying(boolean value);
 
 	boolean isGod();
@@ -75,6 +96,10 @@ public interface IUser {
 	boolean isHidden();
 
 	void setHidden(boolean value);
+
+	void sudo(String command);
+
+	void sendError(Error error);
 
 	UserFile getUserFile();
 

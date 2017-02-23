@@ -3,9 +3,7 @@ package com.njdaeger.java.wrapper;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.data.PlayerConfigData;
-
-public class User extends PlayerConfigData {
+public class User {
 
 	private Player player;
 
@@ -14,11 +12,9 @@ public class User extends PlayerConfigData {
 	/**
 	 * Creates a new User instance.
 	 * 
-	 * @param player
+	 * @param player The player.
 	 */
 	public User(Player player) {
-		super(player);
-		//onlinePlayers.put(player.getUniqueId(), new User(player));
 		this.player = player;
 	}
 
