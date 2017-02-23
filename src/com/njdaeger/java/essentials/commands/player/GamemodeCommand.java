@@ -9,6 +9,7 @@ import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Gamemode;
 import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;
@@ -25,7 +26,7 @@ public class GamemodeCommand extends EssCommand {
 			aliases = { "gm", "mode" },
 			permissions = { Permission.ESS_GAMEMODE, Permission.ESS_GAMEMODE_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
-		if (Mode.getAliasUsed(args[0]) == null) {
+		if (Gamemode.getAliasUsed(args[0]) == null) {
 			sndr.sendMessage(Error.UNKNOWN_GAMEMODE.sendError());
 			return true;
 		}
@@ -33,7 +34,7 @@ public class GamemodeCommand extends EssCommand {
 			if (sndr.isPlayer()) {
 				Player player = sndr.asPlayer();
 				PlayerConfig.getConfig(player).setGamemode(args[0]);
-				player.sendMessage(ChatColor.GRAY + "Your gamemode is now set to " + ChatColor.GREEN + Mode
+				player.sendMessage(ChatColor.GRAY + "Your gamemode is now set to " + ChatColor.GREEN + Gamemode
 						.getAliasUsed(args[0]).toString().toLowerCase());
 				return true;
 			}
@@ -51,35 +52,10 @@ public class GamemodeCommand extends EssCommand {
 			return true;
 		}
 		PlayerConfig.getConfig(target).setGamemode(args[0]);
-		sndr.sendMessage(ChatColor.GRAY + "You changed " + args[1] + "'s gamemode to " + ChatColor.GREEN + Mode
+		sndr.sendMessage(ChatColor.GRAY + "You changed " + args[1] + "'s gamemode to " + ChatColor.GREEN + Gamemode
 				.getAliasUsed(args[0]).toString().toLowerCase());
-		target.sendMessage(ChatColor.GRAY + "Your gamemode has been changed too " + ChatColor.GREEN + Mode.getAliasUsed(
-				args[0]).toString().toLowerCase());
+		target.sendMessage(ChatColor.GRAY + "Your gamemode has been changed too " + ChatColor.GREEN + Gamemode
+				.getAliasUsed(args[0]).toString().toLowerCase());
 		return true;
-	}
-
-	public enum Mode {
-		SURVIVAL("0", "survival"), CREATIVE("1", "creative"), ADVENTURE("2", "adventure"), SPECTATOR("3", "spectator");
-
-		String[] aliases;
-
-		Mode(String... aliases) {
-			this.aliases = aliases;
-		}
-
-		public String[] getAliases() {
-			return aliases;
-		}
-
-		public static Mode getAliasUsed(String input) {
-			for (Mode alias : Mode.values()) {
-				for (String value : alias.getAliases()) {
-					if (value.equals(input)) {
-						return alias;
-					}
-				}
-			}
-			return null;
-		}
 	}
 }

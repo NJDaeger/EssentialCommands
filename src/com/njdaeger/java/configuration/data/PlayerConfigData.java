@@ -22,7 +22,7 @@ import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IBaseConf;
 import com.njdaeger.java.configuration.interfaces.IPlayerConfig;
 import com.njdaeger.java.configuration.interfaces.Resettable;
-import com.njdaeger.java.essentials.commands.player.GamemodeCommand.Mode;
+import com.njdaeger.java.wrapper.Gamemode;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -356,7 +356,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		if (!exists()) {
 			createConfig();
 		}
-		Mode mode = Mode.getAliasUsed(gamemode);
+		Gamemode mode = Gamemode.getAliasUsed(gamemode);
 		switch (mode) {
 		case CREATIVE:
 			player.setGameMode(GameMode.CREATIVE);
@@ -588,7 +588,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 			player.addPotionEffect(effect);
 			return;
 		}
-		setValue(PlayerPaths.HIDDEN.getPath(), true);
+		setValue(PlayerPaths.HIDDEN.getPath(), false);
 		player.showPlayer(player);
 		player.removePotionEffect(PotionEffectType.INVISIBILITY);
 		return;

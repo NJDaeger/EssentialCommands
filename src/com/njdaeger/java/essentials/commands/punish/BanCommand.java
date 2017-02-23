@@ -32,7 +32,7 @@ public class BanCommand extends EssCommand {
 			return true;
 		}
 		if (args.length == 1) {
-			new BanAPI().addBan(target.getName(), sndr, null, null);
+			new BanAPI().addBan(target.getName(), sndr.asCommandSender(), null, null);
 			target.kickPlayer("You have been banned.");
 			return true;
 		}
@@ -41,7 +41,7 @@ public class BanCommand extends EssCommand {
 			builder.append(args[i]).append(' ');
 
 		String reason = builder.toString();
-		new BanAPI().addBan(target.getName(), sndr, null, reason);
+		new BanAPI().addBan(target.getName(), sndr.asCommandSender(), null, reason);
 		target.kickPlayer("You have been banned for " + reason);
 		return true;
 	}

@@ -2,8 +2,8 @@ package com.njdaeger.java.configuration;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.data.LastLocationData;
-import com.njdaeger.java.configuration.data.LogoutLocationData;
+import com.njdaeger.java.configuration.data.LastLocation;
+import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 
@@ -22,8 +22,8 @@ public class Location {
 	 * 
 	 * @return The last locations of the player.
 	 */
-	public LastLocationData lastLocation() {
-		return new LastLocationData(player);
+	public LastLocation lastLocation() {
+		return new LastLocation(player);
 	}
 
 	/**
@@ -31,8 +31,8 @@ public class Location {
 	 * 
 	 * @return The logout locations of the player.
 	 */
-	public LogoutLocationData logoutLocation() {
-		return new LogoutLocationData(player);
+	public LogoutLocation logoutLocation() {
+		return new LogoutLocation(player);
 	}
 
 	/**

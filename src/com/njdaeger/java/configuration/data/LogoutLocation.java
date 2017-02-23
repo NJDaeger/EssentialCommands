@@ -7,11 +7,11 @@ import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
 
-public class LogoutLocationData extends Location implements IValues, ISetValues {
+public class LogoutLocation extends Location implements IValues, ISetValues {
 
 	private PlayerConfigData config;
 
-	public LogoutLocationData(Player player) {
+	public LogoutLocation(Player player) {
 		super(player);
 		config = new PlayerConfigData(player);
 	}

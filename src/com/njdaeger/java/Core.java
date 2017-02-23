@@ -1,5 +1,8 @@
 package com.njdaeger.java;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,12 +18,15 @@ import com.njdaeger.java.essentials.utils.BanAPI;
 import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.tasks.InfoTask;
 import com.njdaeger.java.tasks.MemoryTask;
+import com.njdaeger.java.wrapper.User;
 
 public class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;
 	private static BanAPI BANINSTANCE;
+	private static User user;
+	private static HashMap<UUID, User> onlineUsers = new HashMap<>();
 	private static boolean reloading = false;
 
 	public void registerListeners() {
@@ -74,6 +80,8 @@ public class Core extends JavaPlugin {
 		if (getConf().loadInMemory()) {
 			setReloading(false);
 			for (Player players : Bukkit.getOnlinePlayers()) {
+				user = new User(players);
+				onlineUsers.put(players.getUniqueId(), user);
 				new Transform(players);
 			}
 		}
@@ -134,5 +142,39 @@ public class Core extends JavaPlugin {
 	 */
 	public static BanAPI getBanAPI() {
 		return BANINSTANCE;
+	}
+
+	/**
+	 * Gets an online User via their in game name.
+	 * 
+	 * @param name The name of the player you want to get.
+	 * @return Null if the player doesn't exist, otherwise it returns the user.
+	 */
+	public static User getUser(String name) {
+		Player player = Bukkit.getPlayer(name);
+		if (player == null) {
+			return null;
+		}
+		return onlineUsers.get(player.getUniqueId());
+	}
+
+	/**
+	 * Gets an online User via player object.
+	 * 
+	 * @param player The player to convert into a user.
+	 * @return The user.
+	 */
+	public static User getUser(Player player) {
+		return onlineUsers.get(player.getUniqueId());
+	}
+
+	/**
+	 * Get an online User via their UUID
+	 * 
+	 * @param userUUID The players UUID.
+	 * @return The user.
+	 */
+	public static User getUser(UUID userUUID) {
+		return onlineUsers.get(userUUID);
 	}
 }

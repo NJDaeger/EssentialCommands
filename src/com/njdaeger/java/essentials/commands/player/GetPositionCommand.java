@@ -1,7 +1,6 @@
 package com.njdaeger.java.essentials.commands.player;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
@@ -47,7 +46,7 @@ public class GetPositionCommand extends EssCommand {
 		return true;
 	}
 
-	public void sendLocation(Player target, CommandSender sndr) {
+	public void sendLocation(Player target, Sender sndr) {
 		sndr.sendMessage(ChatColor.GRAY + "Location for player " + ChatColor.GREEN + target.getName());
 		sndr.sendMessage(ChatColor.GRAY + "Coord x:" + ChatColor.GREEN + this.getX(target));
 		sndr.sendMessage(ChatColor.GRAY + "Coord y:" + ChatColor.GREEN + this.getY(target));

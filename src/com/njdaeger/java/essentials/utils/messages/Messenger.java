@@ -3,13 +3,13 @@ package com.njdaeger.java.essentials.utils.messages;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.Sender;
 
 public class Messenger {
 
@@ -22,8 +22,8 @@ public class Messenger {
 	 * @param target The target the message is going to.
 	 * @param message The message being sent.
 	 */
-	public static void sendMessage(CommandSender sndr, String target, String message) {
-		if (!(sndr instanceof Player)) {
+	public static void sendMessage(Sender sndr, String target, String message) {
+		if (!sndr.isPlayer()) {
 			Player player = Bukkit.getPlayer(target);
 			if (target.equalsIgnoreCase("console") && player == null) {
 				conversation.put(sndr.getName(), target);
@@ -66,12 +66,12 @@ public class Messenger {
 		return;
 	}
 
-	public static void sendReply(CommandSender sender, String message) {
+	public static void sendReply(Sender sender, String message) {
 		if (conversation.get(sender.getName()) == null) {
 			sender.sendMessage(Error.throwError("No messages have been sent to anyone recently."));
 			return;
 		}
-		if (!(sender instanceof Player)) {
+		if (!sender.isPlayer()) {
 			Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
 			conversation.put(sender.getName(), conversation.get(sender.getName()));
 			conversation.put(conversation.get(sender.getName()), sender.getName());

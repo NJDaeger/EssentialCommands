@@ -37,7 +37,7 @@ public class TempBanCommand extends EssCommand {
 		}
 		switch (args.length) {
 		case 2:
-			api.addBan(target.getName(), sndr, args[1], null);
+			api.addBan(target.getName(), sndr.asCommandSender(), args[1], null);
 			target.kickPlayer("You have been temp banned.");
 			return true;
 		default:
@@ -45,7 +45,8 @@ public class TempBanCommand extends EssCommand {
 			for (int i = 2; i < args.length; i++)
 				builder.append(args[i]).append(' ');
 			String reason = builder.toString();
-			api.addBan(target.getName(), sndr, args[1], ChatColor.translateAlternateColorCodes('&', reason));
+			api.addBan(target.getName(), sndr.asCommandSender(), args[1], ChatColor.translateAlternateColorCodes('&',
+					reason));
 			target.kickPlayer("You have been temp banned for " + reason);
 			return true;
 		}

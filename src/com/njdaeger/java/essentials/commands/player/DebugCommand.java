@@ -7,6 +7,7 @@ import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 public class DebugCommand extends EssCommand {
 
@@ -18,6 +19,8 @@ public class DebugCommand extends EssCommand {
 			aliases = { "debug", "bug" },
 			executor = Executor.PLAYER)
 	public boolean run(Sender sender, String label, String[] args) {
+		User u = sender.asUser();
+		u.sendMessage("User works");
 		sender.sendMessage("Afk: " + (boolean) Transform.getValue(sender.asPlayer(), PlayerPaths.AFK));
 		sender.sendMessage("Flyspeed: " + (double) Transform.getValue(sender.asPlayer(), PlayerPaths.FLYSPEED));
 		sender.sendMessage("Rank: " + (String) Transform.getValue(sender.asPlayer(), PlayerPaths.RANK));
