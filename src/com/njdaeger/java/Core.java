@@ -1,6 +1,8 @@
 package com.njdaeger.java;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -27,7 +29,8 @@ public class Core extends JavaPlugin {
 	private static Config CFGINSTANCE;
 	private static BanAPI BANINSTANCE;
 	private static User user;
-	private static HashMap<UUID, User> onlineUsers = new HashMap<>();
+	private static HashMap<UUID, User> onlineUserMap = new HashMap<>();
+	private static ArrayList<User> onlineUsers = new ArrayList<>();
 	private static boolean reloading = false;
 
 	public void registerListeners() {
@@ -82,7 +85,8 @@ public class Core extends JavaPlugin {
 			setReloading(false);
 			for (Player players : Bukkit.getOnlinePlayers()) {
 				user = new User(players);
-				onlineUsers.put(players.getUniqueId(), user);
+				onlineUserMap.put(players.getUniqueId(), user);
+				onlineUsers.add(user);
 				new Transform(players);
 			}
 		}
@@ -156,7 +160,7 @@ public class Core extends JavaPlugin {
 		if (player == null) {
 			return null;
 		}
-		return onlineUsers.get(player.getUniqueId());
+		return onlineUserMap.get(player.getUniqueId());
 	}
 
 	/**
@@ -166,7 +170,7 @@ public class Core extends JavaPlugin {
 	 * @return The user.
 	 */
 	public static User getUser(Player player) {
-		return onlineUsers.get(player.getUniqueId());
+		return onlineUserMap.get(player.getUniqueId());
 	}
 
 	/**
@@ -176,7 +180,7 @@ public class Core extends JavaPlugin {
 	 * @return The user.
 	 */
 	public static User getUser(UUID userUUID) {
-		return onlineUsers.get(userUUID);
+		return onlineUserMap.get(userUUID);
 	}
 
 	/**
@@ -192,5 +196,14 @@ public class Core extends JavaPlugin {
 			return null;
 		}
 		return new User(Bukkit.getOfflinePlayer(uuid).getPlayer());
+	}
+
+	/**
+	 * Get a list of the online users.
+	 * 
+	 * @return The online users.
+	 */
+	public static List<User> getOnlineUsers() {
+		return onlineUsers;
 	}
 }

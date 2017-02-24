@@ -1,5 +1,7 @@
 package com.njdaeger.java.wrapper;
 
+import org.bukkit.Location;
+
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
@@ -279,6 +281,13 @@ public interface IUser {
 	void sendError(Error error);
 
 	/**
+	 * Sends a message to the specified user.
+	 * 
+	 * @param message The message to send to the user.
+	 */
+	void sendMessage(String message);
+
+	/**
 	 * Get the users yml file.
 	 * 
 	 * @return The user yml file.
@@ -299,4 +308,17 @@ public interface IUser {
 	 */
 	LogoutLocation getLogout();
 
+	/**
+	 * Gets the name of the user.
+	 * 
+	 * @return The users in game name.
+	 */
+	String getName();
+
+	/**
+	 * Gets all the current locations of the player.
+	 * 
+	 * @return The location of the player.
+	 */
+	Location getLocation();
 }
