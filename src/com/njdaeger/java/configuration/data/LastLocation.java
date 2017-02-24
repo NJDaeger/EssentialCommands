@@ -1,18 +1,19 @@
 package com.njdaeger.java.configuration.data;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.Location;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
 
-public class LastLocation extends Location implements IValues, ISetValues {
+public class LastLocation implements IValues, ISetValues {
 
 	private PlayerConfigData config;
 
 	public LastLocation(Player player) {
-		super(player);
 		config = new PlayerConfigData(player);
 	}
 
@@ -44,6 +45,16 @@ public class LastLocation extends Location implements IValues, ISetValues {
 	@Override
 	public String getWorld() {
 		return (String) config.getValue(PlayerPaths.LAST_WORLD.getPath());
+	}
+
+	@Override
+	public Location getAsLocation() {
+		Validate.notNull(getX(), "X value cannot be null.");
+		Validate.notNull(getY(), "Y value cannot be null.");
+		Validate.notNull(getZ(), "Z value cannot be null.");
+		Validate.notNull(getYaw(), "Yaw value cannot be null.");
+		Validate.notNull(getPitch(), "Pitch value cannot be null.");
+		return new Location(Bukkit.getWorld(getWorld()), getX(), getY(), getZ(), getYaw(), getPitch());
 	}
 
 	@Override

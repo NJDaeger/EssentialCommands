@@ -1,5 +1,7 @@
 package com.njdaeger.java.configuration.interfaces;
 
+import org.bukkit.Location;
+
 public interface IValues {
 
 	/**
@@ -43,5 +45,12 @@ public interface IValues {
 	 * @return
 	 */
 	String getWorld();
+
+	/**
+	 * Returns all the values in {@link IValues} as one location.
+	 * 
+	 * @return A bukkit location.
+	 */
+	Location getAsLocation();
 
 }

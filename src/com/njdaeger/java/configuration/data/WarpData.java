@@ -3,6 +3,7 @@ package com.njdaeger.java.configuration.data;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -119,6 +120,16 @@ public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues
 	@Override
 	public String getWorld() {
 		return YamlConfiguration.loadConfiguration(file).getString("world");
+	}
+
+	@Override
+	public Location getAsLocation() {
+		Validate.notNull(getX(), "X value cannot be null.");
+		Validate.notNull(getY(), "Y value cannot be null.");
+		Validate.notNull(getZ(), "Z value cannot be null.");
+		Validate.notNull(getYaw(), "Yaw value cannot be null.");
+		Validate.notNull(getPitch(), "Pitch value cannot be null.");
+		return new Location(Bukkit.getWorld(getWorld()), getX(), getY(), getZ(), getYaw(), getPitch());
 	}
 
 	@Override
