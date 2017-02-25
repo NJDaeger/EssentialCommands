@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
@@ -145,6 +146,28 @@ public class UserFile implements IBaseConf, Resettable {
 		getFile().delete();
 		System.out.println("Deleted " + name);
 
+	}
+
+	/**
+	 * Gets a User's file version.
+	 * 
+	 * @return The configuration version.
+	 */
+	public String getCfgVersion() {
+		if (!exists()) {
+			createConfig();
+		}
+		return (String) getYamlFile().get(PlayerPaths.CFG_VERSION.getPath());
+	}
+
+	/**
+	 * Sets the configuration version from the core.
+	 */
+	public void setCfgVersion() {
+		if (!exists()) {
+			createConfig();
+		}
+		getYamlFile().set(PlayerPaths.CFG_VERSION.getPath(), Core.getInstance().getDescription().getVersion());
 	}
 
 }

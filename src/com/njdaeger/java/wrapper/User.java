@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
+import com.njdaeger.java.Groups;
 import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
@@ -55,6 +56,56 @@ public class User implements IUser {
 		return player.getWorld();
 	}
 
+	/**
+	 * Gets the user's current X position
+	 * 
+	 * @return The users X position.
+	 */
+	public double getX() {
+		return player.getLocation().getX();
+	}
+
+	/**
+	 * Gets the user's current Y position
+	 * 
+	 * @return The users Y position.
+	 */
+	public double getY() {
+		return player.getLocation().getY();
+	}
+
+	/**
+	 * Get the user's current Z position
+	 * 
+	 * @return The users Z position.
+	 */
+	public double getZ() {
+		return player.getLocation().getZ();
+	}
+
+	/**
+	 * Get the user's current Yaw value
+	 * 
+	 * @return The users Yaw value.
+	 */
+	public float getYaw() {
+		return player.getLocation().getYaw();
+	}
+
+	/**
+	 * Get the user's current pitch value
+	 * 
+	 * @return The users pitch value.
+	 */
+	public float getPitch() {
+		return player.getLocation().getPitch();
+	}
+
+	@Override
+	public Location getLocation() {
+		return new Location(getWorld(), getX(), getY(), getZ(), getYaw(), getPitch());
+	}
+
 	@Override
 	public String getName() {
 		return player.getName();
@@ -78,9 +129,10 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MUTED, value);
-			return;
+			if (value ? Groups.muted.add(player) : Groups.muted.remove(player));
 		}
 		userFile.setValue(PlayerPaths.MUTED.getPath(), value);
+		if (value ? Groups.muted.add(player) : Groups.muted.remove(player));
 		return;
 	}
 
@@ -102,9 +154,11 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.SOCIALSPY, value);
+			if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player));
 			return;
 		}
 		userFile.setValue(PlayerPaths.SOCIALSPY.getPath(), value);
+		if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player));
 		return;
 
 	}
@@ -115,105 +169,197 @@ public class User implements IUser {
 			userFile.createConfig();
 		}
 		if (memory) {
-			return (boolean) Transform.getValue(getBase(), PlayerPaths.SOCIALSPY);
+			return (boolean) Transform.getValue(getBase(), PlayerPaths.GOD);
 		}
-		return (boolean) userFile.getValue(PlayerPaths.SOCIALSPY.getPath());
+		return (boolean) userFile.getValue(PlayerPaths.GOD.getPath());
 	}
 
 	@Override
 	public void setGod(boolean value) {
-		// TODO Auto-generated method stub
-
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.GOD, value);
+			if (value ? Groups.god.add(player) : Groups.god.remove(player));
+			return;
+		}
+		userFile.setValue(PlayerPaths.GOD.getPath(), value);
+		if (value ? Groups.god.add(player) : Groups.god.remove(player));
+		return;
 	}
 
 	@Override
 	public boolean isMessageable() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return (boolean) Transform.getValue(getBase(), PlayerPaths.MESSAGEABLE);
+		}
+		return (boolean) userFile.getValue(PlayerPaths.MESSAGEABLE.getPath());
 	}
 
 	@Override
 	public void setMessageable(boolean value) {
-		// TODO Auto-generated method stub
-
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.MESSAGEABLE, value);
+			if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player));
+			return;
+		}
+		userFile.setValue(PlayerPaths.MESSAGEABLE.getPath(), value);
+		if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player));
+		return;
 	}
 
 	@Override
 	public boolean isAfk() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return (boolean) Transform.getValue(getBase(), PlayerPaths.AFK);
+		}
+		return (boolean) userFile.getValue(PlayerPaths.AFK.getPath());
 	}
 
 	@Override
 	public void setAfk(boolean value) {
-		// TODO Auto-generated method stub
-
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.AFK, value);
+			if (value ? Groups.afk.add(player) : Groups.afk.remove(player));
+			//if (value ? Groups.afkloc.put(getName(), getLocation()) : Groups.afkloc.remove(getName()));
+			return;
+		}
+		userFile.setValue(PlayerPaths.AFK.getPath(), value);
+		if (value ? Groups.afk.add(player) : Groups.afk.remove(player));
+		return;
 	}
 
 	@Override
 	public boolean isTeleportable() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return (boolean) Transform.getValue(getBase(), PlayerPaths.TPTOGGLED);
+		}
+		return (boolean) userFile.getValue(PlayerPaths.TPTOGGLED.getPath());
 	}
 
 	@Override
 	public void setTeleportable(boolean value) {
-		// TODO Auto-generated method stub
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.TPTOGGLED, value);
+			return;
+		}
+		userFile.setValue(PlayerPaths.TPTOGGLED.getPath(), value);
+		return;
 
 	}
 
 	@Override
 	public boolean isGroup(String group) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return Transform.getValue(getBase(), PlayerPaths.RANK).toString().equalsIgnoreCase(group);
+		}
+		return userFile.getValue(PlayerPaths.RANK.getPath()).toString().equalsIgnoreCase(group);
 	}
 
 	@Override
 	public String getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return (String) Transform.getValue(getBase(), PlayerPaths.RANK);
+		}
+		return (String) userFile.getValue(PlayerPaths.RANK.getPath());
 	}
 
 	@Override
 	public void setGroup(String group) {
-		// TODO Auto-generated method stub
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.RANK, group);
+			return;
+		}
+		userFile.setValue(PlayerPaths.RANK.getPath(), group);
+		return;
 
 	}
 
 	@Override
 	public boolean hasNickname() {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString().equalsIgnoreCase(getBase()
+					.getName());
+		}
+		return userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()).toString().equalsIgnoreCase(getBase().getName());
 	}
 
 	@Override
 	public boolean hasNickname(String nickname) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString().equalsIgnoreCase(nickname);
+		}
+		return userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()).toString().equalsIgnoreCase(nickname);
 	}
 
 	@Override
 	public String getNickname() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString();
+		}
+		return userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()).toString();
 	}
 
 	@Override
 	public void setNickname(String nickname) {
-		// TODO Auto-generated method stub
-
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(getBase(), PlayerPaths.DISPLAYNAME, nickname);
+			player.setDisplayName(nickname);
+			return;
+		}
+		userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), nickname);
+		player.setDisplayName(nickname);
+		return;
 	}
 
 	@Override
 	public boolean isFlying() {
-		// TODO Auto-generated method stub
-		return false;
+		return player.isFlying();
 	}
 
 	@Override
 	public void setFlying(boolean value) {
-		// TODO Auto-generated method stub
-
+		//return player.setFlying(value);
 	}
 
 	@Override
@@ -326,25 +472,16 @@ public class User implements IUser {
 
 	@Override
 	public UserFile getUserFile() {
-		// TODO Auto-generated method stub
-		return null;
+		return userFile;
 	}
 
 	@Override
 	public LastLocation getLast() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LastLocation(player);
 	}
 
 	@Override
 	public LogoutLocation getLogout() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LogoutLocation(player);
 	}
 }

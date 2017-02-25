@@ -1,15 +1,13 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
+import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 public class AfkCommand extends EssCommand {
 
@@ -23,29 +21,28 @@ public class AfkCommand extends EssCommand {
 			permissions = { Permission.ESS_AFK, Permission.ESS_AFK_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr.isPlayer()) {
-				Player player = sndr.asPlayer();
-				PlayerConfig.getConfig(player).setAfk();
-				return true;
-			} else {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-		}
-		if (sndr.isPlayer()) {
-			Player player = sndr.asPlayer();
-			if (Holder.hasPermission(player, Permission.ESS_AFK_OTHER)) {
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			if (sndr.isUser()) {
+				User u = sndr.asUser();
+				//Player player = sndr.asPlayer();
+				//PlayerConfig.getConfig(player).setAfk();
+				u.setAfk(!u.isAfk());
 				return true;
 			}
-		}
-		Player target = Bukkit.getPlayer(args[0]);
-		if (target == null) {
-			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		PlayerConfig.getConfig(target).setAfk();
+		if (sndr.isUser()) {
+			if (Holder.hasPermission(sndr, Permission.ESS_AFK_OTHER)) {
+				User u = Core.getUser(args[0]);
+				if (u == null) {
+					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+					return true;
+				}
+				u.setAfk(!u.isAfk());
+				return true;
+			}
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+		}
 		return true;
 	}
 }
