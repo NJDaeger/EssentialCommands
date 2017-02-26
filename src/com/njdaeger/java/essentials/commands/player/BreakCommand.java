@@ -2,6 +2,7 @@ package com.njdaeger.java.essentials.commands.player;
 
 import java.util.HashSet;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -11,8 +12,6 @@ import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class BreakCommand extends EssCommand {
 

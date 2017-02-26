@@ -553,7 +553,7 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 		if (!exists()) {
 			createConfig();
 		}
-		return (boolean) getValue(PlayerPaths.IS_BUBBLED.getPath());
+		return (boolean) getValue(PlayerPaths.BUBBLED.getPath());
 	}
 
 	@Override
@@ -562,10 +562,10 @@ public class PlayerConfigData implements IPlayerConfig, IBaseConf, Resettable {
 			createConfig();
 		}
 		if (!isBubbleMode()) {
-			setValue(PlayerPaths.IS_BUBBLED.getPath(), true);
+			setValue(PlayerPaths.BUBBLED.getPath(), true);
 			return;
 		}
-		setValue(PlayerPaths.IS_BUBBLED.getPath(), false);
+		setValue(PlayerPaths.BUBBLED.getPath(), false);
 	}
 
 	@Override

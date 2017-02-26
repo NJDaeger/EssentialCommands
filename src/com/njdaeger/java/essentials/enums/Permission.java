@@ -92,6 +92,7 @@ public enum Permission {
 	ESS_INFOBAR_ALCDRAM("essentials.serverinfo.infobar.alcdram"),
 	ESS_VANISH("essentials.vanish"),
 	ESS_VANISH_OTHER("essentials.vanish.others"),
+	ESS_VANISH_OVERRIDE("essentials.vanish.override"),
 	ESS_FOOD("essentials.feed"),
 	ESS_FOOD_OTHER("essentials.feed.other"),
 	ESS_MORE("essentials.more"),

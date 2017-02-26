@@ -6,6 +6,7 @@ import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.essentials.enums.Permission;
 
 public interface IUser {
 
@@ -249,6 +250,13 @@ public interface IUser {
 	void setGamemode(Gamemode mode);
 
 	/**
+	 * Set the gamemode of the user. (via string)
+	 * 
+	 * @param mode The gamemode to set the user to.
+	 */
+	void setGamemode(String mode);
+
+	/**
 	 * Checks if the user is in bubble mode.
 	 * 
 	 * @return True if is bubbled, false otherwise.
@@ -296,6 +304,22 @@ public interface IUser {
 	 * @param message The message to send to the user.
 	 */
 	void sendMessage(String message);
+
+	/**
+	 * Checks if a user has a permission derived from EssentialCommands.
+	 * 
+	 * @param permission The permission you're checking for.
+	 * @return True if the user has permission, false otherwise.
+	 */
+	boolean hasPermission(Permission... permission);
+
+	/**
+	 * Checks if a user has a permission.
+	 * 
+	 * @param permission The permission to check for.
+	 * @return True if the user has permission, false otherwise.
+	 */
+	boolean hasPermission(String permission);
 
 	/**
 	 * Get the users yml file.
