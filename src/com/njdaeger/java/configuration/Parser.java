@@ -2,12 +2,11 @@ package com.njdaeger.java.configuration;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.interfaces.IParser;
 import com.njdaeger.java.configuration.parser.BlacklistedCommand;
 import com.njdaeger.java.configuration.parser.NoPermission;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class Parser implements IParser {
+public class Parser {
 
 	/**
 	 * Parser for BlacklistedCommands error.

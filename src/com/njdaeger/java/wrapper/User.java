@@ -479,14 +479,14 @@ public class User implements IUser {
 	}
 
 	@Override
-	public double getWalkingSpeed() {
+	public int getWalkingSpeed() {
 		if (!exists) {
 			userFile.createConfig();
 		}
 		if (memory) {
-			return (double) Transform.getValue(getBase(), PlayerPaths.WALKSPEED);
+			return (int) Transform.getValue(getBase(), PlayerPaths.WALKSPEED);
 		}
-		return (double) userFile.getValue(PlayerPaths.WALKSPEED.getPath());
+		return (int) userFile.getValue(PlayerPaths.WALKSPEED.getPath());
 	}
 
 	@Override
@@ -610,6 +610,18 @@ public class User implements IUser {
 			return;
 		}
 		userFile.setValue(PlayerPaths.GAMEMODE.getPath(), gamemode.name());
+	}
+
+	@Override
+	public boolean hasInfobar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setInfobar(boolean value) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

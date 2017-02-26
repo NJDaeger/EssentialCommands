@@ -29,15 +29,15 @@ public class WhoisCommand extends EssCommand {
 			sender.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;
 		}
-		sender.sendMessage(g + "Realname:" + gr + user.getName());
-		sender.sendMessage(g + "Exp:" + gr + user.getBase().getExp());
-		sender.sendMessage(g + "Exp. Level:" + gr + user.getBase().getLevel());
-		sender.sendMessage(g + "Flyspeed:" + gr + user.getFlyingSpeed());
-		sender.sendMessage(g + "Walkspeed:" + gr + user.getWalkingSpeed());
-		sender.sendMessage(g + "Flyspeed:" + gr + user.getGamemode());
-		sender.sendMessage(g + "Health Level:" + gr + user.getBase().getHealth());
-		sender.sendMessage(g + "Food Level:" + gr + user.getBase().getFoodLevel());
-		sender.sendMessage(g + "UUID:" + gr + user.getId());
+		sender.sendMessage(g + "Realname: " + gr + user.getName());
+		sender.sendMessage(g + "Exp: " + gr + user.getBase().getExp());
+		sender.sendMessage(g + "Exp. Level: " + gr + user.getBase().getLevel());
+		sender.sendMessage(g + "Flyspeed: " + gr + user.getFlyingSpeed());
+		sender.sendMessage(g + "Walkspeed: " + gr + user.getWalkingSpeed());
+		sender.sendMessage(g + "Gamemode: " + gr + user.getGamemode().name().toLowerCase());
+		sender.sendMessage(g + "Health Level: " + gr + user.getBase().getHealth());
+		sender.sendMessage(g + "Food Level: " + gr + user.getBase().getFoodLevel());
+		sender.sendMessage(g + "UUID: " + gr + user.getId());
 		return true;
 	}
 }

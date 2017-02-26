@@ -11,12 +11,8 @@ public class Server {
 
 	public static Object getCPULoad() {
 		OperatingSystemMXBean os = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-		double l = os.getProcessCpuLoad();
-		double a = l * Math.pow(10, 2);
-		double[] values = { a };
-		for (double v : values)
-			return round(v);
-		return null;
+		double l = os.getProcessCpuLoad() * 100;
+		return round(l);
 	}
 
 	public static double round(double number) {

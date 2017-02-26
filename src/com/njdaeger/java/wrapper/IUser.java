@@ -204,7 +204,7 @@ public interface IUser {
 	 * 
 	 * @return The walking speed.
 	 */
-	double getWalkingSpeed();
+	int getWalkingSpeed();
 
 	/**
 	 * Sets the walking speed of a user.
@@ -283,6 +283,20 @@ public interface IUser {
 	 * @param value True hides the user, false unhides the user.
 	 */
 	void setHidden(boolean value);
+
+	/**
+	 * Checks if the user has the infobar enabled.
+	 * 
+	 * @return
+	 */
+	boolean hasInfobar();
+
+	/**
+	 * Enables or disables the infobar for the player.
+	 * 
+	 * @param value True enables it, false disables it.
+	 */
+	void setInfobar(boolean value);
 
 	/**
 	 * Forces the user to run a command.

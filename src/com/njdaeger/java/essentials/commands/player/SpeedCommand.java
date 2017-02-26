@@ -127,7 +127,7 @@ public class SpeedCommand extends EssCommand {
 						if (args[2].equalsIgnoreCase("fly")) {
 							target.sendMessage(ChatColor.GRAY + "Your fly speed has been reset.");
 							sndr.sendMessage(ChatColor.GRAY + "You reset " + ChatColor.GREEN + target.getName()
-									+ ChatColor.GRAY + "'s walk speed.");
+									+ ChatColor.GRAY + "'s fly speed.");
 							target.setFlyingSpeed(1);
 							return true;
 						}

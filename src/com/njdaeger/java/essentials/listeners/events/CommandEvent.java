@@ -35,10 +35,11 @@ public class CommandEvent {
 						messageCommand).contains(message) || replyCommand.getName().equalsIgnoreCase(message)
 				|| getAliases(replyCommand).contains(message) || broadcastCommand.getName().equalsIgnoreCase(message)
 				|| getAliases(vanishCommand).contains(message) || vanishCommand.getName().equalsIgnoreCase(message)) {
-		}
-		if (user.isAfk()) {
-			user.setAfk(false);
-			return;
+			if (user.isAfk()) {
+				return;
+			} else {
+				user.setAfk(false);
+			}
 		}
 	}
 

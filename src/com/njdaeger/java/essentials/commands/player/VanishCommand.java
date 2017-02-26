@@ -28,12 +28,11 @@ public class VanishCommand extends EssCommand {
 				return true;
 			}
 			User user = sndr.asUser();
-			if (user.isHidden()) {
-				user.setHidden(false);
+			user.setHidden(!user.isHidden());
+			if (!user.isHidden()) {
 				sndr.sendMessage(ChatColor.GRAY + "You are no longer hidden.");
 				return true;
 			}
-			user.setHidden(true);
 			sndr.sendMessage(ChatColor.GRAY + "You are now hidden.");
 			return true;
 		}
@@ -43,13 +42,12 @@ public class VanishCommand extends EssCommand {
 				sndr.sendError(Error.UNKNOWN_PLAYER);
 				return true;
 			}
-			if (user.isHidden()) {
-				user.setHidden(false);
+			user.setHidden(!user.isHidden());
+			if (!user.isHidden()) {
 				sndr.sendMessage(ChatColor.GREEN + user.getNickname() + ChatColor.GRAY + " is no longer hidden.");
 				user.sendMessage(ChatColor.GRAY + "You are no longer hidden.");
 				return true;
 			}
-			user.setHidden(true);
 			sndr.sendMessage(ChatColor.GREEN + user.getNickname() + ChatColor.GRAY + " is now hidden.");
 			user.sendMessage(ChatColor.GRAY + "You are now hidden.");
 			return true;
