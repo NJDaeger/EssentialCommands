@@ -1,5 +1,9 @@
 package com.njdaeger.java.wrapper;
 
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -32,10 +36,10 @@ public class User implements IUser {
 	 * @param player The player.
 	 */
 	public User(Player player) {
+		Core.getOnlineUserMap().put(player.getUniqueId(), this);
 		this.player = player;
 		this.userFile = new UserFile(player);
 		this.exists = getUserFile().exists();
-
 	}
 
 	/**
@@ -101,6 +105,15 @@ public class User implements IUser {
 		return player.getLocation().getPitch();
 	}
 
+	/**
+	 * Gets the user's unique UUID.
+	 * 
+	 * @return The users uuid.
+	 */
+	public UUID getId() {
+		return player.getUniqueId();
+	}
+
 	@Override
 	public Location getLocation() {
 		return new Location(getWorld(), getX(), getY(), getZ(), getYaw(), getPitch());
@@ -129,10 +142,12 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MUTED, value);
-			if (value ? Groups.muted.add(player) : Groups.muted.remove(player));
+			if (value ? Groups.muted.add(player) : Groups.muted.remove(player))
+				;
 		}
 		userFile.setValue(PlayerPaths.MUTED.getPath(), value);
-		if (value ? Groups.muted.add(player) : Groups.muted.remove(player));
+		if (value ? Groups.muted.add(player) : Groups.muted.remove(player))
+			;
 		return;
 	}
 
@@ -154,11 +169,13 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.SOCIALSPY, value);
-			if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player));
+			if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player))
+				;
 			return;
 		}
 		userFile.setValue(PlayerPaths.SOCIALSPY.getPath(), value);
-		if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player));
+		if (value ? Groups.socialspy.add(player) : Groups.socialspy.remove(player))
+			;
 		return;
 
 	}
@@ -181,11 +198,13 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.GOD, value);
-			if (value ? Groups.god.add(player) : Groups.god.remove(player));
+			if (value ? Groups.god.add(player) : Groups.god.remove(player))
+				;
 			return;
 		}
 		userFile.setValue(PlayerPaths.GOD.getPath(), value);
-		if (value ? Groups.god.add(player) : Groups.god.remove(player));
+		if (value ? Groups.god.add(player) : Groups.god.remove(player))
+			;
 		return;
 	}
 
@@ -207,11 +226,13 @@ public class User implements IUser {
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MESSAGEABLE, value);
-			if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player));
+			if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player))
+				;
 			return;
 		}
 		userFile.setValue(PlayerPaths.MESSAGEABLE.getPath(), value);
-		if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player));
+		if (value ? Groups.nomessaging.add(player) : Groups.nomessaging.remove(player))
+			;
 		return;
 	}
 
@@ -221,7 +242,7 @@ public class User implements IUser {
 			userFile.createConfig();
 		}
 		if (memory) {
-			return (boolean) Transform.getValue(getBase(), PlayerPaths.AFK);
+			return (boolean) Transform.getValue(player, PlayerPaths.AFK);
 		}
 		return (boolean) userFile.getValue(PlayerPaths.AFK.getPath());
 	}
@@ -232,13 +253,30 @@ public class User implements IUser {
 			userFile.createConfig();
 		}
 		if (memory) {
-			Transform.setValue(getBase(), PlayerPaths.AFK, value);
-			if (value ? Groups.afk.add(player) : Groups.afk.remove(player));
-			//if (value ? Groups.afkloc.put(getName(), getLocation()) : Groups.afkloc.remove(getName()));
+			Transform.setValue(player, PlayerPaths.AFK, value);
+			if (value) {
+				Groups.afk.add(player);
+				Groups.afkloc.put(getName(), getLocation());
+				Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
+				return;
+			} else {
+				Groups.afk.remove(player);
+				Groups.afkloc.remove(getName());
+				Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
+			}
 			return;
 		}
 		userFile.setValue(PlayerPaths.AFK.getPath(), value);
-		if (value ? Groups.afk.add(player) : Groups.afk.remove(player));
+		if (value) {
+			Groups.afk.add(player);
+			Groups.afkloc.put(getName(), getLocation());
+			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
+			return;
+		} else {
+			Groups.afk.remove(player);
+			Groups.afkloc.remove(getName());
+			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
+		}
 		return;
 	}
 
@@ -483,5 +521,33 @@ public class User implements IUser {
 	@Override
 	public LogoutLocation getLogout() {
 		return new LogoutLocation(player);
+	}
+
+	@Override
+	public IUser loginUpdate() {
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			new Transform(getBase());
+		}
+		return this;
+	}
+
+	@Override
+	public IUser logoutUpdate() {
+		if (isAfk()) {
+			setAfk(false);
+		}
+		if (isHidden()) {
+			setHidden(false);
+		}
+		if (isBubbled()) {
+			setBubbled(false);
+		}
+		if (memory) {
+			Transform.unload(getBase());
+		}
+		return this;
 	}
 }

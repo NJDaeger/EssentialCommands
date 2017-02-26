@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
-import com.njdaeger.java.configuration.data.PlayerConfigData;
+import com.njdaeger.java.Core;
+import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.PlayerNotInMemory;
 
@@ -16,7 +16,7 @@ import com.njdaeger.java.configuration.exceptions.PlayerNotInMemory;
 public class Transform {
 
 	//The player's YAML configuration to get the default values from.
-	private static PlayerConfigData conf;
+	private static UserFile conf;
 	//The memory configuration.
 	private static HashMap<Player, HashMap<PlayerPaths, Object>> memconf = new HashMap<>();
 	//The keys from the YAML configuration as a hashmap.
@@ -33,7 +33,7 @@ public class Transform {
 			return;
 		}
 		System.out.println("Loading " + player.getName() + "'s configuration into memory.");
-		Transform.conf = PlayerConfig.getConfig(player);
+		Transform.conf = Core.getUser(player).getUserFile();
 		for (PlayerPaths paths : PlayerPaths.values()) {
 			values.put(paths, conf.getValue(paths.getPath()));
 			memconf.put(player, values);
@@ -104,15 +104,7 @@ public class Transform {
 	 * @return The object value of the path.
 	 */
 	public static Object getValue(Player player, PlayerPaths path) {
-		if (isLoaded(player)) {
-			return memconf.get(player).get(path);
-		}
-		try {
-			throw new PlayerNotInMemory();
-		} catch (PlayerNotInMemory e) {
-			e.printStackTrace();
-		}
-		return null;
+		return memconf.get(player).get(path);
 	}
 
 	/**
@@ -123,14 +115,7 @@ public class Transform {
 	 * @param value The new value of the path.
 	 */
 	public static void setValue(Player player, PlayerPaths path, Object value) {
-		if (isLoaded(player)) {
-			memconf.get(player).put(path, value);
-		}
-		try {
-			throw new PlayerNotInMemory();
-		} catch (PlayerNotInMemory e) {
-			e.printStackTrace();
-		}
+		memconf.get(player).put(path, value);
 	}
 
 }

@@ -19,7 +19,9 @@ public class PlayerLeaveListener implements Listener {
 
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		Transform.unload(e.getPlayer());
+		if (Core.getConf().loadInMemory()) {
+			Transform.unload(e.getPlayer());
+		}
 		/*
 		Player player = e.getPlayer();
 		if (player.isBanned()) {

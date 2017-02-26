@@ -23,26 +23,22 @@ public class AfkCommand extends EssCommand {
 		if (args.length == 0) {
 			if (sndr.isUser()) {
 				User u = sndr.asUser();
-				//Player player = sndr.asPlayer();
-				//PlayerConfig.getConfig(player).setAfk();
 				u.setAfk(!u.isAfk());
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		if (sndr.isUser()) {
-			if (Holder.hasPermission(sndr, Permission.ESS_AFK_OTHER)) {
-				User u = Core.getUser(args[0]);
-				if (u == null) {
-					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-					return true;
-				}
-				u.setAfk(!u.isAfk());
+		if (Holder.hasPermission(sndr, Permission.ESS_AFK_OTHER)) {
+			User u = Core.getUser(args[0]);
+			if (u == null) {
+				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return true;
 			}
-			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			u.setAfk(!u.isAfk());
+			return true;
 		}
+		sndr.sendMessage(Error.NO_PERMISSION.sendError());
 		return true;
 	}
 }

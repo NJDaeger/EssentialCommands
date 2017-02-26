@@ -206,4 +206,16 @@ public class Core extends JavaPlugin {
 	public static List<User> getOnlineUsers() {
 		return onlineUsers;
 	}
+
+	/**
+	 * Gets the online user map.
+	 * 
+	 * @return The online users.
+	 * 
+	 *         <p>
+	 *         Do not mess with this unless you know what you're doing.
+	 */
+	public static HashMap<UUID, User> getOnlineUserMap() {
+		return onlineUserMap;
+	}
 }

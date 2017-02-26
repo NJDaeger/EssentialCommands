@@ -1,7 +1,6 @@
 package com.njdaeger.java.essentials.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -9,9 +8,9 @@ import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.controllers.Database;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.data.DatabaseData;
 import com.njdaeger.java.essentials.utils.BanAPI;
+import com.njdaeger.java.wrapper.User;
 
 public class PlayerJoinListener implements Listener {
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
@@ -22,7 +21,7 @@ public class PlayerJoinListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		PlayerConfig.getConfig(e.getPlayer()).createConfig();
+		new User(e.getPlayer()).loginUpdate();
 		if (e.getPlayer().isBanned()) {
 			if (new BanAPI().isBanExpired(e.getPlayer().getName())) {
 				new BanAPI().unban(e.getPlayer().getName());
@@ -41,21 +40,21 @@ public class PlayerJoinListener implements Listener {
 
 	@EventHandler
 	public void updateDatabase(PlayerJoinEvent e) {
-		Player player = e.getPlayer();
+		User player = Core.getUser(e.getPlayer());
 		DatabaseData base = Database.getDatabase("playerdata");
 		if (base.getBase() == null) {
 			base.create();
-			base.addEntry(player.getName(), player.getUniqueId().toString());
+			base.addEntry(player.getName(), player.getId().toString());
 			return;
 		} else if (base.getEntry(player.getName()) == null) {
-			base.addEntry(player.getName(), player.getUniqueId().toString());
+			base.addEntry(player.getName(), player.getId().toString());
 			return;
 		} else {
-			if (base.getEntry(player.getName()).matches(player.getUniqueId().toString())) {
+			if (base.getEntry(player.getName()).matches(player.getId().toString())) {
 				return;
 			} else {
 				base.removeEntry(player.getName());
-				base.addEntry(player.getName(), player.getUniqueId().toString());
+				base.addEntry(player.getName(), player.getId().toString());
 				return;
 			}
 		}

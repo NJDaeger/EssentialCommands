@@ -10,6 +10,16 @@ import com.njdaeger.java.essentials.enums.Error;
 public interface IUser {
 
 	/**
+	 * A set of various tasks to do when a user joins the server.
+	 */
+	IUser loginUpdate();
+
+	/**
+	 * A set of various tasks to do when a user quits the server.
+	 */
+	IUser logoutUpdate();
+
+	/**
 	 * Checks if the User is muted or not.
 	 * 
 	 * @return True if muted, false otherwise.

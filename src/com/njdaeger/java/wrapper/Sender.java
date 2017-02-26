@@ -7,6 +7,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+import com.njdaeger.java.Core;
+
 public class Sender {
 
 	private CommandSender sender;
@@ -58,7 +60,7 @@ public class Sender {
 
 	public User asUser() {
 		if (isUser()) {
-			return new User(asPlayer());
+			return Core.getUser(asPlayer());
 		}
 		return null;
 	}
