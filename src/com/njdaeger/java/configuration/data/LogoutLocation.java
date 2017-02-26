@@ -3,48 +3,71 @@ package com.njdaeger.java.configuration.data;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
+import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
+import com.njdaeger.java.wrapper.User;
 
 public class LogoutLocation implements IValues, ISetValues {
 
-	private PlayerConfigData config;
+	private User user;
 
-	public LogoutLocation(Player player) {
-		config = new PlayerConfigData(player);
+	private boolean memory;
+
+	public LogoutLocation(User user) {
+		this.user = user;
+		memory = Core.getConf().loadInMemory();
 	}
 
 	@Override
 	public double getX() {
-		return (double) config.getValue(PlayerPaths.LOGOUT_X.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_X);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_X.getPath());
 	}
 
 	@Override
 	public double getY() {
-		return (double) config.getValue(PlayerPaths.LOGOUT_Y.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_Y);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_Y.getPath());
 	}
 
 	@Override
 	public double getZ() {
-		return (double) config.getValue(PlayerPaths.LOGOUT_Z.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_Z);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_Z.getPath());
 	}
 
 	@Override
 	public int getYaw() {
-		return (int) config.getValue(PlayerPaths.LOGOUT_YAW.getPath());
+		if (memory) {
+			return (int) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_YAW);
+		}
+		return (int) user.getUserFile().getValue(PlayerPaths.LOGOUT_YAW.getPath());
 	}
 
 	@Override
 	public int getPitch() {
-		return (int) config.getValue(PlayerPaths.LOGOUT_PITCH.getPath());
+		if (memory) {
+			return (int) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_PITCH);
+		}
+		return (int) user.getUserFile().getValue(PlayerPaths.LOGOUT_PITCH.getPath());
 	}
 
 	@Override
 	public String getWorld() {
-		return (String) config.getValue(PlayerPaths.LOGOUT_WORLD.getPath());
+		if (memory) {
+			return (String) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_WORLD);
+		}
+		return (String) user.getUserFile().getValue(PlayerPaths.LOGOUT_WORLD.getPath());
 	}
 
 	@Override
@@ -59,31 +82,73 @@ public class LogoutLocation implements IValues, ISetValues {
 
 	@Override
 	public void setX(double value) {
-		config.setValue(PlayerPaths.LOGOUT_X.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_X, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_X.getPath(), value);
 	}
 
 	@Override
 	public void setY(double value) {
-		config.setValue(PlayerPaths.LOGOUT_Y.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_Y, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_Y.getPath(), value);
 	}
 
 	@Override
 	public void setZ(double value) {
-		config.setValue(PlayerPaths.LOGOUT_Z.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_Z, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_Z.getPath(), value);
 	}
 
 	@Override
 	public void setYaw(float value) {
-		config.setValue(PlayerPaths.LOGOUT_YAW.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_YAW, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_YAW.getPath(), value);
 	}
 
 	@Override
 	public void setPitch(float value) {
-		config.setValue(PlayerPaths.LOGOUT_PITCH.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_PITCH, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_PITCH.getPath(), value);
 	}
 
 	@Override
 	public void setWorld(String value) {
-		config.setValue(PlayerPaths.LOGOUT_WORLD.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_WORLD, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LOGOUT_WORLD.getPath(), value);
 	}
 }

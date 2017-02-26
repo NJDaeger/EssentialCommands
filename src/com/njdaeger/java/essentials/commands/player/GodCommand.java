@@ -1,18 +1,14 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
-import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
-
-import net.md_5.bungee.api.ChatColor;
+import com.njdaeger.java.wrapper.User;
 
 public class GodCommand extends EssCommand {
 
@@ -27,36 +23,35 @@ public class GodCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
 			if (sndr.isPlayer()) {
-				PlayerConfigData c = PlayerConfig.getConfig(sndr.asPlayer());
-				if (c.isGod() == true) {
-					c.setGod();
+				User user = sndr.asUser();
+				if (user.isGod()) {
+					user.setGod(false);
 					sndr.sendMessage(ChatColor.GRAY + "You are no longer in God mode.");
 					return true;
 				}
-				c.setGod();
+				user.setGod(true);
 				sndr.sendMessage(ChatColor.GRAY + "You are now in God mode.");
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		if (Holder.hasPermission(sndr, Permission.ESS_GOD_OTHER)) {
-			Player target = Bukkit.getPlayer(args[0]);
+		if (sndr.hasPermission(Permission.ESS_GOD_OTHER)) {
+			User target = Core.getUser(args[0]);
 			if (target == null) {
 				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return true;
 			}
-			PlayerConfigData c = PlayerConfig.getConfig(target);
-			if (c.isGod() == true) {
-				c.setGod();
+			if (target.isGod()) {
+				target.setGod(false);
 				target.sendMessage(ChatColor.GRAY + "You are no longer in God mode.");
-				sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY
+				sndr.sendMessage(ChatColor.GREEN + target.getNickname() + ChatColor.GRAY
 						+ " is no longer in God mode.");
 				return true;
 			}
-			c.setGod();
+			target.setGod(true);
 			target.sendMessage(ChatColor.GRAY + "You are now in God mode.");
-			sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is now in God mode.");
+			sndr.sendMessage(ChatColor.GREEN + target.getNickname() + ChatColor.GRAY + " is now in God mode.");
 			return true;
 		}
 		sndr.sendMessage(Error.NO_PERMISSION.sendError());

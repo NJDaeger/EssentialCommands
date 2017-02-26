@@ -3,48 +3,71 @@ package com.njdaeger.java.configuration.data;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
+import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
+import com.njdaeger.java.wrapper.User;
 
 public class LastLocation implements IValues, ISetValues {
 
-	private PlayerConfigData config;
+	private User user;
 
-	public LastLocation(Player player) {
-		config = new PlayerConfigData(player);
+	private boolean memory;
+
+	public LastLocation(User user) {
+		this.user = user;
+		this.memory = Core.getConf().loadInMemory();
 	}
 
 	@Override
 	public double getX() {
-		return (double) config.getValue(PlayerPaths.LAST_X.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_X);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LAST_X.getPath());
 	}
 
 	@Override
 	public double getY() {
-		return (double) config.getValue(PlayerPaths.LAST_X.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_Y);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LAST_Y.getPath());
 	}
 
 	@Override
 	public double getZ() {
-		return (double) config.getValue(PlayerPaths.LAST_Z.getPath());
+		if (memory) {
+			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_Z);
+		}
+		return (double) user.getUserFile().getValue(PlayerPaths.LAST_Z.getPath());
 	}
 
 	@Override
 	public int getYaw() {
-		return (int) config.getValue(PlayerPaths.LAST_YAW.getPath());
+		if (memory) {
+			return (int) Transform.getValue(user.getBase(), PlayerPaths.LAST_YAW);
+		}
+		return (int) user.getUserFile().getValue(PlayerPaths.LAST_YAW.getPath());
 	}
 
 	@Override
 	public int getPitch() {
-		return (int) config.getValue(PlayerPaths.LAST_PITCH.getPath());
+		if (memory) {
+			return (int) Transform.getValue(user.getBase(), PlayerPaths.LAST_PITCH);
+		}
+		return (int) user.getUserFile().getValue(PlayerPaths.LAST_PITCH.getPath());
 	}
 
 	@Override
 	public String getWorld() {
-		return (String) config.getValue(PlayerPaths.LAST_WORLD.getPath());
+		if (memory) {
+			return (String) Transform.getValue(user.getBase(), PlayerPaths.LAST_WORLD);
+		}
+		return (String) user.getUserFile().getValue(PlayerPaths.LAST_WORLD.getPath());
 	}
 
 	@Override
@@ -59,32 +82,74 @@ public class LastLocation implements IValues, ISetValues {
 
 	@Override
 	public void setX(double value) {
-		config.setValue(PlayerPaths.LAST_X.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_X, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_X.getPath(), value);
 	}
 
 	@Override
 	public void setY(double value) {
-		config.setValue(PlayerPaths.LAST_Y.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_Y, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_Y.getPath(), value);
 	}
 
 	@Override
 	public void setZ(double value) {
-		config.setValue(PlayerPaths.LAST_Z.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_Z, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_Z.getPath(), value);
 	}
 
 	@Override
 	public void setYaw(float value) {
-		config.setValue(PlayerPaths.LAST_YAW.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_YAW, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_YAW.getPath(), value);
 	}
 
 	@Override
 	public void setPitch(float value) {
-		config.setValue(PlayerPaths.LAST_PITCH.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_PITCH, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_PITCH.getPath(), value);
 	}
 
 	@Override
 	public void setWorld(String value) {
-		config.setValue(PlayerPaths.LAST_WORLD.getPath(), value);
+		if (!user.getUserFile().exists()) {
+			user.getUserFile().createConfig();
+		}
+		if (memory) {
+			Transform.setValue(user.getBase(), PlayerPaths.LAST_WORLD, value);
+			return;
+		}
+		user.getUserFile().setValue(PlayerPaths.LAST_WORLD.getPath(), value);
 	}
 
 }

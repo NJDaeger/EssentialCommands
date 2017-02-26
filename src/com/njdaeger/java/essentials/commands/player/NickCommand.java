@@ -1,17 +1,14 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
-
-import net.md_5.bungee.api.ChatColor;
+import com.njdaeger.java.wrapper.User;
 
 public class NickCommand extends EssCommand {
 
@@ -30,16 +27,13 @@ public class NickCommand extends EssCommand {
 			return true;
 		}
 		if (args.length == 1) {
-			if (sndr.isPlayer()) {
-				if (sndr.asPlayer().getDisplayName() == sndr.getName()) {
-
-				}
+			if (sndr.isUser()) {
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
-					PlayerConfig.getConfig(sndr.asPlayer()).setNick(sndr.getName());
+					sndr.asUser().setNickname(sndr.getName());
 					sndr.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
 					return true;
 				}
-				PlayerConfig.getConfig(sndr.asPlayer()).setNick(args[0]);
+				sndr.asUser().setNickname(ChatColor.translateAlternateColorCodes('&', args[0]));
 				sndr.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY
 						+ "\".");
 				return true;
@@ -48,25 +42,22 @@ public class NickCommand extends EssCommand {
 				return true;
 			}
 		}
-		if (sndr.isPlayer()) {
-			if (Holder.hasPermission(sndr, Permission.ESS_NICK_OTHER)) {
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
+		if (!sndr.hasPermission(Permission.ESS_NICK_OTHER)) {
+			sndr.sendMessage(Error.NO_PERMISSION.sendError());
+			return true;
 		}
-		Player target = Bukkit.getPlayer(args[1]);
+		User target = Core.getUser(args[1]);
 		if (target == null) {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;
 		}
 		if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("off")) {
-			PlayerConfig.getConfig(target).setNick(target.getName());
+			target.setNickname(target.getName());
 			target.sendMessage(ChatColor.GRAY + "You no longer have a nickname.");
 			sndr.sendMessage(ChatColor.GRAY + "You removed " + target.getName() + ChatColor.GRAY + "'s nickname.");
 			return true;
 		}
-		PlayerConfig.getConfig(target).setNick(args[0]);
+		target.setNickname(ChatColor.translateAlternateColorCodes('&', args[0]));
 		target.sendMessage(ChatColor.GRAY + "Your nickname is now \"" + this.getNick(args[0]) + ChatColor.GRAY + "\".");
 		sndr.sendMessage(ChatColor.GRAY + "You changed " + target.getName() + ChatColor.GRAY + "'s nickname to \""
 				+ this.getNick(args[0]) + ChatColor.GRAY + "\".");

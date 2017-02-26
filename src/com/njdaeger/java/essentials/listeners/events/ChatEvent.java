@@ -2,14 +2,16 @@ package com.njdaeger.java.essentials.listeners.events;
 
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.chat.AllowColor;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import com.njdaeger.java.wrapper.User;
 
 public class ChatEvent {
 
 	public void forAfk(AsyncPlayerChatEvent e) {
-		if (PlayerConfig.getConfig(e.getPlayer()).isAfk() == true) {
-			PlayerConfig.getConfig(e.getPlayer()).setAfk();
+		User user = Core.getUser(e.getPlayer());
+		if (user.isAfk()) {
+			user.setAfk(false);
 		}
 		return;
 	}

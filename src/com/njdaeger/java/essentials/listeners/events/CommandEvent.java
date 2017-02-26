@@ -10,7 +10,6 @@ import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
 import com.njdaeger.java.essentials.commands.messaging.MessageCommand;
 import com.njdaeger.java.essentials.commands.messaging.ReplyCommand;
@@ -18,6 +17,7 @@ import com.njdaeger.java.essentials.commands.player.AfkCommand;
 import com.njdaeger.java.essentials.commands.player.VanishCommand;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.User;
 
 public class CommandEvent {
 
@@ -28,17 +28,16 @@ public class CommandEvent {
 	private VanishCommand vanishCommand = new VanishCommand();
 
 	public void whenAfk(PlayerCommandPreprocessEvent e) {
+		User user = Core.getUser(e.getPlayer());
 		String message = e.getMessage().toLowerCase();
 		if (getAliases(afkCommand).contains(message) || afkCommand.getName().equalsIgnoreCase(message) || getAliases(
 				broadcastCommand).contains(message) || messageCommand.getName().equalsIgnoreCase(message) || getAliases(
 						messageCommand).contains(message) || replyCommand.getName().equalsIgnoreCase(message)
 				|| getAliases(replyCommand).contains(message) || broadcastCommand.getName().equalsIgnoreCase(message)
 				|| getAliases(vanishCommand).contains(message) || vanishCommand.getName().equalsIgnoreCase(message)) {
-			if (PlayerConfig.getConfig(e.getPlayer()).isAfk() == true) {
-				return;
-			} else {
-				PlayerConfig.getConfig(e.getPlayer()).setAfk();
-			}
+		}
+		if (user.isAfk()) {
+			user.setAfk(false);
 			return;
 		}
 	}

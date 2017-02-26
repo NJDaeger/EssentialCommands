@@ -4,7 +4,6 @@ import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
 import com.njdaeger.java.configuration.Transform;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
@@ -27,9 +26,7 @@ public class DebugCommand extends EssCommand {
 		sender.sendMessage("Displayname: " + (String) Transform.getValue(sender.asPlayer(), PlayerPaths.DISPLAYNAME));
 		sender.sendMessage("Toggled: " + (boolean) Transform.getValue(sender.asPlayer(), PlayerPaths.TPTOGGLED));
 		sender.sendMessage("Walkspeed: " + (int) Transform.getValue(sender.asPlayer(), PlayerPaths.WALKSPEED));
-		sender.sendMessage("God mem: " + (boolean) Transform.getValue(sender.asPlayer(), PlayerPaths.GOD));
-		sender.sendMessage("God yml: " + PlayerConfig.getConfig(sender.asPlayer()).getYamlFile().get(PlayerPaths.GOD
-				.getPath()));
+		sender.sendMessage("God: " + (boolean) Transform.getValue(sender.asPlayer(), PlayerPaths.GOD));
 		return true;
 	}
 

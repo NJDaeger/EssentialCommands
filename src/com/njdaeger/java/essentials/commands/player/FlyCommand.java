@@ -1,19 +1,15 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
-import com.njdaeger.java.configuration.data.PlayerConfigData;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
-
-import net.md_5.bungee.api.ChatColor;
+import com.njdaeger.java.wrapper.User;
 
 public class FlyCommand extends EssCommand {
 
@@ -26,36 +22,35 @@ public class FlyCommand extends EssCommand {
 			permissions = { Permission.ESS_FLY, Permission.ESS_FLY_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
 		if (args.length == 0) {
-			if (sndr.isPlayer()) {
-				PlayerConfigData config = PlayerConfig.getConfig(sndr.asPlayer());
-				if (config.isFlying()) {
-					config.setFlying();
+			if (sndr.isUser()) {
+				User user = sndr.asUser();
+				if (user.isFlying()) {
+					user.setFlying(false);
 					sndr.sendMessage(ChatColor.GRAY + "You are no longer flying.");
 					return true;
 				}
-				config.setFlying();
+				user.setFlying(true);
 				sndr.sendMessage(ChatColor.GRAY + "You are now flying.");
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		if (Holder.hasPermission(sndr, Permission.ESS_FLY_OTHER)) {
-			Player target = Bukkit.getPlayer(args[0]);
-			if (target == null) {
+		if (sndr.hasPermission(Permission.ESS_FLY_OTHER)) {
+			User user = Core.getUser(args[0]);
+			if (user == null) {
 				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return true;
 			}
-			PlayerConfigData config = PlayerConfig.getConfig(target);
-			if (config.isFlying()) {
-				config.setFlying();
-				target.sendMessage(ChatColor.GRAY + "You are no longer flying.");
-				sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is no longer flying.");
+			if (user.isFlying()) {
+				user.setFlying(false);
+				user.sendMessage(ChatColor.GRAY + "You are no longer flying.");
+				sndr.sendMessage(ChatColor.GREEN + user.getNickname() + ChatColor.GRAY + " is no longer flying.");
 				return true;
 			}
-			config.setFlying();
-			target.sendMessage(ChatColor.GRAY + "You are now flying.");
-			sndr.sendMessage(ChatColor.GREEN + target.getDisplayName() + ChatColor.GRAY + " is now flying.");
+			user.setFlying(true);
+			user.sendMessage(ChatColor.GRAY + "You are now flying.");
+			sndr.sendMessage(ChatColor.GREEN + user.getNickname() + ChatColor.GRAY + " is now flying.");
 			return true;
 		}
 		sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",

@@ -1,18 +1,15 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Gamemode;
 import com.njdaeger.java.wrapper.Sender;
-
-import net.md_5.bungee.api.ChatColor;
+import com.njdaeger.java.wrapper.User;
 
 public class GamemodeCommand extends EssCommand {
 
@@ -31,27 +28,27 @@ public class GamemodeCommand extends EssCommand {
 			return true;
 		}
 		if (args.length == 1) {
-			if (sndr.isPlayer()) {
-				Player player = sndr.asPlayer();
-				PlayerConfig.getConfig(player).setGamemode(args[0]);
-				player.sendMessage(ChatColor.GRAY + "Your gamemode is now set to " + ChatColor.GREEN + Gamemode
+			if (sndr.isUser()) {
+				User user = sndr.asUser();
+				user.setGamemode(args[0]);
+				user.sendMessage(ChatColor.GRAY + "Your gamemode is now set to " + ChatColor.GREEN + Gamemode
 						.getAliasUsed(args[0]).toString().toLowerCase());
 				return true;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 			return true;
 		}
-		Player target = Bukkit.getPlayer(args[1]);
+		User target = Core.getUser(args[0]);
 		if (target == null) {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;
 		}
-		if (Holder.hasPermission(sndr, Permission.ESS_GAMEMODE_OTHER)) {
+		if (sndr.hasPermission(Permission.ESS_GAMEMODE_OTHER)) {
 		} else {
 			sndr.sendMessage(Error.NO_PERMISSION.sendError());
 			return true;
 		}
-		PlayerConfig.getConfig(target).setGamemode(args[0]);
+		target.setGamemode(args[0]);
 		sndr.sendMessage(ChatColor.GRAY + "You changed " + args[1] + "'s gamemode to " + ChatColor.GREEN + Gamemode
 				.getAliasUsed(args[0]).toString().toLowerCase());
 		target.sendMessage(ChatColor.GRAY + "Your gamemode has been changed too " + ChatColor.GREEN + Gamemode

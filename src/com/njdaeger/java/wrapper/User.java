@@ -714,12 +714,12 @@ public class User implements IUser {
 
 	@Override
 	public LastLocation getLast() {
-		return new LastLocation(player);
+		return new LastLocation(this);
 	}
 
 	@Override
 	public LogoutLocation getLogout() {
-		return new LogoutLocation(player);
+		return new LogoutLocation(this);
 	}
 
 	@Override

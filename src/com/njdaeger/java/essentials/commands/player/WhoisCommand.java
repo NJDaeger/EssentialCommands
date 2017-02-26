@@ -1,15 +1,14 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 public class WhoisCommand extends EssCommand {
 
@@ -25,20 +24,20 @@ public class WhoisCommand extends EssCommand {
 			max = 1,
 			permissions = { Permission.ESS_WHOIS })
 	public boolean run(Sender sender, String label, String[] args) {
-		Player target = Bukkit.getPlayer(args[0]);
-		if (target == null) {
+		User user = Core.getUser(args[0]);
+		if (user == null) {
 			sender.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 			return true;
 		}
-		sender.sendMessage(g + "Realname:" + gr + target.getName());
-		sender.sendMessage(g + "Exp:" + gr + target.getExp());
-		sender.sendMessage(g + "Exp. Level:" + gr + target.getLevel());
-		sender.sendMessage(g + "Flyspeed:" + gr + PlayerConfig.getConfig(target).getFlySpeed());
-		sender.sendMessage(g + "Walkspeed:" + gr + PlayerConfig.getConfig(target).getWalkingSpeed());
-		sender.sendMessage(g + "Flyspeed:" + gr + PlayerConfig.getConfig(target).getGamemode());
-		sender.sendMessage(g + "Health Level:" + gr + target.getHealth());
-		sender.sendMessage(g + "Food Level:" + gr + target.getFoodLevel());
-		sender.sendMessage(g + "UUID:" + gr + target.getUniqueId());
+		sender.sendMessage(g + "Realname:" + gr + user.getName());
+		sender.sendMessage(g + "Exp:" + gr + user.getBase().getExp());
+		sender.sendMessage(g + "Exp. Level:" + gr + user.getBase().getLevel());
+		sender.sendMessage(g + "Flyspeed:" + gr + user.getFlyingSpeed());
+		sender.sendMessage(g + "Walkspeed:" + gr + user.getWalkingSpeed());
+		sender.sendMessage(g + "Flyspeed:" + gr + user.getGamemode());
+		sender.sendMessage(g + "Health Level:" + gr + user.getBase().getHealth());
+		sender.sendMessage(g + "Food Level:" + gr + user.getBase().getFoodLevel());
+		sender.sendMessage(g + "UUID:" + gr + user.getId());
 		return true;
 	}
 }

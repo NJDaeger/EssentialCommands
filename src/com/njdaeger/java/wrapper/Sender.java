@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
 import com.njdaeger.java.Core;
+import com.njdaeger.java.Holder;
+import com.njdaeger.java.essentials.enums.Error;
 
 public class Sender {
 
@@ -65,6 +67,10 @@ public class Sender {
 		return null;
 	}
 
+	public void sendError(Error error) {
+		sender.sendMessage(error.sendError());
+	}
+
 	public boolean isOp() {
 		return sender.isOp();
 	}
@@ -95,5 +101,9 @@ public class Sender {
 
 	public boolean hasPermission(Permission permission) {
 		return sender.hasPermission(permission);
+	}
+
+	public boolean hasPermission(com.njdaeger.java.essentials.enums.Permission... permission) {
+		return Holder.hasPermission(sender, permission);
 	}
 }

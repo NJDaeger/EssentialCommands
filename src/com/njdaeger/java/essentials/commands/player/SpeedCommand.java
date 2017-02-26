@@ -1,16 +1,16 @@
 package com.njdaeger.java.essentials.commands.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import com.njdaeger.java.Holder;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
-import com.njdaeger.java.configuration.controllers.PlayerConfig;
+import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 public class SpeedCommand extends EssCommand {
 
@@ -26,172 +26,151 @@ public class SpeedCommand extends EssCommand {
 	public boolean run(Sender sndr, String label, String[] args) {
 		switch (args.length) {
 		case 1:
-			if (!sndr.isPlayer()) {
+			if (!sndr.isUser()) {
 				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
 				return true;
 			}
-			Player player = sndr.asPlayer();
+			User user = sndr.asUser();
 			if (!Util.isDouble(args[0])) {
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
-					PlayerConfig.getConfig(player).setFlySpeed(1);
-					PlayerConfig.getConfig(player).setWalkingSpeed(1);
+					user.sendMessage(ChatColor.GRAY + "Your speed has been reset.");
+					if (user.isFlying()) {
+						user.setFlyingSpeed(1);
+						return true;
+					}
+					user.setWalkingSpeed(1);
 					return true;
 				}
 				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 				return true;
 			}
 			if (label.equalsIgnoreCase("flypseed")) {
-				PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
+				user.setFlyingSpeed(Double.parseDouble(args[0]));
+				user.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
 			if (label.equalsIgnoreCase("walkspeed")) {
-				PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
+				user.setWalkingSpeed(Double.parseDouble(args[0]));
+				user.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
-			if (player.isFlying()) {
-				PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
+			if (user.isFlying()) {
+				user.setFlyingSpeed(Double.parseDouble(args[0]));
+				user.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
-			PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
+			user.setWalkingSpeed(Double.parseDouble(args[0]));
+			user.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
 			return true;
 		case 2:
-		default:
-			break;
-		}
-		if (args.length == 1) {
-			if (!sndr.isPlayer()) {
-				sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
-				return true;
-			}
-			Player player = sndr.asPlayer();
-			if (!Util.isDouble(args[0])) {
-				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
-					if (player.isFlying()) {
-						PlayerConfig.getConfig(player).setFlySpeed(1);
-						return true;
-					}
-					PlayerConfig.getConfig(player).setWalkingSpeed(1);
+			if (sndr.hasPermission(Permission.ESS_SPEED_OTHER)) {
+				User target = Core.getUser(args[1]);
+				if (target == null) {
+					sndr.sendError(Error.UNKNOWN_PLAYER);
 					return true;
 				}
-				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
-				return true;
-			}
-			if (Holder.hasPermission(player, Permission.ESS_SPEED, Permission.ESS_SPEED_OTHER)) {
-				if (label.equalsIgnoreCase("flypseed")) {
-					if (!player.isFlying()) {
-						sndr.sendMessage(Error.throwError("You must be flying to set your flying speed."));
+				if (!Util.isDouble(args[0])) {
+					if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+						target.sendMessage(ChatColor.GRAY + "Your speed has been reset.");
+						sndr.sendMessage(ChatColor.GRAY + "You reset " + ChatColor.GREEN + target.getName()
+								+ ChatColor.GRAY + "'s speed.");
+
+						if (target.isFlying()) {
+							target.setFlyingSpeed(1);
+							return true;
+						}
+						target.setWalkingSpeed(1);
 						return true;
 					}
-					PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
+					sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
+					return true;
+				}
+				if (label.equalsIgnoreCase("flypseed")) {
+					target.setFlyingSpeed(Double.parseDouble(args[0]));
+					target.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+							+ "'s fly speed to " + ChatColor.GREEN + args[0]);
 					return true;
 				}
 				if (label.equalsIgnoreCase("walkspeed")) {
-					if (player.isFlying()) {
-						sndr.sendMessage(Error.throwError("You must be walking to set your walking speed."));
-						return true;
-					}
-					PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
-					return true;
-				} else {
-					if (player.isFlying()) {
-						PlayerConfig.getConfig(player).setFlySpeed(Double.parseDouble(args[0]));
-						return true;
-					}
-					PlayerConfig.getConfig(player).setWalkingSpeed(Double.parseDouble(args[0]));
+					target.setWalkingSpeed(Double.parseDouble(args[0]));
+					target.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+							+ "'s walk speed to " + ChatColor.GREEN + args[0]);
 					return true;
 				}
-			}
-		}
-		if (args.length == 2) {
-			if (sndr.isPlayer()) {
-				Player player = sndr.asPlayer();
-				if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
-
-				} else {
-					sndr.sendMessage(Error.NO_PERMISSION.sendError());
+				if (target.isFlying()) {
+					target.setFlyingSpeed(Double.parseDouble(args[0]));
+					target.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+							+ "'s walk speed to " + ChatColor.GREEN + args[0]);
 					return true;
 				}
-			}
-			Player target = Bukkit.getPlayer(args[1]);
-			if (!Util.isDouble(args[0])) {
-				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
-					if (target.isFlying()) {
-						PlayerConfig.getConfig(target).setFlySpeed(1);
-						return true;
-					}
-					PlayerConfig.getConfig(target).setWalkingSpeed(1);
-					return true;
-				}
-				sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
+				target.setWalkingSpeed(Double.parseDouble(args[0]));
+				target.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
+				sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+						+ "'s walk speed to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
+					Permission.ESS_SPEED_OTHER));
+			return true;
+		default:
+			User target = Core.getUser(args[1]);
 			if (target == null) {
-				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+				sndr.sendError(Error.UNKNOWN_PLAYER);
 				return true;
 			}
-			if (label.equalsIgnoreCase("flypseed")) {
-				if (!target.isFlying()) {
-					sndr.sendMessage(Error.throwError("Target must be flying in order to set their fly speed."));
+			if (sndr.hasPermission(Permission.ESS_SPEED_OTHER)) {
+				if (!Util.isDouble(args[0])) {
+					if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
+						if (args[2].equalsIgnoreCase("fly")) {
+							target.sendMessage(ChatColor.GRAY + "Your fly speed has been reset.");
+							sndr.sendMessage(ChatColor.GRAY + "You reset " + ChatColor.GREEN + target.getName()
+									+ ChatColor.GRAY + "'s walk speed.");
+							target.setFlyingSpeed(1);
+							return true;
+						}
+						if (args[2].equalsIgnoreCase("walk")) {
+							target.sendMessage(ChatColor.GRAY + "Your walk speed has been reset.");
+							sndr.sendMessage(ChatColor.GRAY + "You reset " + ChatColor.GREEN + target.getName()
+									+ ChatColor.GRAY + "'s walk speed.");
+							target.setWalkingSpeed(1);
+							return true;
+						}
+						sndr.sendError(Error.UNKNOWN_WALK_TYPE);
+						return true;
+					}
+					sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
 					return true;
 				}
-				PlayerConfig.getConfig(target).setFlySpeed(Double.parseDouble(args[0]));
-				return true;
-			}
-			if (label.equalsIgnoreCase("walkspeed")) {
-				if (target.isFlying()) {
-					sndr.sendMessage(Error.throwError("Target must be walking in order to set their walk speed."));
+				if (label.equalsIgnoreCase("flyspeed")) {
+					sndr.sendError(Error.TOO_MANY_ARGS);
 					return true;
 				}
-				PlayerConfig.getConfig(target).setWalkingSpeed(Double.parseDouble(args[0]));
-				return true;
-			} else {
-				if (target.isFlying()) {
-					PlayerConfig.getConfig(target).setFlySpeed(Double.parseDouble(args[0]));
+				if (label.equalsIgnoreCase("walkspeed")) {
+					sndr.sendError(Error.TOO_MANY_ARGS);
 					return true;
 				}
-				PlayerConfig.getConfig(target).setWalkingSpeed(Double.parseDouble(args[0]));
-				return true;
-			}
-		}
-		if (sndr.isPlayer()) {
-			Player player = sndr.asPlayer();
-			if (Holder.hasPermission(player, Permission.ESS_SPEED_OTHER)) {
-
-			} else {
-				sndr.sendMessage(Error.NO_PERMISSION.sendError());
-				return true;
-			}
-		}
-		Player target = Bukkit.getPlayer(args[1]);
-		if (!Util.isDouble(args[0])) {
-			if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
-				if (target.isFlying()) {
-					PlayerConfig.getConfig(target).setFlySpeed(1);
+				if (args[2].equalsIgnoreCase("fly")) {
+					target.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+							+ "'s fly speed to " + ChatColor.GREEN + args[0]);
+					target.setFlyingSpeed(Double.parseDouble(args[0]));
 					return true;
 				}
-				PlayerConfig.getConfig(target).setWalkingSpeed(1);
+				if (args[2].equalsIgnoreCase("walk")) {
+					target.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
+					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY
+							+ "'s walk speed to " + ChatColor.GREEN + args[0]);
+					target.setWalkingSpeed(Double.parseDouble(args[0]));
+					return true;
+				}
+				sndr.sendError(Error.UNKNOWN_WALK_TYPE);
 				return true;
 			}
-			sndr.sendMessage(Error.INPUT_NOT_NUM.sendError());
-			return true;
-		}
-		if (target == null) {
-			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
-			return true;
-		}
-		if (label.equalsIgnoreCase("walkspeed") || label.equalsIgnoreCase("flyspeed")) {
-			sndr.sendMessage(Error.TOO_MANY_ARGS.sendError());
-			return true;
-		}
-		if (args[2].equalsIgnoreCase("fly") || args[2].equalsIgnoreCase("flying")) {
-			PlayerConfig.getConfig(target).setFlySpeed(Double.parseDouble(args[0]));
-			return true;
-		}
-		if (args[2].equalsIgnoreCase("walk") || args[2].equalsIgnoreCase("walking")) {
-			PlayerConfig.getConfig(target).setWalkingSpeed(Double.parseDouble(args[0]));
-			return true;
-		} else {
-			sndr.sendMessage(Error.throwError("Unknown walking type."));
+			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",
+					Permission.ESS_SPEED_OTHER));
 			return true;
 		}
 	}

@@ -8,8 +8,6 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.data.PlayerConfigData;
-
 public class Groups {
 
 	/**
