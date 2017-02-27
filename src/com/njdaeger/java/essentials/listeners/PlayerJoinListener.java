@@ -44,19 +44,17 @@ public class PlayerJoinListener implements Listener {
 		DatabaseData base = Database.getDatabase("playerdata");
 		if (base.getBase() == null) {
 			base.create();
+		}
+		if (base.getEntry(player.getName()) == null) {
 			base.addEntry(player.getName(), player.getId().toString());
 			return;
-		} else if (base.getEntry(player.getName()) == null) {
-			base.addEntry(player.getName(), player.getId().toString());
+		}
+		if (base.getEntry(player.getName()).matches(player.getId().toString())) {
 			return;
 		} else {
-			if (base.getEntry(player.getName()).matches(player.getId().toString())) {
-				return;
-			} else {
-				base.removeEntry(player.getName());
-				base.addEntry(player.getName(), player.getId().toString());
-				return;
-			}
+			base.removeEntry(player.getName());
+			base.addEntry(player.getName(), player.getId().toString());
+			return;
 		}
 	}
 

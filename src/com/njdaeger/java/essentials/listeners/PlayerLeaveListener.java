@@ -19,6 +19,7 @@ public class PlayerLeaveListener implements Listener {
 
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
+		Core.getUser(e.getPlayer()).logoutUpdate();
 		if (Core.getConf().loadInMemory()) {
 			Transform.unload(e.getPlayer());
 		}
