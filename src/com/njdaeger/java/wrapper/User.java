@@ -27,10 +27,13 @@ public class User implements IUser {
 	//The base player this user represents.
 	private Player player;
 
+	//Check if memory configuration is enabled.
 	private boolean memory = Core.getConf().loadInMemory();
 
+	//If the player configuration exists or not.
 	private boolean exists;
 
+	//The user's base file. Where everything is created and reset.
 	private UserFile userFile;
 
 	//private HashMap<UUID, User> onlinePlayers = new HashMap<>();
@@ -745,51 +748,137 @@ public class User implements IUser {
 	}
 
 	@Override
+	public void setLoginTime() {
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(player, PlayerPaths.LOGIN, System.currentTimeMillis());
+			return;
+		}
+		userFile.setValue(PlayerPaths.LOGIN.getPath(), System.currentTimeMillis());
+	}
+
+	@Override
+	public long getLoginTime() {
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Object a = Transform.getValue(player, PlayerPaths.LOGIN);
+			if (a == null) {
+				return -1;
+			}
+			return (long) a;
+		}
+		Object a = userFile.getValue(PlayerPaths.LOGIN.getPath());
+		if (a == null) {
+			return -1;
+		}
+		return (long) a;
+	}
+
+	@Override
+	public void setLogoutTime() {
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Transform.setValue(player, PlayerPaths.LOGOUT, System.currentTimeMillis());
+			return;
+		}
+		userFile.setValue(PlayerPaths.LOGOUT.getPath(), System.currentTimeMillis());
+	}
+
+	@Override
+	public long getLogoutTime() {
+		if (!exists) {
+			userFile.createConfig();
+		}
+		if (memory) {
+			Object a = Transform.getValue(player, PlayerPaths.LOGOUT);
+			if (a == null) {
+				return -1;
+			}
+			return (long) a;
+		}
+		Object a = userFile.getValue(PlayerPaths.LOGOUT.getPath());
+		if (a == null) {
+			return -1;
+		}
+		return (long) a;
+	}
+
+	@Override
 	public IUser loginUpdate() {
 		if (!exists) {
 			userFile.createConfig();
 		}
-		if (userFile.getValue(PlayerPaths.PLAYERNAME.getPath()) == null) {
-			userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
-		}
-		if (userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()) == null) {
-			userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), player.getName());
-		}
-		if (userFile.getValue(PlayerPaths.IP.getPath()) == null) {
-			userFile.setValue(PlayerPaths.IP.getPath(), player.getAddress().getAddress().getHostAddress());
-		}
-		if (userFile.getValue(PlayerPaths.FLYING.getPath()) == null) {
-			userFile.setValue(PlayerPaths.FLYING.getPath(), player.isFlying());
-		}
-		if (userFile.getValue(PlayerPaths.GAMEMODE.getPath()) == null) {
-			userFile.setValue(PlayerPaths.GAMEMODE.getPath(), player.getGameMode().name());
-		}
-		if (userFile.getValue(PlayerPaths.OPPED.getPath()) == null) {
-			userFile.setValue(PlayerPaths.OPPED.getPath(), player.isOp());
-		}
-		if (userFile.getValue(PlayerPaths.LOGIN.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGIN.getPath(), System.currentTimeMillis());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_WORLD.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_WORLD.getPath(), player.getWorld().getName());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_X.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_X.getPath(), player.getLocation().getX());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_Y.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_Y.getPath(), player.getLocation().getY());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_Z.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_Z.getPath(), player.getLocation().getZ());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_YAW.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_YAW.getPath(), player.getLocation().getYaw());
-		}
-		if (userFile.getValue(PlayerPaths.LAST_PITCH.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LAST_PITCH.getPath(), player.getLocation().getPitch());
-		}
 		if (memory) {
 			new Transform(getBase());
+		}
+		if (userFile.getValue(PlayerPaths.PLAYERNAME.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.PLAYERNAME, getName());
+			} else
+				userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
+		}
+		if (userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.DISPLAYNAME, player.getName());
+			} else
+				userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), player.getName());
+		}
+		if (userFile.getValue(PlayerPaths.IP.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.IP, player.getAddress().getAddress().getHostAddress());
+			} else
+				userFile.setValue(PlayerPaths.IP.getPath(), player.getAddress().getAddress().getHostAddress());
+		}
+		if (userFile.getValue(PlayerPaths.FLYING.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.FLYING, player.isFlying());
+			} else
+				userFile.setValue(PlayerPaths.FLYING.getPath(), player.isFlying());
+		}
+		if (userFile.getValue(PlayerPaths.GAMEMODE.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.GAMEMODE, player.getGameMode().name());
+			} else
+				userFile.setValue(PlayerPaths.GAMEMODE.getPath(), player.getGameMode().name());
+		}
+		if (userFile.getValue(PlayerPaths.OPPED.getPath()) == null) {
+			if (memory) {
+				Transform.setValue(player, PlayerPaths.OPPED, player.isOp());
+			} else
+				userFile.setValue(PlayerPaths.OPPED.getPath(), player.isOp());
+		}
+		if (userFile.getValue(PlayerPaths.LOGIN.getPath()) == null) {
+			setLoginTime();
+		}
+		if (userFile.getValue(PlayerPaths.LAST_WORLD.getPath()) == null) {
+			getLast().setWorld(getWorld().getName());
+			//userFile.setValue(PlayerPaths.LAST_WORLD.getPath(), player.getWorld().getName());
+		}
+		if (userFile.getValue(PlayerPaths.LAST_X.getPath()) == null) {
+			getLast().setX(getX());
+			//userFile.setValue(PlayerPaths.LAST_X.getPath(), player.getLocation().getX());
+		}
+		if (userFile.getValue(PlayerPaths.LAST_Y.getPath()) == null) {
+			getLast().setY(getY());
+			//userFile.setValue(PlayerPaths.LAST_Y.getPath(), player.getLocation().getY());
+		}
+		if (userFile.getValue(PlayerPaths.LAST_Z.getPath()) == null) {
+			getLast().setZ(getZ());
+			//userFile.setValue(PlayerPaths.LAST_Z.getPath(), player.getLocation().getZ());
+		}
+		if (userFile.getValue(PlayerPaths.LAST_YAW.getPath()) == null) {
+			getLast().setYaw(getYaw());
+			//userFile.setValue(PlayerPaths.LAST_YAW.getPath(), player.getLocation().getYaw());
+		}
+		if (userFile.getValue(PlayerPaths.LAST_PITCH.getPath()) == null) {
+			getLast().setPitch(getPitch());
+			//userFile.setValue(PlayerPaths.LAST_PITCH.getPath(), player.getLocation().getPitch());
 		}
 		return this;
 	}
@@ -806,25 +895,32 @@ public class User implements IUser {
 			setBubbled(false);
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT.getPath(), System.currentTimeMillis());
+			setLogoutTime();
+			//userFile.setValue(PlayerPaths.LOGOUT.getPath(), System.currentTimeMillis());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_WORLD.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_WORLD.getPath(), player.getWorld().getName());
+			getLogout().setWorld(getWorld().getName());
+			//userFile.setValue(PlayerPaths.LOGOUT_WORLD.getPath(), player.getWorld().getName());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_X.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_X.getPath(), player.getLocation().getX());
+			getLogout().setX(getX());
+			//userFile.setValue(PlayerPaths.LOGOUT_X.getPath(), player.getLocation().getX());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_Y.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_Y.getPath(), player.getLocation().getY());
+			getLogout().setY(getY());
+			//userFile.setValue(PlayerPaths.LOGOUT_Y.getPath(), player.getLocation().getY());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_Z.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_Z.getPath(), player.getLocation().getZ());
+			getLogout().setZ(getZ());
+			//userFile.setValue(PlayerPaths.LOGOUT_Z.getPath(), player.getLocation().getZ());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_YAW.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_YAW.getPath(), player.getLocation().getYaw());
+			getLogout().setYaw(getYaw());
+			//userFile.setValue(PlayerPaths.LOGOUT_YAW.getPath(), player.getLocation().getYaw());
 		}
 		if (userFile.getValue(PlayerPaths.LOGOUT_PITCH.getPath()) == null) {
-			userFile.setValue(PlayerPaths.LOGOUT_PITCH.getPath(), player.getLocation().getPitch());
+			getLogout().setPitch(getPitch());
+			//userFile.setValue(PlayerPaths.LOGOUT_PITCH.getPath(), player.getLocation().getPitch());
 		}
 		if (memory) {
 			Transform.unload(getBase());

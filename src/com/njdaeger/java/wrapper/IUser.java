@@ -336,6 +336,30 @@ public interface IUser {
 	boolean hasPermission(String permission);
 
 	/**
+	 * Sets the logout time to the current time.
+	 */
+	void setLogoutTime();
+
+	/**
+	 * Gets the logout time of the user.
+	 * 
+	 * @return The users logout time.
+	 */
+	long getLogoutTime();
+
+	/**
+	 * Sets the login time to the current time.
+	 */
+	void setLoginTime();
+
+	/**
+	 * Gets the login time of the user.
+	 * 
+	 * @return The users login time.
+	 */
+	long getLoginTime();
+
+	/**
 	 * Get the users yml file.
 	 * 
 	 * @return The user yml file.
