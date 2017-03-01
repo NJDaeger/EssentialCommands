@@ -32,7 +32,7 @@ public class Message {
 		sndr.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "You >> " + ChatColor.GREEN + ChatColor.BOLD + "CONSOLE"
 				+ ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.RESET + message);
 		console.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
-				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor.RESET + message);
+				+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + message);
 		return;
 	}
 
@@ -47,7 +47,7 @@ public class Message {
 	public Message(Sender sndr, Player player, boolean chatColor, String message) {
 		if (chatColor) {
 			sndr.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "You >> " + ChatColor.GREEN + ChatColor.BOLD
-					+ player.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ":" + ChatColor
+					+ player.getDisplayName() + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor
 							.translateAlternateColorCodes('&', message));
 			player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + sndr.getName() + " >> " + ChatColor.GRAY
 					+ ChatColor.BOLD + "You" + ChatColor.GRAY + ChatColor.BOLD + ": " + ChatColor.RESET + ChatColor

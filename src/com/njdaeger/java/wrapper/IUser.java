@@ -18,7 +18,7 @@ public interface IUser {
 	/**
 	 * A set of various tasks to do when a user quits the server.
 	 */
-	IUser logoutUpdate();
+	void logoutUpdate();
 
 	/**
 	 * Checks if the User is muted or not.

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
-import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
@@ -87,7 +86,7 @@ public class Core extends JavaPlugin {
 				user = new User(players);
 				onlineUserMap.put(players.getUniqueId(), user);
 				onlineUsers.add(user);
-				new Transform(players);
+				user.loginUpdate();
 			}
 		}
 	}
@@ -97,7 +96,11 @@ public class Core extends JavaPlugin {
 		if (isReloading()) {
 			if (getConf().loadInMemory()) {
 				for (Player players : Bukkit.getOnlinePlayers()) {
-					Transform.unload(players);
+					User user = getUser(players);
+					user.logoutUpdate();
+					user = null;
+					onlineUsers.clear();
+					onlineUserMap.remove(players.getUniqueId());
 				}
 			}
 			return;

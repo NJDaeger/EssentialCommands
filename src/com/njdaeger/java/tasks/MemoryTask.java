@@ -1,10 +1,10 @@
 package com.njdaeger.java.tasks;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.Transform;
+import com.njdaeger.java.wrapper.User;
 
 public class MemoryTask {
 
@@ -15,9 +15,9 @@ public class MemoryTask {
 				public void run() {
 					int i = 0;
 					if (!Bukkit.getOnlinePlayers().isEmpty()) {
-						for (Player players : Bukkit.getOnlinePlayers()) {
+						for (User users : Core.getOnlineUsers()) {
 							i++;
-							Transform.reload(players);
+							Transform.reload(users);
 						}
 						System.out.println("[MemoryTask] Saved " + i + " memory configuration(s) to file storage.");
 						return;

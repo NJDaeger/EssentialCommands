@@ -44,8 +44,10 @@ public class User implements IUser {
 	 * @param player The player.
 	 */
 	public User(Player player) {
-		Core.getOnlineUserMap().put(player.getUniqueId(), this);
-		Core.getOnlineUsers().add(this);
+		if (!Core.isReloading()) {
+			Core.getOnlineUserMap().put(player.getUniqueId(), this);
+			Core.getOnlineUsers().add(this);
+		}
 		this.player = player;
 		this.userFile = new UserFile(player);
 		this.exists = getUserFile().exists();
@@ -125,7 +127,7 @@ public class User implements IUser {
 
 	@Override
 	public Location getLocation() {
-		return new Location(getWorld(), getX(), getY(), getZ(), getYaw(), getPitch());
+		return player.getLocation();
 	}
 
 	@Override
@@ -275,12 +277,12 @@ public class User implements IUser {
 			Transform.setValue(player, PlayerPaths.AFK, value);
 			if (value) {
 				Groups.afk.add(player);
-				Groups.afkloc.put(getName(), getLocation());
+				Groups.afkloc.put(player.getName(), player.getLocation());
 				Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
 				return;
 			} else {
 				Groups.afk.remove(player);
-				Groups.afkloc.remove(getName());
+				Groups.afkloc.remove(player.getName());
 				Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
 			}
 			return;
@@ -288,12 +290,12 @@ public class User implements IUser {
 		userFile.setValue(PlayerPaths.AFK.getPath(), value);
 		if (value) {
 			Groups.afk.add(player);
-			Groups.afkloc.put(getName(), getLocation());
+			Groups.afkloc.put(player.getName(), player.getLocation());
 			Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is now AFK.");
 			return;
 		}
 		Groups.afk.remove(player);
-		Groups.afkloc.remove(getName());
+		Groups.afkloc.remove(player.getName());
 		Bukkit.broadcastMessage(ChatColor.GRAY + "* " + player.getDisplayName() + " is no longer AFK.");
 		return;
 	}
@@ -864,7 +866,7 @@ public class User implements IUser {
 	}
 
 	@Override
-	public IUser logoutUpdate() {
+	public void logoutUpdate() {
 		if (isAfk()) {
 			setAfk(false);
 		}
@@ -882,8 +884,8 @@ public class User implements IUser {
 		getLogout().setYaw(getYaw());
 		getLogout().setPitch(getPitch());
 		if (memory) {
-			Transform.unload(getBase());
+			Transform.unload(Core.getUser(player));
 		}
-		return this;
+		return;
 	}
 }

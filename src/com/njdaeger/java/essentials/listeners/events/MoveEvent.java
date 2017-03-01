@@ -10,12 +10,12 @@ import com.njdaeger.java.wrapper.User;
 public class MoveEvent {
 
 	public void whenAfk(PlayerMoveEvent e) {
-		Location loc = e.getTo();
-		Location a = Groups.afkloc.get(e.getPlayer().getName());
-		User user = Core.getUser(e.getPlayer());
+		User user = Core.getUser(e.getPlayer().getName());
 		if (user.isAfk()) {
+			Location loc = e.getTo();
+			Location a = Groups.afkloc.get(e.getPlayer().getName());
 			if (a.distance(loc) >= 3) {
-				user.setAfk(!user.isAfk());
+				user.setAfk(false);
 				return;
 			}
 		}

@@ -19,7 +19,7 @@ public class PlayerLeaveListener implements Listener {
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
 		Core.getUser(e.getPlayer()).logoutUpdate();
-		/*
+		/* 
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
 			Date expire = Bukkit.getServer().getBanList(Type.NAME).getBanEntry(player.getName()).getExpiration();
