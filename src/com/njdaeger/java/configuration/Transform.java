@@ -21,22 +21,18 @@ public class Transform {
 	private static UserFile conf;
 	//The memory configuration.
 	private static HashMap<UUID, HashMap<PlayerPaths, Object>> memconf = new HashMap<>();
-	//The keys from the YAML configuration as a hashmap.
-	private static HashMap<PlayerPaths, Object> values = new HashMap<>();
 
 	/**
 	 * When the player joins the configuration wants to be loaded into memory.
 	 * 
 	 * @param player
 	 */
+	//This needs to be the last thing to do when the player joins
 	public Transform(Player player) {
 		User user = Core.getUser(player);
-		if (isLoaded(user)) {
-			System.out.println("Player confifuration is already loaded into memory. Skipping.");
-			return;
-		}
 		System.out.println("Loading " + player.getName() + "'s configuration into memory.");
 		Transform.conf = user.getUserFile();
+		HashMap<PlayerPaths, Object> values = new HashMap<>();
 		for (PlayerPaths paths : PlayerPaths.values()) {
 			values.put(paths, conf.getValue(paths.getPath()));
 		}
@@ -67,8 +63,7 @@ public class Transform {
 			for (PlayerPaths paths : PlayerPaths.values()) {
 				conf.setValue(paths.getPath(), memconf.get(user.getId()).get(paths));
 			}
-			memconf.clear();
-			values.clear();
+			memconf.remove(user.getId()).clear();
 			System.out.println("Unloaded " + user.getName() + " from memory.");
 			return;
 		}

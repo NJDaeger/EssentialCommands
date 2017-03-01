@@ -45,8 +45,7 @@ public class User implements IUser {
 	 */
 	public User(Player player) {
 		if (!Core.isReloading()) {
-			Core.getOnlineUserMap().put(player.getUniqueId(), this);
-			Core.getOnlineUsers().add(this);
+
 		}
 		this.player = player;
 		this.userFile = new UserFile(player);
@@ -812,6 +811,7 @@ public class User implements IUser {
 	}
 
 	@Override
+	//Dont give the option to write to the memory config. Load the memory last.
 	public IUser loginUpdate() {
 		if (!exists) {
 			userFile.createConfig();
@@ -886,6 +886,8 @@ public class User implements IUser {
 		if (memory) {
 			Transform.unload(Core.getUser(player));
 		}
+		Core.getOnlineUserMap().remove(getId());
+		Core.getOnlineUsers().remove(this);
 		return;
 	}
 }

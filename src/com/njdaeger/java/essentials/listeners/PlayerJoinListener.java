@@ -21,7 +21,9 @@ public class PlayerJoinListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		new User(e.getPlayer()).loginUpdate();
+		User user = (User) new User(e.getPlayer()).loginUpdate();
+		Core.getOnlineUserMap().put(user.getId(), user);
+		Core.getOnlineUsers().add(user);
 		if (e.getPlayer().isBanned()) {
 			if (new BanAPI().isBanExpired(e.getPlayer().getName())) {
 				new BanAPI().unban(e.getPlayer().getName());
