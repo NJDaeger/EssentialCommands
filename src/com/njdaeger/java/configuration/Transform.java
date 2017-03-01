@@ -20,7 +20,7 @@ public class Transform {
 	//The player's YAML configuration to get the default values from.
 	private static UserFile conf;
 	//The memory configuration.
-	private static HashMap<UUID, HashMap<PlayerPaths, Object>> memconf = new HashMap<>();
+	private static HashMap<UUID, HashMap<PlayerPaths, Object>> memconf = new HashMap<UUID, HashMap<PlayerPaths, Object>>();
 
 	/**
 	 * When the player joins the configuration wants to be loaded into memory.

@@ -84,8 +84,6 @@ public class Core extends JavaPlugin {
 			setReloading(false);
 			for (Player players : Bukkit.getOnlinePlayers()) {
 				user = new User(players);
-				onlineUserMap.put(players.getUniqueId(), user);
-				onlineUsers.add(user);
 				user.loginUpdate();
 			}
 		}
@@ -100,7 +98,7 @@ public class Core extends JavaPlugin {
 					user.logoutUpdate();
 					user = null;
 					onlineUsers.clear();
-					onlineUserMap.remove(players.getUniqueId());
+					onlineUserMap.clear();
 				}
 			}
 			return;

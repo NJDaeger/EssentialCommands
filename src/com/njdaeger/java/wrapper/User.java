@@ -44,9 +44,8 @@ public class User implements IUser {
 	 * @param player The player.
 	 */
 	public User(Player player) {
-		if (!Core.isReloading()) {
-
-		}
+		Core.getOnlineUserMap().put(player.getUniqueId(), this);
+		Core.getOnlineUsers().add(this);
 		this.player = player;
 		this.userFile = new UserFile(player);
 		this.exists = getUserFile().exists();
@@ -464,7 +463,7 @@ public class User implements IUser {
 			userFile.createConfig();
 		}
 		if (memory) {
-			return (double) Transform.getValue(getBase(), PlayerPaths.FLYSPEED);
+			return (double) Transform.getValue(player, PlayerPaths.FLYSPEED);
 		}
 		return (double) userFile.getValue(PlayerPaths.FLYSPEED.getPath());
 	}
@@ -816,44 +815,44 @@ public class User implements IUser {
 		if (!exists) {
 			userFile.createConfig();
 		}
-		if (memory) {
-			new Transform(getBase());
-		}
 		if (userFile.getValue(PlayerPaths.PLAYERNAME.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.PLAYERNAME, getName());
-			} else
-				userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
+			} else*/
+			userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
 		}
 		if (userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.DISPLAYNAME, player.getName());
-			} else
-				userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), player.getName());
+			} else*/
+			userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), player.getName());
 		}
 		if (userFile.getValue(PlayerPaths.IP.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.IP, player.getAddress().getAddress().getHostAddress());
-			} else
-				userFile.setValue(PlayerPaths.IP.getPath(), player.getAddress().getAddress().getHostAddress());
+			} else*/
+			userFile.setValue(PlayerPaths.IP.getPath(), player.getAddress().getAddress().getHostAddress());
 		}
 		if (userFile.getValue(PlayerPaths.FLYING.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.FLYING, player.isFlying());
-			} else
-				userFile.setValue(PlayerPaths.FLYING.getPath(), player.isFlying());
+			} else*/
+			userFile.setValue(PlayerPaths.FLYING.getPath(), player.isFlying());
 		}
 		if (userFile.getValue(PlayerPaths.GAMEMODE.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.GAMEMODE, player.getGameMode().name());
-			} else
-				userFile.setValue(PlayerPaths.GAMEMODE.getPath(), player.getGameMode().name());
+			} else*/
+			userFile.setValue(PlayerPaths.GAMEMODE.getPath(), player.getGameMode().name());
 		}
 		if (userFile.getValue(PlayerPaths.OPPED.getPath()) == null) {
-			if (memory) {
+			/*if (memory) {
 				Transform.setValue(player, PlayerPaths.OPPED, player.isOp());
-			} else
-				userFile.setValue(PlayerPaths.OPPED.getPath(), player.isOp());
+			} else*/
+			userFile.setValue(PlayerPaths.OPPED.getPath(), player.isOp());
+		}
+		if (memory) {
+			new Transform(getBase());
 		}
 		setLoginTime();
 		getLast().setWorld(getWorld().getName());
@@ -886,8 +885,6 @@ public class User implements IUser {
 		if (memory) {
 			Transform.unload(Core.getUser(player));
 		}
-		Core.getOnlineUserMap().remove(getId());
-		Core.getOnlineUsers().remove(this);
 		return;
 	}
 }

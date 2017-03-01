@@ -13,6 +13,9 @@ import com.njdaeger.java.essentials.utils.BanAPI;
 import com.njdaeger.java.wrapper.User;
 
 public class PlayerJoinListener implements Listener {
+
+	private BanAPI essBan = Core.getBanAPI();
+
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
 
 	public PlayerJoinListener(Core plugin) {
@@ -21,12 +24,10 @@ public class PlayerJoinListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		User user = (User) new User(e.getPlayer()).loginUpdate();
-		Core.getOnlineUserMap().put(user.getId(), user);
-		Core.getOnlineUsers().add(user);
+		new User(e.getPlayer()).loginUpdate();
 		if (e.getPlayer().isBanned()) {
-			if (new BanAPI().isBanExpired(e.getPlayer().getName())) {
-				new BanAPI().unban(e.getPlayer().getName());
+			if (essBan.isBanExpired(e.getPlayer().getName())) {
+				essBan.unban(e.getPlayer().getName());
 			}
 		}
 		return;

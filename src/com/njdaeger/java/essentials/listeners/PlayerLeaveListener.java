@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
+import com.njdaeger.java.wrapper.User;
 
 public class PlayerLeaveListener implements Listener {
 
@@ -18,7 +19,10 @@ public class PlayerLeaveListener implements Listener {
 
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		Core.getUser(e.getPlayer()).logoutUpdate();
+		User user = Core.getUser(e.getPlayer());
+		user.logoutUpdate();
+		Core.getOnlineUserMap().remove(user.getId());
+		Core.getOnlineUsers().remove(user);
 		/* 
 		Player player = e.getPlayer();
 		if (player.isBanned()) {
