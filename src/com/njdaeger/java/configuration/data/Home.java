@@ -8,19 +8,29 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
-import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.configuration.interfaces.IHomeHandler;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
 import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.wrapper.User;
 
-public class HomeData extends Homes implements IValues, IHomeHandler, ISetValues {
+public class Home implements IValues, IHomeHandler, ISetValues {
+
+	private User user;
+
+	private String home;
+
+	public Home(User user, String home) {
+		this.user = user;
+		this.home = home;
+	}
 
 	File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
-			+ target.getUniqueId().toString() + File.separator + "homes");
+			+ user.getId() + File.separator + "homes");
 	File homes = new File(dir + File.separator + home + ".yml");
+
+	YamlConfiguration homefile = YamlConfiguration.loadConfiguration(homes);
 
 	@Override
 	public void create() {
@@ -29,12 +39,12 @@ public class HomeData extends Homes implements IValues, IHomeHandler, ISetValues
 		}
 		try {
 			homes.createNewFile();
-			setX(target.getLocation().getX());
-			setY(target.getLocation().getY());
-			setZ(target.getLocation().getZ());
-			setYaw(target.getLocation().getYaw());
-			setPitch(target.getLocation().getPitch());
-			setWorld(target.getLocation().getWorld().getName());
+			setX(user.getX());
+			setY(user.getY());
+			setZ(user.getZ());
+			setYaw(user.getYaw());
+			setPitch(user.getPitch());
+			setWorld(user.getWorld().getName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,55 +76,53 @@ public class HomeData extends Homes implements IValues, IHomeHandler, ISetValues
 	public void sendHome() {
 		World world = Bukkit.getWorld(getWorld());
 		if (world == null) {
-			target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
+			user.sendMessage(Error.WORLD_NOT_FOUND.sendError());
 			return;
 		}
-		Location location = new Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
-		target.teleport(location);
+		user.tp(getAsLocation());
 		return;
 
 	}
 
 	@Override
-	public void sendOtherHome(Player target) {
+	public void sendOtherHome(User target) {
 		World world = Bukkit.getWorld(getWorld());
 		if (world == null) {
 			target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
 			return;
 		}
-		Location location = new Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
-		target.teleport(location);
+		target.tp(getAsLocation());
 		return;
 	}
 
 	@Override
 	public double getX() {
-		return YamlConfiguration.loadConfiguration(homes).getDouble("x");
+		return homefile.getDouble("x");
 	}
 
 	@Override
 	public double getY() {
-		return YamlConfiguration.loadConfiguration(homes).getDouble("y");
+		return homefile.getDouble("y");
 	}
 
 	@Override
 	public double getZ() {
-		return YamlConfiguration.loadConfiguration(homes).getDouble("z");
+		return homefile.getDouble("z");
 	}
 
 	@Override
 	public int getYaw() {
-		return YamlConfiguration.loadConfiguration(homes).getInt("yaw");
+		return homefile.getInt("yaw");
 	}
 
 	@Override
 	public int getPitch() {
-		return YamlConfiguration.loadConfiguration(homes).getInt("pitch");
+		return homefile.getInt("pitch");
 	}
 
 	@Override
 	public String getWorld() {
-		return YamlConfiguration.loadConfiguration(homes).getString("world");
+		return homefile.getString("world");
 	}
 
 	@Override
@@ -129,84 +137,60 @@ public class HomeData extends Homes implements IValues, IHomeHandler, ISetValues
 
 	@Override
 	public void setX(double value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("x", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("x", value);
 
 	}
 
 	@Override
 	public void setY(double value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("y", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("y", value);
 	}
 
 	@Override
 	public void setZ(double value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("z", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("z", value);
 
 	}
 
 	@Override
 	public void setYaw(float value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("yaw", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("yaw", value);
 	}
 
 	@Override
 	public void setPitch(float value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("pitch", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("pitch", value);
 	}
 
 	@Override
 	public void setWorld(String value) {
-		YamlConfiguration home = YamlConfiguration.loadConfiguration(homes);
-		home.set("world", value);
-		try {
-			home.save(homes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		setValue("world", value);
 	}
 
 	@Override
 	public boolean exists() {
-		if (YamlConfiguration.loadConfiguration(homes) != null) {
-			return true;
-		} else
-			return false;
+		return homes.exists();
+	}
+
+	private void setValue(String key, Object value) {
+		if (!exists()) {
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			try {
+				homes.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		homefile.set(key, value);
+		try {
+			homefile.save(homes);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

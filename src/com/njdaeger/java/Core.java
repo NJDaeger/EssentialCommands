@@ -192,6 +192,9 @@ public class Core extends JavaPlugin {
 	 *         user otherwise.
 	 */
 	public static User getOfflineUser(String name) {
+		if (Database.getDatabase("playerdata").getEntry(name) == null) {
+			return null;
+		}
 		UUID uuid = UUID.fromString(Database.getDatabase("playerdata").getEntry(name));
 		if (uuid == null) {
 			return null;

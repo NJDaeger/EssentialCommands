@@ -2,6 +2,7 @@ package com.njdaeger.java.wrapper;
 
 import org.bukkit.Location;
 
+import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
@@ -358,6 +359,21 @@ public interface IUser {
 	 * @return The users login time.
 	 */
 	long getLoginTime();
+
+	/**
+	 * Gets a home from a user.
+	 * 
+	 * @param home The home to get.
+	 * @return Returns the home if it exists.
+	 */
+	Home getHome(String home);
+
+	/**
+	 * Teleports a user to a specific location.
+	 * 
+	 * @param location The new location for the user.
+	 */
+	void tp(Location location);
 
 	/**
 	 * Get the users yml file.

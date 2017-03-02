@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -15,6 +16,7 @@ import com.njdaeger.java.Core;
 import com.njdaeger.java.Groups;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Transform;
+import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
@@ -49,6 +51,10 @@ public class User implements IUser {
 		this.player = player;
 		this.userFile = new UserFile(player);
 		this.exists = getUserFile().exists();
+	}
+
+	public User(OfflinePlayer player) {
+		this.player = (Player) player;
 	}
 
 	/**
@@ -886,5 +892,15 @@ public class User implements IUser {
 			Transform.unload(Core.getUser(player));
 		}
 		return;
+	}
+
+	@Override
+	public void tp(Location location) {
+		player.teleport(location);
+	}
+
+	@Override
+	public Home getHome(String home) {
+		return new Home(this, home);
 	}
 }

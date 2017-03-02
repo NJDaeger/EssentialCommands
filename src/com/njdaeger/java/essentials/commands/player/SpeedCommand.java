@@ -34,7 +34,7 @@ public class SpeedCommand extends EssCommand {
 			if (!Util.isDouble(args[0])) {
 				if (args[0].equalsIgnoreCase("reset") || args[0].equalsIgnoreCase("default")) {
 					user.sendMessage(ChatColor.GRAY + "Your speed has been reset.");
-					if (user.isFlying()) {
+					if (user.getBase().isFlying()) {
 						user.setFlyingSpeed(1);
 						return true;
 					}
@@ -54,7 +54,7 @@ public class SpeedCommand extends EssCommand {
 				user.sendMessage(ChatColor.GRAY + "Your walk speed has been set to " + ChatColor.GREEN + args[0]);
 				return true;
 			}
-			if (user.isFlying()) {
+			if (user.getBase().isFlying()) {
 				user.setFlyingSpeed(Double.parseDouble(args[0]));
 				user.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
 				return true;
@@ -75,7 +75,7 @@ public class SpeedCommand extends EssCommand {
 						sndr.sendMessage(ChatColor.GRAY + "You reset " + ChatColor.GREEN + target.getName()
 								+ ChatColor.GRAY + "'s speed.");
 
-						if (target.isFlying()) {
+						if (target.getBase().isFlying()) {
 							target.setFlyingSpeed(1);
 							return true;
 						}
@@ -99,7 +99,7 @@ public class SpeedCommand extends EssCommand {
 							+ "'s walk speed to " + ChatColor.GREEN + args[0]);
 					return true;
 				}
-				if (target.isFlying()) {
+				if (target.getBase().isFlying()) {
 					target.setFlyingSpeed(Double.parseDouble(args[0]));
 					target.sendMessage(ChatColor.GRAY + "Your fly speed has been set to " + ChatColor.GREEN + args[0]);
 					sndr.sendMessage(ChatColor.GRAY + "You set " + ChatColor.GREEN + target.getName() + ChatColor.GRAY

@@ -1,15 +1,13 @@
 package com.njdaeger.java.essentials.commands.homes;
 
-import org.bukkit.entity.Player;
-
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.command.util.Executor;
-import com.njdaeger.java.configuration.controllers.Homes;
-import com.njdaeger.java.configuration.data.HomeData;
+import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -27,12 +25,11 @@ public class Sethome extends EssCommand {
 			permissions = { Permission.ESS_SETHOME })
 
 	public boolean run(Sender sndr, String label, String[] args) {
-		Player player = sndr.asPlayer();
-		HomeData home = Homes.getHome(args[0], player);
+		User user = sndr.asUser();
+		Home home = user.getHome(args[0]);
 		if (!home.exists()) {
 			sndr.sendMessage(Error.HOME_EXISTS.sendError());
-			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(args[0], player)
-					.listHomes());
+			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + home.listHomes());
 			return true;
 		}
 		home.create();

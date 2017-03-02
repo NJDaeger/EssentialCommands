@@ -1,6 +1,6 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import org.bukkit.entity.Player;
+import com.njdaeger.java.wrapper.User;
 
 public interface IHomeHandler {
 
@@ -34,8 +34,7 @@ public interface IHomeHandler {
 	/**
 	 * Send someone to another home.
 	 * 
-	 * @param target
-	 *            Player to send.
+	 * @param target Player to send.
 	 */
-	void sendOtherHome(Player target);
+	void sendOtherHome(User target);
 }

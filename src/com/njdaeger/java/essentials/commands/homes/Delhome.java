@@ -4,8 +4,6 @@ import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.configuration.controllers.Database;
-import com.njdaeger.java.configuration.controllers.Homes;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
@@ -28,13 +26,13 @@ public class Delhome extends EssCommand {
 		if (args.length == 1) {
 			if (sndr.isUser()) {
 				User user = sndr.asUser();
-				if (!Homes.getHome(args[0], user.getBase()).exists()) {
+				if (!user.getHome(args[0]).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, user
-							.getBase()));
+					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.getHome(null)
+							.listHomes());
 					return true;
 				}
-				Homes.getHome(args[0], user.getBase()).remove();
+				user.getHome(args[0]).remove();
 				sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
 						+ " from homes.");
 				return true;
@@ -45,28 +43,30 @@ public class Delhome extends EssCommand {
 		if (sndr.hasPermission(Permission.ESS_DELHOME_OTHER)) {
 			User target = Core.getUser(args[1]);
 			if (target == null) {
-				if (Database.getDatabase("playerdata").getEntry(args[1]) == null) {
+				User user = Core.getOfflineUser(args[1]);
+				if (user == null) {
 					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 					return true;
 				}
-				if (!Homes.getOfflineHome(args[0], args[1]).exists()) {
+
+				if (user.getHome(args[0]).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getOfflineHome(null,
-							args[1]));
+					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.getHome(null)
+							.listHomes());
 					return true;
 				}
-				Homes.getOfflineHome(args[0], args[1]).remove();
+				user.getHome(args[0]).remove();
 				sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
 						+ " from " + args[1] + "'s homes.");
 				return true;
 			}
-			if (!Homes.getHome(args[0], target.getBase()).exists()) {
+			if (!target.getHome(args[0]).exists()) {
 				sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + Homes.getHome(null, target
-						.getBase()));
+				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + target.getHome(null)
+						.listHomes());
 				return true;
 			}
-			Homes.getHome(args[0], target.getBase()).remove();
+			target.getHome(args[0]).remove();
 			sndr.sendMessage(ChatColor.GRAY + "Removed home " + ChatColor.GREEN + args[0] + ChatColor.GRAY
 					+ " from homes.");
 			return true;
