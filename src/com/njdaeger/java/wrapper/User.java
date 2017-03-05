@@ -24,7 +24,7 @@ import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
-public class User implements IUser {
+public final class User implements IUser {
 
 	//The base player this user represents.
 	private Player player;
@@ -125,6 +125,7 @@ public class User implements IUser {
 	 * 
 	 * @return The users uuid.
 	 */
+	@Override
 	public UUID getId() {
 		return player.getUniqueId();
 	}
@@ -158,12 +159,12 @@ public class User implements IUser {
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MUTED, value);
 			if (value ? Groups.muted.add(player) : Groups.muted.remove(player))
-				;
+				return;
 		}
 		userFile.setValue(PlayerPaths.MUTED.getPath(), value);
 		if (value ? Groups.muted.add(player) : Groups.muted.remove(player))
-			;
-		return;
+			return;
+
 	}
 
 	@Override

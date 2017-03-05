@@ -9,23 +9,33 @@ import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
+import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public class LogoutLocation implements IValues, ISetValues {
 
-	private User user;
+	private IUserConf user;
+
+	private User onlineUser;
 
 	private boolean memory;
 
+	public LogoutLocation(OfflineUser user) {
+		this.user = user;
+		this.memory = false;
+	}
+
 	public LogoutLocation(User user) {
 		this.user = user;
+		this.onlineUser = user;
 		memory = Core.getConf().loadInMemory();
 	}
 
 	@Override
 	public double getX() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_X);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_X);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_X.getPath());
 	}
@@ -33,7 +43,7 @@ public class LogoutLocation implements IValues, ISetValues {
 	@Override
 	public double getY() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_Y);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_Y);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_Y.getPath());
 	}
@@ -41,7 +51,7 @@ public class LogoutLocation implements IValues, ISetValues {
 	@Override
 	public double getZ() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_Z);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_Z);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LOGOUT_Z.getPath());
 	}
@@ -49,7 +59,7 @@ public class LogoutLocation implements IValues, ISetValues {
 	@Override
 	public int getYaw() {
 		if (memory) {
-			return (int) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_YAW);
+			return (int) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_YAW);
 		}
 		return (int) user.getUserFile().getValue(PlayerPaths.LOGOUT_YAW.getPath());
 	}
@@ -57,7 +67,7 @@ public class LogoutLocation implements IValues, ISetValues {
 	@Override
 	public int getPitch() {
 		if (memory) {
-			return (int) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_PITCH);
+			return (int) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_PITCH);
 		}
 		return (int) user.getUserFile().getValue(PlayerPaths.LOGOUT_PITCH.getPath());
 	}
@@ -65,7 +75,7 @@ public class LogoutLocation implements IValues, ISetValues {
 	@Override
 	public String getWorld() {
 		if (memory) {
-			return (String) Transform.getValue(user.getBase(), PlayerPaths.LOGOUT_WORLD);
+			return (String) Transform.getValue(onlineUser.getBase(), PlayerPaths.LOGOUT_WORLD);
 		}
 		return (String) user.getUserFile().getValue(PlayerPaths.LOGOUT_WORLD.getPath());
 	}
@@ -86,7 +96,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_X, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_X, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_X.getPath(), value);
@@ -98,7 +108,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_Y, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_Y, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_Y.getPath(), value);
@@ -110,7 +120,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_Z, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_Z, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_Z.getPath(), value);
@@ -122,7 +132,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_YAW, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_YAW, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_YAW.getPath(), value);
@@ -134,7 +144,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_PITCH, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_PITCH, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_PITCH.getPath(), value);
@@ -146,7 +156,7 @@ public class LogoutLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LOGOUT_WORLD, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LOGOUT_WORLD, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LOGOUT_WORLD.getPath(), value);

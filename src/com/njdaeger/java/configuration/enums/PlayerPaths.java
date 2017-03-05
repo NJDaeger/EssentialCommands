@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
 
@@ -61,8 +60,7 @@ public enum PlayerPaths {
 		return this.path;
 	}
 
-	public static void checkExist(Player player) {
-		UUID userID = player.getUniqueId();
+	public static void checkExist(UUID userID) {
 		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
 				+ userID);
 		File dir1 = new File(dir + File.separator + "user.yml");

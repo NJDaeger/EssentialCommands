@@ -22,7 +22,7 @@ import com.njdaeger.java.tasks.InfoTask;
 import com.njdaeger.java.tasks.MemoryTask;
 import com.njdaeger.java.wrapper.User;
 
-public class Core extends JavaPlugin {
+public abstract class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;

@@ -4,22 +4,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
-import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
-import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IBaseConf;
 import com.njdaeger.java.configuration.interfaces.Resettable;
 
-public class UserFile implements IBaseConf, Resettable {
+/**
+ * @author Noah
+ *
+ */
+public final class UserFile implements IBaseConf, Resettable {
 
 	//Player object
-	private Player player;
+	private UUID id;
 	//The player file path. And the main configuration file of the player.
 	private File path, file;
 	//The YAML file the players configuration is in.
@@ -31,9 +31,9 @@ public class UserFile implements IBaseConf, Resettable {
 	 * @param player Player to get the configuration files from.
 	 */
 	public UserFile(Player player) {
-		this.player = player;
+		this.id = player.getUniqueId();
 		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
-				+ File.separator + this.player.getUniqueId());
+				+ File.separator + id);
 		this.file = new File(path + File.separator + "user.yml");
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);
 	}
@@ -41,37 +41,20 @@ public class UserFile implements IBaseConf, Resettable {
 	/**
 	 * Gets an offline player's configuration files.
 	 * 
-	 * @param offlinePlayer The offline player to get the configuration files
-	 *            from.
+	 * @param uuid The offline player's uuid.
 	 */
-	public UserFile(String offlinePlayer) {
-		if (Database.getDatabase("playerdata").getBase() == null) {
-			Database.getDatabase("playerdata").create();
-			try {
-				throw new DatabaseNotFound();
-			} catch (DatabaseNotFound e) {
-				e.printStackTrace();
-			}
-		}
-		UUID id = UUID.fromString(Database.getDatabase("playerdata").getEntry(offlinePlayer));
-		if (id == null) {
-			try {
-				throw new DatabaseEntryMissing();
-			} catch (DatabaseEntryMissing e) {
-				e.printStackTrace();
-			}
-		}
-		this.player = (Player) Bukkit.getOfflinePlayer(id);
+	public UserFile(UUID uuid) {
 		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
-				+ File.separator + this.player.getUniqueId());
+				+ File.separator + id);
 		this.file = new File(path + File.separator + "user.yml");
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);
 	}
 
 	@Override
 	public UserFile resetConfog() {
-		// TODO Auto-generated method stub
-		return null;
+		deleteConfig();
+		createConfig();
+		return this;
 	}
 
 	@Override
@@ -87,6 +70,19 @@ public class UserFile implements IBaseConf, Resettable {
 		return getYamlFile().get(path);
 	}
 
+	/**
+	 * Get a value from a path in the player configuration.
+	 * 
+	 * @param path The path to get the value from.
+	 * @return The value of the path.
+	 */
+	public Object getValue(PlayerPaths path) {
+		if (!exists()) {
+			createConfig();
+		}
+		return getYamlFile().get(path.getPath());
+	}
+
 	@Override
 	public void setValue(String path, Object value) {
 		if (!exists()) {
@@ -98,7 +94,24 @@ public class UserFile implements IBaseConf, Resettable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
+	/**
+	 * Set the value of a path in the player configuration.
+	 * 
+	 * @param path The value path.
+	 * @param value THe new value to set it to.
+	 */
+	public void setValue(PlayerPaths path, Object value) {
+		if (!exists()) {
+			createConfig();
+		}
+		yamlfile.set(path.getPath(), value);
+		try {
+			yamlfile.save(getFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -122,8 +135,8 @@ public class UserFile implements IBaseConf, Resettable {
 			getPath().mkdirs();
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(player);
-				System.out.println("A new User configuration has been created for " + player.getName());
+				PlayerPaths.checkExist(id);
+				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -131,8 +144,8 @@ public class UserFile implements IBaseConf, Resettable {
 		if (!getFile().exists()) {
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(player);
-				System.out.println("A new User configuration has been created for " + player.getName());
+				PlayerPaths.checkExist(id);
+				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -64,6 +64,33 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		return;
 	}
 
+	/**
+	 * Get an entry value from a key.
+	 * 
+	 * @param value The value you are getting the entry from.
+	 * @return The entry the value is on.
+	 */
+	public String getFromValue(String value) {
+		File file = new File(dir + File.separator + database + ".yml");
+		if (!file.exists()) {
+			try {
+				throw new DatabaseNotFound();
+			} catch (DatabaseNotFound e) {
+				Warnings.warn("The database \"" + database
+						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Database.getDatabase(database).create();
+				return null;
+			}
+		}
+		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
+		for (String key : base.getKeys(true)) {
+			if (base.getString(key).matches(value)) {
+				return key;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void addEntry(String entry, String value) {
 		File file = new File(dir + File.separator + database + ".yml");

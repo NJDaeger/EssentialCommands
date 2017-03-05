@@ -9,23 +9,33 @@ import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
+import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public class LastLocation implements IValues, ISetValues {
 
-	private User user;
+	private User onlineUser;
+
+	private IUserConf user;
 
 	private boolean memory;
 
+	public LastLocation(OfflineUser user) {
+		this.user = user;
+		this.memory = false;
+	}
+
 	public LastLocation(User user) {
 		this.user = user;
+		this.onlineUser = user;
 		this.memory = Core.getConf().loadInMemory();
 	}
 
 	@Override
 	public double getX() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_X);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_X);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LAST_X.getPath());
 	}
@@ -33,7 +43,7 @@ public class LastLocation implements IValues, ISetValues {
 	@Override
 	public double getY() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_Y);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_Y);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LAST_Y.getPath());
 	}
@@ -41,7 +51,7 @@ public class LastLocation implements IValues, ISetValues {
 	@Override
 	public double getZ() {
 		if (memory) {
-			return (double) Transform.getValue(user.getBase(), PlayerPaths.LAST_Z);
+			return (double) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_Z);
 		}
 		return (double) user.getUserFile().getValue(PlayerPaths.LAST_Z.getPath());
 	}
@@ -49,7 +59,7 @@ public class LastLocation implements IValues, ISetValues {
 	@Override
 	public int getYaw() {
 		if (memory) {
-			return (int) Transform.getValue(user.getBase(), PlayerPaths.LAST_YAW);
+			return (int) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_YAW);
 		}
 		return (int) user.getUserFile().getValue(PlayerPaths.LAST_YAW.getPath());
 	}
@@ -57,7 +67,7 @@ public class LastLocation implements IValues, ISetValues {
 	@Override
 	public int getPitch() {
 		if (memory) {
-			return (int) Transform.getValue(user.getBase(), PlayerPaths.LAST_PITCH);
+			return (int) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_PITCH);
 		}
 		return (int) user.getUserFile().getValue(PlayerPaths.LAST_PITCH.getPath());
 	}
@@ -65,7 +75,7 @@ public class LastLocation implements IValues, ISetValues {
 	@Override
 	public String getWorld() {
 		if (memory) {
-			return (String) Transform.getValue(user.getBase(), PlayerPaths.LAST_WORLD);
+			return (String) Transform.getValue(onlineUser.getBase(), PlayerPaths.LAST_WORLD);
 		}
 		return (String) user.getUserFile().getValue(PlayerPaths.LAST_WORLD.getPath());
 	}
@@ -86,7 +96,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_X, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_X, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_X.getPath(), value);
@@ -98,7 +108,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_Y, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_Y, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_Y.getPath(), value);
@@ -110,7 +120,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_Z, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_Z, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_Z.getPath(), value);
@@ -122,7 +132,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_YAW, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_YAW, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_YAW.getPath(), value);
@@ -134,7 +144,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_PITCH, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_PITCH, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_PITCH.getPath(), value);
@@ -146,7 +156,7 @@ public class LastLocation implements IValues, ISetValues {
 			user.getUserFile().createConfig();
 		}
 		if (memory) {
-			Transform.setValue(user.getBase(), PlayerPaths.LAST_WORLD, value);
+			Transform.setValue(onlineUser.getBase(), PlayerPaths.LAST_WORLD, value);
 			return;
 		}
 		user.getUserFile().setValue(PlayerPaths.LAST_WORLD.getPath(), value);
