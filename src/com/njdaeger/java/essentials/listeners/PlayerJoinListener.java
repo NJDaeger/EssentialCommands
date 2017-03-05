@@ -24,7 +24,8 @@ public class PlayerJoinListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		new User(e.getPlayer()).loginUpdate();
+		User user = new User(e.getPlayer());
+		user.loginUpdate();
 		if (e.getPlayer().isBanned()) {
 			if (essBan.isBanExpired(e.getPlayer().getName())) {
 				essBan.unban(e.getPlayer().getName());

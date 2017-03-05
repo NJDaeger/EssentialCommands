@@ -135,7 +135,7 @@ public final class UserFile implements IBaseConf, Resettable {
 			getPath().mkdirs();
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(id);
+				PlayerPaths.checkExist(file);
 				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -144,7 +144,7 @@ public final class UserFile implements IBaseConf, Resettable {
 		if (!getFile().exists()) {
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(id);
+				PlayerPaths.checkExist(file);
 				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();

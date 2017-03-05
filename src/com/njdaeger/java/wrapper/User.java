@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -21,6 +20,7 @@ import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
+import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -51,10 +51,6 @@ public final class User implements IUser {
 		this.player = player;
 		this.userFile = new UserFile(player);
 		this.exists = getUserFile().exists();
-	}
-
-	public User(OfflinePlayer player) {
-		this.player = (Player) player;
 	}
 
 	/**
@@ -572,7 +568,7 @@ public final class User implements IUser {
 		if (!exists) {
 			userFile.createConfig();
 		}
-		return getGamemode() == mode;
+		return getGamemode().equals(mode);
 	}
 
 	@Override
@@ -819,47 +815,27 @@ public final class User implements IUser {
 	@Override
 	//Dont give the option to write to the memory config. Load the memory last.
 	public IUser loginUpdate() {
-		if (!exists) {
-			userFile.createConfig();
-		}
+		PlayerPaths.checkExist(getUserFile().getFile());
 		if (userFile.getValue(PlayerPaths.PLAYERNAME.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.PLAYERNAME, getName());
-			} else*/
 			userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
 		}
 		if (userFile.getValue(PlayerPaths.DISPLAYNAME.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.DISPLAYNAME, player.getName());
-			} else*/
 			userFile.setValue(PlayerPaths.DISPLAYNAME.getPath(), player.getName());
 		}
 		if (userFile.getValue(PlayerPaths.IP.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.IP, player.getAddress().getAddress().getHostAddress());
-			} else*/
 			userFile.setValue(PlayerPaths.IP.getPath(), player.getAddress().getAddress().getHostAddress());
 		}
 		if (userFile.getValue(PlayerPaths.FLYING.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.FLYING, player.isFlying());
-			} else*/
 			userFile.setValue(PlayerPaths.FLYING.getPath(), player.isFlying());
 		}
 		if (userFile.getValue(PlayerPaths.GAMEMODE.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.GAMEMODE, player.getGameMode().name());
-			} else*/
 			userFile.setValue(PlayerPaths.GAMEMODE.getPath(), player.getGameMode().name());
 		}
 		if (userFile.getValue(PlayerPaths.OPPED.getPath()) == null) {
-			/*if (memory) {
-				Transform.setValue(player, PlayerPaths.OPPED, player.isOp());
-			} else*/
 			userFile.setValue(PlayerPaths.OPPED.getPath(), player.isOp());
 		}
 		if (memory) {
-			new Transform(getBase());
+			new Transform(player);
 		}
 		setLoginTime();
 		getLast().setWorld(getWorld().getName());
@@ -890,7 +866,7 @@ public final class User implements IUser {
 		getLogout().setYaw(getYaw());
 		getLogout().setPitch(getPitch());
 		if (memory) {
-			Transform.unload(Core.getUser(player));
+			Transform.unload(player);
 		}
 		return;
 	}
@@ -901,7 +877,7 @@ public final class User implements IUser {
 	}
 
 	@Override
-	public Home getHome(String home) {
+	public IOfflineHome getHome(String home) {
 		return new Home(this, home);
 	}
 }

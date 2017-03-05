@@ -2,13 +2,14 @@ package com.njdaeger.java.configuration.interfaces;
 
 import com.njdaeger.java.wrapper.User;
 
-public interface IHomeHandler {
+public interface IHome extends IOfflineHome {
 
 	/**
 	 * Checks if the home exists.
 	 * 
 	 * @return Returns true if exists, false otherwise.
 	 */
+	@Override
 	boolean exists();
 
 	/**
@@ -19,11 +20,13 @@ public interface IHomeHandler {
 	/**
 	 * Removes the home specified
 	 */
+	@Override
 	void remove();
 
 	/**
 	 * List the homes of the specified player.
 	 */
+	@Override
 	String listHomes();
 
 	/**
@@ -36,5 +39,6 @@ public interface IHomeHandler {
 	 * 
 	 * @param target Player to send.
 	 */
+	@Override
 	void sendOtherHome(User target);
 }

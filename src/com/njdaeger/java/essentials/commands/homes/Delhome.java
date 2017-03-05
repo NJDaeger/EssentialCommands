@@ -6,6 +6,7 @@ import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
 
@@ -43,7 +44,7 @@ public class Delhome extends EssCommand {
 		if (sndr.hasPermission(Permission.ESS_DELHOME_OTHER)) {
 			User target = Core.getUser(args[1]);
 			if (target == null) {
-				User user = Core.getOfflineUser(args[1]);
+				OfflineUser user = Core.getOfflineUser(args[1]);
 				if (user == null) {
 					sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 					return true;

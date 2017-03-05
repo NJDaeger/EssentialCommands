@@ -20,9 +20,10 @@ import com.njdaeger.java.essentials.utils.BanAPI;
 import com.njdaeger.java.essentials.utils.Util;
 import com.njdaeger.java.tasks.InfoTask;
 import com.njdaeger.java.tasks.MemoryTask;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
-public abstract class Core extends JavaPlugin {
+public class Core extends JavaPlugin {
 
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;
@@ -191,7 +192,7 @@ public abstract class Core extends JavaPlugin {
 	 * @return Null if the database doesn't contain the player, it returns the
 	 *         user otherwise.
 	 */
-	public static User getOfflineUser(String name) {
+	public static OfflineUser getOfflineUser(String name) {
 		if (Database.getDatabase("playerdata").getEntry(name) == null) {
 			return null;
 		}
@@ -199,7 +200,7 @@ public abstract class Core extends JavaPlugin {
 		if (uuid == null) {
 			return null;
 		}
-		return new User(Bukkit.getOfflinePlayer(uuid).getPlayer());
+		return new OfflineUser(name);
 	}
 
 	/**

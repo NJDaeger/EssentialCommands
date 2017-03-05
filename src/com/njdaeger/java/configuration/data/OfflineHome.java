@@ -9,18 +9,19 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.njdaeger.java.configuration.interfaces.IHome;
+import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
-public class Home implements IHome {
+public class OfflineHome implements IOfflineHome {
 
-	private User user;
+	private OfflineUser user;
 
 	private String home;
 
-	public Home(User user, String home) {
+	public OfflineHome(OfflineUser user, String home) {
 		this.user = user;
 		this.home = home;
 	}
@@ -30,69 +31,6 @@ public class Home implements IHome {
 	File homes = new File(dir + File.separator + home + ".yml");
 
 	YamlConfiguration homefile = YamlConfiguration.loadConfiguration(homes);
-
-	@Override
-	public void create() {
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		try {
-			homes.createNewFile();
-			setX(user.getX());
-			setY(user.getY());
-			setZ(user.getZ());
-			setYaw(user.getYaw());
-			setPitch(user.getPitch());
-			setWorld(user.getWorld().getName());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
-	}
-
-	@Override
-	public void remove() {
-		homes.delete();
-	}
-
-	@Override
-	public String listHomes() {
-		if (dir.list() == null) {
-			return null;
-		}
-		String[] homes = dir.list();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < homes.length; i++) {
-			sb.append(homes[i]).append(" ");
-		}
-		String message = sb.toString().trim();
-		String finalmsg = message.replace(".yml", "");
-		String wcommas = finalmsg.replaceAll(" ", ", ");
-		return wcommas;
-	}
-
-	@Override
-	public void sendHome() {
-		World world = Bukkit.getWorld(getWorld());
-		if (world == null) {
-			user.sendMessage(Error.WORLD_NOT_FOUND.sendError());
-			return;
-		}
-		user.tp(getAsLocation());
-		return;
-
-	}
-
-	@Override
-	public void sendOtherHome(User target) {
-		World world = Bukkit.getWorld(getWorld());
-		if (world == null) {
-			target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
-			return;
-		}
-		target.tp(getAsLocation());
-		return;
-	}
 
 	@Override
 	public double getX() {
@@ -143,6 +81,7 @@ public class Home implements IHome {
 	@Override
 	public void setY(double value) {
 		setValue("y", value);
+
 	}
 
 	@Override
@@ -154,21 +93,58 @@ public class Home implements IHome {
 	@Override
 	public void setYaw(float value) {
 		setValue("yaw", value);
+
 	}
 
 	@Override
 	public void setPitch(float value) {
 		setValue("pitch", value);
+
 	}
 
 	@Override
 	public void setWorld(String value) {
 		setValue("world", value);
+
 	}
 
 	@Override
 	public boolean exists() {
 		return homes.exists();
+	}
+
+	@Override
+	public void remove() {
+		homes.delete();
+
+	}
+
+	@Override
+	public String listHomes() {
+		if (dir.list() == null) {
+			return null;
+		}
+		String[] homes = dir.list();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < homes.length; i++) {
+			sb.append(homes[i]).append(" ");
+		}
+		String message = sb.toString().trim();
+		String finalmsg = message.replace(".yml", "");
+		String wcommas = finalmsg.replaceAll(" ", ", ");
+		return wcommas;
+	}
+
+	@Override
+	public void sendOtherHome(User target) {
+		World world = Bukkit.getWorld(getWorld());
+		if (world == null) {
+			target.sendMessage(Error.WORLD_NOT_FOUND.sendError());
+			return;
+		}
+		target.tp(getAsLocation());
+		return;
+
 	}
 
 	@Override
@@ -207,4 +183,5 @@ public class Home implements IHome {
 		}
 
 	}
+
 }

@@ -1,10 +1,10 @@
 package com.njdaeger.java.tasks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.Transform;
-import com.njdaeger.java.wrapper.User;
 
 public class MemoryTask {
 
@@ -15,7 +15,7 @@ public class MemoryTask {
 				public void run() {
 					int i = 0;
 					if (!Bukkit.getOnlinePlayers().isEmpty()) {
-						for (User users : Core.getOnlineUsers()) {
+						for (Player users : Bukkit.getOnlinePlayers()) {
 							i++;
 							Transform.reload(users);
 						}

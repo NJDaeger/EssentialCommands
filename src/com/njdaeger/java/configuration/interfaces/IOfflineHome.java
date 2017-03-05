@@ -1,32 +1,46 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import org.bukkit.entity.Player;
+import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.User;
 
-public interface IOfflineHome {
+public interface IOfflineHome extends IValues, ISetValues {
 
 	/**
 	 * Checks if the home exists.
 	 * 
 	 * @return Returns true if it exists, false otherwise.
 	 */
-	public boolean exists();
+	boolean exists();
 
 	/**
 	 * Removes the home specified
 	 */
-	public void remove();
+	void remove();
 
 	/**
 	 * List the homes of the specified player.
 	 */
-	public String listHomes();
+	String listHomes();
 
 	/**
 	 * Send someone to another home.
 	 * 
-	 * @param target
-	 *            Player to send.
+	 * @param target Player to send.
 	 */
-	public void sendOtherHome(Player target);
+	void sendOtherHome(User target);
+
+	/**
+	 * Get the user that owns the home.
+	 * 
+	 * @return The home owner.
+	 */
+	IUserConf getOwner();
+
+	/**
+	 * Get the name of the home.
+	 * 
+	 * @return The home.
+	 */
+	String getName();
 
 }

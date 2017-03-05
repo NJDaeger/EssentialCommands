@@ -2,7 +2,6 @@ package com.njdaeger.java.configuration.enums;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -60,11 +59,8 @@ public enum PlayerPaths {
 		return this.path;
 	}
 
-	public static void checkExist(UUID userID) {
-		File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
-				+ userID);
-		File dir1 = new File(dir + File.separator + "user.yml");
-		if (!dir.exists()) {
+	public static void checkExist(File file) {
+		/*if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		if (!dir1.exists()) {
@@ -73,13 +69,14 @@ public enum PlayerPaths {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(dir1);
+		}*/
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
 		for (PlayerPaths path : PlayerPaths.values()) {
-			if (!c.contains(path.getPath())) {
+			if (path.defValue() != null) {
+				System.out.println("set " + path.getPath() + " to " + path.defValue());
 				c.set(path.getPath(), path.defValue());
 				try {
-					c.save(dir1);
+					c.save(file);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

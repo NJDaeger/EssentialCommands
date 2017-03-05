@@ -5,8 +5,10 @@ import com.njdaeger.java.Holder;
 import com.njdaeger.java.command.util.Cmd;
 import com.njdaeger.java.command.util.EssCommand;
 import com.njdaeger.java.configuration.Parser;
+import com.njdaeger.java.configuration.data.OfflineHome;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
 
@@ -40,7 +42,7 @@ public class Listhomes extends EssCommand {
 			if (sndr.hasPermission(Permission.ESS_LISTHOMES_OTHER)) {
 				User target = Core.getUser(args[0]);
 				if (target == null) {
-					User otarget = Core.getOfflineUser(args[0]);
+					OfflineUser otarget = Core.getOfflineUser(args[0]);
 					if (otarget == null) {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return true;
@@ -68,17 +70,17 @@ public class Listhomes extends EssCommand {
 			if (Holder.hasPermission(sndr, Permission.ESS_LISTHOMES_DETAIL)) {
 				User target = Core.getUser(args[0]);
 				if (target == null) {
-					User otarget = Core.getOfflineUser(args[0]);
-					com.njdaeger.java.configuration.data.Home home;
+					OfflineUser otarget = Core.getOfflineUser(args[0]);
+					OfflineHome home;
 					if (otarget == null) {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return true;
 					}
-					if (!otarget.getHome(args[0]).exists()) {
+					home = (OfflineHome) otarget.getHome(args[1]);
+					if (!home.exists()) {
 						sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
 						return true;
 					}
-					home = new com.njdaeger.java.configuration.data.Home(otarget, args[1]);
 					sndr.sendMessage(ChatColor.GRAY + "Home \"" + args[1] + "\" information.");
 					sndr.sendMessage(ChatColor.GRAY + "x: " + ChatColor.GREEN + home.getX());
 					sndr.sendMessage(ChatColor.GRAY + "y: " + ChatColor.GREEN + home.getY());

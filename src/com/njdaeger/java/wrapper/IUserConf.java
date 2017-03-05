@@ -2,10 +2,10 @@ package com.njdaeger.java.wrapper;
 
 import java.util.UUID;
 
-import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
+import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 
 public interface IUserConf {
 
@@ -289,7 +289,7 @@ public interface IUserConf {
 	 * @param home The home to get.
 	 * @return Returns the home if it exists.
 	 */
-	Home getHome(String home);
+	IOfflineHome getHome(String home);
 
 	/**
 	 * Get the users yml file.

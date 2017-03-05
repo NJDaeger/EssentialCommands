@@ -3,13 +3,13 @@ package com.njdaeger.java.wrapper;
 import java.util.UUID;
 
 import com.njdaeger.java.configuration.controllers.Database;
-import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
+import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 
 public final class OfflineUser implements IUserConf {
 
@@ -375,7 +375,7 @@ public final class OfflineUser implements IUserConf {
 	}
 
 	@Override
-	public Home getHome(String home) {
+	public IOfflineHome getHome(String home) {
 		return null;
 	}
 

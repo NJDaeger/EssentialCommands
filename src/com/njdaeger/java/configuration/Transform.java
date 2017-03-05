@@ -34,9 +34,9 @@ public class Transform {
 		Transform.conf = user.getUserFile();
 		HashMap<PlayerPaths, Object> values = new HashMap<>();
 		for (PlayerPaths paths : PlayerPaths.values()) {
-			values.put(paths, conf.getValue(paths.getPath()));
+			values.put(paths, conf.getValue(paths));
 		}
-		memconf.put(user.getId(), values);
+		memconf.put(player.getUniqueId(), values);
 
 	}
 
@@ -46,8 +46,8 @@ public class Transform {
 	 * @param player Player to check.
 	 * @return True if its in memory, false otherwise.
 	 */
-	public static boolean isLoaded(User user) {
-		if (memconf.get(user.getId()) == null) {
+	public static boolean isLoaded(Player player) {
+		if (memconf.get(player.getUniqueId()) == null) {
 			return false;
 		}
 		return true;
@@ -58,13 +58,13 @@ public class Transform {
 	 * 
 	 * @param player Player to take out of memory.
 	 */
-	public static void unload(User user) {
-		if (isLoaded(user)) {
+	public static void unload(Player player) {
+		if (isLoaded(player)) {
 			for (PlayerPaths paths : PlayerPaths.values()) {
-				conf.setValue(paths.getPath(), memconf.get(user.getId()).get(paths));
+				conf.setValue(paths.getPath(), memconf.get(player.getUniqueId()).get(paths));
 			}
-			memconf.remove(user.getId()).clear();
-			System.out.println("Unloaded " + user.getName() + " from memory.");
+			memconf.remove(player.getUniqueId()).clear();
+			System.out.println("Unloaded " + player.getName() + " from memory.");
 			return;
 		}
 		try {
@@ -80,10 +80,10 @@ public class Transform {
 	 * 
 	 * @param player Player whos configuration to reload.
 	 */
-	public static void reload(User user) {
-		if (isLoaded(user)) {
-			unload(user);
-			new Transform(user.getBase());
+	public static void reload(Player player) {
+		if (isLoaded(player)) {
+			unload(player);
+			new Transform(player);
 			return;
 		}
 		try {

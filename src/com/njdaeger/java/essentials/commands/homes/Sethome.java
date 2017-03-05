@@ -26,7 +26,7 @@ public class Sethome extends EssCommand {
 
 	public boolean run(Sender sndr, String label, String[] args) {
 		User user = sndr.asUser();
-		Home home = user.getHome(args[0]);
+		Home home = (Home) user.getHome(args[0]);
 		if (!home.exists()) {
 			sndr.sendMessage(Error.HOME_EXISTS.sendError());
 			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + home.listHomes());
