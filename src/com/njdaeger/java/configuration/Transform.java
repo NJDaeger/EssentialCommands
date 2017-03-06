@@ -32,7 +32,7 @@ public class Transform {
 		User user = Core.getUser(player);
 		System.out.println("Loading " + player.getName() + "'s configuration into memory.");
 		Transform.conf = user.getUserFile();
-		HashMap<PlayerPaths, Object> values = new HashMap<>();
+		HashMap<PlayerPaths, Object> values = new HashMap<PlayerPaths, Object>();
 		for (PlayerPaths paths : PlayerPaths.values()) {
 			values.put(paths, conf.getValue(paths));
 		}

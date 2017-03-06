@@ -2,6 +2,7 @@ package com.njdaeger.java.essentials.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
@@ -22,10 +23,10 @@ public class PlayerJoinListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
-		User user = new User(e.getPlayer());
-		user.loginUpdate();
+		new User(e.getPlayer());
+		Core.getUser(e.getPlayer()).loginUpdate();
 		if (e.getPlayer().isBanned()) {
 			if (essBan.isBanExpired(e.getPlayer().getName())) {
 				essBan.unban(e.getPlayer().getName());

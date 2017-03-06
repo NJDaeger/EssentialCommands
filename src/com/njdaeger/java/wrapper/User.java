@@ -140,6 +140,7 @@ public final class User implements IUser {
 	public boolean isMuted() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.MUTED);
@@ -151,6 +152,7 @@ public final class User implements IUser {
 	public void setMuted(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MUTED, value);
@@ -167,6 +169,7 @@ public final class User implements IUser {
 	public boolean isSpying() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.SOCIALSPY);
@@ -178,6 +181,7 @@ public final class User implements IUser {
 	public void setSpying(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.SOCIALSPY, value);
@@ -196,6 +200,7 @@ public final class User implements IUser {
 	public boolean isGod() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.GOD);
@@ -207,6 +212,7 @@ public final class User implements IUser {
 	public void setGod(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.GOD, value);
@@ -234,6 +240,7 @@ public final class User implements IUser {
 	public boolean isMessageable() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.MESSAGEABLE);
@@ -245,6 +252,7 @@ public final class User implements IUser {
 	public void setMessageable(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.MESSAGEABLE, value);
@@ -262,6 +270,7 @@ public final class User implements IUser {
 	public boolean isAfk() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(player, PlayerPaths.AFK);
@@ -273,6 +282,7 @@ public final class User implements IUser {
 	public void setAfk(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(player, PlayerPaths.AFK, value);
@@ -305,6 +315,7 @@ public final class User implements IUser {
 	public boolean isTeleportable() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.TPTOGGLED);
@@ -316,6 +327,7 @@ public final class User implements IUser {
 	public void setTeleportable(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.TPTOGGLED, value);
@@ -330,6 +342,7 @@ public final class User implements IUser {
 	public boolean isGroup(String group) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return Transform.getValue(getBase(), PlayerPaths.RANK).toString().equalsIgnoreCase(group);
@@ -341,6 +354,7 @@ public final class User implements IUser {
 	public String getGroup() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (String) Transform.getValue(getBase(), PlayerPaths.RANK);
@@ -352,6 +366,7 @@ public final class User implements IUser {
 	public void setGroup(String group) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.RANK, group);
@@ -366,6 +381,7 @@ public final class User implements IUser {
 	public boolean hasNickname() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString().equalsIgnoreCase(getBase()
@@ -378,6 +394,7 @@ public final class User implements IUser {
 	public boolean hasNickname(String nickname) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString().equalsIgnoreCase(nickname);
@@ -389,6 +406,7 @@ public final class User implements IUser {
 	public String getNickname() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return Transform.getValue(getBase(), PlayerPaths.DISPLAYNAME).toString();
@@ -400,6 +418,7 @@ public final class User implements IUser {
 	public void setNickname(String nickname) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(player, PlayerPaths.DISPLAYNAME, nickname);
@@ -417,6 +436,7 @@ public final class User implements IUser {
 	public boolean isFlying() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.FLYING);
@@ -428,6 +448,7 @@ public final class User implements IUser {
 	public void setFlying(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(player, PlayerPaths.FLYING, value);
@@ -464,6 +485,7 @@ public final class User implements IUser {
 	public double getFlyingSpeed() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (double) Transform.getValue(player, PlayerPaths.FLYSPEED);
@@ -475,6 +497,7 @@ public final class User implements IUser {
 	public void setFlyingSpeed(double value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (value > 10) {
 			double b = value - 10;
@@ -498,6 +521,7 @@ public final class User implements IUser {
 	public int getWalkingSpeed() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (int) Transform.getValue(getBase(), PlayerPaths.WALKSPEED);
@@ -509,6 +533,7 @@ public final class User implements IUser {
 	public void setWalkingSpeed(double value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		double a = 0;
 		a += ((19 * value) - Math.pow(value, 2)) / 90;
@@ -532,6 +557,7 @@ public final class User implements IUser {
 	public boolean isOp() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(player, PlayerPaths.OPPED);
@@ -543,6 +569,7 @@ public final class User implements IUser {
 	public void setOp(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		player.setOp(value);
 		if (memory) {
@@ -556,6 +583,7 @@ public final class User implements IUser {
 	public Gamemode getGamemode() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return Gamemode.getAliasUsed((String) Transform.getValue(player, PlayerPaths.GAMEMODE));
@@ -567,6 +595,7 @@ public final class User implements IUser {
 	public boolean isGamemode(Gamemode mode) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		return getGamemode().equals(mode);
 	}
@@ -575,6 +604,7 @@ public final class User implements IUser {
 	public void setGamemode(Gamemode mode) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		switch (mode) {
 		case CREATIVE:
@@ -603,6 +633,7 @@ public final class User implements IUser {
 	public void setGamemode(String mode) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		Gamemode gamemode = Gamemode.getAliasUsed(mode);
 		switch (gamemode) {
@@ -644,6 +675,7 @@ public final class User implements IUser {
 	public boolean isBubbled() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(getBase(), PlayerPaths.TPTOGGLED);
@@ -655,6 +687,7 @@ public final class User implements IUser {
 	public void setBubbled(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(getBase(), PlayerPaths.BUBBLED, value);
@@ -668,6 +701,7 @@ public final class User implements IUser {
 	public boolean isHidden() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			return (boolean) Transform.getValue(player, PlayerPaths.HIDDEN);
@@ -679,6 +713,7 @@ public final class User implements IUser {
 	public void setHidden(boolean value) {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 100000000, 1, false, false);
 		if (value) {
@@ -754,6 +789,7 @@ public final class User implements IUser {
 	public void setLoginTime() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(player, PlayerPaths.LOGIN, System.currentTimeMillis());
@@ -766,6 +802,7 @@ public final class User implements IUser {
 	public long getLoginTime() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Object a = Transform.getValue(player, PlayerPaths.LOGIN);
@@ -785,6 +822,7 @@ public final class User implements IUser {
 	public void setLogoutTime() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Transform.setValue(player, PlayerPaths.LOGOUT, System.currentTimeMillis());
@@ -797,6 +835,7 @@ public final class User implements IUser {
 	public long getLogoutTime() {
 		if (!exists) {
 			userFile.createConfig();
+			exists = true;
 		}
 		if (memory) {
 			Object a = Transform.getValue(player, PlayerPaths.LOGOUT);
@@ -815,7 +854,10 @@ public final class User implements IUser {
 	@Override
 	//Dont give the option to write to the memory config. Load the memory last.
 	public IUser loginUpdate() {
-		PlayerPaths.checkExist(getUserFile().getFile());
+		if (!exists) {
+			getUserFile().createConfig();
+			exists = true;
+		}
 		if (userFile.getValue(PlayerPaths.PLAYERNAME.getPath()) == null) {
 			userFile.setValue(PlayerPaths.PLAYERNAME.getPath(), player.getName());
 		}

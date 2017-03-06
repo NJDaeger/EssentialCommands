@@ -44,6 +44,7 @@ public final class UserFile implements IBaseConf, Resettable {
 	 * @param uuid The offline player's uuid.
 	 */
 	public UserFile(UUID uuid) {
+		this.id = uuid;
 		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
 				+ File.separator + id);
 		this.file = new File(path + File.separator + "user.yml");
@@ -85,9 +86,9 @@ public final class UserFile implements IBaseConf, Resettable {
 
 	@Override
 	public void setValue(String path, Object value) {
-		if (!exists()) {
+		/*if (!exists()) {
 			createConfig();
-		}
+		}*/
 		yamlfile.set(path, value);
 		try {
 			yamlfile.save(getFile());
@@ -131,11 +132,13 @@ public final class UserFile implements IBaseConf, Resettable {
 
 	@Override
 	public UserFile createConfig() {
-		if (!getPath().exists()) {
+		PlayerPaths.checkExist(id, path, file);
+		return this;
+		/*if (!getPath().exists()) {
 			getPath().mkdirs();
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(file);
+				PlayerPaths.checkExist(id);
 				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -144,13 +147,13 @@ public final class UserFile implements IBaseConf, Resettable {
 		if (!getFile().exists()) {
 			try {
 				getFile().createNewFile();
-				PlayerPaths.checkExist(file);
+				PlayerPaths.checkExist(id);
 				System.out.println("A new User configuration has been created for user " + id);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return this;
+		return this;*/
 	}
 
 	@Override
@@ -167,9 +170,9 @@ public final class UserFile implements IBaseConf, Resettable {
 	 * @return The configuration version.
 	 */
 	public String getCfgVersion() {
-		if (!exists()) {
+		/*if (!exists()) {
 			createConfig();
-		}
+		}*/
 		return (String) getYamlFile().get(PlayerPaths.CFG_VERSION.getPath());
 	}
 
@@ -177,9 +180,9 @@ public final class UserFile implements IBaseConf, Resettable {
 	 * Sets the configuration version from the core.
 	 */
 	public void setCfgVersion() {
-		if (!exists()) {
+		/*if (!exists()) {
 			createConfig();
-		}
+		}*/
 		getYamlFile().set(PlayerPaths.CFG_VERSION.getPath(), Core.getInstance().getDescription().getVersion());
 	}
 

@@ -2,10 +2,11 @@ package com.njdaeger.java.configuration.enums;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.bukkit.configuration.file.YamlConfiguration;
+import java.util.UUID;
 
 import com.njdaeger.java.Core;
+import com.njdaeger.java.configuration.data.UserFile;
+import com.njdaeger.java.wrapper.User;
 
 public enum PlayerPaths {
 
@@ -59,29 +60,23 @@ public enum PlayerPaths {
 		return this.path;
 	}
 
-	public static void checkExist(File file) {
-		/*if (!dir.exists()) {
+	public static void checkExist(UUID id, File dir, File file) {
+		User user = Core.getUser(id);
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		if (!dir1.exists()) {
+		if (!file.exists()) {
 			try {
-				dir1.createNewFile();
+				file.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}*/
-		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		}
+		UserFile c = user.getUserFile();
 		for (PlayerPaths path : PlayerPaths.values()) {
-			if (path.defValue() != null) {
-				System.out.println("set " + path.getPath() + " to " + path.defValue());
-				c.set(path.getPath(), path.defValue());
-				try {
-					c.save(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			if (c.getValue(path) == null && path.defValue() != null) {
+				c.setValue(path, path.defValue());
 			}
 		}
 	}
-
 }
