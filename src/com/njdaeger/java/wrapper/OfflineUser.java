@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.LastLocation;
 import com.njdaeger.java.configuration.data.LogoutLocation;
+import com.njdaeger.java.configuration.data.OfflineHome;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
@@ -376,7 +377,7 @@ public final class OfflineUser implements IUserConf {
 
 	@Override
 	public IOfflineHome getHome(String home) {
-		return null;
+		return new OfflineHome(this, home);
 	}
 
 	@Override

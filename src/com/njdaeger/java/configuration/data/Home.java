@@ -20,16 +20,20 @@ public class Home implements IHome {
 
 	private String home;
 
+	private File dir, homes;
+
+	private YamlConfiguration homefile;
+
 	public Home(User user, String home) {
 		this.user = user;
-		this.home = home;
+		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ user.getId() + File.separator + "homes");
+		if (home != null) {
+			this.home = home;
+			this.homes = new File(dir + File.separator + home + ".yml");
+			this.homefile = YamlConfiguration.loadConfiguration(homes);
+		}
 	}
-
-	File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
-			+ user.getId() + File.separator + "homes");
-	File homes = new File(dir + File.separator + home + ".yml");
-
-	YamlConfiguration homefile = YamlConfiguration.loadConfiguration(homes);
 
 	@Override
 	public void create() {
