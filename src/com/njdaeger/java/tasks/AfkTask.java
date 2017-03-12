@@ -1,10 +1,9 @@
 package com.njdaeger.java.tasks;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.Groups;
+import com.njdaeger.java.wrapper.User;
 
 public class AfkTask {
 
@@ -13,8 +12,8 @@ public class AfkTask {
 
 			@Override
 			public void run() {
-				for (Player players : Bukkit.getOnlinePlayers()) {
-					if (!Groups.afk.contains(players)) {
+				for (User user : Core.getAfkUsers()) {
+					if (!user.isAfk()) {
 
 					}
 				}

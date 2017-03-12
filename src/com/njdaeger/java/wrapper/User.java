@@ -488,9 +488,9 @@ public final class User implements IUser {
 			exists = true;
 		}
 		if (memory) {
-			return (double) Transform.getValue(player, PlayerPaths.FLYSPEED);
+			return (int) Transform.getValue(player, PlayerPaths.FLYSPEED);
 		}
-		return (double) userFile.getValue(PlayerPaths.FLYSPEED.getPath());
+		return (int) userFile.getValue(PlayerPaths.FLYSPEED.getPath());
 	}
 
 	@Override

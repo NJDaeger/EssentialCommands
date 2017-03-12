@@ -52,7 +52,8 @@ public enum Error {
 	CONSOLE_ONLY("This action is restricted to console only."),
 	BLOCKED_COMMAND(Messages.BLACKLIST_COMMAND_MSG_PLR.getMessage()),
 	CANNOT_BURN_TARGET("Target cannot be burned."),
-	CANNOT_CHANGE_TO_TIME("Time cannot be changed to that.");
+	CANNOT_CHANGE_TO_TIME("Time cannot be changed to that."),
+	CANNOT_CHANGE_WEATHER("Weather cannot be changed to that.");
 
 	public final String error;
 

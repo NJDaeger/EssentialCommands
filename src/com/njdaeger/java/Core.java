@@ -223,4 +223,17 @@ public class Core extends JavaPlugin {
 	public static HashMap<UUID, User> getOnlineUserMap() {
 		return onlineUserMap;
 	}
+
+	/**
+	 * Gets a list of currently afk users.
+	 * 
+	 * @return A list of afk users.
+	 */
+	public static List<User> getAfkUsers() {
+		ArrayList<User> list = new ArrayList<>();
+		for (Player users : Groups.afk) {
+			list.add(getUser(users));
+		}
+		return list;
+	}
 }

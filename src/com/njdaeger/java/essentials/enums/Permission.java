@@ -100,7 +100,12 @@ public enum Permission {
 	ESS_PTIME_OTHER("essentials.time.ptime.other"),
 	ESS_WHOIS("essentials.whois"),
 	ESS_PWEATHER("essentials.weather.pweather"),
-	ESS_PWEATHER_OTHER("essentials.weather.pweather.other");
+	ESS_PWEATHER_OTHER("essentials.weather.pweather.other"),
+	ESS_PING("essentials.ping"),
+	ESS_WORKBENCH("essentials.workbench"),
+	ESS_REPAIR("essentials.repair"),
+	ESS_REALNAME("essentials.realname"),
+	ESS_DISABLE_MSG("essentials.message.disable");
 
 	public final String permission;
 

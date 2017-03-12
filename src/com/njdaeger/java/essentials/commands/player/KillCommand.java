@@ -17,13 +17,14 @@ public class KillCommand extends EssCommand {
 
 	@Override
 	@Cmd(
-			name = "kill",
-			desc = "Kill someone.",
-			usage = "/kill [player]",
-			max = 1,
-			aliases = { "death", "perish", "suicide" },
-			permissions = { Permission.ESS_SUICIDE, Permission.ESS_KILL_OTHER })
+		name = "kill",
+		desc = "Kill someone.",
+		usage = "/kill [player]",
+		max = 1,
+		aliases = { "death", "perish", "suicide" },
+		permissions = { Permission.ESS_SUICIDE, Permission.ESS_KILL_OTHER })
 	public boolean run(Sender sndr, String label, String[] args) {
+
 		if (label.equalsIgnoreCase("suicide")) {
 			if (sndr.isPlayer()) {
 				switch (args.length) {

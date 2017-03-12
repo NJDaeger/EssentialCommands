@@ -66,6 +66,10 @@ public class Messenger {
 		return;
 	}
 
+	/*
+	 * Add checks for disabled messaing.
+	 */
+
 	public static void sendReply(Sender sender, String message) {
 		if (conversation.get(sender.getName()) == null) {
 			sender.sendMessage(Error.throwError("No messages have been sent to anyone recently."));
