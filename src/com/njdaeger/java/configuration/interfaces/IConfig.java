@@ -191,4 +191,33 @@ public interface IConfig {
 	 */
 	void setConsoleNotified(boolean enable);
 
+	/**
+	 * Gets the list of currently spied commands.
+	 * 
+	 * @return A list of spied commands.
+	 */
+	List<String> getSpiedCommands();
+
+	/**
+	 * Adds a set of spied commands to the spied commands list.
+	 * 
+	 * @param commands The commands to add to the list.
+	 */
+	void addSpiedCommands(List<String> commands);
+
+	/**
+	 * Removes a set of spied commands from the spied commands list.
+	 * 
+	 * @param commands The set of commands to remove.
+	 */
+	void removeSpiedCommands(List<String> commands);
+
+	/**
+	 * Checks if a command is in the spied commands list.
+	 * 
+	 * @param command The command to find in the list.
+	 * @return Returns true if found, false otherwise.
+	 */
+	boolean isSpiedCommand(String command);
+
 }

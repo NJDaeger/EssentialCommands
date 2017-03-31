@@ -2,14 +2,15 @@ package com.njdaeger.java.essentials.utils.messages;
 
 import java.util.HashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
+import com.njdaeger.java.wrapper.User;
 
 public class Messenger {
 
@@ -24,7 +25,7 @@ public class Messenger {
 	 */
 	public static void sendMessage(Sender sndr, String target, String message) {
 		if (!sndr.isPlayer()) {
-			Player player = Bukkit.getPlayer(target);
+			User player = Core.getUser(target);
 			if (target.equalsIgnoreCase("console") && player == null) {
 				conversation.put(sndr.getName(), target);
 				conversation.put(target, sndr.getName());
@@ -35,12 +36,16 @@ public class Messenger {
 				sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 				return;
 			}
+			if (!player.isMessageable()) {
+				sndr.sendError(Error.CANNOT_SEND_PM);
+				return;
+			}
 			conversation.put(sndr.getName(), player.getName());
 			conversation.put(player.getName(), sndr.getName());
 			new Message(sndr, player, true, message);
 			return;
 		}
-		Player player = Bukkit.getPlayer(target);
+		User player = Core.getUser(target);
 		if (target.equalsIgnoreCase("console") && player == null) {
 			if (Holder.hasPermission(sndr, Permission.ESS_MESSAGE_CONSOLE)) {
 				conversation.put(sndr.getName(), target);
@@ -54,6 +59,14 @@ public class Messenger {
 			}
 			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), (Player) sndr, "Unknown",
 					Permission.ESS_MESSAGE_CONSOLE));
+			return;
+		}
+		if (player == null) {
+			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
+			return;
+		}
+		if (!player.isMessageable()) {
+			sndr.sendError(Error.CANNOT_SEND_PM);
 			return;
 		}
 		conversation.put(sndr.getName(), target);
@@ -76,7 +89,7 @@ public class Messenger {
 			return;
 		}
 		if (!sender.isPlayer()) {
-			Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
+			User player = Core.getUser(conversation.get(sender.getName()));
 			conversation.put(sender.getName(), conversation.get(sender.getName()));
 			conversation.put(conversation.get(sender.getName()), sender.getName());
 			if (player == null) {
@@ -87,10 +100,14 @@ public class Messenger {
 				sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
 				return;
 			}
+			if (!player.isMessageable()) {
+				sender.sendError(Error.CANNOT_SEND_PM);
+				return;
+			}
 			new Message(sender, player, true, message);
 			return;
 		}
-		Player player = Bukkit.getPlayer(conversation.get(sender.getName()));
+		User player = Core.getUser(conversation.get(sender.getName()));
 		boolean a = false;
 		if (Holder.hasPermission(sender, Permission.ESS_MESSAGE_CHATCOLOR)) {
 			a = true;
@@ -108,6 +125,10 @@ public class Messenger {
 				return;
 			}
 			sender.sendMessage(Error.CANNOT_SEND_PM.sendError());
+			return;
+		}
+		if (!player.isMessageable()) {
+			sender.sendError(Error.CANNOT_SEND_PM);
 			return;
 		}
 		new Message(sender, player, a, message);

@@ -3,6 +3,7 @@ package com.njdaeger.java.essentials.listeners.events;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
@@ -86,6 +87,16 @@ public class CommandEvent {
 			Core.setReloading(true);
 		}
 		return;
+	}
+
+	public void whenSpied(PlayerCommandPreprocessEvent e) {
+		String string[] = e.getMessage().split(" ");
+		if (Core.getConf().isSpiedCommand(string[0].substring(1, string[0].length()))) {
+			for (User user : Core.getSpyingUsers()) {
+				user.sendMessage(ChatColor.RED + "[SocialSpy] " + ChatColor.GRAY + e.getPlayer().getName()
+						+ ChatColor.ITALIC + ChatColor.GRAY + "/" + e.getMessage());
+			}
+		}
 	}
 
 	private List<String> getAliases(EssCommand command) {

@@ -217,4 +217,30 @@ public class Config implements IConfig, IBaseConf, Resettable {
 	public void setConsoleNotified(boolean enable) {
 		setValue(Path.BLACKLIST_COMMANDS_NOTIFY_CSL.getPath(), enable);
 	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> getSpiedCommands() {
+		return (List<String>) getValue(Path.SPIED_COMMANDS.getPath());
+	}
+
+	@Override
+	public void addSpiedCommands(List<String> commands) {
+		List<String> lastCommands = getSpiedCommands();
+		lastCommands.addAll(commands);
+		commands.clear();
+		setValue(Path.SPIED_COMMANDS.getPath(), lastCommands);
+		lastCommands.clear();
+	}
+
+	@Override
+	public void removeSpiedCommands(List<String> commands) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isSpiedCommand(String command) {
+		return getSpiedCommands().contains(command);
+	}
 }

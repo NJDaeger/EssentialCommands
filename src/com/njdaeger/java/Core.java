@@ -1,6 +1,7 @@
 package com.njdaeger.java;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -235,5 +236,18 @@ public class Core extends JavaPlugin {
 			list.add(getUser(users));
 		}
 		return list;
+	}
+
+	/**
+	 * Gets a list of currently spying users.
+	 * 
+	 * @return All the users with socialspy enabled.
+	 */
+	public static Collection<User> getSpyingUsers() {
+		Collection<User> users = new ArrayList<>();
+		for (Player user : Groups.socialspy) {
+			users.add(getUser(user));
+		}
+		return users;
 	}
 }

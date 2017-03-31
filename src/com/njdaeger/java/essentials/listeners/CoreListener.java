@@ -35,6 +35,7 @@ public class CoreListener implements Listener {
 		commandEvent.whenAfk(e);
 		commandEvent.whenBlocked(e);
 		commandEvent.checkReload(e);
+		commandEvent.whenSpied(e);
 	}
 
 	@EventHandler
