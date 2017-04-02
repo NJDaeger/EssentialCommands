@@ -3,22 +3,9 @@ package com.njdaeger.java;
 import java.lang.reflect.Field;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 
-import com.njdaeger.java.command.util.BaseCommand;
-import com.njdaeger.java.command.util.EssCommand;
-
 public class Plugin {
-
-	/**
-	 * Registers an EssCommand.
-	 * 
-	 * @param getCommand The command instance.
-	 */
-	public static void addCommand(EssCommand getCommand) {
-		getMap().register("ess", new BaseCommand(getCommand));
-	}
 
 	/**
 	 * Gets the bukkit command map.
@@ -36,19 +23,6 @@ public class Plugin {
 			e.printStackTrace();
 		}
 		return map;
-	}
-
-	/**
-	 * Registers a Command.
-	 * 
-	 * @param command The main name of the command.
-	 * @param getCommand The command instance.
-	 * 
-	 * @deprecated Please use the new command format. (EssCommand)
-	 */
-	@Deprecated
-	public static void addCommand(String command, Command getCommand) {
-		getMap().register("ess", getCommand);
 	}
 
 	/**

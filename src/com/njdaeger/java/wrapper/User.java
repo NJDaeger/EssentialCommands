@@ -21,6 +21,8 @@ import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
+import com.njdaeger.java.essentials.commands.player.TimeUnit;
+import com.njdaeger.java.essentials.commands.player.WeatherUnit;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -921,5 +923,58 @@ public final class User implements IUser {
 	@Override
 	public IOfflineHome getHome(String home) {
 		return new Home(this, home);
+	}
+
+	@Override
+	public void kick() {
+		player.kickPlayer("You have been kicked.");
+
+	}
+
+	@Override
+	public void kick(String reason) {
+		player.kickPlayer(reason);
+	}
+
+	@Override
+	public void setUserTime(TimeUnit time) {
+		player.setPlayerTime(time.getTime(), false);
+	}
+
+	@Override
+	public void setUserTime(long time) {
+		player.setPlayerTime(time, false);
+
+	}
+
+	@Override
+	public long getUserTime() {
+		return player.getPlayerTime();
+	}
+
+	@Override
+	public TimeUnit getUserTimeUnit() {
+		return TimeUnit.getClosestTime(player.getPlayerTime());
+	}
+
+	@Override
+	public void resetUserTime() {
+		player.resetPlayerTime();
+	}
+
+	@Override
+	public void setUserWeather(WeatherUnit unit) {
+		player.setPlayerWeather(unit.getType());
+	}
+
+	@Override
+	public WeatherUnit getUserWeather() {
+		return WeatherUnit.getFromWeatherType(player.getPlayerWeather());
+	}
+
+	@Override
+	public void resetUserWeather() {
+		player.resetPlayerWeather();
+
 	}
 }

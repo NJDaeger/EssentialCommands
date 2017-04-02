@@ -1,53 +1,23 @@
 package com.njdaeger.java.essentials.commands;
 
-import com.njdaeger.java.Plugin;
-import com.njdaeger.java.essentials.commands.homes.Delhome;
-import com.njdaeger.java.essentials.commands.homes.Home;
-import com.njdaeger.java.essentials.commands.homes.Listhomes;
-import com.njdaeger.java.essentials.commands.homes.Sethome;
-import com.njdaeger.java.essentials.commands.messaging.BroadcastCommand;
-import com.njdaeger.java.essentials.commands.messaging.MeCommand;
-import com.njdaeger.java.essentials.commands.messaging.MessageCommand;
-import com.njdaeger.java.essentials.commands.messaging.ReplyCommand;
-import com.njdaeger.java.essentials.commands.player.AfkCommand;
-import com.njdaeger.java.essentials.commands.player.BreakCommand;
-import com.njdaeger.java.essentials.commands.player.BurnCommand;
-import com.njdaeger.java.essentials.commands.player.ClearInvCommand;
-import com.njdaeger.java.essentials.commands.player.DebugCommand;
-import com.njdaeger.java.essentials.commands.player.EditsignCommand;
-import com.njdaeger.java.essentials.commands.player.FlyCommand;
-import com.njdaeger.java.essentials.commands.player.FoodCommand;
-import com.njdaeger.java.essentials.commands.player.GamemodeCommand;
-import com.njdaeger.java.essentials.commands.player.GetPositionCommand;
-import com.njdaeger.java.essentials.commands.player.GiveCommand;
-import com.njdaeger.java.essentials.commands.player.GodCommand;
-import com.njdaeger.java.essentials.commands.player.HatCommand;
-import com.njdaeger.java.essentials.commands.player.HealCommand;
-import com.njdaeger.java.essentials.commands.player.KillCommand;
-import com.njdaeger.java.essentials.commands.player.MoreCommand;
-import com.njdaeger.java.essentials.commands.player.NickCommand;
-import com.njdaeger.java.essentials.commands.player.PingCommand;
-import com.njdaeger.java.essentials.commands.player.PtimeCommand;
-import com.njdaeger.java.essentials.commands.player.SpeedCommand;
-import com.njdaeger.java.essentials.commands.player.VanishCommand;
-import com.njdaeger.java.essentials.commands.player.WhoisCommand;
-import com.njdaeger.java.essentials.commands.player.WorkbenchCommand;
-import com.njdaeger.java.essentials.commands.punish.BanCommand;
-import com.njdaeger.java.essentials.commands.punish.HelpopCommand;
-import com.njdaeger.java.essentials.commands.punish.KickallCommand;
-import com.njdaeger.java.essentials.commands.punish.TempBanCommand;
-import com.njdaeger.java.essentials.commands.punish.UnbanCommand;
-import com.njdaeger.java.essentials.commands.warps.DelwarpCommand;
-import com.njdaeger.java.essentials.commands.warps.SetwarpCommand;
-import com.njdaeger.java.essentials.commands.warps.WarpCommand;
-import com.njdaeger.java.essentials.commands.warps.WarpsCommand;
-import com.njdaeger.java.essentials.commands.world.InfoSidebarCommand;
-import com.njdaeger.java.essentials.commands.world.ServerInfoCommand;
+import com.njdaeger.java.command.util.Lib;
+import com.njdaeger.java.essentials.commands.homes.HomeCommands;
+import com.njdaeger.java.essentials.commands.messaging.MessageCommands;
+import com.njdaeger.java.essentials.commands.player.PlayerCommands;
+import com.njdaeger.java.essentials.commands.player.PlayerEnvironmentCommands;
+import com.njdaeger.java.essentials.commands.player.UsefulPlayerCommands;
+import com.njdaeger.java.essentials.commands.warps.WarpCommands;
 
-public class CommandCore extends Plugin {
+public class CommandCore extends Lib {
 
 	public static void registerCommands() {
-		addCommand(new AfkCommand());
+		addCommand(HomeCommands.class);
+		addCommand(MessageCommands.class);
+		addCommand(PlayerEnvironmentCommands.class);
+		addCommand(PlayerCommands.class);
+		addCommand(UsefulPlayerCommands.class);
+		addCommand(WarpCommands.class);
+		/*addCommand(new AfkCommand());
 		addCommand(new BreakCommand());
 		addCommand(new BurnCommand());
 		addCommand(new ClearInvCommand());
@@ -96,11 +66,11 @@ public class CommandCore extends Plugin {
 		addCommand(new MeCommand());
 		//addCommand(new DisableMessageCommand());
 		addCommand(new BroadcastCommand());
-		addCommand(new Sethome());
-		addCommand(new Listhomes());
-		addCommand(new Home());
-		addCommand(new Delhome());
-		addCommand(new PtimeCommand());
+		//addCommand(new Sethome());
+		//addCommand(new Listhomes());
+		//addCommand(new Home());
+		//addCommand(new Delhome());
+		addCommand(new PtimeCommand());*/
 		//addCommand(new PweatherCommand());
 
 	}

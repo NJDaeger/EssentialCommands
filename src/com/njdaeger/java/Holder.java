@@ -40,18 +40,20 @@ public class Holder {
 		return false;
 	}
 
-	public static boolean hasPermission(Sender sndr, Permission... permission) {
+	public static boolean hasPermission(Sender sender, Permission... permissions) {
+		if (sender.isOp() || sender.hasPermission(Permission.ESS_ALL)) {
+			return true;
+		}
 		int i = 0;
-		for (Permission perm : permission) {
-			if (i > 1) {
+		for (Permission node : permissions) {
+			if (i >= 1) {
 				return true;
 			}
-			if (sndr.hasPermission(perm.getPermission()) || sndr.hasPermission(Permission.ESS_ALL.getPermission())
-					|| sndr.isOp()) {
+			if (sender.hasPermission(node)) {
 				i++;
 				return true;
-			} else
-				return false;
+			}
+			continue;
 		}
 		return false;
 	}

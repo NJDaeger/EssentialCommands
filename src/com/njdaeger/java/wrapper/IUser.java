@@ -2,6 +2,8 @@ package com.njdaeger.java.wrapper;
 
 import org.bukkit.Location;
 
+import com.njdaeger.java.essentials.commands.player.TimeUnit;
+import com.njdaeger.java.essentials.commands.player.WeatherUnit;
 import com.njdaeger.java.essentials.enums.Error;
 import com.njdaeger.java.essentials.enums.Permission;
 
@@ -95,4 +97,68 @@ public interface IUser extends IUserConf {
 	 * @return The location of the player.
 	 */
 	Location getLocation();
+
+	/**
+	 * Kicks a user for the default kick reason.
+	 */
+	void kick();
+
+	/**
+	 * Kicks a user for a custom reason.
+	 * 
+	 * @param reason The reason the user was kicked.
+	 */
+	void kick(String reason);
+
+	/**
+	 * Sets the user time.
+	 * 
+	 * @param time The time of day to set the user to.
+	 */
+	void setUserTime(TimeUnit time);
+
+	/**
+	 * Sets the user time.
+	 * 
+	 * @param time The time of day to set the user to.
+	 */
+	void setUserTime(long time);
+
+	/**
+	 * Gets the users time.
+	 * 
+	 * @return The user time.
+	 */
+	long getUserTime();
+
+	/**
+	 * Gets the TimeUnit closest to the current user time.
+	 * 
+	 * @return The closest TimeUnit.
+	 */
+	TimeUnit getUserTimeUnit();
+
+	/**
+	 * Sets the user time back to the server time.
+	 */
+	void resetUserTime();
+
+	/**
+	 * Sets the user time
+	 * 
+	 * @param unit
+	 */
+	void setUserWeather(WeatherUnit unit);
+
+	/**
+	 * Gets the current weather type of the user.
+	 * 
+	 * @return The current weather for the user.
+	 */
+	WeatherUnit getUserWeather();
+
+	/**
+	 * Resets the user's weather to the server weather.
+	 */
+	void resetUserWeather();
 }

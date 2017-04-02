@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
+import com.njdaeger.java.command.util.BukkitCommonLib;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
 import com.njdaeger.java.essentials.commands.CommandCore;
@@ -73,6 +74,7 @@ public class Core extends JavaPlugin {
 		INSTANCE = this;
 		CFGINSTANCE = new Config();
 		BANINSTANCE = new BanAPI();
+		new BukkitCommonLib(this);
 		MessageFile.create();
 		CommandCore.registerCommands();
 		getConf().createConfig();
