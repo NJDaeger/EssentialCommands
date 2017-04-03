@@ -1,4 +1,4 @@
-package com.njdaeger.java.essentials.listeners;
+package com.njdaeger.java.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.DatabaseData;
-import com.njdaeger.java.essentials.utils.BanAPI;
+import com.njdaeger.java.utils.BanAPI;
 import com.njdaeger.java.wrapper.User;
 
 public class PlayerJoinListener implements Listener {

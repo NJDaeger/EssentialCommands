@@ -1,11 +1,11 @@
-package com.njdaeger.java.essentials.utils;
+package com.njdaeger.java.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 
 /**
  * @author Noah

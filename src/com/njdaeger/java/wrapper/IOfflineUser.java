@@ -7,7 +7,7 @@ import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 
-public interface IUserConf {
+public interface IOfflineUser {
 
 	/**
 	 * Checks if the User is muted or not.
@@ -290,6 +290,20 @@ public interface IUserConf {
 	 * @return Returns the home if it exists.
 	 */
 	IOfflineHome getHome(String home);
+
+	/**
+	 * Gets a list of homes from a user.
+	 * 
+	 * @return A list of the user homes.
+	 */
+	String[] getHomes();
+
+	/**
+	 * List the homes of the specified player.
+	 * 
+	 * @return Returns a formatted set of homes.
+	 */
+	String listHomes();
 
 	/**
 	 * Get the users yml file.

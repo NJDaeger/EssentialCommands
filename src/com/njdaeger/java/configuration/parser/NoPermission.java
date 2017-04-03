@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 
 import net.md_5.bungee.api.ChatColor;
 

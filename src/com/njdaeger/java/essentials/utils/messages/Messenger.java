@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
 

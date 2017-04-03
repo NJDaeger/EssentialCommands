@@ -12,16 +12,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.command.util.BukkitCommonLib;
+import com.njdaeger.java.command.util.commands.CommandInfo;
+import com.njdaeger.java.command.util.commands.CommandReg;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
-import com.njdaeger.java.essentials.commands.CommandCore;
-import com.njdaeger.java.essentials.listeners.CoreListener;
-import com.njdaeger.java.essentials.listeners.PlayerJoinListener;
-import com.njdaeger.java.essentials.listeners.PlayerLeaveListener;
-import com.njdaeger.java.essentials.utils.BanAPI;
-import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.listeners.PlayerJoinListener;
+import com.njdaeger.java.listeners.PlayerLeaveListener;
+import com.njdaeger.java.register.CommandCore;
+import com.njdaeger.java.register.CoreListener;
 import com.njdaeger.java.tasks.InfoTask;
 import com.njdaeger.java.tasks.MemoryTask;
+import com.njdaeger.java.utils.BanAPI;
+import com.njdaeger.java.utils.Util;
 import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
@@ -251,5 +253,18 @@ public class Core extends JavaPlugin {
 			users.add(getUser(user));
 		}
 		return users;
+	}
+
+	/**
+	 * Gets a command based from its name.
+	 * 
+	 * @param name The name of the command.
+	 * @return The command information.
+	 */
+	public static CommandInfo getRegisteredCommand(String name) {
+		if (CommandReg.commands.get(name) == null) {
+			return null;
+		}
+		return CommandReg.commands.get(name);
 	}
 }

@@ -13,7 +13,7 @@ import com.njdaeger.java.configuration.controllers.Warps;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
 import com.njdaeger.java.configuration.interfaces.IWarpHandler;
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.enums.Error;
 
 public class WarpData extends Warps implements IWarpHandler, IValues, ISetValues {
 

@@ -13,11 +13,11 @@ import com.njdaeger.java.command.util.commands.CommandReg;
 import com.njdaeger.java.command.util.commands.completer.TabComplete;
 
 public class Lib {
-	
+
 	//String is the command name and method is the tab completion method.
 	private static HashMap<String, Method> completions = new HashMap<>();
 	private static HashMap<String, Class<?>> completionclass = new HashMap<>();
-	
+
 	/**
 	 * Gets the bukkit command map.
 	 * 
@@ -35,23 +35,24 @@ public class Lib {
 		}
 		return map;
 	}
-	
+
 	/**
 	 * Grabs commands from a class. A class can have more than one command.
+	 * 
 	 * @param cls The class that contains the command(s)
 	 */
 	public static void addCommand(Class<?> cls) {
-		CommandReg reg = null;
+		//CommandReg reg = null;
 		try {
-			reg = new CommandReg(cls.newInstance());
+			new CommandReg(cls.newInstance());
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		for (CommandInfo command : reg.commands.values()) {
+		for (CommandInfo command : CommandReg.commands.values()) {
 			Lib.getMap().register(BukkitCommonLib.getPlugin().getName(), new BaseCommand(command));
 		}
 	}
-	
+
 	public static void addCompletion(Class<?> cls) {
 		for (Method method : cls.getMethods()) {
 			if (method.isAnnotationPresent(TabComplete.class)) {
@@ -61,7 +62,7 @@ public class Lib {
 			}
 		}
 	}
-	
+
 	public static HashMap<String, Method> getCompletions() {
 		return completions;
 	}

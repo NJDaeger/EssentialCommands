@@ -5,7 +5,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 
 public class AllowColor {
 	

@@ -3,7 +3,7 @@ package com.njdaeger.java;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
 
 public class Holder {

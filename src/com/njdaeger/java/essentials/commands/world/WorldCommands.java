@@ -6,7 +6,7 @@ import com.njdaeger.java.InfoBoard;
 import com.njdaeger.java.Server;
 import com.njdaeger.java.command.util.commands.Cmd;
 import com.njdaeger.java.command.util.commands.Executor;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
 
 import net.md_5.bungee.api.ChatColor;

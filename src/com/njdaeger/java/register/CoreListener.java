@@ -1,4 +1,4 @@
-package com.njdaeger.java.essentials.listeners;
+package com.njdaeger.java.register;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,5 +1,8 @@
 package com.njdaeger.java.essentials.listeners.events;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -7,8 +10,8 @@ import org.bukkit.event.server.ServerCommandEvent;
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
 import com.njdaeger.java.configuration.Parser;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.User;
 
 public class CommandEvent {
@@ -20,9 +23,16 @@ public class CommandEvent {
 	private VanishCommand vanishCommand = new VanishCommand();*/
 
 	public void whenAfk(PlayerCommandPreprocessEvent e) {
-		/*User user = Core.getUser(e.getPlayer());
+		User user = Core.getUser(e.getPlayer());
 		String message = e.getMessage().toLowerCase();
-		if (getAliases(afkCommand).contains(message) || afkCommand.getName().equalsIgnoreCase(message) || getAliases(
+		if (user.isAfk()) {
+			if (getAliases("afk").contains(message)) {
+				return;
+			}
+			user.setAfk(false);
+		}
+
+		/*if (getAliases(afkCommand).contains(message) || afkCommand.getName().equalsIgnoreCase(message) || getAliases(
 				broadcastCommand).contains(message) || messageCommand.getName().equalsIgnoreCase(message) || getAliases(
 						messageCommand).contains(message) || replyCommand.getName().equalsIgnoreCase(message)
 				|| getAliases(replyCommand).contains(message) || broadcastCommand.getName().equalsIgnoreCase(message)
@@ -90,7 +100,8 @@ public class CommandEvent {
 		}
 	}
 
-	/*private List<String> getAliases(EssCommand command) {
-		return Arrays.asList(command.getAliases());
-	}*/
+	private List<String> getAliases(String command) {
+		String[] aliases = Core.getRegisteredCommand(command).getAliases();
+		return Arrays.asList(aliases);
+	}
 }

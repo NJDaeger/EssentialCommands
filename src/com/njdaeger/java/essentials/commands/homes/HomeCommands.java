@@ -9,8 +9,8 @@ import com.njdaeger.java.command.util.commands.Executor;
 import com.njdaeger.java.configuration.Parser;
 import com.njdaeger.java.configuration.data.Home;
 import com.njdaeger.java.configuration.data.OfflineHome;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
@@ -30,6 +30,7 @@ public class HomeCommands {
 		usage = "/delhome <homename> [player]",
 		max = 2,
 		min = 1,
+		completer = true,
 		aliases = { "deletehome", "removehome", "clearhome" },
 		permissions = { Permission.ESS_DELHOME, Permission.ESS_DELHOME_OTHER })
 	public void delhome(Sender sndr, String label, String[] args) {
@@ -38,8 +39,7 @@ public class HomeCommands {
 				User user = sndr.asUser();
 				if (!user.getHome(args[0]).exists()) {
 					sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.getHome(null)
-							.listHomes());
+					sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.listHomes());
 					return;
 				}
 				user.getHome(args[0]).remove();
@@ -65,7 +65,7 @@ public class HomeCommands {
 
 			if (user.getHome(args[0]).exists()) {
 				sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.getHome(null).listHomes());
+				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.listHomes());
 				return;
 			}
 			user.getHome(args[0]).remove();
@@ -75,7 +75,7 @@ public class HomeCommands {
 		}
 		if (!target.getHome(args[0]).exists()) {
 			sndr.sendMessage(Error.HOME_NOTEXIST.sendError());
-			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + target.getHome(null).listHomes());
+			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + target.listHomes());
 			return;
 		}
 		target.getHome(args[0]).remove();
@@ -163,11 +163,11 @@ public class HomeCommands {
 		case 0:
 			if (sndr.isUser()) {
 				User user = sndr.asUser();
-				if (user.getHome(null).listHomes() == null) {
+				if (user.listHomes() == null) {
 					sndr.sendMessage(Error.NO_HOMES.sendError());
 					return;
 				}
-				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.getHome(null).listHomes());
+				sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.listHomes());
 				return;
 			}
 			sndr.sendMessage(Error.NOT_ENOUGH_ARGS.sendError());
@@ -181,20 +181,20 @@ public class HomeCommands {
 						sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
 						return;
 					}
-					if (otarget.getHome(null).listHomes() == null) {
+					if (otarget.listHomes() == null) {
 						sndr.sendMessage(Error.NO_HOMES.sendError());
 						return;
 					}
 					sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN + otarget
-							.getHome(null).listHomes());
+							.listHomes());
 					return;
 				}
-				if (target.getHome(null).listHomes() == null) {
+				if (target.listHomes() == null) {
 					sndr.sendMessage(Error.NO_HOMES.sendError());
 					return;
 				}
-				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN + target.getHome(
-						null).listHomes());
+				sndr.sendMessage(ChatColor.GRAY + args[0] + "'s current homes: " + ChatColor.GREEN + target
+						.listHomes());
 				return;
 			}
 			sndr.sendMessage(Parser.parse(Error.NO_PERMISSION.getError(), sndr.asPlayer(), "Unknown",

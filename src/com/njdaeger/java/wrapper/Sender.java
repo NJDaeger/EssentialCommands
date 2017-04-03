@@ -9,7 +9,7 @@ import org.bukkit.permissions.Permission;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.Holder;
-import com.njdaeger.java.essentials.enums.Error;
+import com.njdaeger.java.enums.Error;
 
 public class Sender {
 
@@ -103,7 +103,7 @@ public class Sender {
 		return sender.hasPermission(permission);
 	}
 
-	public boolean hasPermission(com.njdaeger.java.essentials.enums.Permission... permission) {
+	public boolean hasPermission(com.njdaeger.java.enums.Permission... permission) {
 		return Holder.hasPermission(sender, permission);
 	}
 }

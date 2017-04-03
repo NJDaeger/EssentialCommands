@@ -1,22 +1,28 @@
-package com.njdaeger.java.essentials.commands;
+package com.njdaeger.java.register;
 
 import com.njdaeger.java.command.util.Lib;
 import com.njdaeger.java.essentials.commands.homes.HomeCommands;
+import com.njdaeger.java.essentials.commands.homes.HomeCompleter;
 import com.njdaeger.java.essentials.commands.messaging.MessageCommands;
 import com.njdaeger.java.essentials.commands.player.PlayerCommands;
 import com.njdaeger.java.essentials.commands.player.PlayerEnvironmentCommands;
 import com.njdaeger.java.essentials.commands.player.UsefulPlayerCommands;
+import com.njdaeger.java.essentials.commands.punish.PunishCommands;
 import com.njdaeger.java.essentials.commands.warps.WarpCommands;
+import com.njdaeger.java.essentials.commands.world.WorldCommands;
 
 public class CommandCore extends Lib {
 
 	public static void registerCommands() {
 		addCommand(HomeCommands.class);
+		addCompletion(HomeCompleter.class);
 		addCommand(MessageCommands.class);
 		addCommand(PlayerEnvironmentCommands.class);
 		addCommand(PlayerCommands.class);
 		addCommand(UsefulPlayerCommands.class);
 		addCommand(WarpCommands.class);
+		addCommand(PunishCommands.class);
+		addCommand(WorldCommands.class);
 		/*addCommand(new AfkCommand());
 		addCommand(new BreakCommand());
 		addCommand(new BurnCommand());

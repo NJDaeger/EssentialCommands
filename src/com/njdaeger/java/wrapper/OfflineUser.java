@@ -1,5 +1,6 @@
 package com.njdaeger.java.wrapper;
 
+import java.io.File;
 import java.util.UUID;
 
 import com.njdaeger.java.configuration.controllers.Database;
@@ -12,7 +13,7 @@ import com.njdaeger.java.configuration.exceptions.db.DatabaseEntryMissing;
 import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 
-public final class OfflineUser implements IUserConf {
+public final class OfflineUser implements IOfflineUser {
 
 	//The user's file
 	private UserFile userFile;
@@ -25,6 +26,9 @@ public final class OfflineUser implements IUserConf {
 
 	//The name of the user.
 	private String name;
+
+	//This is the directory to the user's homes.
+	private File dir;
 
 	public OfflineUser(String name) {
 		if (Database.getDatabase("playerdata").getBase() == null) {
@@ -398,5 +402,30 @@ public final class OfflineUser implements IUserConf {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String[] getHomes() {
+		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ getId() + File.separator + "homes");
+		return dir.list();
+	}
+
+	@Override
+	public String listHomes() {
+		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ getId() + File.separator + "homes");
+		if (dir.list() == null) {
+			return null;
+		}
+		String[] homes = dir.list();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < homes.length; i++) {
+			sb.append(homes[i]).append(" ");
+		}
+		String message = sb.toString().trim();
+		String finalmsg = message.replace(".yml", "");
+		String wcommas = finalmsg.replaceAll(" ", ", ");
+		return wcommas;
 	}
 }

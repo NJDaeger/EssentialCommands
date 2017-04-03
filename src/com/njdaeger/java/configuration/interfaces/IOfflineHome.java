@@ -1,6 +1,6 @@
 package com.njdaeger.java.configuration.interfaces;
 
-import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.IOfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public interface IOfflineHome extends IValues, ISetValues {
@@ -34,7 +34,7 @@ public interface IOfflineHome extends IValues, ISetValues {
 	 * 
 	 * @return The home owner.
 	 */
-	IUserConf getOwner();
+	IOfflineUser getOwner();
 
 	/**
 	 * Get the name of the home.

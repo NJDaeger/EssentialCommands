@@ -2,12 +2,12 @@ package com.njdaeger.java.wrapper;
 
 import org.bukkit.Location;
 
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.essentials.commands.player.TimeUnit;
 import com.njdaeger.java.essentials.commands.player.WeatherUnit;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
 
-public interface IUser extends IUserConf {
+public interface IUser extends IOfflineUser {
 
 	/**
 	 * A set of various tasks to do when a user joins the server.

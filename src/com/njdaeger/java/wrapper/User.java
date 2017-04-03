@@ -1,5 +1,6 @@
 package com.njdaeger.java.wrapper;
 
+import java.io.File;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -21,10 +22,10 @@ import com.njdaeger.java.configuration.data.LogoutLocation;
 import com.njdaeger.java.configuration.data.UserFile;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.essentials.commands.player.TimeUnit;
 import com.njdaeger.java.essentials.commands.player.WeatherUnit;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
 
 public final class User implements IUser {
 
@@ -39,6 +40,9 @@ public final class User implements IUser {
 
 	//The user's base file. Where everything is created and reset.
 	private UserFile userFile;
+
+	//This file stores user homes.. 
+	private File dir;
 
 	//private HashMap<UUID, User> onlinePlayers = new HashMap<>();
 
@@ -490,9 +494,9 @@ public final class User implements IUser {
 			exists = true;
 		}
 		if (memory) {
-			return (int) Transform.getValue(player, PlayerPaths.FLYSPEED);
+			return (Double) Transform.getValue(player, PlayerPaths.FLYSPEED);
 		}
-		return (int) userFile.getValue(PlayerPaths.FLYSPEED.getPath());
+		return (Double) userFile.getValue(PlayerPaths.FLYSPEED.getPath());
 	}
 
 	@Override
@@ -526,9 +530,9 @@ public final class User implements IUser {
 			exists = true;
 		}
 		if (memory) {
-			return (int) Transform.getValue(getBase(), PlayerPaths.WALKSPEED);
+			return ((Double) Transform.getValue(getBase(), PlayerPaths.WALKSPEED)).intValue();
 		}
-		return (int) userFile.getValue(PlayerPaths.WALKSPEED.getPath());
+		return ((Double) userFile.getValue(PlayerPaths.WALKSPEED.getPath())).intValue();
 	}
 
 	@Override
@@ -587,10 +591,19 @@ public final class User implements IUser {
 			userFile.createConfig();
 			exists = true;
 		}
+		Gamemode gm;
 		if (memory) {
-			return Gamemode.getAliasUsed((String) Transform.getValue(player, PlayerPaths.GAMEMODE));
+			gm = Gamemode.getAliasUsed((String) Transform.getValue(player, PlayerPaths.GAMEMODE));
+			if (gm == null) {
+				gm = Gamemode.getAliasUsed(player.getGameMode().name());
+			}
+			return gm;
 		}
-		return Gamemode.getAliasUsed((String) userFile.getValue(PlayerPaths.GAMEMODE.getPath()));
+		gm = Gamemode.getAliasUsed((String) userFile.getValue(PlayerPaths.GAMEMODE.getPath()));
+		if (gm == null) {
+			gm = Gamemode.getAliasUsed(player.getGameMode().name());
+		}
+		return gm;
 	}
 
 	@Override
@@ -923,6 +936,31 @@ public final class User implements IUser {
 	@Override
 	public IOfflineHome getHome(String home) {
 		return new Home(this, home);
+	}
+
+	@Override
+	public String[] getHomes() {
+		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ getId() + File.separator + "homes");
+		return dir.list();
+	}
+
+	@Override
+	public String listHomes() {
+		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+				+ getId() + File.separator + "homes");
+		if (dir.list() == null) {
+			return null;
+		}
+		String[] homes = dir.list();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < homes.length; i++) {
+			sb.append(homes[i]).append(" ");
+		}
+		String message = sb.toString().trim();
+		String finalmsg = message.replace(".yml", "");
+		String wcommas = finalmsg.replaceAll(" ", ", ");
+		return wcommas;
 	}
 
 	@Override

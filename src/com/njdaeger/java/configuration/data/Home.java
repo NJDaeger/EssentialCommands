@@ -10,8 +10,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.njdaeger.java.configuration.interfaces.IHome;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.wrapper.IOfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public class Home implements IHome {
@@ -181,7 +181,7 @@ public class Home implements IHome {
 	}
 
 	@Override
-	public IUserConf getOwner() {
+	public IOfflineUser getOwner() {
 		return user;
 	}
 

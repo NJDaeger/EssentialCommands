@@ -4,9 +4,9 @@ import org.bukkit.ChatColor;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.commands.Cmd;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.Util;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
+import com.njdaeger.java.utils.Util;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
 

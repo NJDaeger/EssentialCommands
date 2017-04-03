@@ -1,4 +1,4 @@
-package com.njdaeger.java.essentials.enums;
+package com.njdaeger.java.enums;
 
 public enum Permission {
 

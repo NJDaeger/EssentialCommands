@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import com.njdaeger.java.configuration.parser.BlacklistedCommand;
 import com.njdaeger.java.configuration.parser.NoPermission;
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 
 public class Parser {
 

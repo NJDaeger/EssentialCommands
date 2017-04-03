@@ -1,4 +1,4 @@
-package com.njdaeger.java.essentials.utils;
+package com.njdaeger.java.utils;
 
 import java.util.Arrays;
 import java.util.Date;

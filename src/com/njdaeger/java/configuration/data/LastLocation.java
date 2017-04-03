@@ -9,7 +9,7 @@ import com.njdaeger.java.configuration.Transform;
 import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.ISetValues;
 import com.njdaeger.java.configuration.interfaces.IValues;
-import com.njdaeger.java.wrapper.IUserConf;
+import com.njdaeger.java.wrapper.IOfflineUser;
 import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
@@ -17,7 +17,7 @@ public class LastLocation implements IValues, ISetValues {
 
 	private User onlineUser;
 
-	private IUserConf user;
+	private IOfflineUser user;
 
 	private boolean memory;
 

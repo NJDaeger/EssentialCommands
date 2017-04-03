@@ -2,9 +2,8 @@ package com.njdaeger.java.essentials.commands.punish;
 
 import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.commands.Cmd;
-import com.njdaeger.java.essentials.enums.Error;
-import com.njdaeger.java.essentials.enums.Permission;
-import com.njdaeger.java.essentials.utils.BanAPI;
+import com.njdaeger.java.enums.Error;
+import com.njdaeger.java.enums.Permission;
 import com.njdaeger.java.wrapper.Sender;
 import com.njdaeger.java.wrapper.User;
 
@@ -26,7 +25,7 @@ public class PunishCommands {
 		min = 1,
 		aliases = { "perm", "banhammer" },
 		permissions = { Permission.ESS_BAN })
-	public void run(Sender sndr, String label, String[] args) {
+	public void ban(Sender sndr, String label, String[] args) {
 		User user = Core.getUser(args[0]);
 		if (user == null) {
 			sndr.sendMessage(Error.UNKNOWN_PLAYER.sendError());
@@ -46,7 +45,7 @@ public class PunishCommands {
 			builder.append(args[i]).append(' ');
 
 		String reason = builder.toString();
-		new BanAPI().addBan(user.getName(), sndr.asCommandSender(), null, reason);
+		Core.getBanAPI().addBan(user.getName(), sndr.asCommandSender(), null, reason);
 		user.kick("You have been banned for " + reason);
 		return;
 	}

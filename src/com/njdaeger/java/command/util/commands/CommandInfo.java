@@ -2,7 +2,7 @@ package com.njdaeger.java.command.util.commands;
 
 import java.lang.reflect.Method;
 
-import com.njdaeger.java.essentials.enums.Permission;
+import com.njdaeger.java.enums.Permission;
 
 public class CommandInfo {
 
