@@ -3,7 +3,7 @@
     <groupId>com.njdaeger</groupId>
     <artifactId>EssentialCommands</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <licenses>
         <license>
@@ -273,4 +273,11 @@
 		</plugin>
         </plugins>
     </build>
+    <modules>
+    	
+    	<module>Annotations</module>
+    	<module>NJPerms</module>
+    	<module>ServerProtect</module>
+    	<module>LoginClearance</module>
+    </modules>
 </project>
