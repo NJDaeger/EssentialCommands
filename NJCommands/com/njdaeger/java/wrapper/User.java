@@ -24,8 +24,8 @@ import com.njdaeger.java.configuration.enums.PlayerPaths;
 import com.njdaeger.java.configuration.interfaces.IOfflineHome;
 import com.njdaeger.java.enums.Error;
 import com.njdaeger.java.enums.Permission;
-import com.njdaeger.java.essentials.commands.player.TimeUnit;
-import com.njdaeger.java.essentials.commands.player.WeatherUnit;
+import com.njdaeger.java.njcommands.commands.player.TimeUnit;
+import com.njdaeger.java.njcommands.commands.player.WeatherUnit;
 
 public final class User implements IUser {
 

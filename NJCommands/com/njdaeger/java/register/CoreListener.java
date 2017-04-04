@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.essentials.listeners.events.ChatEvent;
-import com.njdaeger.java.essentials.listeners.events.CommandEvent;
-import com.njdaeger.java.essentials.listeners.events.InteractEvent;
-import com.njdaeger.java.essentials.listeners.events.MoveEvent;
+import com.njdaeger.java.njcommands.listeners.events.ChatEvent;
+import com.njdaeger.java.njcommands.listeners.events.CommandEvent;
+import com.njdaeger.java.njcommands.listeners.events.InteractEvent;
+import com.njdaeger.java.njcommands.listeners.events.MoveEvent;
 
 public class CoreListener implements Listener {
 

@@ -4,8 +4,8 @@ import org.bukkit.Location;
 
 import com.njdaeger.java.enums.Error;
 import com.njdaeger.java.enums.Permission;
-import com.njdaeger.java.essentials.commands.player.TimeUnit;
-import com.njdaeger.java.essentials.commands.player.WeatherUnit;
+import com.njdaeger.java.njcommands.commands.player.TimeUnit;
+import com.njdaeger.java.njcommands.commands.player.WeatherUnit;
 
 public interface IUser extends IOfflineUser {
 

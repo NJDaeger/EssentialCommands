@@ -224,55 +224,6 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
     </repositories>
-
-    <build>
-        <sourceDirectory>src/com/njdaeger/</sourceDirectory>
-        <defaultGoal>clean install</defaultGoal>
-        <resources>
-            <resource>
-                <directory>src/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>plugin.yml</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>2.10.4</version>
-			<configuration>
-				<failOnError>false</failOnError>
-				<sourcepath>src/</sourcepath>
-			</configuration>
-			<executions>
-				<execution>
-					<id>attach-javadocs</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-        </plugins>
-    </build>
     <modules>
     	
     	<module>Annotations</module>

@@ -1,15 +1,15 @@
 package com.njdaeger.java.register;
 
 import com.njdaeger.java.command.util.Lib;
-import com.njdaeger.java.essentials.commands.homes.HomeCommands;
-import com.njdaeger.java.essentials.commands.homes.HomeCompleter;
-import com.njdaeger.java.essentials.commands.messaging.MessageCommands;
-import com.njdaeger.java.essentials.commands.player.PlayerCommands;
-import com.njdaeger.java.essentials.commands.player.PlayerEnvironmentCommands;
-import com.njdaeger.java.essentials.commands.player.UsefulPlayerCommands;
-import com.njdaeger.java.essentials.commands.punish.PunishCommands;
-import com.njdaeger.java.essentials.commands.warps.WarpCommands;
-import com.njdaeger.java.essentials.commands.world.WorldCommands;
+import com.njdaeger.java.njcommands.commands.homes.HomeCommands;
+import com.njdaeger.java.njcommands.commands.homes.HomeCompleter;
+import com.njdaeger.java.njcommands.commands.messaging.MessageCommands;
+import com.njdaeger.java.njcommands.commands.player.PlayerCommands;
+import com.njdaeger.java.njcommands.commands.player.PlayerEnvironmentCommands;
+import com.njdaeger.java.njcommands.commands.player.UsefulPlayerCommands;
+import com.njdaeger.java.njcommands.commands.punish.PunishCommands;
+import com.njdaeger.java.njcommands.commands.warps.WarpCommands;
+import com.njdaeger.java.njcommands.commands.world.WorldCommands;
 
 public class CommandCore extends Lib {
 
