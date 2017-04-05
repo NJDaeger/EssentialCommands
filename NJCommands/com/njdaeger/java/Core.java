@@ -28,7 +28,7 @@ import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public class Core extends JavaPlugin {
-
+	
 	private static Core INSTANCE;
 	private static Config CFGINSTANCE;
 	private static BanAPI BANINSTANCE;
@@ -36,35 +36,19 @@ public class Core extends JavaPlugin {
 	private static HashMap<UUID, User> onlineUserMap = new HashMap<>();
 	private static ArrayList<User> onlineUsers = new ArrayList<>();
 	private static boolean reloading = false;
-
+	
 	public void registerListeners() {
 		new PlayerLeaveListener(this);
 		new PlayerJoinListener(this);
 		new CoreListener(this);
 	}
-
-	private void enableSubplugins() {
-		if (getConf().isAnnotationsEnabled()) {
-			Bukkit.getLogger().info("[EssentialCommands] Annotations is now Enabled.");
-		}
-		if (getConf().isLoginClearanceEnabled()) {
-			Bukkit.getLogger().info("[EssentialCommands] LoginClearance is now Enabled.");
-		}
-		if (getConf().isNJPermsEnabled()) {
-			Bukkit.getLogger().info("[EssentialCommands] NJPerms is now Enabled.");
-		}
-		if (getConf().isServerProtectEnabled()) {
-			Bukkit.getLogger().info("[EssentialCommands] ServerProtect is now Enabled.");
-		} else
-			Bukkit.getLogger().info("No sub-plugins have been enabled in EssentialCommands.");
-	}
-
+	
 	private void registerPermissions() {
 		Util.generatePermissions();
-		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by " + this
-				.getDescription().getAuthors() + " is now Enabled!");
+		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by "
+				+ this.getDescription().getAuthors() + " is now Enabled!");
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -83,7 +67,6 @@ public class Core extends JavaPlugin {
 		TPS.getTPSClass();
 		new InfoTask(this).run();
 		new MemoryTask();
-		enableSubplugins();
 		registerListeners();
 		registerPermissions();
 		if (getConf().loadInMemory()) {
@@ -94,7 +77,7 @@ public class Core extends JavaPlugin {
 			}
 		}
 	}
-
+	
 	@Override
 	public void onDisable() {
 		if (isReloading()) {
@@ -110,7 +93,7 @@ public class Core extends JavaPlugin {
 			return;
 		}
 	}
-
+	
 	/**
 	 * Get the instance of the plugin core.
 	 * 
@@ -119,7 +102,7 @@ public class Core extends JavaPlugin {
 	public static Core getInstance() {
 		return INSTANCE;
 	}
-
+	
 	/**
 	 * Get the plugin configuration.
 	 *
@@ -128,7 +111,7 @@ public class Core extends JavaPlugin {
 	public static Config getConf() {
 		return CFGINSTANCE;
 	}
-
+	
 	/**
 	 * Checks if the server is reloading.
 	 * 
@@ -137,16 +120,17 @@ public class Core extends JavaPlugin {
 	public static boolean isReloading() {
 		return reloading;
 	}
-
+	
 	/**
 	 * Sets the reloading variable.
 	 * 
-	 * @param reloading True if reloading, false otherwise
+	 * @param reloading
+	 *            True if reloading, false otherwise
 	 */
 	public static void setReloading(boolean reloading) {
 		Core.reloading = reloading;
 	}
-
+	
 	/**
 	 * Gets the plugin BanAPI
 	 * 
@@ -155,45 +139,53 @@ public class Core extends JavaPlugin {
 	public static BanAPI getBanAPI() {
 		return BANINSTANCE;
 	}
-
+	
 	/**
 	 * Gets an online User via their in game name.
 	 * 
-	 * @param name The name of the player you want to get.
+	 * @param name
+	 *            The name of the player you want to get.
 	 * @return Null if the player doesn't exist, otherwise it returns the user.
 	 */
 	public static User getUser(String name) {
-		Player player = Bukkit.getPlayer(name);
-		if (player == null) {
-			return null;
+		if (Bukkit.getPlayer(name) != null) {
+			return onlineUserMap.get(Bukkit.getPlayer(name).getUniqueId());
 		}
-		return onlineUserMap.get(player.getUniqueId());
+		for (User user : getOnlineUsers()) {
+			if (Util.checkIfSimilar(name, user.getNickname())) {
+				return user;
+			}
+		}
+		return null;
 	}
-
+	
 	/**
 	 * Gets an online User via player object.
 	 * 
-	 * @param player The player to convert into a user.
+	 * @param player
+	 *            The player to convert into a user.
 	 * @return The user.
 	 */
 	public static User getUser(Player player) {
 		return onlineUserMap.get(player.getUniqueId());
 	}
-
+	
 	/**
 	 * Get an online User via their UUID
 	 * 
-	 * @param userUUID The players UUID.
+	 * @param userUUID
+	 *            The players UUID.
 	 * @return The user.
 	 */
 	public static User getUser(UUID userUUID) {
 		return onlineUserMap.get(userUUID);
 	}
-
+	
 	/**
 	 * Attempts to get an offline player from the player database.
 	 * 
-	 * @param name The name of the offline player.
+	 * @param name
+	 *            The name of the offline player.
 	 * @return Null if the database doesn't contain the player, it returns the
 	 *         user otherwise.
 	 */
@@ -207,7 +199,7 @@ public class Core extends JavaPlugin {
 		}
 		return new OfflineUser(name);
 	}
-
+	
 	/**
 	 * Get a list of the online users.
 	 * 
@@ -216,7 +208,7 @@ public class Core extends JavaPlugin {
 	public static List<User> getOnlineUsers() {
 		return onlineUsers;
 	}
-
+	
 	/**
 	 * Gets the online user map.
 	 * 
@@ -228,7 +220,7 @@ public class Core extends JavaPlugin {
 	public static HashMap<UUID, User> getOnlineUserMap() {
 		return onlineUserMap;
 	}
-
+	
 	/**
 	 * Gets a list of currently afk users.
 	 * 
@@ -241,7 +233,7 @@ public class Core extends JavaPlugin {
 		}
 		return list;
 	}
-
+	
 	/**
 	 * Gets a list of currently spying users.
 	 * 
@@ -254,11 +246,12 @@ public class Core extends JavaPlugin {
 		}
 		return users;
 	}
-
+	
 	/**
 	 * Gets a command based from its name.
 	 * 
-	 * @param name The name of the command.
+	 * @param name
+	 *            The name of the command.
 	 * @return The command information.
 	 */
 	public static CommandInfo getRegisteredCommand(String name) {

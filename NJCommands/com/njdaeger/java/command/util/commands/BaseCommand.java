@@ -6,12 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Holder;
@@ -29,7 +26,8 @@ public class BaseCommand extends Command implements PluginIdentifiableCommand {
 	 * This is the Base register for the command. This transforms CommandInfo
 	 * into a command.
 	 * 
-	 * @param command The command info being transformed
+	 * @param command
+	 *            The command info being transformed
 	 */
 	public BaseCommand(CommandInfo command) {
 		super(command.getName());
@@ -42,8 +40,10 @@ public class BaseCommand extends Command implements PluginIdentifiableCommand {
 	/**
 	 * Checks if the command arguments go over or under the alloted amount.
 	 * 
-	 * @param sndr Sender sending the command.
-	 * @param args The command arguments.
+	 * @param sndr
+	 *            Sender sending the command.
+	 * @param args
+	 *            The command arguments.
 	 * @return True if the argument count is invalid.
 	 */
 	private boolean checkLength(Sender sndr, String[] args) {
@@ -61,7 +61,8 @@ public class BaseCommand extends Command implements PluginIdentifiableCommand {
 	/**
 	 * Checks the executor of the command.
 	 * 
-	 * @param sender Commandsender to check.
+	 * @param sender
+	 *            Commandsender to check.
 	 * @return Returns true if the command cannot be executed.
 	 */
 	private boolean checkExecutor(Sender sender) {
@@ -69,46 +70,59 @@ public class BaseCommand extends Command implements PluginIdentifiableCommand {
 		for (Executor executor : command.getExecutors()) {
 			executors.add(executor);
 		}
-		boolean isPlayer = executors.contains(Executor.PLAYER); //This is true if the executor list allows players.
-		boolean isConsole = executors.contains(Executor.CONSOLE); //This is true if the executor list allows console.
-		boolean isBlock = executors.contains(Executor.BLOCK); //This is true if the executor list allows blocks.
-		if (isPlayer && !isConsole && !isBlock) { //Player only
-			if (!(sender instanceof Player)) {
+		boolean isPlayer = executors.contains(Executor.PLAYER); // This is true
+																// if the
+																// executor list
+																// allows
+																// players.
+		boolean isConsole = executors.contains(Executor.CONSOLE); // This is
+																	// true if
+																	// the
+																	// executor
+																	// list
+																	// allows
+																	// console.
+		boolean isBlock = executors.contains(Executor.BLOCK); // This is true if
+																// the executor
+																// list allows
+																// blocks.
+		if (isPlayer && !isConsole && !isBlock) { // Player only
+			if (!sender.isUser()) {
 				sender.sendMessage(Error.PLAYER_ONLY.format());
 				return true;
 			}
 		}
-		if (!isPlayer && isConsole && !isBlock) { //Console only
-			if (!(sender instanceof ConsoleCommandSender)) {
+		if (!isPlayer && isConsole && !isBlock) { // Console only
+			if (!sender.isConsole()) {
 				sender.sendMessage(Error.CONSOLE_ONLY.format());
 				return true;
 			}
 		}
-		if (!isPlayer && !isConsole && isBlock) { //Block only
-			if (!(sender instanceof BlockCommandSender)) {
+		if (!isPlayer && !isConsole && isBlock) { // Block only
+			if (!sender.isBlock()) {
 				sender.sendMessage(Error.BLOCK_ONLY.format());
 				return true;
 			}
 		}
-		if (isPlayer && isConsole && !isBlock) { //Player & console
-			if (sender instanceof BlockCommandSender) {
+		if (isPlayer && isConsole && !isBlock) { // Player & console
+			if (sender.isBlock()) {
 				sender.sendMessage(Error.PLAYER_CONSOLE_ONLY.format());
 				return true;
 			}
 		}
-		if (isPlayer && !isConsole && isBlock) { //Player & block
-			if (sender instanceof ConsoleCommandSender) {
+		if (isPlayer && !isConsole && isBlock) { // Player & block
+			if (sender.isConsole()) {
 				sender.sendMessage(Error.PLAYER_BLOCK_ONLY.format());
 				return true;
 			}
 		}
-		if (!isPlayer && isConsole && isBlock) { //Console & block
-			if (sender instanceof Player) {
+		if (!isPlayer && isConsole && isBlock) { // Console & block
+			if (sender.isUser()) {
 				sender.sendMessage(Error.BLOCK_CONSOLE_ONLY.format());
 				return true;
 			}
 		}
-		return false; //Anyone
+		return false; // Anyone
 	}
 
 	@Override
@@ -138,6 +152,9 @@ public class BaseCommand extends Command implements PluginIdentifiableCommand {
 
 	@SuppressWarnings("unchecked")
 	private List<String> complete(Sender sender, String alias, String[] args) {
+		if (!sender.isUser()) {
+			return null;
+		}
 		if (command.hasCompleter()) {
 			Method completions = Lib.getCompletions().get(command.getName());
 			Class<?> cls = Lib.getCompletionClass().get(command.getName());

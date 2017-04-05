@@ -18,14 +18,10 @@ public interface IOfflineHome extends IValues, ISetValues {
 	void remove();
 
 	/**
-	 * List the homes of the specified player.
-	 */
-	String listHomes();
-
-	/**
 	 * Send someone to another home.
 	 * 
-	 * @param target Player to send.
+	 * @param target
+	 *            Player to send.
 	 */
 	void sendOtherHome(User target);
 

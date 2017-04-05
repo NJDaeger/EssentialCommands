@@ -24,12 +24,6 @@ public interface IHome extends IOfflineHome {
 	void remove();
 
 	/**
-	 * List the homes of the specified player.
-	 */
-	@Override
-	String listHomes();
-
-	/**
 	 * Send the specified player to their home.
 	 */
 	void sendHome();
@@ -37,7 +31,8 @@ public interface IHome extends IOfflineHome {
 	/**
 	 * Send someone to another home.
 	 * 
-	 * @param target Player to send.
+	 * @param target
+	 *            Player to send.
 	 */
 	@Override
 	void sendOtherHome(User target);

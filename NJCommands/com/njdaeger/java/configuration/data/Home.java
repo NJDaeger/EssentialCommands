@@ -60,22 +60,6 @@ public class Home implements IHome {
 	}
 
 	@Override
-	public String listHomes() {
-		if (dir.list() == null) {
-			return null;
-		}
-		String[] homes = dir.list();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < homes.length; i++) {
-			sb.append(homes[i]).append(" ");
-		}
-		String message = sb.toString().trim();
-		String finalmsg = message.replace(".yml", "");
-		String wcommas = finalmsg.replaceAll(" ", ", ");
-		return wcommas;
-	}
-
-	@Override
 	public void sendHome() {
 		World world = Bukkit.getWorld(getWorld());
 		if (world == null) {
@@ -188,8 +172,10 @@ public class Home implements IHome {
 	/**
 	 * Quick way to set a config value.
 	 * 
-	 * @param key The key to set.
-	 * @param value The value to set the key
+	 * @param key
+	 *            The key to set.
+	 * @param value
+	 *            The value to set the key
 	 */
 	private void setValue(String key, Object value) {
 		if (!exists()) {

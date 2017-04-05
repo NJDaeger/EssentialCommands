@@ -1,7 +1,7 @@
 #USELESS CRAP
 package-info.java
-/.classpath
-/.project
+*.classpath
+*.project
 .settings
 
 ##FILES

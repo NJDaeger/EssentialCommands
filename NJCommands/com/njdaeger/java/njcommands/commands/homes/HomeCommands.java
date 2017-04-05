@@ -156,6 +156,7 @@ public class HomeCommands {
 		desc = "Gets a list of your homes.",
 		usage = "/homes [player] [home]",
 		max = 2,
+		completer = true,
 		aliases = { "listhomes", "seehomes", "homelist" },
 		permissions = { Permission.ESS_LISTHOMES, Permission.ESS_LISTHOMES_OTHER, Permission.ESS_LISTHOMES_DETAIL })
 	public void listhomes(Sender sndr, String label, String[] args) {
@@ -265,7 +266,7 @@ public class HomeCommands {
 		Home home = (Home) user.getHome(args[0]);
 		if (home.exists()) {
 			sndr.sendMessage(Error.HOME_EXISTS.sendError());
-			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + home.listHomes());
+			sndr.sendMessage(ChatColor.GRAY + "Current homes: " + ChatColor.GREEN + user.listHomes());
 			return;
 		}
 		home.create();
