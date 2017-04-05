@@ -3,7 +3,7 @@ package com.njdaeger.java.configuration;
 import org.bukkit.Bukkit;
 
 public class Warnings {
-
+	
 	/**
 	 * Default console error message.
 	 * 
@@ -17,7 +17,7 @@ public class Warnings {
 	public static void warn(String warningMessage, Throwable thrown, boolean showCanceled) {
 		Bukkit.getLogger().warning("");
 		Bukkit.getLogger().warning("");
-		Bukkit.getLogger().warning("==========================EssentialCommands==========================");
+		Bukkit.getLogger().warning("==========================NJCommands==========================");
 		if (showCanceled == true) {
 			Bukkit.getLogger().warning("");
 			Bukkit.getLogger().warning("Operation canceled. Please read below.");
@@ -41,7 +41,7 @@ public class Warnings {
 		Bukkit.getLogger().warning("==============================EndOfError=============================");
 		Bukkit.getLogger().warning("");
 		Bukkit.getLogger().warning("");
-
+		
 	}
-
+	
 }

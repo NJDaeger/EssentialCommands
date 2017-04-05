@@ -16,57 +16,57 @@ import com.njdaeger.java.wrapper.OfflineUser;
 import com.njdaeger.java.wrapper.User;
 
 public class OfflineHome implements IOfflineHome {
-
+	
 	private IOfflineUser user;
-
+	
 	private String home;
-
+	
 	private File dir, homes;
-
+	
 	private YamlConfiguration homefile;
-
+	
 	public OfflineHome(OfflineUser user, String home) {
 		this.user = user;
-		this.dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users" + File.separator
+		this.dir = new File("plugins" + File.separator + "NJCommands" + File.separator + "users" + File.separator
 				+ user.getId() + File.separator + "homes");
 		if (home != null) {
 			this.home = home;
 			this.homes = new File(dir + File.separator + home + ".yml");
 			this.homefile = YamlConfiguration.loadConfiguration(homes);
 		}
-
+		
 	}
-
+	
 	@Override
 	public double getX() {
 		return homefile.getDouble("x");
 	}
-
+	
 	@Override
 	public double getY() {
 		return homefile.getDouble("y");
 	}
-
+	
 	@Override
 	public double getZ() {
 		return homefile.getDouble("z");
 	}
-
+	
 	@Override
 	public int getYaw() {
 		return homefile.getInt("yaw");
 	}
-
+	
 	@Override
 	public int getPitch() {
 		return homefile.getInt("pitch");
 	}
-
+	
 	@Override
 	public String getWorld() {
 		return homefile.getString("world");
 	}
-
+	
 	@Override
 	public Location getAsLocation() {
 		Validate.notNull(getX(), "X value cannot be null.");
@@ -76,54 +76,54 @@ public class OfflineHome implements IOfflineHome {
 		Validate.notNull(getPitch(), "Pitch value cannot be null.");
 		return new Location(Bukkit.getWorld(getWorld()), getX(), getY(), getZ(), getYaw(), getPitch());
 	}
-
+	
 	@Override
 	public void setX(double value) {
 		setValue("x", value);
-
+		
 	}
-
+	
 	@Override
 	public void setY(double value) {
 		setValue("y", value);
-
+		
 	}
-
+	
 	@Override
 	public void setZ(double value) {
 		setValue("z", value);
-
+		
 	}
-
+	
 	@Override
 	public void setYaw(float value) {
 		setValue("yaw", value);
-
+		
 	}
-
+	
 	@Override
 	public void setPitch(float value) {
 		setValue("pitch", value);
-
+		
 	}
-
+	
 	@Override
 	public void setWorld(String value) {
 		setValue("world", value);
-
+		
 	}
-
+	
 	@Override
 	public boolean exists() {
 		return homes.exists();
 	}
-
+	
 	@Override
 	public void remove() {
 		homes.delete();
-
+		
 	}
-
+	
 	@Override
 	public void sendOtherHome(User target) {
 		World world = Bukkit.getWorld(getWorld());
@@ -133,19 +133,19 @@ public class OfflineHome implements IOfflineHome {
 		}
 		target.tp(getAsLocation());
 		return;
-
+		
 	}
-
+	
 	@Override
 	public String getName() {
 		return home;
 	}
-
+	
 	@Override
 	public IOfflineUser getOwner() {
 		return user;
 	}
-
+	
 	/**
 	 * Quick way to set a config value.
 	 * 
@@ -172,7 +172,7 @@ public class OfflineHome implements IOfflineHome {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
-
+	
 }

@@ -19,9 +19,9 @@ import com.njdaeger.java.configuration.exceptions.db.DatabaseNotFound;
 import com.njdaeger.java.configuration.interfaces.IDatabaseHandler;
 
 public class DatabaseData extends Database implements IDatabaseHandler {
-
-	private File dir = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "databases");
-
+	
+	private File dir = new File("plugins" + File.separator + "NJCommands" + File.separator + "databases");
+	
 	@Override
 	public String getEntry(String entry) {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -29,8 +29,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return null;
 			}
@@ -38,7 +39,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		YamlConfiguration base = YamlConfiguration.loadConfiguration(file);
 		return base.getString(entry);
 	}
-
+	
 	@Override
 	public void removeEntry(String entry) {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -46,8 +47,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
 			}
@@ -63,11 +65,12 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		save(file, entry, null);
 		return;
 	}
-
+	
 	/**
 	 * Get an entry value from a key.
 	 * 
-	 * @param value The value you are getting the entry from.
+	 * @param value
+	 *            The value you are getting the entry from.
 	 * @return The entry the value is on.
 	 */
 	public String getFromValue(String value) {
@@ -76,8 +79,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return null;
 			}
@@ -90,7 +94,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		}
 		return null;
 	}
-
+	
 	@Override
 	public void addEntry(String entry, String value) {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -98,14 +102,15 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 			}
 		}
 		save(file, entry, value);
 	}
-
+	
 	@Override
 	public void clear() {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -113,8 +118,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you.", new DatabaseNotFound(), false);
+				Warnings.warn(
+						"The database \"" + database + "\" has been moved, or does not exist. Creating it for you.",
+						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
 			}
@@ -127,19 +133,20 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			DatabaseData.save(file, entries, null);
 		}
 	}
-
+	
 	@Override
 	public void backup() {
 		DateFormat format = new SimpleDateFormat("yyyy/dd/MM-hh:mm:ss");
 		File file = new File(dir + File.separator + database + ".yml");
-		File bckp = new File(dir + File.separator + "backups" + File.separator + database + format.format(new Date())
-				+ ".yml");
+		File bckp = new File(
+				dir + File.separator + "backups" + File.separator + database + format.format(new Date()) + ".yml");
 		if (!file.exists()) {
 			try {
 				throw new DatabaseNotFound();
 			} catch (DatabaseNotFound e) {
-				Warnings.warn("The database \"" + database
-						+ "\" has been moved, or does not exist. Creating it for you. Backup was not created.",
+				Warnings.warn(
+						"The database \"" + database
+								+ "\" has been moved, or does not exist. Creating it for you. Backup was not created.",
 						new DatabaseNotFound(), false);
 				Database.getDatabase(database).create();
 				return;
@@ -162,7 +169,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			return;
 		}
 	}
-
+	
 	@Override
 	public void create() {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -184,7 +191,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public void delete() {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -197,9 +204,9 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 			return;
 		}
 		file.delete();
-
+		
 	}
-
+	
 	@Override
 	public YamlConfiguration getBase() {
 		File file = new File(dir + File.separator + database + ".yml");
@@ -209,7 +216,7 @@ public class DatabaseData extends Database implements IDatabaseHandler {
 		} else
 			return null;
 	}
-
+	
 	private static void save(File base, String entry, Object value) {
 		YamlConfiguration base2 = YamlConfiguration.loadConfiguration(base);
 		base2.set(entry, value);
