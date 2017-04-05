@@ -45,7 +45,7 @@ public final class UserFile implements IBaseConf, Resettable {
 	 */
 	public UserFile(UUID uuid) {
 		this.id = uuid;
-		this.path = new File("plugins" + File.separator + "EssentialCommands" + File.separator + "users"
+		this.path = new File("plugins" + File.separator + "NJCommands" + File.separator + "users" 
 				+ File.separator + id);
 		this.file = new File(path + File.separator + "user.yml");
 		this.yamlfile = YamlConfiguration.loadConfiguration(file);

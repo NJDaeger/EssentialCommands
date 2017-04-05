@@ -3,7 +3,6 @@ package com.njdaeger.java;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -16,6 +15,7 @@ import com.njdaeger.java.command.util.commands.CommandInfo;
 import com.njdaeger.java.command.util.commands.CommandReg;
 import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
+import com.njdaeger.java.configuration.enums.InternalDatabase;
 import com.njdaeger.java.listeners.PlayerJoinListener;
 import com.njdaeger.java.listeners.PlayerLeaveListener;
 import com.njdaeger.java.register.CommandCore;
@@ -34,7 +34,7 @@ public class Core extends JavaPlugin {
 	private static BanAPI BANINSTANCE;
 	private static User user;
 	private static HashMap<UUID, User> onlineUserMap = new HashMap<>();
-	private static ArrayList<User> onlineUsers = new ArrayList<>();
+	private static Collection<User> onlineUsers = new ArrayList<>();
 	private static boolean reloading = false;
 	
 	public void registerListeners() {
@@ -205,7 +205,7 @@ public class Core extends JavaPlugin {
 	 * 
 	 * @return The online users.
 	 */
-	public static List<User> getOnlineUsers() {
+	public static Collection<User> getOnlineUsers() {
 		return onlineUsers;
 	}
 	
@@ -226,8 +226,8 @@ public class Core extends JavaPlugin {
 	 * 
 	 * @return A list of afk users.
 	 */
-	public static List<User> getAfkUsers() {
-		ArrayList<User> list = new ArrayList<>();
+	public static Collection<User> getAfkUsers() {
+		Collection<User> list = new ArrayList<>();
 		for (Player users : Groups.afk) {
 			list.add(getUser(users));
 		}
@@ -259,5 +259,17 @@ public class Core extends JavaPlugin {
 			return null;
 		}
 		return CommandReg.commands.get(name);
+	}
+	
+	public static Collection<com.njdaeger.java.configuration.data.Database> getDatabases() {
+		return null;
+	}
+	
+	public static com.njdaeger.java.configuration.data.Database getDatabase(String name) {
+		return null;
+	}
+	
+	public static com.njdaeger.java.configuration.data.Database getDatabase(InternalDatabase database) {
+		return null;
 	}
 }
