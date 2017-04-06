@@ -1,5 +1,6 @@
 package com.njdaeger.java.configuration.interfaces;
 
+import java.io.File;
 import java.util.Collection;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,10 +11,10 @@ public interface IDatabase {
 	 * Gets an entry from the database from the entry key.
 	 * 
 	 * @param key
-	 *            The value of the entry.
+	 *            The path value of the entry.
 	 * @return The entry.
 	 */
-	IEntry getEntry(String key);
+	IEntry getEntry(String entry);
 	
 	/**
 	 * Gets a list of entrys from this database.
@@ -36,7 +37,7 @@ public interface IDatabase {
 	 * @param entry
 	 *            The entry to remove.
 	 */
-	void removeEntry(String entry);
+	void removeEntry(IEntry entry);
 	
 	/**
 	 * Gets this current database.
@@ -80,5 +81,12 @@ public interface IDatabase {
 	 * @return The database name
 	 */
 	String getName();
+	
+	/**
+	 * Gets the file.
+	 * 
+	 * @return The file
+	 */
+	File getFile();
 	
 }

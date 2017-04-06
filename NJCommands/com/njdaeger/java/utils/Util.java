@@ -75,6 +75,6 @@ public class Util {
 				}
 			}
 		}
-		return matches / max >= .75;
+		return matches / max >= .50;
 	}
 }
