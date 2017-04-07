@@ -1,0 +1,5 @@
+name: NJCommands
+description: All the essential commands and features for a server.
+version: 0.0.1-SNAPSHOT
+author: NJDaeger
+main: com.njdaeger.java.Core
