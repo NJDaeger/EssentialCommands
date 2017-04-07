@@ -25,7 +25,9 @@ public class Util {
 	public static void generatePermissions() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		for (Permission perm : Permission.values()) {
-			pm.addPermission(perm.registerPermission());
+			if (pm.getPermission(perm.getPermission()) == null) {
+				pm.addPermission(perm.registerPermission());
+			}
 		}
 	}
 	

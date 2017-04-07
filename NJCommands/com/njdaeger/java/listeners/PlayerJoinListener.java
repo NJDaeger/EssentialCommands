@@ -8,28 +8,41 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.njdaeger.java.Core;
-import com.njdaeger.java.configuration.controllers.Database;
-import com.njdaeger.java.configuration.data.DatabaseData;
+import com.njdaeger.java.configuration.data.Database;
+import com.njdaeger.java.configuration.data.Entry;
+import com.njdaeger.java.configuration.enums.InternalDatabase;
 import com.njdaeger.java.utils.BanAPI;
 import com.njdaeger.java.wrapper.User;
 
 public class PlayerJoinListener implements Listener {
-
+	
 	private BanAPI essBan = Core.getBanAPI();
-
+	
 	Plugin plugin = Bukkit.getPluginManager().getPlugin("EssentialCommands");
-
+	
 	public PlayerJoinListener(Core plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
-
+	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
-		new User(e.getPlayer());
-		Core.getUser(e.getPlayer()).loginUpdate();
 		if (e.getPlayer().isBanned()) {
 			if (essBan.isBanExpired(e.getPlayer().getName())) {
 				essBan.unban(e.getPlayer().getName());
+			}
+		}
+		new User(e.getPlayer());
+		Core.getUser(e.getPlayer()).loginUpdate();
+		User user = Core.getUser(e.getPlayer());
+		Database database = (Database) Core.getDatabase(InternalDatabase.PLAYERDATA);
+		if (database.getEntry(user.getName()) == null) {
+			database.addEntry(new Entry(database, user.getName(), user.getId().toString()));
+		}
+		if (database.getEntryFromValue(user.getId().toString()) != null) {
+			Entry ent = (Entry) database.getEntryFromValue(user.getId());
+			if (!ent.getPath().equals(user.getName())) {
+				ent.setPath(user.getName());
+				return;
 			}
 		}
 		return;
@@ -42,27 +55,30 @@ public class PlayerJoinListener implements Listener {
 		 * + " loaded."); return; }
 		 */
 	}
-
-	@EventHandler
-	public void updateDatabase(PlayerJoinEvent e) {
-		User player = Core.getUser(e.getPlayer());
-		DatabaseData base = Database.getDatabase("playerdata");
-		if (base.getBase() == null) {
-			base.create();
-		}
-		if (base.getEntry(player.getName()) == null) {
-			base.addEntry(player.getName(), player.getId().toString());
-			return;
-		}
-		if (base.getEntry(player.getName()).matches(player.getId().toString())) {
-			return;
-		} else {
-			base.removeEntry(player.getName());
-			base.addEntry(player.getName(), player.getId().toString());
-			return;
-		}
-	}
-
+	
+	/*
+	 * @EventHandler public void updateDatabase(PlayerJoinEvent e) { User user =
+	 * Core.getUser(e.getPlayer()); // DatabaseData base =
+	 * Database.getDatabase("playerdata"); Database database = (Database)
+	 * Core.getDatabase(InternalDatabase.PLAYERDATA);
+	 * System.out.println(database.getName());
+	 * System.out.println(user.getName()); if (database.getEntry(user.getName())
+	 * == null) { database.addEntry(new Entry(database, user.getName(),
+	 * user.getId())); } if (database.getEntryFromValue(user.getId()) != null) {
+	 * Entry ent = (Entry) database.getEntryFromValue(user.getId()); if
+	 * (!ent.getPath().equals(user.getName())) { ent.setPath(user.getName());
+	 * return; } }
+	 * 
+	 * if (base.getBase() == null) { base.create(); } if
+	 * (base.getEntry(player.getName()) == null) {
+	 * base.addEntry(player.getName(), player.getId().toString()); return; } if
+	 * (base.getEntry(player.getName()).matches(player.getId().toString())) {
+	 * return; } else { base.removeEntry(player.getName());
+	 * base.addEntry(player.getName(), player.getId().toString()); return; }
+	 * 
+	 * }
+	 */
+	
 	/*
 	 * Check if player file and path exist on join.
 	 * 
@@ -84,5 +100,5 @@ public class PlayerJoinListener implements Listener {
 	 * EssentialCommands/warps/warpname.yml EssentialCommands/motd.txt
 	 * 
 	 */
-
+	
 }

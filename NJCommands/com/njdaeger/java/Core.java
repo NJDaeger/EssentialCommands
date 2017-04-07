@@ -13,9 +13,10 @@ import com.njdaeger.java.chat.MessageFile;
 import com.njdaeger.java.command.util.BukkitCommonLib;
 import com.njdaeger.java.command.util.commands.CommandInfo;
 import com.njdaeger.java.command.util.commands.CommandReg;
-import com.njdaeger.java.configuration.controllers.Database;
 import com.njdaeger.java.configuration.data.Config;
+import com.njdaeger.java.configuration.data.Database;
 import com.njdaeger.java.configuration.enums.InternalDatabase;
+import com.njdaeger.java.configuration.interfaces.IDatabase;
 import com.njdaeger.java.listeners.PlayerJoinListener;
 import com.njdaeger.java.listeners.PlayerLeaveListener;
 import com.njdaeger.java.register.CommandCore;
@@ -35,40 +36,53 @@ public class Core extends JavaPlugin {
 	private static User user;
 	private static HashMap<UUID, User> onlineUserMap = new HashMap<>();
 	private static Collection<User> onlineUsers = new ArrayList<>();
+	private static Collection<IDatabase> databases = new ArrayList<>();
 	private static boolean reloading = false;
 	
-	public void registerListeners() {
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	/**
+	 * Registers listeners
+	 */
+	private void registerListeners() {
 		new PlayerLeaveListener(this);
 		new PlayerJoinListener(this);
 		new CoreListener(this);
 	}
 	
-	private void registerPermissions() {
-		Util.generatePermissions();
-		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by "
-				+ this.getDescription().getAuthors() + " is now Enabled!");
+	/**
+	 * Registers tasks
+	 */
+	private void registerTasks() {
+		new InfoTask();
+		new MemoryTask();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.bukkit.plugin.java.JavaPlugin#onEnable() check if the plugin is
-	 * enabled with a checkenabled method and call it in the onenable.
+	/**
+	 * Registers various objects.
 	 */
-	@Override
-	public void onEnable() {
-		INSTANCE = this;
-		CFGINSTANCE = new Config();
-		BANINSTANCE = new BanAPI();
-		new BukkitCommonLib(this);
+	private void registerUtils() {
 		MessageFile.create();
 		CommandCore.registerCommands();
+		Util.generatePermissions();
 		getConf().createConfig();
-		TPS.getTPSClass();
-		new InfoTask(this).run();
-		new MemoryTask();
-		registerListeners();
-		registerPermissions();
+	}
+	
+	/**
+	 * Registers all the users if a reload is present.
+	 */
+	private void registerUsers() {
 		if (getConf().loadInMemory()) {
 			setReloading(false);
 			for (Player players : Bukkit.getOnlinePlayers()) {
@@ -76,6 +90,41 @@ public class Core extends JavaPlugin {
 				user.loginUpdate();
 			}
 		}
+	}
+	
+	/**
+	 * Registers the permissions.
+	 */
+	private void registerPermissions() {
+		Util.generatePermissions();
+		Bukkit.getLogger().info("[EssentialCommands] Version " + this.getDescription().getVersion() + " by "
+				+ this.getDescription().getAuthors() + " is now Enabled!");
+	}
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	@Override
+	public void onEnable() {
+		INSTANCE = this;
+		CFGINSTANCE = new Config();
+		BANINSTANCE = new BanAPI();
+		new BukkitCommonLib(this);
+		registerTasks();
+		registerUtils();
+		registerListeners();
+		registerPermissions();
+		registerUsers();
 	}
 	
 	@Override
@@ -93,6 +142,19 @@ public class Core extends JavaPlugin {
 			return;
 		}
 	}
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
 	/**
 	 * Get the instance of the plugin core.
@@ -139,6 +201,19 @@ public class Core extends JavaPlugin {
 	public static BanAPI getBanAPI() {
 		return BANINSTANCE;
 	}
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
 	/**
 	 * Gets an online User via their in game name.
@@ -190,15 +265,34 @@ public class Core extends JavaPlugin {
 	 *         user otherwise.
 	 */
 	public static OfflineUser getOfflineUser(String name) {
-		if (Database.getDatabase("playerdata").getEntry(name) == null) {
+		Database database = (Database) getDatabase(InternalDatabase.PLAYERDATA);
+		if (database.getEntry(name) == null) {
 			return null;
 		}
-		UUID uuid = UUID.fromString(Database.getDatabase("playerdata").getEntry(name));
-		if (uuid == null) {
+		if (database.getEntry(name).getValue() == null) {
 			return null;
 		}
+		/*
+		 * if (Database.getDatabase("playerdata").getEntry(name) == null) {
+		 * return null; } UUID uuid =
+		 * UUID.fromString(Database.getDatabase("playerdata").getEntry(name));
+		 * if (uuid == null) { return null; }
+		 */
 		return new OfflineUser(name);
 	}
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
 	/**
 	 * Get a list of the online users.
@@ -219,6 +313,15 @@ public class Core extends JavaPlugin {
 	 */
 	public static HashMap<UUID, User> getOnlineUserMap() {
 		return onlineUserMap;
+	}
+	
+	/**
+	 * Gets a collection of all the registered databases.
+	 * 
+	 * @return A collection of databases.
+	 */
+	public static Collection<IDatabase> getRegisterdDatabases() {
+		return databases;
 	}
 	
 	/**
@@ -247,6 +350,19 @@ public class Core extends JavaPlugin {
 		return users;
 	}
 	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
 	/**
 	 * Gets a command based from its name.
 	 * 
@@ -261,15 +377,35 @@ public class Core extends JavaPlugin {
 		return CommandReg.commands.get(name);
 	}
 	
-	public static Collection<com.njdaeger.java.configuration.data.Database> getDatabases() {
-		return null;
+	/**
+	 * Gets a database from its name.
+	 * 
+	 * @param name
+	 *            The name of the database to retrieve.
+	 * @return The database.
+	 */
+	public static IDatabase getDatabase(String name) {
+		for (IDatabase database : databases) {
+			if (database.getName().equals(name)) {
+				return database;
+			}
+		}
+		return new Database(name);
 	}
 	
-	public static com.njdaeger.java.configuration.data.Database getDatabase(String name) {
-		return null;
-	}
-	
-	public static com.njdaeger.java.configuration.data.Database getDatabase(InternalDatabase database) {
-		return null;
+	/**
+	 * Gets an internal database.
+	 * 
+	 * @param internalBase
+	 *            The internal database to retrieve.
+	 * @return The internal database.
+	 */
+	public static IDatabase getDatabase(InternalDatabase internalBase) {
+		for (IDatabase database : databases) {
+			if (database.getName().equals(internalBase.getName())) {
+				return database;
+			}
+		}
+		return new Database(internalBase);
 	}
 }

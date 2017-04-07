@@ -10,6 +10,8 @@ import java.util.Date;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.google.common.io.Files;
+import com.njdaeger.java.Core;
 import com.njdaeger.java.command.util.BukkitCommonLib;
 import com.njdaeger.java.configuration.enums.InternalDatabase;
 import com.njdaeger.java.configuration.interfaces.IDatabase;
@@ -38,6 +40,9 @@ public class Database implements IDatabase {
 			}
 		}
 		this.config = YamlConfiguration.loadConfiguration(file);
+		if (!Core.getRegisterdDatabases().contains(this)) {
+			Core.getRegisterdDatabases().add(this);
+		}
 		
 	}
 	
@@ -45,7 +50,7 @@ public class Database implements IDatabase {
 		this.name = database.getName();
 		this.dir = new File(
 				"plugins" + File.separator + BukkitCommonLib.getPlugin().getName() + File.separator + "databases");
-		this.file = new File(dir + database.getName() + ".yml");
+		this.file = new File(dir + File.separator + database.getName() + ".yml");
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
@@ -57,19 +62,22 @@ public class Database implements IDatabase {
 			}
 		}
 		this.config = YamlConfiguration.loadConfiguration(file);
+		if (!Core.getRegisterdDatabases().contains(this)) {
+			Core.getRegisterdDatabases().add(this);
+		}
 	}
 	
 	@Override
 	public IEntry getEntry(String entry) {
 		for (IEntry entries : getEntries()) {
-			if (entries.getPath().matches(entry))
+			if (entries.getPath().matches(entry)) {
 				return entries;
+			}
 		}
 		return null;
 	}
 	
 	@Override
-	// Check the value of getKeys
 	public Collection<IEntry> getEntries() {
 		for (String entry : getBase().getKeys(true)) {
 			collection.add(new Entry(this, entry, getBase().get(entry)));
@@ -89,6 +97,16 @@ public class Database implements IDatabase {
 	}
 	
 	@Override
+	public IEntry getEntryFromValue(Object value) {
+		for (IEntry entry : getEntries()) {
+			if (entry.getValue() == value) {
+				return entry;
+			}
+		}
+		return null;
+	}
+	
+	@Override
 	public IDatabase getDatabase() {
 		return this;
 	}
@@ -102,12 +120,19 @@ public class Database implements IDatabase {
 	
 	@Override
 	public void backup() {
-		DateFormat format = new SimpleDateFormat("yyyy/dd/MM-hh:mm:ss");
-		File file = new File(dir + File.separator + name + ".yml");
-		File bckp = new File(
-				dir + File.separator + "backups" + File.separator + name + format.format(new Date()) + ".yml");
-		if (!dir.exists()) {
+		DateFormat format = new SimpleDateFormat("yyyy/dd/MM-hh.mm.ss");
+		File file = new File(dir + File.separator + "backups");
+		File bckp = new File(file + File.separator + name + format.format(new Date()) + ".yml");
+		if (!dir.exists() || bckp.exists() || !this.file.exists()) {
 			return;
+		}
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		try {
+			Files.copy(this.file, bckp);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -142,7 +167,6 @@ public class Database implements IDatabase {
 		try {
 			getBase().save(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

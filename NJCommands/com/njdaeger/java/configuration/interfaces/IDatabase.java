@@ -89,4 +89,11 @@ public interface IDatabase {
 	 */
 	File getFile();
 	
+	/**
+	 * Gets an entry path from a value.
+	 * 
+	 * @return The path of the entry.
+	 */
+	IEntry getEntryFromValue(Object value);
+	
 }

@@ -1,6 +1,6 @@
 package com.njdaeger.java.configuration.enums;
 
-import com.njdaeger.java.configuration.controllers.Database;
+import com.njdaeger.java.Core;
 
 public enum Messages {
 
@@ -112,10 +112,10 @@ public enum Messages {
 	 *         message.
 	 */
 	public String getMessage() {
-		if (Database.getDatabase("messages").getEntry(path) == null) {
+		if (Core.getDatabase(InternalDatabase.MESSAGES).getEntry(path) == null) {
 			return defaultmessage;
 		}
-		return Database.getDatabase("messages").getEntry(path);
+		return (String) Core.getDatabase(InternalDatabase.MESSAGES).getEntry(path).getValue();
 	}
 
 	/**
