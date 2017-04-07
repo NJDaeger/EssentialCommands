@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.njdaeger</groupId>
-    <artifactId>EssentialCommands</artifactId>
+    <artifactId>NJCommonPlugins</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.njdaeger</groupId>
