@@ -1,5 +1,0 @@
-name: ${project.artifactId}
-description: All the essential commands and features for a server.
-version: ${project.version}
-author: NJDaeger
-main: com.njdaeger.java.Core
