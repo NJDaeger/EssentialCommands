@@ -4,20 +4,20 @@
 'UTF-8'
 -protected
 -sourcepath
-'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/com'
+'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/src/com'
 -author
 -bottom
 'Copyright &#169; 2017. All rights reserved.'
 -charset
 'UTF-8'
 -d
-'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/target'
+'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/src/target'
 -docencoding
 'UTF-8'
 -doctitle
 'NJCommands 0.0.1-SNAPSHOT API'
 -linkoffline
-'http://docs.oracle.com/javase/8/docs/api' 'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/target/javadoc-bundle-options'
+'http://docs.oracle.com/javase/8/docs/api' 'C:/Users/Noah/Documents/BukkitWorkspace/NJCommomPlugins/NJCommands/src/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle

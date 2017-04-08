@@ -236,12 +236,12 @@
     </repositories>
 
     <build>
-        <sourceDirectory>src/com/njdaeger/</sourceDirectory>
+        <sourceDirectory>com/njdaeger/</sourceDirectory>
         <defaultGoal>clean install</defaultGoal>
         <resources>
         
             <resource>
-                <directory>src</directory>
+                <directory></directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>plugin.yml</include>
@@ -249,7 +249,7 @@
             </resource>
             
             <resource>
-                <directory>src</directory>
+                <directory></directory>
                 <filtering>false</filtering>
                 <excludes>
                     <exclude>**/*.java</exclude>

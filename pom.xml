@@ -230,6 +230,6 @@
     	<module>NJPerms</module>
     	<module>ServerProtect</module>
     	<module>LoginClearance</module>
-    	<module>NJCommands</module>
+    	<module>NJCommands/src</module>
     </modules>
 </project>
